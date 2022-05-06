@@ -3,11 +3,10 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="net.developia.kkh.dao.MemberMapper">
+<mapper namespace="com.hmall.team04.mapper.MemberMapper">
 	
 	<resultMap type="MemberVO" id="memberMap">
 		<id property="userid" column="userid"/>
-		<result property="userpw" column="userpw"/>
 		<result property="userpw" column="userpw"/>
 		<result property="userName" column="username"/>
 		<result property="regDate" column="regdate"/>
