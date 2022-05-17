@@ -5,26 +5,31 @@
 
 <mapper namespace="com.hmall.team04.dao.user.UserDAO">
 	
-	<resultMap type="MemberVO" id="memberMap">
-		<id property="userid" column="userid"/>
-		<result property="userpw" column="userpw"/>
-		<result property="userName" column="username"/>
-		<result property="regDate" column="regdate"/>
-		<result property="updateDate" column="updatedate"/>
+	<resultMap id="userMap" type="UserVO">
+		<id property="user_id" column="user_id"/>
+		<result property="user_nm" column="user_nm"/>
+		<result property="password" column="password"/>
+		<result property="email" column="email"/>
+		<result property="birth" column="birth"/>
+		<result property="address_f" column="address_f"/>
+		<result property="address_l" column="address_l"/>
+		<result property="hp_no" column="hp_no"/>
+		<result property="ins_dt" column="ins_dt"/>
+		<result property="upd_dt" column="upd_dt"/>
 		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	
-	<resultMap type="AuthVO" id="authMap">
-		<result property="userid" column="userid"/>
+	<resultMap id="authMap" type="AuthVO">
+		<result property="user_id" column="user_id"/>
 		<result property="auth" column="auth"/>
 	</resultMap>
 	
-	<select id="read" resultMap="memberMap">
+	<select id="selectUserInfo" resultMap="userMap">
 		SELECT
-			mem.userid, userpw, username, enabled, regdate, updatedate, auth
+			u.user_id, user_nm, password, email, birth, address_f, address_l, hp_no, ins_dt, upd_dt, a.auth
 		FROM
-			tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.userid = auth.userid
-		WHERE mem.userid = #{userid}
+			user_t u LEFT OUTER JOIN user_auth_t a on u.user_id = a.user_id
+		WHERE u.user_id = #{userid}
 	</select>
 	
 </mapper>

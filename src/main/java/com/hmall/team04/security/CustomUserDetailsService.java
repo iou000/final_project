@@ -16,17 +16,18 @@ import com.hmall.team04.dto.user.UserVO;
 public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Setter(onMethod_ = {@Autowired})
-	private UserDAO memberMapper;
+	private UserDAO userDAO;
 	
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		log.warn("Load User By UserName : "+ userName);
 		
-		UserVO vo = memberMapper.read(userName);
+		UserVO vo = userDAO.selectUserInfo(userName); //userName은 user_id를 의미
 		
 		log.warn("queried by member mapper: " + vo);
 		
+		//CustomUser 반환
 		return vo == null? null : new CustomUser(vo);
 	}
 
