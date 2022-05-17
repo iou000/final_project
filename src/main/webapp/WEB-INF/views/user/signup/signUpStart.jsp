@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	회원 가입 > 회원구분 선택
 </body>
 </html>
