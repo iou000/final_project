@@ -48,11 +48,11 @@
 		<property name="mapperInterface" value="com.hmall.team04.dao.ReplyDAO" />
 	</bean>	
 	-->
-	<bean id="memeberMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="userDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="boardSqlSession" />
-		<property name="mapperInterface" value="com.hmall.team04.mapper.MemberMapper" />
+		<property name="mapperInterface" value="com.hmall.team04.dao.user.UserDAO" />
 	</bean>	
-	 <mybatis-spring:scan base-package="com.hmall.team04.mapper" />
+	 <mybatis-spring:scan base-package="com.hmall.team04.dao" />
   	
    <!-- transaction setting start -->
    <aop:aspectj-autoproxy />	

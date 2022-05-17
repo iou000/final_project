@@ -8,22 +8,22 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-import com.hmall.team04.mapper.MemberMapper;
-import com.hmall.team04.dto.CustomUser;
-import com.hmall.team04.dto.MemberVO;
+import com.hmall.team04.dao.user.UserDAO;
+import com.hmall.team04.dto.user.CustomUser;
+import com.hmall.team04.dto.user.UserVO;
 
 @Log4j
 public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Setter(onMethod_ = {@Autowired})
-	private MemberMapper memberMapper;
+	private UserDAO memberMapper;
 	
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		log.warn("Load User By UserName : "+ userName);
 		
-		MemberVO vo = memberMapper.read(userName);
+		UserVO vo = memberMapper.read(userName);
 		
 		log.warn("queried by member mapper: " + vo);
 		

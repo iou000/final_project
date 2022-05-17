@@ -1,4 +1,4 @@
-package com.hmall.team04.dto;
+package com.hmall.team04.dto.user;
 
 import java.util.Collection;
 
@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j;
 @Getter
 public class CustomUser extends User{
 	private static final long serialVersionUID = 1L;
-	private MemberVO member;
+	private UserVO user;
 	
 	public CustomUser(String username, String password,
 			Collection<? extends GrantedAuthority> authorities) {
@@ -23,9 +23,10 @@ public class CustomUser extends User{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CustomUser(MemberVO vo) {
-		super(vo.getUserid(), vo.getUserpw(), vo.getAuthList().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList()));
-		this.member = vo;
+	public CustomUser(UserVO vo) {
+		super(vo.getUser_id(), vo.getPassword(), vo.getAuthList()
+				.stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList()));
+		this.user = vo;
 	}
 
 }
