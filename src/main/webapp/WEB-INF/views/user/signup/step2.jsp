@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	회원가입 > 개인정보입력(일반)
 </body>
 </html>
