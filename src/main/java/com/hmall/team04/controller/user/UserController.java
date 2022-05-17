@@ -1,4 +1,4 @@
-package com.hmall.team04.controller;
+package com.hmall.team04.controller.user;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +12,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-public class CommonController {
+public class UserController {
 	@GetMapping("accessError")
 	public void accessDenied(Authentication auth, Model model) {
 		log.info("access Denied : " + auth);
