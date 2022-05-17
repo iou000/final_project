@@ -11,7 +11,7 @@ public class UserVO {
 	private String user_nm;
 	private String password;
 	private String email;
-	private Date date;
+	private Date birth;
 	private String address_f;
 	private String address_l;
 	private String hp_no;
