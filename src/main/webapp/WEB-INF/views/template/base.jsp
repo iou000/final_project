@@ -2,17 +2,7 @@
 	language="java"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<style>
-.wrapper {
-	width: 100%;
-	/* base 가 header.jsp, login.jsp, footer.jsp를 종합한다.*/
-	background: #FFFFFF;
-}
-table{
-    width: 100%;
-}
-</style>
+<c:set var="app" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
 
@@ -61,12 +51,6 @@ table{
 }
 </script>
 
-<link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
-<!-- UI/UX Style -->
-<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/common.css"><!-- 공통 css -->
-<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/layout.css"><!-- 공통 Layout css -->
-<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/popup.css"><!-- 공통 Popup css -->
-<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/jquery-ui.css"><!-- jQuery UI css -->
 <style>
 .hidden {display:none !important;}
 </style>
@@ -1048,6 +1032,12 @@ function DirectCopnDownload(prmoNo){
 <!--head_stop_flag-->
 
 <style>
+.wrapper {
+	width: 100%;
+	/* base 가 header.jsp, login.jsp, footer.jsp를 종합한다.*/
+	background: #FFFFFF;
+}
+
 .page_content {
 	margin: 15% 30%;
 }
