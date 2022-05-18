@@ -16,7 +16,7 @@
 	 
 	<security:http auto-config="true" use-expressions="true">
 
-		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess" />
+		<security:form-login login-page="/login" authentication-success-handler-ref="customLoginSuccess" />
 
 		<security:access-denied-handler ref="customAccessDenied"/>
 
