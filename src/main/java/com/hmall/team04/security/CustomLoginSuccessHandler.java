@@ -11,12 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
-
+public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler{
+	
+	@Override
+	protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
+		String s = request.getParameter("_to");
+		System.out.println(s);
+		if(s != null)
+			return s;
+		else
+			return super.determineTargetUrl(request, response);
+	}
    @Override
    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
          throws IOException, ServletException {

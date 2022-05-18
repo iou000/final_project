@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import lombok.extern.log4j.Log4j;
 
@@ -17,6 +18,11 @@ public class UserController {
 	public void accessDenied(Authentication auth, Model model) {
 		log.info("access Denied : " + auth);
 		model.addAttribute("msg", "Access Denied");
+	}
+	
+	@GetMapping("/loginpopup")
+	public void loginpopup(@RequestHeader("Referer") String from, Model model){
+		model.addAttribute("_to", from);
 	}
 	
 	@GetMapping("/customLogin")
