@@ -3,67 +3,7 @@
 <!DOCTYPE html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport"
-		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height">
-	<meta name="HandheldFriendly" content="true">
-	<meta name="format-detection" content="telephone=no, email=no, address=no">
-	<meta name="apple-mobile-web-app-capable" content=" yes">
-	<meta name="robots" content="index,follow">
-	<meta name="title" content="https://hmall.com">
-	<meta name="author" content="@Hmall">
-	<meta name="description"
-		content="백화점, 브랜드, 홈쇼핑까지- 당신의 모든 취향을 읽다. Korean Online Shopping Mall, Worldwide Shipping available, Hyundai Department Store Group in Korea. 韩国现代百货店的线上购物网站正品保障, 海外配送.">
-	<meta name="keywords" content="">
-	<meta http-equiv="imagetoolbar" content="no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>공지사항 - 현대Hmall</title>
-
-	<!-- includeScript -->
-
-	<meta charset="UTF-8">
-	<meta name="viewport"
-		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height">
-	<meta name="HandheldFriendly" content="true">
-	<meta name="format-detection" content="telephone=no, email=no, address=no">
-	<meta name="apple-mobile-web-app-capable" content=" yes">
-	<meta name="robots" content="index,follow">
-	<meta name="author" content="@Hmall">
-	<meta http-equiv="imagetoolbar" content="no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-	<link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
-	<!-- UI/UX Style -->
-	<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/common.css"><!-- 공통 css -->
-	<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/layout.css"><!-- 공통 Layout css -->
-	<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/popup.css"><!-- 공통 Popup css -->
-	<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/jquery-ui.css"><!-- jQuery UI css -->
-	<style>
-		.hidden {
-			display: none !important;
-		}
-	</style>
-	<script src="//image.hmall.com/p/js/co/jquery-3.4.1.min.js"></script><!-- jQuery Plugin -->
-	<script src="//image.hmall.com/p/js/co/jquery.easing.min.js"></script><!-- jQuery UI Effect -->
-	<script src="//image.hmall.com/p/js/co/jquery-ui.1.12.1.min.js"></script><!-- jQuery UI js -->
-	<script src="//image.hmall.com/p/js/co/ukDetect.min.js"></script><!-- UI에 사용하는 Detect -->
-	<script src="//image.hmall.com/p/js/co/slick.min.js"></script><!-- 공통 Slide 플러그인 -->
-	<script src="//image.hmall.com/p/js/co/common.js"></script><!-- UI에 사용하는 기본 js  -->
-	<script src="//image.hmall.com/p/js/co/co.js"></script><!-- UI에 사용하는 기본 js  -->
-	<script src="//image.hmall.com/p/js/co/jquery.cookie.js"></script>
-	<script src="//image.hmall.com/p/js/co/commonFunction.js"></script><!-- as-is common.js 상속  -->
-	<script src="//image.hmall.com/p/js/co/reDirectExceptUrlList.js"></script><!-- 로그인버튼 click 리다이렉트 예외 url리스트  -->
-	<!-- includeScript -->
-	<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/cc/customer.css">
-
-	<!-- header include -->
-
-	<main class="cmain customer" role="main">
-		<div class="container">
-			<!-- LNB 시작 -->
-			<!-- 사이드 메뉴 include -->
-
-			<!-- .contents -->
+</head>
 			<div class="contents">
 				<!--공지사항-->
 				<div class="cus-wrap">
@@ -114,16 +54,6 @@
 				<!--//공지사항-->
 			</div>
 			<!-- // .contents -->
-		</div>
-		<!-- //.container -->
-	</main>
-	<!-- //.cmain -->
-
-
-
-	<!-- footer include -->
-
-
 <!--
 	<script type="text/javascript">
 
