@@ -10,6 +10,14 @@
 <script type="text/javascript" src="//image.hmall.com/gen/js/searchSpecialShopLinkList.js?ver=050417" charset="UTF-8"></script>
 <script type="text/javascript" src="//image.hmall.com/gen/js/searchBrndShopLinkList.js?ver=050417" charset="UTF-8"></script>
 
+<script type="text/javascript" src="${app}/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="${app}/resources/js/common-pub.js"></script>
+<script type="text/javascript">
+			$(function(){
+
+    			commonPub.common();
+			})
+		</script>
 <link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
 <!-- UI/UX Style -->
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/common.css"><!-- 공통 css -->

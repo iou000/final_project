@@ -13,9 +13,13 @@
 	 
 	 <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	 <bean id="customUserDetailsService" class="com.hmall.team04.security.CustomUserDetailsService" />
-	 
-	<security:http auto-config="true" use-expressions="true">
 
+	<security:http auto-config="true" use-expressions="true">
+	
+		<security:csrf disabled="true" /> <!-- 테스트용 -->
+		
+		<security:intercept-url pattern="/signUp/*" access="permitAll" />
+		
 		<security:form-login login-page="/login" authentication-success-handler-ref="customLoginSuccess" />
 
 		<security:access-denied-handler ref="customAccessDenied"/>
