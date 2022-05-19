@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="app" value="${pageContext.request.contextPath}" />
 
 <!-- header -->
 <script type="text/javascript" src="//image.hmall.com/gen/js/searchPopKeyWordList.js?ver=050417"></script>
@@ -8,6 +9,16 @@
 <script type="text/javascript" src="//image.hmall.com/gen/js/searchADLinkList.js?ver=050417" charset="UTF-8"></script>
 <script type="text/javascript" src="//image.hmall.com/gen/js/searchSpecialShopLinkList.js?ver=050417" charset="UTF-8"></script>
 <script type="text/javascript" src="//image.hmall.com/gen/js/searchBrndShopLinkList.js?ver=050417" charset="UTF-8"></script>
+
+<link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
+<!-- UI/UX Style -->
+<link rel="stylesheet" type="text/css" href="${app}/resources/css/common.css"><!-- 공통 css -->
+<link rel="stylesheet" type="text/css" href="${app}/resources/css/layout.css"><!-- 공통 Layout css -->
+<link rel="stylesheet" type="text/css" href="${app}/resources/css/popup.css"><!-- 공통 Popup css -->
+<link rel="stylesheet" type="text/css" href="${app}/resources/css/jquery-ui.css"><!-- jQuery UI css -->
+<link rel="stylesheet" type="text/css" href="${app}/resources/css/login.css">
+<link rel="stylesheet" type="text/css" href="${app}/resources/css/screen.ui.css">
+<link rel="stylesheet" type="text/css" href="${app}/resources/css/swiper.min.css">
 
 <script type="text/javascript">
 

@@ -4,12 +4,20 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
-	<!-- 화면 설계 문제로 부득이 login을 위한 modal을 모두 삽입하였음 -->
+	<!-- index 화면, 첫페이지 -->
 	<definition name="index" template="/WEB-INF/views/template/base.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 		<put-attribute name="modal" value="/WEB-INF/views/layout/modal.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
+	
+	<!-- 회원가입 -->
+	<definition name="user.signup.*" template="/WEB-INF/views/template/signUpLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/user/signup/{1}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+	
 
 </tiles-definitions>
