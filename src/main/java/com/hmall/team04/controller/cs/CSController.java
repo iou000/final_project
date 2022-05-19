@@ -14,7 +14,7 @@ public class CSController {
 	
 	@GetMapping("/main.do")
 	public String main() {
-		return "cs.main";
+		return "cs.faq.faqMainList";
 	}
 	
 	@GetMapping("/notice")
@@ -31,6 +31,7 @@ public class CSController {
 	public String question() {
 		return "cs.qna.question";
 	}
+	
 	
 	@GetMapping("/findByOrder")
 	public String findByOrderGet() {
