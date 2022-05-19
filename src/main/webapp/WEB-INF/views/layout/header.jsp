@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/login.css">
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/screen.ui.css">
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/swiper.min.css">
-
+ <link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css"> 
 <script type="text/javascript">
 
 
