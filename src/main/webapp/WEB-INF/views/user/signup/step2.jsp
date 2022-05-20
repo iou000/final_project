@@ -49,7 +49,7 @@
 
 				<!-- 정보입력 -->
 				<form:form name="UserInfoForm" id="UserInfoForm" commandName="signUpRequestDTO" method="post" action="./step3">
-
+					<input type="hidden" id="token" data-token-name="${_csrf.headerName}" placeholder="Password" value="${_csrf.token}">
 					<input type="hidden" name="check_agree0" value="N" /> 
 					<input type="hidden" name="check_agree1" value="N" />
 
