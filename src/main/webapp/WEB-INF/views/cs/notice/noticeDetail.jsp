@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="app" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
 
@@ -22,27 +26,26 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="txt-left">현대홈쇼핑 보험대리점등록증</th>
-                                        <th scope="col" class="txt-right date">2021.09.24</th>
+                                        <th scope="col" class="txt-left">${article.title}</th>
+                                        <th scope="col" class="txt-right date"><fmt:formatDate value="${article.ins_dt}" type="date" /></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td colspan="2" class="txt-left">
                                             <p>
-                                            <p>안녕하세요, 현대홈쇼핑입니다.</p>
-                                            <p>&nbsp;</p>금융소비자보호법 제26조 제2항에 따라 현대홈쇼핑 대리점등록증을 다음과 같이 고지합니다.
-                                            <p>&nbsp;</p>
-                                            <p>감사합니다.</p>
+                                            	<c:out value="${article.content}"></c:out>
                                             </p>
 
                                             <!--첨부파일이 있는 경우 노출-->
-                                            <dl class="board-file">
-                                                <dt>첨부파일</dt>
-
-                                                <dd><a href="/p/ccb/fileDownload.do?ancmId=53596">현대홈쇼핑 보험대리점등록증.pdf</a>
-                                                </dd>
-                                            </dl>
+                                            <c:if test="${article.file_yn == 1}">
+	                                            <dl class="board-file">
+	                                                <dt>첨부파일</dt>
+	
+	                                                <dd><a href="/p/ccb/fileDownload.do?ancmId=53596">현대홈쇼핑 보험대리점등록증.pdf</a>
+	                                                </dd>
+	                                            </dl>
+                                            </c:if>
                                             <!--//첨부파일이 있는 경우 노출-->
 
                                         </td>
