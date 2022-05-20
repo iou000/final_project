@@ -10,13 +10,13 @@
     </h2>
     <div class="side-menu-list">
         <ul>
-            <li><a href="#" onclick="openCnslAcptPup(); return false;">1:1 문의하기</a></li>
+            <li><a href="#" onClick="window.open('${app}/cs/qnaInsPopUp','1:1 문의하기','width=756,height=700')">1:1 문의하기</a></li>
 
             <li><a href="#" onclick='javascript:location.href="${app}/cs/question"'>내 상담내역 조회</a></li>
 
             <li><a class="#" href="${app}/cs/faq">자주 묻는 질문</a></li>
 
-            <li><a href="/p/ccb/noticeList.do">공지사항</a></li>
+            <li><a href="${app}/cs/noticeList.do">공지사항</a></li>
 
         </ul>
     </div>
