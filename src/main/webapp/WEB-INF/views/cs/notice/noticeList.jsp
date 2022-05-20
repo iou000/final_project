@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="app" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
 </head>
 			<div class="contents">
 				<!--공지사항-->
@@ -23,16 +28,17 @@
 								</tr>
 							</thead>
 							<tbody>
-								<!-- foreach 시작 -->
+								<c:forEach items="${list}" var="dto" varStatus="vs">
 								<tr>
 									<td class="nowrap">
-										<a href="/p/ccb/noticeView.do?ancmId=53744&page=1&topFixYn=N">현대홈쇼핑 멤버십 제도 개편
-											안내</a>
-
+										<a href="${app}/cs/noticeView.do?articleid=${dto.article_id}">${dto.title}</a>
+										<c:if test="${dto.file_yn == 1}">
+											<!-- 파일 있으면 이미지 띄우기 -->
+										</c:if>
 									</td>
-									<td class="txt-center"><span class="date">2022.05.02</span></td>
+									<td class="txt-center"><span class="date"><fmt:formatDate value="${dto.ins_dt}" type="date" /></span></td>
 								</tr>
-								<!-- foreach 끝 -->
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>

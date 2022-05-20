@@ -44,7 +44,11 @@
 	</bean>	
 	-->
 
-
+	<bean id="noticeDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="team04SqlSession" />
+		<property name="mapperInterface" value="com.hmall.team04.dao.cs.NoticeDAO" />
+	</bean>
+	
 	<bean id="userDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="team04SqlSession" />
 		<property name="mapperInterface" value="com.hmall.team04.dao.user.UserDAO" />
