@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j;
 @Getter
 public class CustomUser extends User{
 	private static final long serialVersionUID = 1L;
-	private UserVO user;
+	private UserDTO user;
 	
 	public CustomUser(String username, String password,
 			Collection<? extends GrantedAuthority> authorities) {
@@ -23,7 +23,7 @@ public class CustomUser extends User{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CustomUser(UserVO vo) {
+	public CustomUser(UserDTO vo) {
 		super(vo.getUser_id(), vo.getPassword(), vo.getAuthList()
 													.stream()
 													.map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList()));

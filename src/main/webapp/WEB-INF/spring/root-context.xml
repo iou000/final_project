@@ -25,7 +25,7 @@
       p:driverClassName="${spring.datasource.driverClassName}"
       p:maximumPoolSize="2" />
 	
-	<bean id="boardSqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="team04SqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 여러가지 타입 얼라이어스를 설정해줘야 나중에 패키지 여러개를 사용할때 IMsDAO안에서 resulttype에 대해서 클래스명으로 
 			설정가능 -->
@@ -42,14 +42,11 @@
 		<property name="sqlSessionFactory" ref="boardSqlSession" />
 		<property name="mapperInterface" value="com.hmall.team04.dao.HotBoardDAO" />
 	</bean>	
-	
-	<bean id="replyDAO"	class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="sqlSessionFactory" ref="boardSqlSession" />
-		<property name="mapperInterface" value="com.hmall.team04.dao.ReplyDAO" />
-	</bean>	
 	-->
+
+
 	<bean id="userDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="sqlSessionFactory" ref="boardSqlSession" />
+		<property name="sqlSessionFactory" ref="team04SqlSession" />
 		<property name="mapperInterface" value="com.hmall.team04.dao.user.UserDAO" />
 	</bean>	
 	 <mybatis-spring:scan base-package="com.hmall.team04.dao" />

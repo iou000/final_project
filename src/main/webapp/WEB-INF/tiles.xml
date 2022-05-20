@@ -19,5 +19,11 @@
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
 	
-
+	<!-- 아이디찾기, 비밀번호찾기 -->
+	<definition name="user.find.*" template="/WEB-INF/views/template/findLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/user/find/{1}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+	
 </tiles-definitions>
