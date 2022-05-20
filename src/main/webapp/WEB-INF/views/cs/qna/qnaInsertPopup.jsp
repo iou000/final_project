@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="app" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
 
@@ -99,9 +103,10 @@
 
                     <td>
                         <div class="product_pop"></div>
-                        <a href="#" onClick="window.open('/cs/findByOrder','주문내역에서 찾기','width=756,height=541')">
-                            <input type="button" value="주문내역에서 찾기" style="cursor: pointer;">
-                        </a> <input type="button" value="장바구니에서 찾기" style="cursor: pointer;">
+                        <a href="#" onClick="window.open('${app}/cs/findInOrder','주문내역에서 찾기','width=756,height=541')">
+                            <input type="button" value="주문내역에서 찾기" style="cursor: pointer;"> </a>
+                        <a href="#" onClick="window.open('${app}/cs/findInCart','장바구니에서 찾기','width=756,height=541')">
+                        	<input type="button" value="장바구니에서 찾기" style="cursor: pointer;"> </a>
     </div>
     </td>
 

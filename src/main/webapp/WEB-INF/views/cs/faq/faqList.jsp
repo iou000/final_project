@@ -1,20 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="app" value="${pageContext.request.contextPath}" />
     
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
     <style>
         .hidden {
             display: none !important;
         }
     </style>
+    <script src="//image.hmall.com/p/js/co/jquery-3.4.1.min.js"></script><!-- jQuery Plugin -->
+    <script src="//image.hmall.com/p/js/co/jquery.easing.min.js"></script><!-- jQuery UI Effect -->
+    <script src="//image.hmall.com/p/js/co/jquery-ui.1.12.1.min.js"></script><!-- jQuery UI js -->
+
     <!-- includeScript -->
+    <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/cc/customer.css">
     <script type="text/javascript">
         var param = "";
         var faqLCsfCount = "0";
@@ -130,8 +134,6 @@
 
     </script>
 </head>
-
-<body>
                 <div class="contents">
                     <!--search : 자주 묻는 질문-->
                     <div class="cus-wrap">
@@ -161,19 +163,19 @@
                     <div class="cus-wrap">
                         <div class="faq-tab">
                             <ul class="faq-full">
-                                <li class='on'><a href="/p/ccc/faqList.do"><span>전체</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=01"><span>회원</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=02"><span>상품</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=03"><span>주문/결제</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=04"><span>배송</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=05"><span>취소/교환/반품</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=07"><span>적립금/e포인트/할인쿠폰</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=08"><span>사이트 이용</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=09"><span>기타사항</span></a></li>
+                                <li class='on'><a href="${app}/cs/faq"><span>전체</span></a></li>
+                                <li><a href="${app}/cs/faq/faqLCsfNo=01"><span>회원</span></a></li>
+                                <li><a href="${app}/ccc/faqList.do?faqLCsfNo=02"><span>상품</span></a></li>
+                                <li><a href="${app}/ccc/faqList.do?faqLCsfNo=03"><span>주문/결제</span></a></li>
+                                <li><a href="${app}/ccc/faqList.do?faqLCsfNo=04"><span>배송</span></a></li>
+                                <li><a href="${app}/ccc/faqList.do?faqLCsfNo=05"><span>취소/교환/반품</span></a></li>
+                                <li><a href="${app}/ccc/faqList.do?faqLCsfNo=07"><span>적립금/e포인트/할인쿠폰</span></a></li>
+                                <li><a href="${app}/ccc/faqList.do?faqLCsfNo=08"><span>사이트 이용</span></a></li>
+                                <li><a href="${app}/ccc/faqList.do?faqLCsfNo=09"><span>기타사항</span></a></li>
                             </ul>
                         </div>
                     </div>
-                    <!--//cus-wrap-->                  
+                    <!--//cus-wrap-->
 
                     <!--faq-list-->
                     <div class="cus-wrap">
@@ -648,10 +650,6 @@
                     <!--//cus-wrap-->
                 </div>
                 <!-- //.contents -->
-            </div>
-            <!-- //.container -->
-        </main>
-        <!-- //.cmain -->
-</body>
+
 
 </html>

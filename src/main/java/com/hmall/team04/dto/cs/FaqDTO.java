@@ -1,12 +1,11 @@
 package com.hmall.team04.dto.cs;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Data;
 
 @Data
-public class FaqDTO implements Serializable{
+public class FaqDTO {
 	private String article_id;
 	private String title;
 	private String content;

@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="app" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
 </head>
 <body>
                 <!-- .contents -->
@@ -22,27 +27,26 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="txt-left">현대홈쇼핑 보험대리점등록증</th>
-                                        <th scope="col" class="txt-right date">2021.09.24</th>
+                                        <th scope="col" class="txt-left">${article.title}</th>
+                                        <th scope="col" class="txt-right date"><fmt:formatDate value="${article.ins_dt}" type="date" /></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td colspan="2" class="txt-left">
                                             <p>
-                                            <p>안녕하세요, 현대홈쇼핑입니다.</p>
-                                            <p>&nbsp;</p>금융소비자보호법 제26조 제2항에 따라 현대홈쇼핑 대리점등록증을 다음과 같이 고지합니다.
-                                            <p>&nbsp;</p>
-                                            <p>감사합니다.</p>
+                                            	<c:out value="${article.content}"></c:out>
                                             </p>
 
                                             <!--첨부파일이 있는 경우 노출-->
-                                            <dl class="board-file">
-                                                <dt>첨부파일</dt>
-
-                                                <dd><a href="/p/ccb/fileDownload.do?ancmId=53596">현대홈쇼핑 보험대리점등록증.pdf</a>
-                                                </dd>
-                                            </dl>
+                                            <c:if test="${article.file_yn == 1}">
+	                                            <dl class="board-file">
+	                                                <dt>첨부파일</dt>
+	
+	                                                <dd><a href="/p/ccb/fileDownload.do?ancmId=53596">현대홈쇼핑 보험대리점등록증.pdf</a>
+	                                                </dd>
+	                                            </dl>
+                                            </c:if>
                                             <!--//첨부파일이 있는 경우 노출-->
 
                                         </td>
@@ -66,28 +70,36 @@
                                     <tr>
                                         <th scope="row">이전글</th>
                                         <td class="nowrap txt-left">
-
-
-                                            <a href="/p/ccb/noticeView.do?ancmId=53597&page=1&topFixYn=N">현대홈쇼핑 금융소비자보호
-                                                내부통제기준 및 금융소비자보호기준</a>
-
+                                        <c:choose>
+                                        	<c:when test="${article.prev_id != null }">
+                                            	<a href="${app }/cs/noticeView.do?articleid=${article.prev_id}">${article.prev_title }</a>
+											</c:when>
+											
+											<c:when test="${article.prev_id == null }">
+                                            	<p>${article.prev_title }</p>
+											</c:when>
+										</c:choose>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">다음글</th>
                                         <td class="nowrap txt-left">
-
-
-                                            <a href="/p/ccb/noticeView.do?ancmId=53584&page=1&topFixYn=N">개인정보처리방침 변경
-                                                안내(08/05)</a>
-
+                                        <c:choose>
+                                        	<c:when test="${article.next_id != null }">
+                                            	<a href="${app }/cs/noticeView.do?articleid=${article.next_id}">${article.next_title }</a>
+											</c:when>
+											
+											<c:when test="${article.next_id == null }">
+                                            	<p>${article.next_title }</p>
+											</c:when>
+										</c:choose>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="btngroup cuslist-btn">
-                            <button onclick="location.href='/p/ccb/noticeList.do?page=1'"
+                            <button onclick="location.href='${app}/cs/noticeList.do?page=1'"
                                 class="btn btn-linegray small"><span>목록</span></button>
                         </div>
                     </div>
