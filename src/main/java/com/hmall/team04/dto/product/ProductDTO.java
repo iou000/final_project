@@ -4,15 +4,13 @@ import lombok.Data;
 
 @Data
 public class ProductDTO {
-	private int cate_id;
-	private String g_id;
+	private String prd_id;
+	private String prd_nm;
+	private int amount;
 	
-	private int cate_lev;
-	private String cate_nm;
+	private String prd_board_id;
+	private String prd_detail;
 
-	private int cate_detail_lev;
-	private String cate_detail_nm;
-	
-	private int cate_parent_lev;
-	private int cate_detail_parent_lev;	
+	private String option1;
+	private String option2;
 }

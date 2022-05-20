@@ -27,9 +27,9 @@
 	</definition>
 		
 	<!-- product_board 페이지 -->
-	<definition name="product" template="/WEB-INF/views/template/product.jsp">
+	<definition name="product.*" template="/WEB-INF/views/template/product.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/product/product.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/product/{1}.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
 	

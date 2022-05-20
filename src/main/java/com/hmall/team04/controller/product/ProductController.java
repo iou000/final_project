@@ -10,7 +10,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/pda")
+@RequestMapping("/pdatemp")
 public class ProductController {
 	
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
