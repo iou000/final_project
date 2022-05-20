@@ -48,7 +48,7 @@
 
 				<!-- 정보입력 -->
 				<form name="termsForm" id="termsForm" method="post" action="./step2">
-					
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<input type="hidden" name="check_agree0" value="N"/>
 					<input type="hidden" name="check_agree1" value="N"/>
 					
