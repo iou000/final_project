@@ -49,6 +49,12 @@
 		<property name="mapperInterface" value="com.hmall.team04.dao.cs.NoticeDAO" />
 	</bean>
 	
+	<bean id="faqDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="team04SqlSession"></property>
+		<property name="mapperInterface" value="com.hmall.team04.dao.cs.FaqDAO"></property>
+	</bean>	
+
 	<bean id="userDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="team04SqlSession" />
 		<property name="mapperInterface" value="com.hmall.team04.dao.user.UserDAO" />
