@@ -10,7 +10,7 @@
 
 	<body>
 		<tiles:insertAttribute name="header" />
-		<main class="cmain customer" role="main">
+		<main class="cmain customer" id="mainContents" role="main">
 			<div class="container" >
 				<tiles:insertAttribute name="leftsidebar" />
 				<tiles:insertAttribute name="body" />

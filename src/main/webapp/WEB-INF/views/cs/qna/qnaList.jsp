@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="app" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/common.css"><!-- 공통 css -->
-    <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/layout.css"><!-- 공통 Layout css -->
-    <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/popup.css"><!-- 공통 Popup css -->
-    <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/jquery-ui.css"><!-- jQuery UI css -->
+      <link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
+      <link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
+     <script src="//image.hmall.com/p/js/co/jquery-3.4.1.min.js"></script><!-- jQuery Plugin -->
+     <script src="//image.hmall.com/p/js/co/jquery.easing.min.js"></script><!-- jQuery UI Effect -->
+     <script src="//image.hmall.com/p/js/co/jquery-ui.1.12.1.min.js"></script><!-- jQuery UI js -->
     <style>
         .hidden {
             display: none !important;
@@ -77,16 +79,6 @@
         }
         
     </style>
-    <script src="//image.hmall.com/p/js/co/jquery-3.4.1.min.js"></script><!-- jQuery Plugin -->
-    <script src="//image.hmall.com/p/js/co/jquery.easing.min.js"></script><!-- jQuery UI Effect -->
-    <script src="//image.hmall.com/p/js/co/jquery-ui.1.12.1.min.js"></script><!-- jQuery UI js -->
-    <script src="//image.hmall.com/p/js/co/ukDetect.min.js"></script><!-- UI에 사용하는 Detect -->
-    <script src="//image.hmall.com/p/js/co/slick.min.js"></script><!-- 공통 Slide 플러그인 -->
-    <script src="//image.hmall.com/p/js/co/common.js"></script><!-- UI에 사용하는 기본 js  -->
-    <script src="//image.hmall.com/p/js/co/co.js"></script><!-- UI에 사용하는 기본 js  -->
-    <script src="//image.hmall.com/p/js/co/jquery.cookie.js"></script>
-    <script src="//image.hmall.com/p/js/co/commonFunction.js"></script><!-- as-is common.js 상속  -->
-    <script src="//image.hmall.com/p/js/co/reDirectExceptUrlList.js"></script><!-- 로그인버튼 click 리다이렉트 예외 url리스트  -->
     <!-- .contents -->
     <div class="contents">
         <!--공지사항-->
@@ -102,14 +94,29 @@
             </div>
             <!--tblwrap tbl-list-->
             <div class="tblwrap tbl-list">
+             <script type="text/javascript">
+                    $(function () {
+                        var article = (".recruit .show");
+                        $(".recruit .item  td").click(function () {
+                            var myArticle = $(this).parents().next("tr");
+                            if ($(myArticle).hasClass('hide')) {
+                                $(article).removeClass('show').addClass('hide');
+                                $(myArticle).removeClass('hide').addClass('show');
+                            }
+                            else {
+                                $(myArticle).addClass('hide').removeClass('show');
+                            }
+                        });
+                    });  
+                </script>
                 <table class="recruit">
                     <caption>고객센터 공지사항</caption>
                     <colgroup>
                         <col style="width:50px">
                         <col style="width:125px">
-                        <col style="width:550px">
-                        <col style="width:125px">
-                        <col style="width:125px">
+                        <col style="width:250px">
+                        <col style="width:120px">
+                        <col style="width:120px">
                         <col style="width:100px">
                     </colgroup>
                     <thead>
@@ -154,21 +161,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <script type="text/javascript">
-                    $(function () {
-                        var article = (".recruit .show");
-                        $(".recruit .item  td").click(function () {
-                            var myArticle = $(this).parents().next("tr");
-                            if ($(myArticle).hasClass('hide')) {
-                                $(article).removeClass('show').addClass('hide');
-                                $(myArticle).removeClass('hide').addClass('show');
-                            }
-                            else {
-                                $(myArticle).addClass('hide').removeClass('show');
-                            }
-                        });
-                    });  
-                </script>
             </div>
             <!--//tblwrap tbl-list-->
             <!--paging-->

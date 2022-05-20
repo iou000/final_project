@@ -17,9 +17,15 @@ public class CSController {
 		return "cs.faq.faqMainList";
 	}
 	
+	@GetMapping("/faq")
+	public String faq() {
+		return "cs.faq.faqList";
+
+	}
+	
 	@GetMapping("/notice")
 	public String notice() {
-		return "cs.notice.notice";
+		return "cs.notice.noticeList";
 	}
 	
 	@GetMapping("/notice/{n}")
@@ -29,7 +35,7 @@ public class CSController {
 	
 	@GetMapping("/question")
 	public String question() {
-		return "cs.qna.question";
+		return "cs.qna.qnaList";
 	}
 	
 	
