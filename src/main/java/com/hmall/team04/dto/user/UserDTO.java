@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class UserVO {
+public class UserDTO {
 	private String user_id;
 	private String user_nm;
 	private String password;
@@ -17,6 +17,7 @@ public class UserVO {
 	private String hp_no;
 	private Date ins_dt;
 	private Date upd_dt;
+	private int enabled;
 	
-	private List<AuthVO> authList;
+	private List<AuthDTO> authList;
 }
