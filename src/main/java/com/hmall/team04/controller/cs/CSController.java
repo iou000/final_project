@@ -20,6 +20,7 @@ public class CSController {
 	@GetMapping("/faq")
 	public String faq() {
 		return "cs.faq.faqList";
+
 	}
 	
 	@GetMapping("/notice")

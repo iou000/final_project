@@ -9,6 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
+
     <style>
         .hidden {
             display: none !important;
@@ -55,6 +56,7 @@
     	justify-content: space-between;
     
     	}
+
     </style>
     <script type="text/javascript">
         function checkCseg() {
