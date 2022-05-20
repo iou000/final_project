@@ -12,7 +12,7 @@
 			<div class="sign_up">
 				<div class="pageTitle">
 					<div class="layout1">
-						<h2 class="tit">H.Point 회원가입</h2>
+						<h2 class="tit">Hmall 회원가입</h2>
 						<p class="desc">간편하게 신규가입하고 다양한 혜택을 누려보세요!</p>
 
 					</div>
