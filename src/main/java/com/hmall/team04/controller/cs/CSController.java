@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.hmall.team04.dto.cs.NoticeDTO;
 import com.hmall.team04.service.cs.NoticeService;
 
+import com.hmall.team04.dto.cs.FaqDTO;
+import com.hmall.team04.service.cs.FaqService;
+
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -25,15 +28,26 @@ public class CSController {
 //	private long blockSize;
 	
 	private NoticeService noticeService;
-	
-	public CSController(NoticeService noticeService) {
+	private FaqService faqService;
+
+	public CSController(FaqService faqService, NoticeService noticeService) {
+		this.faqService = faqService;
 		this.noticeService = noticeService;
 	}
 	
-	
 	@GetMapping("/main.do")
-	public String main() {
-		return "cs.faq.faqMainList";
+	public String main(Model model) throws Exception {
+		try {
+			List<FaqDTO> list = faqService.getfaqList(); 
+			model.addAttribute("list", list);
+			return "cs.faq.faqMainList";
+		}
+		catch(Exception e ) {
+			model.addAttribute("msg","list 출력 에러");
+			model.addAttribute("url","index"); 
+			return "result";
+		}
+		
 	}
 	
 	@GetMapping("/noticeList.do")
