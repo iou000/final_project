@@ -1,4 +1,4 @@
-package com.hmall.team04.security.dao;
+package com.hmall.team04.security.dao.product;
 
 
 import java.sql.SQLException;
@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class CategoryDAOTests {
+public class ProductDAOTests {
 	
 	@Setter(onMethod_ = @Autowired)
 	private CategoryDAO categoryDAO;

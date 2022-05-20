@@ -1051,12 +1051,12 @@ function DirectCopnDownload(prmoNo){
 <style>
 .content {
 	width: 100%;
-	/* base 가 header.jsp, login.jsp, footer.jsp를 종합한다.*/
-	background: #ed75f4;
+	background: #7c7c7c;
 }
 
 .page_content {
-	margin: 15% 30%;
+	margin: 5% 21%;
+	background: #afafaf;
 }
 </style>
 
@@ -1066,13 +1066,11 @@ function DirectCopnDownload(prmoNo){
 	<tiles:insertAttribute name="header" />
 	
 	<div class="content">
-		<tiles:insertAttribute name="menu" />
 
 		<div class="page_content">
 			<tiles:insertAttribute name="body" />
 		</div>
 		
-		<tiles:insertAttribute name="event" />
 	</div>
 	
 	<tiles:insertAttribute name="footer" />

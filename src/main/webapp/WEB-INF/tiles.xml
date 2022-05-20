@@ -7,9 +7,7 @@
 	<!-- index 화면, 첫페이지 -->
 	<definition name="index" template="/WEB-INF/views/template/base.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
-		<put-attribute name="menu" value="/WEB-INF/views/layout/menu.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
-		<put-attribute name="event" value="/WEB-INF/views/layout/event.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
 	
