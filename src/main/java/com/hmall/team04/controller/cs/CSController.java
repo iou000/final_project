@@ -2,11 +2,9 @@ package com.hmall.team04.controller.cs;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,7 +15,6 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-
 @RequestMapping("/cs")
 public class CSController {
 	
@@ -88,15 +85,19 @@ public class CSController {
 		
 	}
 	
-	@GetMapping("/qnaList")
-	public String question() {
-		return "cs.qna.qnaList";
+	@GetMapping("/qnaInsPopUp")
+	public String qnaInsert() {
+		return "cs/qna/qnaInsertPopup";
 	}
 	
 	
-	@GetMapping("/findByOrder")
-	public String findByOrderGet() {
-		log.info("findByOrderPopUp");
-		return "/cs/qna/findinorderlist";
+	@GetMapping("/findInOrder")
+	public String findInOrder() {
+		return "cs/qna/orderListPopup";
+	}
+	
+	@GetMapping("/findInCart")
+	public String findInCart() {
+		return "cs/qna/cartListPopup";
 	}
 }

@@ -10,22 +10,26 @@
 
 <head>
 <!-- favicon -->
-<link rel="shortcut icon" type="image/x-icon" href="//image.hmall.com/p/img/co/favicon/favicon.ico">
-<title>현대홈쇼핑 - 현대Hmall</title> 
+<link rel="shortcut icon" type="image/x-icon"
+	href="//image.hmall.com/p/img/co/favicon/favicon.ico">
+<title>현대홈쇼핑 - 현대Hmall</title>
 
 <!-- ? -->
 <meta name="title" content="현대홈쇼핑 - 현대Hmall">
 <meta name="description" content="백화점, 브랜드, 홈쇼핑까지- 당신의 모든 취향을 읽다.">
-<meta name="keywords" content="현대홈쇼핑, 현대몰, 현대Hmall, 현대H몰, Hmall, H몰, 에이치몰, 현대홈쇼핑편성표, 현대에이치몰, 현대쇼핑몰, 쇼핑라이브, HPoint, dpdlclahf, hahf, showppinglive, shoppinglive, 쇼핑live, show핑live, 불금데이, 현대백화점, H펫샵, 펫클럽, HPoint, H.Point, 에이치포인트, COS, 코스, 고비, gobi, 제이바이, jby, 이상봉, 아이디, id, 에이앤디, andy, 라씨엔토, laciento, 꼬에, coe, 밀라노스토리, milanostory, &otherstoies, 앤아더스토리즈, 안나수이, 아이디, 뷰벨, 유리드, URID, 주식회사꼬르륵, 꼬르륵, 메이크썸굿, 히츠폼즈, 엠비티아이, 드고떼, MBTI, 브라텐, braten">
-    
+<meta name="keywords"
+	content="현대홈쇼핑, 현대몰, 현대Hmall, 현대H몰, Hmall, H몰, 에이치몰, 현대홈쇼핑편성표, 현대에이치몰, 현대쇼핑몰, 쇼핑라이브, HPoint, dpdlclahf, hahf, showppinglive, shoppinglive, 쇼핑live, show핑live, 불금데이, 현대백화점, H펫샵, 펫클럽, HPoint, H.Point, 에이치포인트, COS, 코스, 고비, gobi, 제이바이, jby, 이상봉, 아이디, id, 에이앤디, andy, 라씨엔토, laciento, 꼬에, coe, 밀라노스토리, milanostory, &otherstoies, 앤아더스토리즈, 안나수이, 아이디, 뷰벨, 유리드, URID, 주식회사꼬르륵, 꼬르륵, 메이크썸굿, 히츠폼즈, 엠비티아이, 드고떼, MBTI, 브라텐, braten">
+
 
 <!-- includeScript -->
 <script src="https://www.googleoptimize.com/optimize.js?id=OPT-NBGRL7P"></script>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height">
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height">
 <meta name="HandheldFriendly" content="true">
-<meta name="format-detection" content="telephone=no, email=no, address=no"> 
+<meta name="format-detection"
+	content="telephone=no, email=no, address=no">
 <meta name="apple-mobile-web-app-capable" content=" yes">
 <meta name="robots" content="index,follow">
 <meta name="author" content="@Hmall">
@@ -52,18 +56,29 @@
 </script>
 
 <style>
-.hidden {display:none !important;}
+.hidden {
+	display: none !important;
+}
 </style>
-<script src="//image.hmall.com/p/js/co/jquery-3.4.1.min.js"></script><!-- jQuery Plugin -->
-<script src="//image.hmall.com/p/js/co/jquery.easing.min.js"></script><!-- jQuery UI Effect -->
-<script src="//image.hmall.com/p/js/co/jquery-ui.1.12.1.min.js"></script><!-- jQuery UI js -->
-<script src="//image.hmall.com/p/js/co/ukDetect.min.js"></script><!-- UI에 사용하는 Detect -->
-<script src="//image.hmall.com/p/js/co/slick.min.js"></script><!-- 공통 Slide 플러그인 -->
-<script src="//image.hmall.com/p/js/co/common.js"></script><!-- UI에 사용하는 기본 js  -->
-<script src="//image.hmall.com/p/js/co/co.js"></script><!-- UI에 사용하는 기본 js  -->
+<script src="//image.hmall.com/p/js/co/jquery-3.4.1.min.js"></script>
+<!-- jQuery Plugin -->
+<script src="//image.hmall.com/p/js/co/jquery.easing.min.js"></script>
+<!-- jQuery UI Effect -->
+<script src="//image.hmall.com/p/js/co/jquery-ui.1.12.1.min.js"></script>
+<!-- jQuery UI js -->
+<script src="//image.hmall.com/p/js/co/ukDetect.min.js"></script>
+<!-- UI에 사용하는 Detect -->
+<script src="//image.hmall.com/p/js/co/slick.min.js"></script>
+<!-- 공통 Slide 플러그인 -->
+<script src="//image.hmall.com/p/js/co/common.js"></script>
+<!-- UI에 사용하는 기본 js  -->
+<script src="//image.hmall.com/p/js/co/co.js"></script>
+<!-- UI에 사용하는 기본 js  -->
 <script src="//image.hmall.com/p/js/co/jquery.cookie.js"></script>
-<script src="//image.hmall.com/p/js/co/commonFunction.js"></script><!-- as-is common.js 상속  -->
-<script src="//image.hmall.com/p/js/co/reDirectExceptUrlList.js"></script><!-- 로그인버튼 click 리다이렉트 예외 url리스트  -->
+<script src="//image.hmall.com/p/js/co/commonFunction.js"></script>
+<!-- as-is common.js 상속  -->
+<script src="//image.hmall.com/p/js/co/reDirectExceptUrlList.js"></script>
+<!-- 로그인버튼 click 리다이렉트 예외 url리스트  -->
 
 
 <script>
@@ -681,7 +696,8 @@ function DirectCopnDownload(prmoNo){
 </script>
 
 <!-- includeScript -->
-<script type="text/javascript" src="//image.hmall.com/p/js/co/intersectionObserver.js?ver=050417"></script>
+<script type="text/javascript"
+	src="//image.hmall.com/p/js/co/intersectionObserver.js?ver=050417"></script>
 
 <script type="text/javascript">
 
@@ -1024,7 +1040,8 @@ function DirectCopnDownload(prmoNo){
 </script>
 
 <!-- Main Contents css = Contents css부분은 각페이지마다 다르게 해당되는 css가 호출 됨(폴더 구조별)  -->
-<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/main.css">
+<link rel="stylesheet" type="text/css"
+	href="//image.hmall.com/p/css/co/main.css">
 <link href="//image.hmall.com/p/css/co/video-js.css" rel="stylesheet">
 <script src="//image.hmall.com/p/js/co/video.js"></script>
 <script src="//image.hmall.com/p/js/co/videojs-http-streaming.js"></script>
@@ -1032,28 +1049,31 @@ function DirectCopnDownload(prmoNo){
 <!--head_stop_flag-->
 
 <style>
-.wrapper {
+.content {
 	width: 100%;
-	/* base 가 header.jsp, login.jsp, footer.jsp를 종합한다.*/
-	background: #FFFFFF;
+	background: #7c7c7c;
 }
 
 .page_content {
-	margin: 15% 30%;
+	margin: 5% 21%;
+	background: #afafaf;
 }
 </style>
- 
-	<body>
-		<div class="wrapper">
-		    
-		    <tiles:insertAttribute name="header" />
-		    <div class="page_content">
-		    	<tiles:insertAttribute name="body" />
-		    </div>
-		    <tiles:insertAttribute name="modal" />
-		    
-		    <tiles:insertAttribute name="footer" />
 
-	 	</div>
-	</body>
+
+<body>
+
+	<tiles:insertAttribute name="header" />
+	
+	<div class="content">
+
+		<div class="page_content">
+			<tiles:insertAttribute name="body" />
+		</div>
+		
+	</div>
+	
+	<tiles:insertAttribute name="footer" />
+
+</body>
 </html>

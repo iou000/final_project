@@ -5,7 +5,7 @@
 
 <mapper namespace="com.hmall.team04.dao.user.UserDAO">
 	
-	<resultMap id="userMap" type="UserVO">
+	<resultMap id="userMap" type="UserDTO">
 		<id property="user_id" column="user_id"/>
 		<result property="user_nm" column="user_nm"/>
 		<result property="password" column="password"/>
@@ -19,17 +19,30 @@
 		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	
-	<resultMap id="authMap" type="AuthVO">
+	<resultMap type="UserDTO" id="finduserMap">
+		<result property="user_id" column="user_id"/>
+		<result property="ins_dt" column="ins_dt"/>
+	</resultMap>
+	
+	<resultMap id="authMap" type="AuthDTO">
 		<result property="user_id" column="user_id"/>
 		<result property="auth" column="auth"/>
 	</resultMap>
 	
 	<select id="selectUserInfo" resultMap="userMap">
 		SELECT
-			u.user_id, user_nm, password, email, birth, address_f, address_l, hp_no, ins_dt, upd_dt, a.auth
+			u.user_id, user_nm, password, email, birth, address_f, address_l, hp_no, ins_dt, upd_dt, enabled, a.auth
 		FROM
 			user_t u LEFT OUTER JOIN user_auth_t a on u.user_id = a.user_id
 		WHERE u.user_id = #{userid}
+	</select>
+	
+	<select id="findIdbyNameEmail" resultMap="finduserMap">
+		SELECT
+			user_id, ins_dt 
+		FROM
+			user_t 
+		WHERE user_nm = #{usernm} and email = #{email}
 	</select>
 	
 </mapper>

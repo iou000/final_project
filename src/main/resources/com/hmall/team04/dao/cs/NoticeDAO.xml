@@ -24,10 +24,16 @@
 	</select>
 	
 	<select id="getNoticeArticle" parameterType="String" resultType="NoticeDTO">
+	select a.*
+	from (
 		SELECT
 		    article_id,
 		    user_id,
 		    title,
+		    LEAD(article_id, 1) over (order by article_id desc) as next_id,
+		    LEAD(title, 1, '다음글이 없습니다') over (order by article_id desc) as next_title,
+		    LAG (article_id, 1) over (order by article_id desc) as prev_id,
+		    LAG (title, 1, '이전글이 없습니다') over (order by article_id desc) as prev_title,
 		    content,
 		    file_yn,
 		    ins_dt,
@@ -35,7 +41,9 @@
 		    article_type
 		FROM
 		    notice_v
-		where article_id = #{articleid}
+		ORDER BY article_id DESC
+		) a
+	where a.article_id = #{articleid}
 	</select>
 	
 	<!-- <select id="getBoardListPage" parameterType="long" resultType="NoticeDTO">

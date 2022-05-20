@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hmall.team04.dao.category.CategoryDAO">
+	
+	<select id="getCategoryList" resultType="CategoryDTO">
+		select cate_id,g_id,cate_lev,cate_nm,cate_detail_lev,cate_detail_nm,cate_parent_lev,cate_detail_parent_lev
+		from category_t
+		order by cate_id
+	</select>
+	
+</mapper>

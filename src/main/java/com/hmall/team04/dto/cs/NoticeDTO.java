@@ -14,5 +14,8 @@ public class NoticeDTO {
 	private Date ins_dt;
 	private Date upd_dt;
 	private String article_type;
-	
+	private String prev_id;
+	private String next_id;
+	private String prev_title;
+	private String next_title;
 }

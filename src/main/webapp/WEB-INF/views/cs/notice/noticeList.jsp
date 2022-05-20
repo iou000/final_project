@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
 </head>
 			<div class="contents">
 				<!--공지사항-->
@@ -31,6 +32,9 @@
 								<tr>
 									<td class="nowrap">
 										<a href="${app}/cs/noticeView.do?articleid=${dto.article_id}">${dto.title}</a>
+										<c:if test="${dto.file_yn == 1}">
+											<!-- 파일 있으면 이미지 띄우기 -->
+										</c:if>
 									</td>
 									<td class="txt-center"><span class="date"><fmt:formatDate value="${dto.ins_dt}" type="date" /></span></td>
 								</tr>

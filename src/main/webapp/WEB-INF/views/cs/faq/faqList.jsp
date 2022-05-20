@@ -1,33 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="app" value="${pageContext.request.contextPath}" />
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
-    <!-- UI/UX Style -->
-    <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/common.css"><!-- °øÅë css -->
-    <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/layout.css"><!-- °øÅë Layout css -->
-    <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/popup.css"><!-- °øÅë Popup css -->
-    <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/jquery-ui.css"><!-- jQuery UI css -->
+    <link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
     <style>
         .hidden {
             display: none !important;
         }
     </style>
-    <script src="//image.hmall.com/p/js/co/jquery-3.4.1.min.js"></script><!-- jQuery Plugin -->
-    <script src="//image.hmall.com/p/js/co/jquery.easing.min.js"></script><!-- jQuery UI Effect -->
-    <script src="//image.hmall.com/p/js/co/jquery-ui.1.12.1.min.j s"></script><!-- jQuery UI js -->
-    <script src="//image.hmall.com/p/js/co/ukDetect.min.js"></script><!-- UI¿¡ »ç¿ëÇÏ´Â Detect -->
-    <script src="//image.hmall.com/p/js/co/slick.min.js"></script><!-- °øÅë Slide ÇÃ·¯±×ÀÎ -->
-    <script src="//image.hmall.com/p/js/co/common.js"></script><!-- UI¿¡ »ç¿ëÇÏ´Â ±âº» js  -->
-    <script src="//image.hmall.com/p/js/co/co.js"></script><!-- UI¿¡ »ç¿ëÇÏ´Â ±âº» js  -->
-    <script src="//image.hmall.com/p/js/co/jquery.cookie.js"></script>
-    <script src="//image.hmall.com/p/js/co/commonFunction.js"></script><!-- as-is common.js »ó¼Ó  -->
-    <script src="//image.hmall.com/p/js/co/reDirectExceptUrlList.js"></script><!-- ·Î±×ÀÎ¹öÆ° click ¸®´ÙÀÌ·ºÆ® ¿¹¿Ü url¸®½ºÆ®  -->
-
     <!-- includeScript -->
-    <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/cc/customer.css">
     <script type="text/javascript">
         var param = "";
         var faqLCsfCount = "0";
@@ -45,7 +32,7 @@
                 $("#" + param).attr('chk', 'true');
             }
 
-            //FAQ Æò°¡ ±ÛÀÚ ¼ö Á¦ÇÑ
+            //FAQ í‰ê°€ ê¸€ìž ìˆ˜ ì œí•œ
             $("textarea").keyup(function () {
                 var text = $(this).val();
                 var textlength = text.length;
@@ -64,7 +51,7 @@
                     $("textarea").blur();
                     var msg = $("textarea").val().substring(0, 1000);
                     $("textarea").val(msg);
-                    alert("1000byte¸¦ ÃÊ°úÇÏ½Ç ¼ö ¾ø½À´Ï´Ù");
+                    alert("1000byteë¥¼ ì´ˆê³¼í•˜ì‹¤ ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
                     return false;
                 }
                 $("span.color_ora").text(bytesize);
@@ -77,17 +64,17 @@
             });
         })
 
-        //°Ë»öÇÏ¿© ¸®½ºÆ® Ãâ·Â
+        //ê²€ìƒ‰í•˜ì—¬ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
         function searchCntn() {
             var ancmCntn = $("input[name='ancmCntn']").val().trim();
             if (ancmCntn == "") {
-                alert("°Ë»ö¾î¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.");
+                alert("ê²€ìƒ‰ì–´ë¥¼ ìž…ë ¥í•´ ì£¼ì„¸ìš”.");
                 return false;
             }
             $("form[name='searchForm']").submit();
         }
 
-        //Á¶È¸¼ö ¼ø¼­·Î ¸®½ºÆ® Ãâ·Â
+        //ì¡°íšŒìˆ˜ ìˆœì„œë¡œ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
         function sortByCnt() {
             var faqMCsfNo = "";
             var faqLCsfNo = "";
@@ -103,7 +90,7 @@
             $("form[name='searchForm']").submit();
         }
 
-        //ÀÚ¸´¼ö ¸ÂÃß±â
+        //ìžë¦¿ìˆ˜ ë§žì¶”ê¸°
         function leadingSpaces(n, digits) {
             var space = '';
             n = n.toString();
@@ -116,7 +103,7 @@
         }
 
 
-        //2021.07.02 KJH FAQ Á¶È¸¼ö Ä«¿îÆ®
+        //2021.07.02 KJH FAQ ì¡°íšŒìˆ˜ ì¹´ìš´íŠ¸
         function lookup_count(target, notice_id, category) {
             if (($(target).parent().attr('class') != "selected")) {
                 if (category.toString().length == 1) {
@@ -145,52 +132,48 @@
 </head>
 
 <body>
-    <div class="wrap customer-question">
-        <main class="cmain customer" role="main">
-            <div class="container">
-                <!-- .contents -->
                 <div class="contents">
-                    <!--search : ÀÚÁÖ ¹¯´Â Áú¹®-->
+                    <!--search : ìžì£¼ ë¬»ëŠ” ì§ˆë¬¸-->
                     <div class="cus-wrap">
-                        <h3>ÀÚÁÖ ¹¯´Â Áú¹®</h3>
-                        <!-- 20200909 ½Ã¾È 08/26 ±âÁØ ÀÛ¾÷ -->
+                        <h3>ìžì£¼ ë¬»ëŠ” ì§ˆë¬¸</h3>
+                        <!-- 20200909 ì‹œì•ˆ 08/26 ê¸°ì¤€ ìž‘ì—… -->
                         <div class="search-area">
                             <form name="searchForm" method="get" action="/p/ccc/faqList.do">
                                 <div class="inputbox">
                                     <input hidden="hidden" />
                                     <label class="inplabel icon-find"><input type="text" name="ancmCntn"
-                                            placeholder="Áú¹®À» °Ë»öÇØº¸¼¼¿ä" title="°Ë»ö¾î ÀÔ·Â" value=""></label>
+                                            placeholder="ì§ˆë¬¸ì„ ê²€ìƒ‰í•´ë³´ì„¸ìš”" title="ê²€ìƒ‰ì–´ ìž…ë ¥" value=""></label>
                                     <button type="button" class="btn btn-find" onclick="searchCntn();"><i
-                                            class="icon find-sm"></i><span class="hiding">°Ë»ö</span></button>
+                                            class="icon find-sm"></i><span class="hiding">ê²€ìƒ‰</span></button>
                                     <button type="button" class="btn ico-clearabled"><i class="icon"></i><span
-                                            class="hiding">Áö¿ì±â</span></button>
+                                            class="hiding">ì§€ìš°ê¸°</span></button>
                                 </div>
                                 <input type="hidden" name="sort" id="sort" value="false" />
                                 <input type="hidden" name="faqMCsfNo" id="faqMCsfNo" value="" />
                             </form>
                         </div>
-                        <!-- 20200909 ½Ã¾È 08/26 ±âÁØ ÀÛ¾÷ -->
+                        <!-- 20200909 ì‹œì•ˆ 08/26 ê¸°ì¤€ ìž‘ì—… -->
                     </div>
-                    <!--//search : ÀÚÁÖ ¹¯´Â Áú¹®-->
+                    <!--//search : ìžì£¼ ë¬»ëŠ” ì§ˆë¬¸-->
 
 
                     <!--faq-tab-->
                     <div class="cus-wrap">
                         <div class="faq-tab">
                             <ul class="faq-full">
-                                <li class='on'><a href="/p/ccc/faqList.do"><span>ÀüÃ¼</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=01"><span>È¸¿ø</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=02"><span>»óÇ°</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=03"><span>ÁÖ¹®/°áÁ¦</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=04"><span>¹è¼Û</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=05"><span>Ãë¼Ò/±³È¯/¹ÝÇ°</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=07"><span>Àû¸³±Ý/eÆ÷ÀÎÆ®/ÇÒÀÎÄíÆù</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=08"><span>»çÀÌÆ® ÀÌ¿ë</span></a></li>
-                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=09"><span>±âÅ¸»çÇ×</span></a></li>
+                                <li class='on'><a href="/p/ccc/faqList.do"><span>ì „ì²´</span></a></li>
+                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=01"><span>íšŒì›</span></a></li>
+                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=02"><span>ìƒí’ˆ</span></a></li>
+                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=03"><span>ì£¼ë¬¸/ê²°ì œ</span></a></li>
+                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=04"><span>ë°°ì†¡</span></a></li>
+                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=05"><span>ì·¨ì†Œ/êµí™˜/ë°˜í’ˆ</span></a></li>
+                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=07"><span>ì ë¦½ê¸ˆ/eí¬ì¸íŠ¸/í• ì¸ì¿ í°</span></a></li>
+                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=08"><span>ì‚¬ì´íŠ¸ ì´ìš©</span></a></li>
+                                <li><a href="/p/ccc/faqList.do?faqLCsfNo=09"><span>ê¸°íƒ€ì‚¬í•­</span></a></li>
                             </ul>
                         </div>
                     </div>
-                    <!--//cus-wrap-->
+                    <!--//cus-wrap-->                  
 
                     <!--faq-list-->
                     <div class="cus-wrap">
@@ -198,54 +181,54 @@
 
                         <div class="accparent">
 
-                            <!--best-txt01 : -h3/accordion-panel¿¡ selected ½Ã ¿­¸²-->
+                            <!--best-txt01 : -h3/accordion-panelì— selected ì‹œ ì—´ë¦¼-->
                             <h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger"
                                     aria-expanded="false" onclick="lookup_count(this,25,05)"><i
-                                        class="icon question"></i><span>ÁÖ¹® ³»¿ë º¯°æ, Ãë¼Ò, AS µîÀº ¾î¶»°Ô ÇÏ³ª¿ä?</span><i
+                                        class="icon question"></i><span>ì£¼ë¬¸ ë‚´ìš© ë³€ê²½, ì·¨ì†Œ, AS ë“±ì€ ì–´ë–»ê²Œ í•˜ë‚˜ìš”?</span><i
                                         class="icon acc-arrow"></i></button></h3>
                             <div class="accordion-panel best-txt01" role="best-txt01">
-                                <!--txt ¿µ¿ª-->
+                                <!--txt ì˜ì—­-->
                                 <div class="txt-wrap">
                                     <p><strong><span style="COLOR: #cc3d3d"><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹&nbsp;»ö»ó/»çÀÌÁî&nbsp;¹×
-                                                    ¹è¼ÛÁö º¯°æ</span><br></span></strong><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">°áÁ¦¿Ï·á
-                                                ´Ü°èÀÏ¶§ ¸¶ÀÌÆäÀÌÁö¿¡¼­ Á÷Á¢ ¼öÁ¤ÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù. </span><br></span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·&nbsp;ìƒ‰ìƒ/ì‚¬ì´ì¦ˆ&nbsp;ë°
+                                                    ë°°ì†¡ì§€ ë³€ê²½</span><br></span></strong><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ê²°ì œì™„ë£Œ
+                                                ë‹¨ê³„ì¼ë•Œ ë§ˆì´íŽ˜ì´ì§€ì—ì„œ ì§ì ‘ ìˆ˜ì •í•˜ì‹¤ ìˆ˜ ìžˆìŠµë‹ˆë‹¤. </span><br></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">ÁÖ¹®ÀÌ
-                                                »óÇ°ÁØºñÁß ´Ü°è·Î º¯°æµÈ&nbsp;ÀÌÈÄ¿¡´Â 1:1 °í°´»ó´ãÀ» ÅëÇØ º¯°æ ½ÅÃ» ÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù.
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì£¼ë¬¸ì´
+                                                ìƒí’ˆì¤€ë¹„ì¤‘ ë‹¨ê³„ë¡œ ë³€ê²½ëœ&nbsp;ì´í›„ì—ëŠ” 1:1 ê³ ê°ìƒë‹´ì„ í†µí•´ ë³€ê²½ ì‹ ì²­ í•˜ì‹¤ ìˆ˜ ìžˆìŠµë‹ˆë‹¤.
                                             </span><br><br></span><strong><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹</span></strong><strong><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·</span></strong><strong><span
                                                 style="COLOR: #cc3d3d"><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">&nbsp;ÁÖ¹®
-                                                    Ãë¼Ò</span><br></span></strong><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¸¶ÀÌÆäÀÌÁö
-                                                ÁÖ¹®»ó¼¼ ³»¿ª¿¡¼­ Áï½Ã Ãë¼Ò°¡ °¡´ÉÇÑ ´Ü°è´Â ¾Æ·¡¿Í °°½À´Ï´Ù.&nbsp;</span><br></span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">&nbsp;ì£¼ë¬¸
+                                                    ì·¨ì†Œ</span><br></span></strong><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë§ˆì´íŽ˜ì´ì§€
+                                                ì£¼ë¬¸ìƒì„¸ ë‚´ì—­ì—ì„œ ì¦‰ì‹œ ì·¨ì†Œê°€ ê°€ëŠ¥í•œ ë‹¨ê³„ëŠ” ì•„ëž˜ì™€ ê°™ìŠµë‹ˆë‹¤.&nbsp;</span><br></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">-
-                                                ½Å¿ëÄ«µå ÁÖ¹® : °áÁ¦¿Ï·á, »óÇ°ÁØºñÁß (ÁÖ¹®Á¦ÀÛ/¼³Ä¡ µî ÀÏºÎ »óÇ° Á¦¿Ü)</span><br></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">-
+                                                ì‹ ìš©ì¹´ë“œ ì£¼ë¬¸ : ê²°ì œì™„ë£Œ, ìƒí’ˆì¤€ë¹„ì¤‘ (ì£¼ë¬¸ì œìž‘/ì„¤ì¹˜ ë“± ì¼ë¶€ ìƒí’ˆ ì œì™¸)</span><br></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">-
-                                                Çö±Ý, »óÇ°±Ç ÁÖ¹® : ÁÖ¹®Á¢¼ö</span><br></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">Áï½Ã
-                                            Ãë¼Ò°¡ °¡´ÉÇÑ ÁÖ¹®Àº À§ ´Ü°èÀÏ¶§ [ÁÖ¹®Ãë¼Ò] ¹öÆ°ÀÌ Ç¥½ÃµÇ¹Ç·Î, Á÷Á¢ Ãë¼Ò ÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù. </span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">-
+                                                í˜„ê¸ˆ, ìƒí’ˆê¶Œ ì£¼ë¬¸ : ì£¼ë¬¸ì ‘ìˆ˜</span><br></span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì¦‰ì‹œ
+                                            ì·¨ì†Œê°€ ê°€ëŠ¥í•œ ì£¼ë¬¸ì€ ìœ„ ë‹¨ê³„ì¼ë•Œ [ì£¼ë¬¸ì·¨ì†Œ] ë²„íŠ¼ì´ í‘œì‹œë˜ë¯€ë¡œ, ì§ì ‘ ì·¨ì†Œ í•˜ì‹¤ ìˆ˜ ìžˆìŠµë‹ˆë‹¤. </span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">´Ü,
-                                                À§¿¡ ÇØ´çµÇÁö ¾Ê´Â ´Ü°è·Î ³Ñ¾î°£ ÁÖ¹®¿¡ ´ëÇØ¼­´Â 1:1 °í°´»ó´ãÀ» ÅëÇØ ÁÖ¹®Ãë¼Ò ½ÅÃ»ÇÏ½Ç ¼ö
-                                                ÀÖ½À´Ï´Ù.&nbsp;</span></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535"><br></span><br></span><strong><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹</span></strong><strong><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">&nbsp;AS½ÅÃ»</span></strong><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë‹¨,
+                                                ìœ„ì— í•´ë‹¹ë˜ì§€ ì•ŠëŠ” ë‹¨ê³„ë¡œ ë„˜ì–´ê°„ ì£¼ë¬¸ì— ëŒ€í•´ì„œëŠ” 1:1 ê³ ê°ìƒë‹´ì„ í†µí•´ ì£¼ë¬¸ì·¨ì†Œ ì‹ ì²­í•˜ì‹¤ ìˆ˜
+                                                ìžˆìŠµë‹ˆë‹¤.&nbsp;</span></span><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535"><br></span><br></span><strong><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·</span></strong><strong><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">&nbsp;ASì‹ ì²­</span></strong><span
                                             style="COLOR: #cc3d3d"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">
                                             </span><br></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">AS´Â
-                                            ¸¶ÀÌÆäÀÌÁö¿¡¼­ Á÷Á¢ ½ÅÃ»ÀÌ ºÒ°¡ÇÕ´Ï´Ù. </span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">1:1»ó´ã½ÅÃ»
-                                                È¤Àº Çö´ëÈ¨¼îÇÎ °í°´¼¾ÅÍ(1600-0000)·Î ÀüÈ­ ÁÖ½Ã¾î AS ¹®ÀÇ¸¦ ³²°Ü ÁÖ½Å´Ù¸é ¾È³» µµ¿Í
-                                                µå¸®°Ú½À´Ï´Ù.</span><br></span><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">ÁÖ¹®
-                                            ÁøÇà»óÅÂ¿¡ µû¶ó ½ÅÃ» °¡´ÉÇÑ Ç×¸ñÀº ´ÙÀ½°ú °°½À´Ï´Ù.</span></p>
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ASëŠ”
+                                            ë§ˆì´íŽ˜ì´ì§€ì—ì„œ ì§ì ‘ ì‹ ì²­ì´ ë¶ˆê°€í•©ë‹ˆë‹¤. </span><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">1:1ìƒë‹´ì‹ ì²­
+                                                í˜¹ì€ í˜„ëŒ€í™ˆì‡¼í•‘ ê³ ê°ì„¼í„°(1600-0000)ë¡œ ì „í™” ì£¼ì‹œì–´ AS ë¬¸ì˜ë¥¼ ë‚¨ê²¨ ì£¼ì‹ ë‹¤ë©´ ì•ˆë‚´ ë„ì™€
+                                                ë“œë¦¬ê² ìŠµë‹ˆë‹¤.</span><br></span><br><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì£¼ë¬¸
+                                            ì§„í–‰ìƒíƒœì— ë”°ë¼ ì‹ ì²­ ê°€ëŠ¥í•œ í•­ëª©ì€ ë‹¤ìŒê³¼ ê°™ìŠµë‹ˆë‹¤.</span></p>
                                     <p>&nbsp;</p>
                                     <p>&nbsp;</p>
                                     <p><img src="https://image.hmall.com/CO/EDITOR/20220208/133804159/414tk.jpg"></p>
@@ -253,395 +236,395 @@
                                     <p>&nbsp;</p>
                                     <p>&nbsp;</p>
                                 </div>
-                                <!--//txt ¿µ¿ª-->
+                                <!--//txt ì˜ì—­-->
                             </div>
                             <!--best-txt01 -->
 
-                            <!--best-txt01 : -h3/accordion-panel¿¡ selected ½Ã ¿­¸²-->
+                            <!--best-txt01 : -h3/accordion-panelì— selected ì‹œ ì—´ë¦¼-->
                             <h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger"
                                     aria-expanded="false" onclick="lookup_count(this,19,04)"><i
-                                        class="icon question"></i><span>ÁÖ¹®ÇÑ »óÇ°Àº ¹è¼Û ³»¿ªÀº ¾îµð¼­ È®ÀÎÇÏ³ª¿ä?</span><i
+                                        class="icon question"></i><span>ì£¼ë¬¸í•œ ìƒí’ˆì€ ë°°ì†¡ ë‚´ì—­ì€ ì–´ë””ì„œ í™•ì¸í•˜ë‚˜ìš”?</span><i
                                         class="icon acc-arrow"></i></button></h3>
                             <div class="accordion-panel best-txt02" role="best-txt02">
-                                <!--txt ¿µ¿ª-->
+                                <!--txt ì˜ì—­-->
                                 <div class="txt-wrap">
                                     <p style="LINE-HEIGHT: 1.5"><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">ÁÖ¹®ÇÏ½Å
-                                            »óÇ°ÀÇ ¹è¼Û ÀÏÁ¤Àº °áÁ¦¿Ï·á ½ÃÁ¡À» ±âÁØÀ¸·Î ¾È³»µË´Ï´Ù. </span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">»óÇ°
-                                                Á¾·ù¿¡ µû¶ó ¹è¼Û ÀÏÁ¤ÀÌ ´Þ¶óÁú ¼ö ÀÖÀ¸´Ï ¾Æ·¡ °¡ÀÌµå¿¡ µû¶ó ¹è¼Û ÀÏÁ¤À» È®ÀÎÇØÁÖ½Ã¸é
-                                                µË´Ï´Ù.</span><br><br></span><span style="COLOR: #cc3d3d"><strong><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì£¼ë¬¸í•˜ì‹ 
+                                            ìƒí’ˆì˜ ë°°ì†¡ ì¼ì •ì€ ê²°ì œì™„ë£Œ ì‹œì ì„ ê¸°ì¤€ìœ¼ë¡œ ì•ˆë‚´ë©ë‹ˆë‹¤. </span><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ìƒí’ˆ
+                                                ì¢…ë¥˜ì— ë”°ë¼ ë°°ì†¡ ì¼ì •ì´ ë‹¬ë¼ì§ˆ ìˆ˜ ìžˆìœ¼ë‹ˆ ì•„ëž˜ ê°€ì´ë“œì— ë”°ë¼ ë°°ì†¡ ì¼ì •ì„ í™•ì¸í•´ì£¼ì‹œë©´
+                                                ë©ë‹ˆë‹¤.</span><br><br></span><span style="COLOR: #cc3d3d"><strong><span
                                                     style="COLOR: #cc3d3d"><span
-                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹È¸¿ø
-                                                        ÁÖ¹® ½Ã</span><br></span></strong></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">1.
-                                            [ ¸¶ÀÌÆäÀÌÁö &gt; </span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">ÁÖ¹®/¹è¼ÛÇöÈ²
+                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·íšŒì›
+                                                        ì£¼ë¬¸ ì‹œ</span><br></span></strong></span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">1.
+                                            [ ë§ˆì´íŽ˜ì´ì§€ &gt; </span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì£¼ë¬¸/ë°°ì†¡í˜„í™©
                                             &gt; </span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">ÁÖ¹®/¹è¼Û
-                                                »ó¼¼ ]&nbsp;¼±ÅÃ</span><br></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">2.
-                                                ¹è¼Û °ü·Ã »ó¼¼ Á¤º¸ È®ÀÎ °¡´É</span><br><br></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì£¼ë¬¸/ë°°ì†¡
+                                                ìƒì„¸ ]&nbsp;ì„ íƒ</span><br></span><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">2.
+                                                ë°°ì†¡ ê´€ë ¨ ìƒì„¸ ì •ë³´ í™•ì¸ ê°€ëŠ¥</span><br><br></span><span
                                             style="COLOR: #000000"><strong><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹</span><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">&nbsp;</span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·</span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">&nbsp;</span><span
                                                     style="COLOR: #cc3d3d"><span
-                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">ºñÈ¸¿ø
-                                                        ÁÖ¹® ½Ã</span><br></span></strong></span><span
+                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">ë¹„íšŒì›
+                                                        ì£¼ë¬¸ ì‹œ</span><br></span></strong></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">1.
-                                                ·Î±×ÀÎ È­¸é¿¡¼­ ºñÈ¸¿ø ÁÖ¹®Á¶È¸ ¼±ÅÃ</span><br></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">2.
-                                                ¼º¸í/ÁÖ¹®¹øÈ£ ÀÔ·Â</span><br></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">3.
-                                                ¹è¼Û °ü·Ã »ó¼¼ Á¤º¸ È®ÀÎ °¡´É</span><br><br></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">1.
+                                                ë¡œê·¸ì¸ í™”ë©´ì—ì„œ ë¹„íšŒì› ì£¼ë¬¸ì¡°íšŒ ì„ íƒ</span><br></span><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">2.
+                                                ì„±ëª…/ì£¼ë¬¸ë²ˆí˜¸ ìž…ë ¥</span><br></span><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">3.
+                                                ë°°ì†¡ ê´€ë ¨ ìƒì„¸ ì •ë³´ í™•ì¸ ê°€ëŠ¥</span><br><br></span><span
                                             style="COLOR: #000000"><strong><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¡Ø&nbsp;</span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â€»&nbsp;</span><span
                                                     style="COLOR: #cc3d3d"><span
-                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">Âü°í»çÇ×<br></span></span></strong></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">²ÉÀÌ³ª
-                                            ÄÉÀÌÅ©´Â ¹è¼ÛÈñ¸ÁÀÏÀ» ÁÖ¹® ¸Þ¸ð¿¡ Àû¾î ÁÖ½Ã¸é ÇØ´ç ³¯Â¥¿¡ ¹è¼ÛÇØ µå¸³´Ï´Ù.</span></p>
+                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">ì°¸ê³ ì‚¬í•­<br></span></span></strong></span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ê½ƒì´ë‚˜
+                                            ì¼€ì´í¬ëŠ” ë°°ì†¡í¬ë§ì¼ì„ ì£¼ë¬¸ ë©”ëª¨ì— ì ì–´ ì£¼ì‹œë©´ í•´ë‹¹ ë‚ ì§œì— ë°°ì†¡í•´ ë“œë¦½ë‹ˆë‹¤.</span></p>
                                 </div>
-                                <!--//txt ¿µ¿ª-->
+                                <!--//txt ì˜ì—­-->
                             </div>
                             <!--best-txt01 -->
 
-                            <!--best-txt01 : -h3/accordion-panel¿¡ selected ½Ã ¿­¸²-->
+                            <!--best-txt01 : -h3/accordion-panelì— selected ì‹œ ì—´ë¦¼-->
                             <h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger"
                                     aria-expanded="false" onclick="lookup_count(this,52944,05)"><i
-                                        class="icon question"></i><span>Ãë¼Ò/¹ÝÇ° ¿Ï·á ÈÄ È¯ºÒ ¾ðÁ¦ µÇ³ª¿ä?</span><i
+                                        class="icon question"></i><span>ì·¨ì†Œ/ë°˜í’ˆ ì™„ë£Œ í›„ í™˜ë¶ˆ ì–¸ì œ ë˜ë‚˜ìš”?</span><i
                                         class="icon acc-arrow"></i></button></h3>
                             <div class="accordion-panel best-txt03" role="best-txt03">
-                                <!--txt ¿µ¿ª-->
+                                <!--txt ì˜ì—­-->
                                 <div class="txt-wrap">
                                     <p><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">Ãë¼Ò
-                                                ¶Ç´Â ¹ÝÇ°¿¡ ´ëÇÑ È¯ºÒ Ã³¸®´Â Ãë¼Ò, ¹ÝÇ° Á¢¼ö ÈÄ 24½Ã°£ ÀÌ³» ÇØµå¸³´Ï´Ù. È¯ºÒ Ã³¸®´Â ÁÖ¹® °áÁ¦ ¼ö´Ü°ú µ¿ÀÏÇÏ°Ô ÇÔÀ»
-                                                ¿øÄ¢À¸·Î ÇÏ¸ç, È¯ºÒ ¹ÞÀ» ±Ý¾×À» ¿¹Ä¡ ÇØµÎ°í ´ÙÀ½¿¡ »ç¿ëÇÏ°íÀÚ ÇÑ´Ù¸é °í°´¼¾ÅÍ¸¦ ÅëÇØ È¯ºÒ ±Ý¾×ÀÇ ¿¹Ä¡±Ý ÀüÈ¯À» ½ÅÃ»ÇØ ÁÖ½Ã±â
-                                                ¹Ù¶ø´Ï´Ù.</span><br></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¡Ø
-                                                Hmall »óÇ°ÀÇ ¹ÝÇ°¿¡ ´ëÇÑ È¯ºÒ Ã³¸®´Â »óÇ° ÀÔ°íÇÏ¿© °ËÇ° ¿Ï·á ÈÄ È¯ºÒÃ³¸® µÇ¹Ç·Î ´ë·« 4~7ÀÏ Á¤µµÀÇ ½Ã°£ÀÌ ¼Ò¿äµË´Ï´Ù.
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì·¨ì†Œ
+                                                ë˜ëŠ” ë°˜í’ˆì— ëŒ€í•œ í™˜ë¶ˆ ì²˜ë¦¬ëŠ” ì·¨ì†Œ, ë°˜í’ˆ ì ‘ìˆ˜ í›„ 24ì‹œê°„ ì´ë‚´ í•´ë“œë¦½ë‹ˆë‹¤. í™˜ë¶ˆ ì²˜ë¦¬ëŠ” ì£¼ë¬¸ ê²°ì œ ìˆ˜ë‹¨ê³¼ ë™ì¼í•˜ê²Œ í•¨ì„
+                                                ì›ì¹™ìœ¼ë¡œ í•˜ë©°, í™˜ë¶ˆ ë°›ì„ ê¸ˆì•¡ì„ ì˜ˆì¹˜ í•´ë‘ê³  ë‹¤ìŒì— ì‚¬ìš©í•˜ê³ ìž í•œë‹¤ë©´ ê³ ê°ì„¼í„°ë¥¼ í†µí•´ í™˜ë¶ˆ ê¸ˆì•¡ì˜ ì˜ˆì¹˜ê¸ˆ ì „í™˜ì„ ì‹ ì²­í•´ ì£¼ì‹œê¸°
+                                                ë°”ëžë‹ˆë‹¤.</span><br></span><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">â€»
+                                                Hmall ìƒí’ˆì˜ ë°˜í’ˆì— ëŒ€í•œ í™˜ë¶ˆ ì²˜ë¦¬ëŠ” ìƒí’ˆ ìž…ê³ í•˜ì—¬ ê²€í’ˆ ì™„ë£Œ í›„ í™˜ë¶ˆì²˜ë¦¬ ë˜ë¯€ë¡œ ëŒ€ëžµ 4~7ì¼ ì •ë„ì˜ ì‹œê°„ì´ ì†Œìš”ë©ë‹ˆë‹¤.
                                             </span><br></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¡Ø
-                                                ÁÖ¸» ¶Ç´Â ÈÞÀÏÃ³·³ ±ÝÀ¶¾÷¹«°¡ ºñÁ¤»óÀûÀÎ °æ¿ì ±× ´ÙÀ½ ±Ù¹« ÀÏ¿¡ Ã³¸®µË´Ï´Ù.</span><br><br></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">â€»
+                                                ì£¼ë§ ë˜ëŠ” íœ´ì¼ì²˜ëŸ¼ ê¸ˆìœµì—…ë¬´ê°€ ë¹„ì •ìƒì ì¸ ê²½ìš° ê·¸ ë‹¤ìŒ ê·¼ë¬´ ì¼ì— ì²˜ë¦¬ë©ë‹ˆë‹¤.</span><br><br></span><span
                                             style="COLOR: #cc3d3d"><strong><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹
-                                                    ½Å¿ëÄ«µå<span
-                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535"></span></span><br></strong></span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·
+                                                    ì‹ ìš©ì¹´ë“œ<span
+                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535"></span></span><br></strong></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif">ÁÖ¹®Ãë¼Ò
-                                                ½Ã Ä«µå¸ÅÃâ Ãë¼Ò´Â Áï½Ã Á¢¼ö µÇÁö¸¸, Ä«µå»ç ¸ÅÀÔ Ãë¼Ò±îÁö º¸Åë 3~7ÀÏ Á¤µµ ¼Ò¿äµÉ ¼ö ÀÖ½À´Ï´Ù.
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif">ì£¼ë¬¸ì·¨ì†Œ
+                                                ì‹œ ì¹´ë“œë§¤ì¶œ ì·¨ì†ŒëŠ” ì¦‰ì‹œ ì ‘ìˆ˜ ë˜ì§€ë§Œ, ì¹´ë“œì‚¬ ë§¤ìž… ì·¨ì†Œê¹Œì§€ ë³´í†µ 3~7ì¼ ì •ë„ ì†Œìš”ë  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.
                                             </span><br></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif">¡Ø
-                                                ¸ÅÀÔ Àü Ä«µå ÁÖ¹®Àº ´çÀÏ Ãë¼ÒµË´Ï´Ù.</span><br></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #000000">¡Ø
-                                            °¢ Ä«µå»ç¸¶´Ù Ãë¼Ò Ã³¸® ±â°£ÀÌ ´Ù¸£±â ¶§¹®¿¡ Ä«µå»ç¸¦ ÅëÇÏ¿© È®ÀÎÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù. </span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif">â€»
+                                                ë§¤ìž… ì „ ì¹´ë“œ ì£¼ë¬¸ì€ ë‹¹ì¼ ì·¨ì†Œë©ë‹ˆë‹¤.</span><br></span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #000000">â€»
+                                            ê° ì¹´ë“œì‚¬ë§ˆë‹¤ ì·¨ì†Œ ì²˜ë¦¬ ê¸°ê°„ì´ ë‹¤ë¥´ê¸° ë•Œë¬¸ì— ì¹´ë“œì‚¬ë¥¼ í†µí•˜ì—¬ í™•ì¸í•˜ì‹¤ ìˆ˜ ìžˆìŠµë‹ˆë‹¤. </span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif">¸¸¾à¿¡
-                                                ´ë±ÝÀÌ °áÁ¦µÇ¾ú´Ù ÇÏ´õ¶óµµ ÇØ´ç ±Ý¾×¸¸Å­ ÇØ´ç Ä«µå»ç¿¡¼­ ´ÙÀ½´Þ °áÁ¦ ´ë±Ý¿¡¼­
-                                                Á¦¿ÜµË´Ï´Ù.</span><br><br></span><span style="COLOR: #cc3d3d"><strong><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹
-                                                    Ã¼Å©Ä«µå</span><br></strong></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">´ç»ç
-                                                Ãë¼Ò Ã»±¸ ÈÄ 7ÀÏ ÀÌ³» Ä«µå»ç¿¡¼­ °èÁÂ·Î ÀÔ±ÝµË´Ï´Ù.</span><br></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif">ë§Œì•½ì—
+                                                ëŒ€ê¸ˆì´ ê²°ì œë˜ì—ˆë‹¤ í•˜ë”ë¼ë„ í•´ë‹¹ ê¸ˆì•¡ë§Œí¼ í•´ë‹¹ ì¹´ë“œì‚¬ì—ì„œ ë‹¤ìŒë‹¬ ê²°ì œ ëŒ€ê¸ˆì—ì„œ
+                                                ì œì™¸ë©ë‹ˆë‹¤.</span><br><br></span><span style="COLOR: #cc3d3d"><strong><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·
+                                                    ì²´í¬ì¹´ë“œ</span><br></strong></span><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë‹¹ì‚¬
+                                                ì·¨ì†Œ ì²­êµ¬ í›„ 7ì¼ ì´ë‚´ ì¹´ë“œì‚¬ì—ì„œ ê³„ì¢Œë¡œ ìž…ê¸ˆë©ë‹ˆë‹¤.</span><br></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¡Ø
-                                                ÀºÇà¿¡ µû¶ó ¼Ò¿äÀÏ ´Þ¶óÁú ¼ö ÀÖ½À´Ï´Ù.</span><br><br></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">â€»
+                                                ì€í–‰ì— ë”°ë¼ ì†Œìš”ì¼ ë‹¬ë¼ì§ˆ ìˆ˜ ìžˆìŠµë‹ˆë‹¤.</span><br><br></span><span
                                             style="COLOR: #cc3d3d"><strong><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹
-                                                    ¹«ÅëÀåÀÔ±Ý/ ½Ç½Ã°£°èÁÂÀÌÃ¼</span><br></strong></span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·
+                                                    ë¬´í†µìž¥ìž…ê¸ˆ/ ì‹¤ì‹œê°„ê³„ì¢Œì´ì²´</span><br></strong></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">È¯ºÒ¿äÃ»
-                                                ÈÄ ÀÍÀÏ (¿µ¾÷ÀÏ ±âÁØ<span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535"></span>)
-                                                ÀÔ·ÂÇÏ½Å °èÁÂ·Î ÀÔ±ÝµË´Ï´Ù.</span><br></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">í™˜ë¶ˆìš”ì²­
+                                                í›„ ìµì¼ (ì˜ì—…ì¼ ê¸°ì¤€<span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535"></span>)
+                                                ìž…ë ¥í•˜ì‹  ê³„ì¢Œë¡œ ìž…ê¸ˆë©ë‹ˆë‹¤.</span><br></span><span
                                             style="COLOR: #cc3d3d"><strong><br><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹
-                                                    ÈÞ´ëÆù °áÁ¦</span><br></strong></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif">È¯ºÒ¿äÃ»
-                                                ÈÄ 3~5ÀÏ ¼Ò¿äµË´Ï´Ù.</span><br><br></span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·
+                                                    íœ´ëŒ€í° ê²°ì œ</span><br></strong></span><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif">í™˜ë¶ˆìš”ì²­
+                                                í›„ 3~5ì¼ ì†Œìš”ë©ë‹ˆë‹¤.</span><br><br></span><span
                                             style="COLOR: #cc3d3d"><strong><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹
-                                                    »óÇ°±Ç °áÁ¦</span><br></strong></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">È¯ºÒ
-                                            ¿äÃ» ÈÄ ÀÍÀÏ (¿µ¾÷ÀÏ ±âÁØ) ¿¹Ä¡±Ý È¯ºÒ·Î Ã³¸®µË´Ï´Ù.</span></p>
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·
+                                                    ìƒí’ˆê¶Œ ê²°ì œ</span><br></strong></span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">í™˜ë¶ˆ
+                                            ìš”ì²­ í›„ ìµì¼ (ì˜ì—…ì¼ ê¸°ì¤€) ì˜ˆì¹˜ê¸ˆ í™˜ë¶ˆë¡œ ì²˜ë¦¬ë©ë‹ˆë‹¤.</span></p>
                                 </div>
-                                <!--//txt ¿µ¿ª-->
+                                <!--//txt ì˜ì—­-->
                             </div>
                             <!--best-txt01 -->
 
-                            <!--best-txt01 : -h3/accordion-panel¿¡ selected ½Ã ¿­¸²-->
+                            <!--best-txt01 : -h3/accordion-panelì— selected ì‹œ ì—´ë¦¼-->
                             <h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger"
                                     aria-expanded="false" onclick="lookup_count(this,28,05)"><i
-                                        class="icon question"></i><span>ÅÃ¹è±â»ç¸¦ ±â´Ù¸± ÇÊ¿ä¾øÀÌ ÆíÀÇÁ¡¹ÝÇ°ÀÌ °¡´ÉÇÑ°¡¿ä?</span><i
+                                        class="icon question"></i><span>íƒë°°ê¸°ì‚¬ë¥¼ ê¸°ë‹¤ë¦´ í•„ìš”ì—†ì´ íŽ¸ì˜ì ë°˜í’ˆì´ ê°€ëŠ¥í•œê°€ìš”?</span><i
                                         class="icon acc-arrow"></i></button></h3>
                             <div class="accordion-panel best-txt04" role="best-txt04">
-                                <!--txt ¿µ¿ª-->
+                                <!--txt ì˜ì—­-->
                                 <div class="txt-wrap">
                                     <span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¹ÝÇ°½ÅÃ»
-                                        ÈÄ ¼ö°Å°¡ ÁøÇàµÇ´Â µ¿¾ÈÀÇ ºÒÆíÇÔÀ» ÁÙÀÌ°íÀÚ ÆíÀÇÁ¡¹ÝÇ° ¼­ºñ½º¸¦ ¿ÀÇÂÇÏ¿´½À´Ï´Ù.</span><br><br><b>
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë°˜í’ˆì‹ ì²­
+                                        í›„ ìˆ˜ê±°ê°€ ì§„í–‰ë˜ëŠ” ë™ì•ˆì˜ ë¶ˆíŽ¸í•¨ì„ ì¤„ì´ê³ ìž íŽ¸ì˜ì ë°˜í’ˆ ì„œë¹„ìŠ¤ë¥¼ ì˜¤í”ˆí•˜ì˜€ìŠµë‹ˆë‹¤.</span><br><br><b>
                                         <font color="red"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹ÆíÀÇÁ¡¹ÝÇ°ÀÌ¶õ?</span><br>
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·íŽ¸ì˜ì ë°˜í’ˆì´ëž€?</span><br>
                                         </font>
                                     </b><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¹ÝÇ°½ÅÃ»
-                                        ÈÄ ÅÃ¹è±â»ç´ÔÀÇ ¹æ¹®À» ±â´Ù¸± ÇÊ¿ä ¾øÀÌ °¡±î¿î ÆíÀÇÁ¡(GS25, CU)¿¡ ¹æ¹®ÇÏ¿© ¹ÝÇ°Á¢¼ö¸¦ </span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">ÇÒ
-                                        ¼ö ÀÖ´Â ¼­ºñ½ºÀÔ´Ï´Ù. </span><br><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¡Ø
-                                        »çÀü Çö´ëÈ¨¼îÇÎ °í°´¼¾ÅÍ(1600-0000)·Î ¿¬¶ôÇÏ¿© Á¢¼öÇØ ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù. </span><br><br>
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë°˜í’ˆì‹ ì²­
+                                        í›„ íƒë°°ê¸°ì‚¬ë‹˜ì˜ ë°©ë¬¸ì„ ê¸°ë‹¤ë¦´ í•„ìš” ì—†ì´ ê°€ê¹Œìš´ íŽ¸ì˜ì (GS25, CU)ì— ë°©ë¬¸í•˜ì—¬ ë°˜í’ˆì ‘ìˆ˜ë¥¼ </span><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">í• 
+                                        ìˆ˜ ìžˆëŠ” ì„œë¹„ìŠ¤ìž…ë‹ˆë‹¤. </span><br><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">â€»
+                                        ì‚¬ì „ í˜„ëŒ€í™ˆì‡¼í•‘ ê³ ê°ì„¼í„°(1600-0000)ë¡œ ì—°ë½í•˜ì—¬ ì ‘ìˆ˜í•´ ì£¼ì‹œê¸° ë°”ëžë‹ˆë‹¤. </span><br><br>
                                     <font color="red"><span style="COLOR: #cc3d3d"><span
                                                 style="COLOR: #cc3d3d"><strong><span
-                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹</span></strong></span><strong><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">ÆíÀÇÁ¡¹ÝÇ°
-                                                    ÁøÇà´Ü°è</span></strong></span></font><br><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">1.
+                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·</span></strong></span><strong><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">íŽ¸ì˜ì ë°˜í’ˆ
+                                                    ì§„í–‰ë‹¨ê³„</span></strong></span></font><br><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">1.
                                     </span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">´ç»ç
-                                        °í°´¼¾ÅÍ ÀüÈ­»ó´ã</span><br><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">2.</span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">
-                                        ÆíÀÇÁ¡¹ÝÇ° Á¢¼ö</span><br><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">3.</span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">
-                                        ¹ÝÇ°½ÅÃ»½ÂÀÎ¹øÈ£ SMS¹ß¼Û</span><br><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">4.</span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">
-                                        ÆíÀÇÁ¡¹æ¹®,½ÂÀÎ¹øÈ£ÀÔ·Â / ÅÃ¹èÁ¢¼ö</span><br><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">5.</span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">
-                                        ¹ÝÇ°¹è¼Û ½ÃÀÛ</span><br><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">6.</span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">
-                                        ¹ÝÇ°¹è¼Û ¿Ï·á</span><br><br>
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë‹¹ì‚¬
+                                        ê³ ê°ì„¼í„° ì „í™”ìƒë‹´</span><br><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">2.</span><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">
+                                        íŽ¸ì˜ì ë°˜í’ˆ ì ‘ìˆ˜</span><br><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">3.</span><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">
+                                        ë°˜í’ˆì‹ ì²­ìŠ¹ì¸ë²ˆí˜¸ SMSë°œì†¡</span><br><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">4.</span><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">
+                                        íŽ¸ì˜ì ë°©ë¬¸,ìŠ¹ì¸ë²ˆí˜¸ìž…ë ¥ / íƒë°°ì ‘ìˆ˜</span><br><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">5.</span><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">
+                                        ë°˜í’ˆë°°ì†¡ ì‹œìž‘</span><br><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">6.</span><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">
+                                        ë°˜í’ˆë°°ì†¡ ì™„ë£Œ</span><br><br>
                                     <font color="red"><span style="COLOR: #cc3d3d"><span
                                                 style="COLOR: #cc3d3d"><strong><span
-                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹</span></strong></span><strong><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">ÆíÀÇÁ¡¹ÝÇ°
-                                                    ºÒ°¡»óÇ°</span></strong></span></font><br><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">1.
+                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·</span></strong></span><strong><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">íŽ¸ì˜ì ë°˜í’ˆ
+                                                    ë¶ˆê°€ìƒí’ˆ</span></strong></span></font><br><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">1.
                                     </span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">ºñ±Ô°Ý»óÇ°(°¡·Î+¼¼·Î+³ôÀÌÀÇ
-                                        ÇÕÀÌ 100cmÀÌ»ó ¶Ç´Â 2kgÀÌ»ó)</span><br><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">2.
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë¹„ê·œê²©ìƒí’ˆ(ê°€ë¡œ+ì„¸ë¡œ+ë†’ì´ì˜
+                                        í•©ì´ 100cmì´ìƒ ë˜ëŠ” 2kgì´ìƒ)</span><br><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">2.
                                     </span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">½ÄÇ°·ù</span><br><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">3.
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì‹í’ˆë¥˜</span><br><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">3.
                                     </span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">»óÇ°°¡°Ý
-                                        50¸¸¿ø ÀÌ»óÀÇ »óÇ°</span><span
-                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ìƒí’ˆê°€ê²©
+                                        50ë§Œì› ì´ìƒì˜ ìƒí’ˆ</span><span
+                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">
                                     </span>
                                 </div>
-                                <!--//txt ¿µ¿ª-->
+                                <!--//txt ì˜ì—­-->
                             </div>
                             <!--best-txt01 -->
 
-                            <!--best-txt01 : -h3/accordion-panel¿¡ selected ½Ã ¿­¸²-->
+                            <!--best-txt01 : -h3/accordion-panelì— selected ì‹œ ì—´ë¦¼-->
                             <h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger"
                                     aria-expanded="false" onclick="lookup_count(this,26,05)"><i
-                                        class="icon question"></i><span>È¯ºÒÀº ¾î¶»°Ô ¹Þ³ª¿ä?</span><i
+                                        class="icon question"></i><span>í™˜ë¶ˆì€ ì–´ë–»ê²Œ ë°›ë‚˜ìš”?</span><i
                                         class="icon acc-arrow"></i></button></h3>
                             <div class="accordion-panel best-txt05" role="best-txt05">
-                                <!--txt ¿µ¿ª-->
+                                <!--txt ì˜ì—­-->
                                 <div class="txt-wrap">
                                     <p><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">Ãë¼Ò
-                                            ¶Ç´Â ¹ÝÇ°¿¡ ´ëÇÑ È¯ºÒÃ³¸®´Â Ãë¼Ò, ¹ÝÇ° Á¢¼ö ÈÄ 24½Ã°£ ÀÌ³» ÇØµå¸³´Ï´Ù.&nbsp; </span><br><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">´Ü,
-                                            Hmall »óÇ°ÀÇ ¹ÝÇ°¿¡ ´ëÇÑ È¯ºÒÃ³¸®´Â »óÇ° ÀÔ°íÇÏ¿© °ËÇ° ¿Ï·á ÈÄ È¯ºÒÃ³¸® µÇ¹Ç·Î ´ë·« 4~7ÀÏ Á¤µµÀÇ ½Ã°£ÀÌ ¼Ò¿äµË´Ï´Ù.
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì·¨ì†Œ
+                                            ë˜ëŠ” ë°˜í’ˆì— ëŒ€í•œ í™˜ë¶ˆì²˜ë¦¬ëŠ” ì·¨ì†Œ, ë°˜í’ˆ ì ‘ìˆ˜ í›„ 24ì‹œê°„ ì´ë‚´ í•´ë“œë¦½ë‹ˆë‹¤.&nbsp; </span><br><br><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë‹¨,
+                                            Hmall ìƒí’ˆì˜ ë°˜í’ˆì— ëŒ€í•œ í™˜ë¶ˆì²˜ë¦¬ëŠ” ìƒí’ˆ ìž…ê³ í•˜ì—¬ ê²€í’ˆ ì™„ë£Œ í›„ í™˜ë¶ˆì²˜ë¦¬ ë˜ë¯€ë¡œ ëŒ€ëžµ 4~7ì¼ ì •ë„ì˜ ì‹œê°„ì´ ì†Œìš”ë©ë‹ˆë‹¤.
                                         </span><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">´Ù¸¸,
-                                            ÁÖ¸» ¶Ç´Â ÈÞÀÏÃ³·³ ±ÝÀ¶¾÷¹«°¡ ºñÁ¤»óÀûÀÎ °æ¿ì ±× ´ÙÀ½ ±Ù¹«ÀÏ¿¡ Ã³¸®µË´Ï´Ù.</span><br><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">Âü°í·Î,
-                                            È¯ºÒÃ³¸®´Â ÁÖ¹®°áÁ¦ ¼ö´Ü°ú µ¿ÀÏÇÏ°Ô ÇÔÀ» ¿øÄ¢À¸·Î ÇÏ¸ç, È¯ºÒ ¹ÞÀ» ±Ý¾×À» ¿¹Ä¡ÇØµÎ°í ´ÙÀ½¿¡ »ç¿ëÇÏ°íÀÚ ÇÑ´Ù¸é °í°´¼¾ÅÍ¸¦ ÅëÇØ È¯ºÒ±Ý¾×ÀÇ
-                                            ¿¹Ä¡±Ý ÀüÈ¯À» ½ÅÃ»ÇØ ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.</span></p>
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë‹¤ë§Œ,
+                                            ì£¼ë§ ë˜ëŠ” íœ´ì¼ì²˜ëŸ¼ ê¸ˆìœµì—…ë¬´ê°€ ë¹„ì •ìƒì ì¸ ê²½ìš° ê·¸ ë‹¤ìŒ ê·¼ë¬´ì¼ì— ì²˜ë¦¬ë©ë‹ˆë‹¤.</span><br><br><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì°¸ê³ ë¡œ,
+                                            í™˜ë¶ˆì²˜ë¦¬ëŠ” ì£¼ë¬¸ê²°ì œ ìˆ˜ë‹¨ê³¼ ë™ì¼í•˜ê²Œ í•¨ì„ ì›ì¹™ìœ¼ë¡œ í•˜ë©°, í™˜ë¶ˆ ë°›ì„ ê¸ˆì•¡ì„ ì˜ˆì¹˜í•´ë‘ê³  ë‹¤ìŒì— ì‚¬ìš©í•˜ê³ ìž í•œë‹¤ë©´ ê³ ê°ì„¼í„°ë¥¼ í†µí•´ í™˜ë¶ˆê¸ˆì•¡ì˜
+                                            ì˜ˆì¹˜ê¸ˆ ì „í™˜ì„ ì‹ ì²­í•´ ì£¼ì‹œê¸° ë°”ëžë‹ˆë‹¤.</span></p>
                                 </div>
-                                <!--//txt ¿µ¿ª-->
+                                <!--//txt ì˜ì—­-->
                             </div>
                             <!--best-txt01 -->
 
-                            <!--best-txt01 : -h3/accordion-panel¿¡ selected ½Ã ¿­¸²-->
+                            <!--best-txt01 : -h3/accordion-panelì— selected ì‹œ ì—´ë¦¼-->
                             <h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger"
                                     aria-expanded="false" onclick="lookup_count(this,5,01)"><i
-                                        class="icon question"></i><span>È¸¿øÅ»Åð´Â ¾î¶»°Ô ÇÏ³ª¿ä?</span><i
+                                        class="icon question"></i><span>íšŒì›íƒˆí‡´ëŠ” ì–´ë–»ê²Œ í•˜ë‚˜ìš”?</span><i
                                         class="icon acc-arrow"></i></button></h3>
                             <div class="accordion-panel best-txt06" role="best-txt06">
-                                <!--txt ¿µ¿ª-->
+                                <!--txt ì˜ì—­-->
                                 <div class="txt-wrap">
                                     <p style="LINE-HEIGHT: 1.5"><span style="COLOR: #cc3d3d"><strong><span
                                                     style="FONT-SIZE: 10pt; COLOR: #123456"><span
                                                         style="COLOR: #cc3d3d"><span
-                                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹PC
+                                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·PC
                                                         </span></span></span></strong></span><br><span
                                             style="FONT-SIZE: 10pt; COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">È­¸é
-                                                »ó´Ü¿¡ ÀÖ´Â [¸¶ÀÌÆäÀÌÁö &gt;&nbsp;È¸¿øÁ¤º¸ &gt; È¸¿øÅ»Åð]¸¦ ¼±ÅÃÇÏ½Ã¸é È¸¿øÅ»Åð¸¦ ÇÏ½Ç ¼ö
-                                                ÀÖ½À´Ï´Ù.</span><br><br></span><strong><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">í™”ë©´
+                                                ìƒë‹¨ì— ìžˆëŠ” [ë§ˆì´íŽ˜ì´ì§€ &gt;&nbsp;íšŒì›ì •ë³´ &gt; íšŒì›íƒˆí‡´]ë¥¼ ì„ íƒí•˜ì‹œë©´ íšŒì›íƒˆí‡´ë¥¼ í•˜ì‹¤ ìˆ˜
+                                                ìžˆìŠµë‹ˆë‹¤.</span><br><br></span><strong><span
                                                 style="FONT-SIZE: 10pt; COLOR: #123456"><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹¸ð¹ÙÀÏ</span><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">&nbsp;</span></span><br></strong><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·ëª¨ë°”ì¼</span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">&nbsp;</span></span><br></strong><span
                                             style="FONT-SIZE: 10pt; COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">È­¸é
-                                                ÇÏ´Ü¿¡ ÀÖ´Â [¸¶ÀÌÆäÀÌÁö &gt; ÃÖÇÏ´Ü ¡®¢ßÇö´ëÈ¨¼îÇÎ¡¯ &gt; È¸¿øÅ»Åð]¸¦ ¼±ÅÃÇÏ½Ã¸é È¸¿øÅ»Åð¸¦ ÇÏ½Ç ¼ö
-                                                ÀÖ½À´Ï´Ù.</span><br><br></span><span style="COLOR: #cc3d3d"><span><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¡Ø
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">í™”ë©´
+                                                í•˜ë‹¨ì— ìžˆëŠ” [ë§ˆì´íŽ˜ì´ì§€ &gt; ìµœí•˜ë‹¨ â€˜ãˆœí˜„ëŒ€í™ˆì‡¼í•‘â€™ &gt; íšŒì›íƒˆí‡´]ë¥¼ ì„ íƒí•˜ì‹œë©´ íšŒì›íƒˆí‡´ë¥¼ í•˜ì‹¤ ìˆ˜
+                                                ìžˆìŠµë‹ˆë‹¤.</span><br><br></span><span style="COLOR: #cc3d3d"><span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â€»
                                                 </span><strong><span
-                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">À¯ÀÇ»çÇ×</span></strong><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">
+                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">ìœ ì˜ì‚¬í•­</span></strong><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">
                                                 </span></span></span><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">1.
-                                            ¹è¼Û ÁøÇà Áß, ¹ÝÇ°ÁøÇàÁßÀÎ ÁÖ¹® °ÇÀÌ &nbsp;ÀÖÀ» °æ¿ì¿¡´Â Å»ÅðÃ³¸®°¡ µÇÁö ¾Ê½À´Ï´Ù.</span><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">2.
-                                            Àç°¡ÀÔÇÏ¼Åµµ °³ÀÎÁ¤º¸°¡ º¹¿øµÇÁö ¾Ê½À´Ï´Ù. </span><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">3.
-                                            Hmall¿¡ °¡Áö°í °è½Å Àû¸³±Ý, ¿¹Ä¡±Ý, ÇÒÀÎÄíÆù µîÀÇ ÇýÅÃÀÌ ÀÚµ¿»èÁ¦ µÇ¸ç, Àç°¡ÀÔÇÏ½Ç °æ¿ì¿¡µµ º¹¿øµÇÁö
-                                            ¾Ê½À´Ï´Ù.</span><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">4.&nbsp;Àç°¡ÀÔ½Ã,
-                                            ±âÁ¸¿¡ »ç¿ëÇÏ¼Ì´ø ID´Â Àç°¡ÀÔ ½Ã »ç¿ëÇÏ½Ç ¼ö ¾ø½À´Ï´Ù. </span></p>
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">1.
+                                            ë°°ì†¡ ì§„í–‰ ì¤‘, ë°˜í’ˆì§„í–‰ì¤‘ì¸ ì£¼ë¬¸ ê±´ì´ &nbsp;ìžˆì„ ê²½ìš°ì—ëŠ” íƒˆí‡´ì²˜ë¦¬ê°€ ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.</span><br><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">2.
+                                            ìž¬ê°€ìž…í•˜ì…”ë„ ê°œì¸ì •ë³´ê°€ ë³µì›ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤. </span><br><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">3.
+                                            Hmallì— ê°€ì§€ê³  ê³„ì‹  ì ë¦½ê¸ˆ, ì˜ˆì¹˜ê¸ˆ, í• ì¸ì¿ í° ë“±ì˜ í˜œíƒì´ ìžë™ì‚­ì œ ë˜ë©°, ìž¬ê°€ìž…í•˜ì‹¤ ê²½ìš°ì—ë„ ë³µì›ë˜ì§€
+                                            ì•ŠìŠµë‹ˆë‹¤.</span><br><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">4.&nbsp;ìž¬ê°€ìž…ì‹œ,
+                                            ê¸°ì¡´ì— ì‚¬ìš©í•˜ì…¨ë˜ IDëŠ” ìž¬ê°€ìž… ì‹œ ì‚¬ìš©í•˜ì‹¤ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. </span></p>
                                 </div>
-                                <!--//txt ¿µ¿ª-->
+                                <!--//txt ì˜ì—­-->
                             </div>
                             <!--best-txt01 -->
 
-                            <!--best-txt01 : -h3/accordion-panel¿¡ selected ½Ã ¿­¸²-->
+                            <!--best-txt01 : -h3/accordion-panelì— selected ì‹œ ì—´ë¦¼-->
                             <h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger"
                                     aria-expanded="false" onclick="lookup_count(this,24,05)"><i
-                                        class="icon question"></i><span>±³È¯ ¶Ç´Â ¹ÝÇ°ÀÌ ¾ÈµÇ´Â °æ¿ì´Â ¾î¶² °æ¿ìÀÎ°¡¿ä?</span><i
+                                        class="icon question"></i><span>êµí™˜ ë˜ëŠ” ë°˜í’ˆì´ ì•ˆë˜ëŠ” ê²½ìš°ëŠ” ì–´ë–¤ ê²½ìš°ì¸ê°€ìš”?</span><i
                                         class="icon acc-arrow"></i></button></h3>
                             <div class="accordion-panel best-txt07" role="best-txt07">
-                                <!--txt ¿µ¿ª-->
+                                <!--txt ì˜ì—­-->
                                 <div class="txt-wrap">
                                     <p style="LINE-HEIGHT: 1.5"><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¹ÞÀ¸½Å
-                                            »óÇ°¿¡ ÇÏÀÚ°¡ ÀÖ°Å³ª ¸¶À½¿¡ µéÁö ¾Ê´Â °æ¿ì, Hmall »óÇ°Àº ¹è¼Û¿Ï·á ÈÄ 7ÀÏ³», TV È¨¼îÇÎ »óÇ°Àº 30ÀÏ ÀÌ³»¿¡&nbsp;¾ðÁ¦µçÁö
-                                            ±³È¯ ¶Ç´Â ¹ÝÇ°½ÅÃ»ÀÌ °¡´ÉÇÕ´Ï´Ù. ´Ü, TV È¨¼îÇÎ ÀÇ·ù, º¸¼®, ÇÚµå¹é, ½´Áî, ¼±±Û¶ó½º »óÇ°Àº »óÇ°ÀÎµµ ÈÄ 15ÀÏ, ½Å¼±½ÄÇ°Àº
-                                            »óÇ°ÀÎµµ ÈÄ 7ÀÏ ÀÌ³»¿¡ °¡´ÉÇÕ´Ï´Ù.</span><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">»óÇ°ÀÌ
-                                            ºÒ·®ÀÏ °æ¿ì¿¡´Â ¾ðÁ¦µçÁö ¹ÝÇ°ÀÌ °¡´ÉÇÕ´Ï´Ù. ´Ü, ¾Æ·¡ÀÇ °æ¿ì´Â ¹ÝÇ°ÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù.(»óÇ°ºÒ·® Á¦¿Ü)<br></span></p>
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë°›ìœ¼ì‹ 
+                                            ìƒí’ˆì— í•˜ìžê°€ ìžˆê±°ë‚˜ ë§ˆìŒì— ë“¤ì§€ ì•ŠëŠ” ê²½ìš°, Hmall ìƒí’ˆì€ ë°°ì†¡ì™„ë£Œ í›„ 7ì¼ë‚´, TV í™ˆì‡¼í•‘ ìƒí’ˆì€ 30ì¼ ì´ë‚´ì—&nbsp;ì–¸ì œë“ ì§€
+                                            êµí™˜ ë˜ëŠ” ë°˜í’ˆì‹ ì²­ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤. ë‹¨, TV í™ˆì‡¼í•‘ ì˜ë¥˜, ë³´ì„, í•¸ë“œë°±, ìŠˆì¦ˆ, ì„ ê¸€ë¼ìŠ¤ ìƒí’ˆì€ ìƒí’ˆì¸ë„ í›„ 15ì¼, ì‹ ì„ ì‹í’ˆì€
+                                            ìƒí’ˆì¸ë„ í›„ 7ì¼ ì´ë‚´ì— ê°€ëŠ¥í•©ë‹ˆë‹¤.</span><br><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ìƒí’ˆì´
+                                            ë¶ˆëŸ‰ì¼ ê²½ìš°ì—ëŠ” ì–¸ì œë“ ì§€ ë°˜í’ˆì´ ê°€ëŠ¥í•©ë‹ˆë‹¤. ë‹¨, ì•„ëž˜ì˜ ê²½ìš°ëŠ” ë°˜í’ˆì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.(ìƒí’ˆë¶ˆëŸ‰ ì œì™¸)<br></span></p>
                                     <p style="LINE-HEIGHT: 1.5">&nbsp;</p>
                                     <p style="LINE-HEIGHT: 1.5"><img
                                             src="https://image.hmall.com/CO/EDITOR/20220208/133734588/9j5j5.jpg"></p>
                                     <p style="LINE-HEIGHT: 1.5"><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #000000">¡Ø
-                                            »óÇ°¿¡ µû¶ó¼­ º¯½ÉÀ¸·Î ÀÎÇÑ ¹ÝÇ° ½Ã °í°´²²¼­ ¹ÝÇ° ºñ¿ëÀ» ºÎ´ãÇÏ¼Å¾ß ÇÏ´Â °æ¿ìµµ ÀÖ½À´Ï´Ù.</span><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif"><span
-                                                style="COLOR: #000000">¡Ø ±× ¿Ü Æ¯ÀÌ»çÇ×Àº ÇØ´ç »óÇ° ¼³¸í¿¡ Ç¥±âµÇ¾î ÀÖ½À´Ï´Ù. </span></span>
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #000000">â€»
+                                            ìƒí’ˆì— ë”°ë¼ì„œ ë³€ì‹¬ìœ¼ë¡œ ì¸í•œ ë°˜í’ˆ ì‹œ ê³ ê°ê»˜ì„œ ë°˜í’ˆ ë¹„ìš©ì„ ë¶€ë‹´í•˜ì…”ì•¼ í•˜ëŠ” ê²½ìš°ë„ ìžˆìŠµë‹ˆë‹¤.</span><br><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif"><span
+                                                style="COLOR: #000000">â€» ê·¸ ì™¸ íŠ¹ì´ì‚¬í•­ì€ í•´ë‹¹ ìƒí’ˆ ì„¤ëª…ì— í‘œê¸°ë˜ì–´ ìžˆìŠµë‹ˆë‹¤. </span></span>
                                     </p>
                                 </div>
-                                <!--//txt ¿µ¿ª-->
+                                <!--//txt ì˜ì—­-->
                             </div>
                             <!--best-txt01 -->
 
-                            <!--best-txt01 : -h3/accordion-panel¿¡ selected ½Ã ¿­¸²-->
+                            <!--best-txt01 : -h3/accordion-panelì— selected ì‹œ ì—´ë¦¼-->
                             <h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger"
                                     aria-expanded="false" onclick="lookup_count(this,31,07)"><i
-                                        class="icon question"></i><span>ÀÌº¥Æ® ´çÃ·Àº ¾îµð¼­ È®ÀÎÇÏ³ª¿ä?</span><i
+                                        class="icon question"></i><span>ì´ë²¤íŠ¸ ë‹¹ì²¨ì€ ì–´ë””ì„œ í™•ì¸í•˜ë‚˜ìš”?</span><i
                                         class="icon acc-arrow"></i></button></h3>
                             <div class="accordion-panel best-txt08" role="best-txt08">
-                                <!--txt ¿µ¿ª-->
+                                <!--txt ì˜ì—­-->
                                 <div class="txt-wrap">
                                     <p class="depth1" nodeIndex="1" jQuery17102688160967782381="246"
                                         sizcache09139176650749625="6" sizset="54"><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">ÀÌº¥Æ®
-                                            ´çÃ·ÀÚ´Â ÀÌº¥Æ® ÅÇÀÇ ÀÌº¥Æ® ´çÃ·°øÁö¿¡¼­ È®ÀÎÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù.</span><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">³»°¡
-                                            Âü¿©ÇÑ ÀÌº¥Æ®´Â ¸¶ÀÌÆäÀÌÁö &gt; Âü¿©ÀÌº¥Æ®¿¡¼­ È®ÀÎÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù.</span><br><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">[PC]</span><br><img
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì´ë²¤íŠ¸
+                                            ë‹¹ì²¨ìžëŠ” ì´ë²¤íŠ¸ íƒ­ì˜ ì´ë²¤íŠ¸ ë‹¹ì²¨ê³µì§€ì—ì„œ í™•ì¸í•˜ì‹¤ ìˆ˜ ìžˆìŠµë‹ˆë‹¤.</span><br><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë‚´ê°€
+                                            ì°¸ì—¬í•œ ì´ë²¤íŠ¸ëŠ” ë§ˆì´íŽ˜ì´ì§€ &gt; ì°¸ì—¬ì´ë²¤íŠ¸ì—ì„œ í™•ì¸í•˜ì‹¤ ìˆ˜ ìžˆìŠµë‹ˆë‹¤.</span><br><br><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">[PC]</span><br><img
                                             src="http://image.hyundaihmall.com/CO/EDITOR/20210208/053356609/www5o.jpg"><br><br><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">[¸ð¹ÙÀÏ]</span><br><img
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">[ëª¨ë°”ì¼]</span><br><img
                                             style="HEIGHT: 581px; WIDTH: 310px"
                                             src="http://image.hyundaihmall.com/CO/EDITOR/20210208/053421173/19o7u.jpg"
                                             width="310" height="581"></p>
                                 </div>
-                                <!--//txt ¿µ¿ª-->
+                                <!--//txt ì˜ì—­-->
                             </div>
                             <!--best-txt01 -->
 
-                            <!--best-txt01 : -h3/accordion-panel¿¡ selected ½Ã ¿­¸²-->
+                            <!--best-txt01 : -h3/accordion-panelì— selected ì‹œ ì—´ë¦¼-->
                             <h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger"
                                     aria-expanded="false" onclick="lookup_count(this,21,04)"><i
-                                        class="icon question"></i><span>¹éÈ­Á¡ »óÇ°ÀÇ ¹è¼ÛÀº ¾î¶»°Ô ÁøÇàÀÌ µÇ³ª¿ä?</span><i
+                                        class="icon question"></i><span>ë°±í™”ì  ìƒí’ˆì˜ ë°°ì†¡ì€ ì–´ë–»ê²Œ ì§„í–‰ì´ ë˜ë‚˜ìš”?</span><i
                                         class="icon acc-arrow"></i></button></h3>
                             <div class="accordion-panel best-txt09" role="best-txt09">
-                                <!--txt ¿µ¿ª-->
+                                <!--txt ì˜ì—­-->
                                 <div class="txt-wrap">
                                     <p style="LINE-HEIGHT: 1.5"><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">°¡±¸
-                                                ¹× Ä§±¸ µî ÀÏºÎ »óÇ°ÀÇ °æ¿ì Çù·Â»ç¿¡ Á÷Á¢ ¹è¼ÛÀÌ ÁøÇàµÇ¸ç, ±× ¿Ü »óÇ°Àº Çö´ë¹éÈ­Á¡ ¸ÅÀåÀ» ÅëÇØ ¹è¼Û ÁøÇà
-                                                µË´Ï´Ù.</span><br></span><span style="COLOR: #cc3d3d"><strong><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ê°€êµ¬
+                                                ë° ì¹¨êµ¬ ë“± ì¼ë¶€ ìƒí’ˆì˜ ê²½ìš° í˜‘ë ¥ì‚¬ì— ì§ì ‘ ë°°ì†¡ì´ ì§„í–‰ë˜ë©°, ê·¸ ì™¸ ìƒí’ˆì€ í˜„ëŒ€ë°±í™”ì  ë§¤ìž¥ì„ í†µí•´ ë°°ì†¡ ì§„í–‰
+                                                ë©ë‹ˆë‹¤.</span><br></span><span style="COLOR: #cc3d3d"><strong><span
                                                     style="COLOR: #cc3d3d"><br><span
-                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹¹è¼Û°úÁ¤
+                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·ë°°ì†¡ê³¼ì •
                                                     </span><br></span></strong></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">1.
-                                                °áÁ¦¿Ï·á°¡ µÈ ´ÙÀ½³¯ ¹éÈ­Á¡ ¸ÅÀåÀ¸·Î »óÇ° ÁØºñ ¿äÃ»µË´Ï´Ù. </span><br></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">1.
+                                                ê²°ì œì™„ë£Œê°€ ëœ ë‹¤ìŒë‚  ë°±í™”ì  ë§¤ìž¥ìœ¼ë¡œ ìƒí’ˆ ì¤€ë¹„ ìš”ì²­ë©ë‹ˆë‹¤. </span><br></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">2.
-                                                Çö´ë¹éÈ­Á¡ ¹è¼ÛÆÀ¿¡¼­ »óÇ°À» ¹Þ¾Æ Æ÷ÀåÇÕ´Ï´Ù.</span><br></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">2.
+                                                í˜„ëŒ€ë°±í™”ì  ë°°ì†¡íŒ€ì—ì„œ ìƒí’ˆì„ ë°›ì•„ í¬ìž¥í•©ë‹ˆë‹¤.</span><br></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">3.
-                                                Æ÷Àå¿Ï·áÈÄ ÇØ´çÁö¿ªÀ¸·Î ¹ß¼ÛÇÕ´Ï´Ù.</span><br></span><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">4.
-                                                ¹ß¼ÛÈÄ 1~2ÀÏ ÀÌÈÄ ¼ö·É(°áÁ¦ÈÄ 2~7ÀÏÀÌ³»)&nbsp;°¡´ÉÇÕ´Ï´Ù.</span><br></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">3.
+                                                í¬ìž¥ì™„ë£Œí›„ í•´ë‹¹ì§€ì—­ìœ¼ë¡œ ë°œì†¡í•©ë‹ˆë‹¤.</span><br></span><span style="COLOR: #000000"><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">4.
+                                                ë°œì†¡í›„ 1~2ì¼ ì´í›„ ìˆ˜ë ¹(ê²°ì œí›„ 2~7ì¼ì´ë‚´)&nbsp;ê°€ëŠ¥í•©ë‹ˆë‹¤.</span><br></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¡Ø
-                                                ¹«ÅëÀåÀÔ±Ý °æ¿ì ¹«ÅëÀåÀÔ±Ý È®ÀÎÀÌ µÈ ´ÙÀ½³¯ ¹éÈ­Á¡ ¸ÅÀåÀ¸·Î »óÇ° ÁØºñ
-                                                ¿äÃ»µË´Ï´Ù.</span><br><br></span><span style="COLOR: #cc3d3d"><strong><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">¢¹&nbsp;¹è¼Û±â°£</span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">â€»
+                                                ë¬´í†µìž¥ìž…ê¸ˆ ê²½ìš° ë¬´í†µìž¥ìž…ê¸ˆ í™•ì¸ì´ ëœ ë‹¤ìŒë‚  ë°±í™”ì  ë§¤ìž¥ìœ¼ë¡œ ìƒí’ˆ ì¤€ë¹„
+                                                ìš”ì²­ë©ë‹ˆë‹¤.</span><br><br></span><span style="COLOR: #cc3d3d"><strong><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">â–·&nbsp;ë°°ì†¡ê¸°ê°„</span><span
                                                     style="COLOR: #cc3d3d"><span
-                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #cc3d3d">
+                                                        style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #cc3d3d">
                                                     </span><br></span></strong></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #000000"><span
-                                                style="COLOR: #353535">1. ¸ÅÀå¿¡ Àç°í°¡ ÀÖÀ» °æ¿ì ÁÖ¹®ÀÏ·Î ºÎÅÍ Æò±Õ 3~4ÀÏ ¼Ò¿äµÇ¸ç(°øÈÞÀÏ
-                                                Á¦¿Ü)</span><span style="COLOR: #353535">&nbsp;</span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #000000"><span
+                                                style="COLOR: #353535">1. ë§¤ìž¥ì— ìž¬ê³ ê°€ ìžˆì„ ê²½ìš° ì£¼ë¬¸ì¼ë¡œ ë¶€í„° í‰ê·  3~4ì¼ ì†Œìš”ë˜ë©°(ê³µíœ´ì¼
+                                                ì œì™¸)</span><span style="COLOR: #353535">&nbsp;</span><span
                                                 style="COLOR: #000000"><span
-                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">ÀÏ½ÃÇ°ÀýÀÏ
-                                                    °æ¿ì Æò±Õ 5~7ÀÏ ¼Ò¿äµË´Ï´Ù.(¿ÏÀü Ç°ÀýÀÏ °æ¿ì Ãë¼Ò ¿äÃ»)</span></span></span><span
+                                                    style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì¼ì‹œí’ˆì ˆì¼
+                                                    ê²½ìš° í‰ê·  5~7ì¼ ì†Œìš”ë©ë‹ˆë‹¤.(ì™„ì „ í’ˆì ˆì¼ ê²½ìš° ì·¨ì†Œ ìš”ì²­)</span></span></span><span
                                             style="COLOR: #000000"><br></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">2.
-                                            ¹éÈ­Á¡ÀÇ ÈÞ¹«ÀÏ°ú °øÈÞÀÏ, ÁÖ¸»ÀÇ ÁÖ¹®»óÇ°Àº Æò±Õ¹è¼ÛÀÏ¿¡ 1~2ÀÏÀÌ ´õ ¼Ò¿äµË´Ï´Ù.&nbsp;</span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">Á¦Ç°
-                                            Ç°Àý½Ã °í°´´Ô²² °¡´ÉÇÑ ºü¸¥½Ã°£³»¿¡ Ç°ÀýÅëº¸ ¹× È¯ºÒÀýÂ÷¿¡ ´ëÇØ ¾È³»ÇØ µå¸®µµ·Ï ÇÏ°Ú½À´Ï´Ù.</span><br></p>
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">2.
+                                            ë°±í™”ì ì˜ íœ´ë¬´ì¼ê³¼ ê³µíœ´ì¼, ì£¼ë§ì˜ ì£¼ë¬¸ìƒí’ˆì€ í‰ê· ë°°ì†¡ì¼ì— 1~2ì¼ì´ ë” ì†Œìš”ë©ë‹ˆë‹¤.&nbsp;</span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì œí’ˆ
+                                            í’ˆì ˆì‹œ ê³ ê°ë‹˜ê»˜ ê°€ëŠ¥í•œ ë¹ ë¥¸ì‹œê°„ë‚´ì— í’ˆì ˆí†µë³´ ë° í™˜ë¶ˆì ˆì°¨ì— ëŒ€í•´ ì•ˆë‚´í•´ ë“œë¦¬ë„ë¡ í•˜ê² ìŠµë‹ˆë‹¤.</span><br></p>
                                 </div>
-                                <!--//txt ¿µ¿ª-->
+                                <!--//txt ì˜ì—­-->
                             </div>
                             <!--best-txt01 -->
 
-                            <!--best-txt01 : -h3/accordion-panel¿¡ selected ½Ã ¿­¸²-->
+                            <!--best-txt01 : -h3/accordion-panelì— selected ì‹œ ì—´ë¦¼-->
                             <h3><button data-modules-collapse="parent:.accparent;" class="accordion-trigger"
                                     aria-expanded="false" onclick="lookup_count(this,18,04)"><i
-                                        class="icon question"></i><span>ÁÖ¹® ÈÄ ¹è¼Û»óÅÂ¸¦ ¾î¶»°Ô ¾Ë ¼ö ÀÖ³ª¿ä?</span><i
+                                        class="icon question"></i><span>ì£¼ë¬¸ í›„ ë°°ì†¡ìƒíƒœë¥¼ ì–´ë–»ê²Œ ì•Œ ìˆ˜ ìžˆë‚˜ìš”?</span><i
                                         class="icon acc-arrow"></i></button></h3>
                             <div class="accordion-panel best-txt010" role="best-txt010">
-                                <!--txt ¿µ¿ª-->
+                                <!--txt ì˜ì—­-->
                                 <div class="txt-wrap">
                                     <p style="LINE-HEIGHT: 1.5"><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">°í°´²²¼­
-                                                ÁÖ¹®ÇÏ½Å »óÇ°ÀÇ ¹è¼Û»óÅÂ´Â È­¸é »ó´ÜÀÇ [ÁÖ¹®/¹è¼ÛÁ¶È¸]¿¡¼­ È®ÀÎÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù.</span><br></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">ÁÖ¹®»óÅÂº°
-                                            ÁÖ¹®ÀÇ ÁøÇàÇöÈ²Àº ´ÙÀ½°ú °°½À´Ï´Ù.<br></span></p>
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ê³ ê°ê»˜ì„œ
+                                                ì£¼ë¬¸í•˜ì‹  ìƒí’ˆì˜ ë°°ì†¡ìƒíƒœëŠ” í™”ë©´ ìƒë‹¨ì˜ [ì£¼ë¬¸/ë°°ì†¡ì¡°íšŒ]ì—ì„œ í™•ì¸í•˜ì‹¤ ìˆ˜ ìžˆìŠµë‹ˆë‹¤.</span><br></span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì£¼ë¬¸ìƒíƒœë³„
+                                            ì£¼ë¬¸ì˜ ì§„í–‰í˜„í™©ì€ ë‹¤ìŒê³¼ ê°™ìŠµë‹ˆë‹¤.<br></span></p>
                                     <p style="LINE-HEIGHT: 1.5">&nbsp;</p>
                                     <p style="LINE-HEIGHT: 1.5"><img
                                             src="https://image.hmall.com/CO/EDITOR/20220208/133831202/af1o8.jpg"></p>
                                     <p style="LINE-HEIGHT: 1.5"><br><span style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535"><br>¡Ø
-                                                ¹ß¼Û¿Ï·á ´Ü°è¿¡¼­´Â ¹è¼ÛÃßÀû±â´ÉÀ» ÅëÇØ ÅÃ¹è»ç, »óÇ°ÀÇ ÇöÀç À§Ä¡¸¦ ½Ã°£´ëº°·Î ½Ç½Ã°£ </span></span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535"><br>â€»
+                                                ë°œì†¡ì™„ë£Œ ë‹¨ê³„ì—ì„œëŠ” ë°°ì†¡ì¶”ì ê¸°ëŠ¥ì„ í†µí•´ íƒë°°ì‚¬, ìƒí’ˆì˜ í˜„ìž¬ ìœ„ì¹˜ë¥¼ ì‹œê°„ëŒ€ë³„ë¡œ ì‹¤ì‹œê°„ </span></span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">Á¶È¸ÇÏ½Ç
-                                                ¼ö ÀÖ½À´Ï´Ù. </span><br></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¡Ø
-                                            ÁÖ¹®»óÅÂÀÇ º¯°æÀº ½Ç½Ã°£À¸·Î ¹Ý¿µÇÏ´Â °ÍÀ» ¿øÄ¢À¸·Î ÇÏ¿À³ª, ¾÷Ã¼¹è¼Û »óÇ°ÀÇ °æ¿ì °£È¤ </span><span
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì¡°íšŒí•˜ì‹¤
+                                                ìˆ˜ ìžˆìŠµë‹ˆë‹¤. </span><br></span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">â€»
+                                            ì£¼ë¬¸ìƒíƒœì˜ ë³€ê²½ì€ ì‹¤ì‹œê°„ìœ¼ë¡œ ë°˜ì˜í•˜ëŠ” ê²ƒì„ ì›ì¹™ìœ¼ë¡œ í•˜ì˜¤ë‚˜, ì—…ì²´ë°°ì†¡ ìƒí’ˆì˜ ê²½ìš° ê°„í˜¹ </span><span
                                             style="COLOR: #000000"><span
-                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¹Ý¿µÀÌ
-                                                ´Ê¾îÁö´Â °æ¿ì°¡ ¹ß»ýÇÒ ¼ö ÀÖ½À´Ï´Ù.</span><br></span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¡Ø
-                                            ÁÖ¹®»óÅÂ º¯°æÀÌ Áö¿¬µÇ°í ÀÖ´Â °æ¿ì¿¡´Â 1´ë1 °í°´»ó´ãÀÌ³ª °í°´¼¾ÅÍ(1600-0000)À¸·Î ¹®ÀÇÇÏ½Ã¸é ºü¸¥ ½Ã°£ ³»¿¡ ¹è¼ÛÇöÈ²À»
+                                                style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ë°˜ì˜ì´
+                                                ëŠ¦ì–´ì§€ëŠ” ê²½ìš°ê°€ ë°œìƒí•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.</span><br></span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">â€»
+                                            ì£¼ë¬¸ìƒíƒœ ë³€ê²½ì´ ì§€ì—°ë˜ê³  ìžˆëŠ” ê²½ìš°ì—ëŠ” 1ëŒ€1 ê³ ê°ìƒë‹´ì´ë‚˜ ê³ ê°ì„¼í„°(1600-0000)ìœ¼ë¡œ ë¬¸ì˜í•˜ì‹œë©´ ë¹ ë¥¸ ì‹œê°„ ë‚´ì— ë°°ì†¡í˜„í™©ì„
                                         </span><span
-                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,±¼¸²,AppleGothic,sans-serif; COLOR: #353535">¾Ë·Áµå¸®°Ú½À´Ï´Ù.</span><span
+                                            style="FONT-SIZE: 10pt; FONT-FAMILY: Gulim,êµ´ë¦¼,AppleGothic,sans-serif; COLOR: #353535">ì•Œë ¤ë“œë¦¬ê² ìŠµë‹ˆë‹¤.</span><span
                                             style="COLOR: #000000"><br></span></p>
                                 </div>
-                                <!--//txt ¿µ¿ª-->
+                                <!--//txt ì˜ì—­-->
                             </div>
                             <!--best-txt01 -->
                         </div>
@@ -649,7 +632,7 @@
                         <div class="paging">
                             <div class="page-prevarea">
                                 <div class="page-prevarea">
-                                    <strong aria-label="ÇöÀç ¼±ÅÃÆäÀÌÁö">1</strong>
+                                    <strong aria-label="í˜„ìž¬ ì„ íƒíŽ˜ì´ì§€">1</strong>
                                     <a href="/p/ccc/faqList.do?page=2">2</a>
                                     <a href="/p/ccc/faqList.do?page=3">3</a>
                                     <a href="/p/ccc/faqList.do?page=4">4</a>

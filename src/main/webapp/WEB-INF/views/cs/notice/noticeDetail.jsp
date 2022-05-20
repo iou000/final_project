@@ -9,6 +9,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
 </head>
 <body>
                 <!-- .contents -->
@@ -69,28 +70,36 @@
                                     <tr>
                                         <th scope="row">이전글</th>
                                         <td class="nowrap txt-left">
-
-
-                                            <a href="/p/ccb/noticeView.do?ancmId=53597&page=1&topFixYn=N">현대홈쇼핑 금융소비자보호
-                                                내부통제기준 및 금융소비자보호기준</a>
-
+                                        <c:choose>
+                                        	<c:when test="${article.prev_id != null }">
+                                            	<a href="${app }/cs/noticeView.do?articleid=${article.prev_id}">${article.prev_title }</a>
+											</c:when>
+											
+											<c:when test="${article.prev_id == null }">
+                                            	<p>${article.prev_title }</p>
+											</c:when>
+										</c:choose>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">다음글</th>
                                         <td class="nowrap txt-left">
-
-
-                                            <a href="/p/ccb/noticeView.do?ancmId=53584&page=1&topFixYn=N">개인정보처리방침 변경
-                                                안내(08/05)</a>
-
+                                        <c:choose>
+                                        	<c:when test="${article.next_id != null }">
+                                            	<a href="${app }/cs/noticeView.do?articleid=${article.next_id}">${article.next_title }</a>
+											</c:when>
+											
+											<c:when test="${article.next_id == null }">
+                                            	<p>${article.next_title }</p>
+											</c:when>
+										</c:choose>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="btngroup cuslist-btn">
-                            <button onclick="location.href='/p/ccb/noticeList.do?page=1'"
+                            <button onclick="location.href='${app}/cs/noticeList.do?page=1'"
                                 class="btn btn-linegray small"><span>목록</span></button>
                         </div>
                     </div>

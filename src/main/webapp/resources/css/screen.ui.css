@@ -2,91 +2,91 @@
 
 @font-face {
   font-family: 'HGGGothicssi';
-  src: url("/assets/app/fonts/HGGGothicssi_Pro_00g.ttf") format("ttf"), url("/assets/app/fonts/HGGGothicssi_Pro_00g.woff") format("woff");
+  src: url("../fonts/HGGGothicssi_Pro_00g.ttf") format("ttf"), url("../fonts/HGGGothicssi_Pro_00g.woff") format("woff");
   font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'HGGGothicssi';
-  src: url("/assets/app/fonts/HGGGothicssi_Pro_20g.ttf") format("ttf"), url("/assets/app/fonts/HGGGothicssi_Pro_20g.woff") format("woff");
+  src: url("../fonts/HGGGothicssi_Pro_20g.ttf") format("ttf"), url("../fonts/HGGGothicssi_Pro_20g.woff") format("woff");
   font-weight: 200;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'HGGGothicssi';
-  src: url("/assets/app/fonts/HGGGothicssi_Pro_40g.ttf") format("ttf"), url("/assets/app/fonts/HGGGothicssi_Pro_40g.woff") format("woff");
+  src: url("../fonts/HGGGothicssi_Pro_40g.ttf") format("ttf"), url("../fonts/HGGGothicssi_Pro_40g.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'HGGGothicssi';
-  src: url("/assets/app/fonts/HGGGothicssi_Pro_60g.ttf") format("ttf"), url("/assets/app/fonts/HGGGothicssi_Pro_60g.woff") format("woff");
+  src: url("../fonts/HGGGothicssi_Pro_60g.ttf") format("ttf"), url("../fonts/HGGGothicssi_Pro_60g.woff") format("woff");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'HGGGothicssi';
-  src: url("/assets/app/fonts/HGGGothicssi_Pro_80g.ttf") format("ttf"), url("/assets/app/fonts/HGGGothicssi_Pro_80g.woff") format("woff");
+  src: url("../fonts/HGGGothicssi_Pro_80g.ttf") format("ttf"), url("../fonts/HGGGothicssi_Pro_80g.woff") format("woff");
   font-weight: 800;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'HGGGothicssi';
-  src: url("/assets/app/fonts/HGGGothicssi_Pro_99g.ttf") format("ttf"), url("/assets/app/fonts/HGGGothicssi_Pro_99g.woff") format("woff");
+  src: url("../fonts/HGGGothicssi_Pro_99g.ttf") format("ttf"), url("../fonts/HGGGothicssi_Pro_99g.woff") format("woff");
   font-weight: 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url("/assets/app/fonts/NotoSansKR-Thin.woff2") format("woff2"), url("/assets/app/fonts/NotoSansKR-Thin.woff") format("woff"), url("/assets/app/fonts/NotoSansKR-Thin.ttf") format("truetype");
+  src: url("../fonts/NotoSansKR-Thin.woff2") format("woff2"), url("../fonts/NotoSansKR-Thin.woff") format("woff"), url("../fonts/NotoSansKR-Thin.ttf") format("truetype");
   font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url("/assets/app/fonts/NotoSansKR-Light.woff2") format("woff2"), url("/assets/app/fonts/NotoSansKR-Light.woff") format("woff"), url("/assets/app/fonts/NotoSansKR-Light.ttf") format("truetype");
+  src: url("../fonts/NotoSansKR-Light.woff2") format("woff2"), url("../fonts/NotoSansKR-Light.woff") format("woff"), url("../fonts/NotoSansKR-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url("/assets/app/fonts/NotoSansKR-DemiLight.woff2") format("woff2"), url("/assets/app/fonts/NotoSansKR-DemiLight.woff") format("woff"), url("/assets/app/fonts/NotoSansKR-DemiLight.ttf") format("truetype");
+  src: url("../fonts/NotoSansKR-DemiLight.woff2") format("woff2"), url("../fonts/NotoSansKR-DemiLight.woff") format("woff"), url("../fonts/NotoSansKR-DemiLight.ttf") format("truetype");
   font-weight: 350;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url("/assets/app/fonts/NotoSansKR-Regular.woff2") format("woff2"), url("/assets/app/fonts/NotoSansKR-Regular.woff") format("woff"), url("/assets/app/fonts/NotoSansKR-Regular.ttf") format("truetype");
+  src: url("../fonts/NotoSansKR-Regular.woff2") format("woff2"), url("../fonts/NotoSansKR-Regular.woff") format("woff"), url("../fonts/NotoSansKR-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url("/assets/app/fonts/NotoSansKR-Medium.woff2") format("woff2"), url("/assets/app/fonts/NotoSansKR-Medium.woff") format("woff"), url("/assets/app/fonts/NotoSansKR-Medium.ttf") format("truetype");
+  src: url("../fonts/NotoSansKR-Medium.woff2") format("woff2"), url("../fonts/NotoSansKR-Medium.woff") format("woff"), url("../fonts/NotoSansKR-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url("/assets/app/fonts/NotoSansKR-Bold.woff2") format("woff2"), url("/assets/app/fonts/NotoSansKR-Bold.woff") format("woff"), url("/assets/app/fonts/NotoSansKR-Bold.ttf") format("truetype");
+  src: url("../fonts/NotoSansKR-Bold.woff2") format("woff2"), url("../fonts/NotoSansKR-Bold.woff") format("woff"), url("../fonts/NotoSansKR-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url("/assets/app/fonts/NotoSansKR-Black.woff2") format("woff2"), url("/assets/app/fonts/NotoSansKR-Black.woff") format("woff"), url("/assets/app/fonts/NotoSansKR-Black.ttf") format("truetype");
+  src: url("../fonts/NotoSansKR-Black.woff2") format("woff2"), url("../fonts/NotoSansKR-Black.woff") format("woff"), url("../fonts/NotoSansKR-Black.ttf") format("truetype");
   font-weight: 900;
   font-style: normal;
 }
@@ -3356,7 +3356,7 @@ input[type=radio] + label {
   top: 1px;
   width: 26px;
   height: 26px;
-  background-image: url("/assets/app/img/common/chk_bg1.png");
+  background-image: url("../images/chk_bg1.png");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: 0 0;
@@ -7460,7 +7460,7 @@ input[type=radio] + label {
   top: 11px;
   width: 11px;
   height: 10px;
-  background-image: url("/assets/app/img/common/chk_bg2.png");
+  background-image: url("../images/chk_bg2.png");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: 0 0;
@@ -7471,7 +7471,7 @@ input[type=radio] + label {
 }
 
 #sign .marketing_agree .marketing_chk .box.box_type2 .list li.on::before {
-  background-image: url("/assets/app/img/common/chk_bg2.png");
+  background-image: url("../images/chk_bg2.png");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: 0 -10px;
@@ -7630,28 +7630,28 @@ input[type=radio] + label {
 }
 
 #sign .sign_up .wrap_sign_step ol li.on.step1 .num {
-  background-image: url("/assets/app/img/sign/ic_signup_step1.png");
+  background-image: url("../images/ic_signup_step1.png");
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center center;
 }
 
 #sign .sign_up .wrap_sign_step ol li.on.step2 .num {
-  background-image: url("/assets/app/img/sign/ic_signup_step2.png");
+  background-image: url("../images/ic_signup_step2.png");
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center center;
 }
 
 #sign .sign_up .wrap_sign_step ol li.on.step3 .num {
-  background-image: url("/assets/app/img/sign/ic_signup_step3.png");
+  background-image: url("../images/ic_signup_step3.png");
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center center;
 }
 
 #sign .sign_up .wrap_sign_step ol li.on.step4 .num {
-  background-image: url("/assets/app/img/sign/ic_signup_step4.png");
+  background-image: url("../images/ic_signup_step4.png");
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center center;
@@ -9819,7 +9819,7 @@ input[type=radio] + label {
   top: 11px;
   width: 11px;
   height: 10px;
-  background-image: url("/assets/app/img/common/chk_bg2.png");
+  background-image: url("../images/chk_bg2.png");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: 0 0;
@@ -9830,7 +9830,7 @@ input[type=radio] + label {
 }
 
 .my_infomation .modify_complete .marketing_agree .marketing_chk .box.box_type2 .list li.on::before {
-  background-image: url("/assets/app/img/common/chk_bg2.png");
+  background-image: url("../images/chk_bg2.png");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: 0 -10px;
@@ -19919,7 +19919,7 @@ input[type=radio] + label {
   .checkbox_ui.type1 input[type="checkbox"] + label::before {
     width: 20px;
     height: 20px;
-    background-image: url("/assets/app/img/common/mo/chk_bg1.png");
+    background-image: url("../images/chk_bg1.png");
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: 0 0;
@@ -19941,7 +19941,7 @@ input[type=radio] + label {
   .radio_ui.type1 input[type="radio"] + label::before {
     width: 20px;
     height: 20px;
-    background-image: url("/assets/app/img/common/mo/rdo_bg1.png");
+    background-image: url("../images/chk_bg1.png");
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: 0 0;
@@ -21415,14 +21415,14 @@ input[type=radio] + label {
     top: 13px;
     width: 10px;
     height: 7px;
-    background-image: url("/assets/app/img/common/mo/chk_bg2.png");
+    background-image: url("../images/chk_bg2.png");
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: 0 0;
   }
 
   #sign .marketing_agree .marketing_chk .box.box_type2 .list li.on::before {
-    background-image: url("/assets/app/img/common/mo/chk_bg2.png");
+    background-image: url("../images/chk_bg2.png");
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: 0 -7px;
@@ -23189,14 +23189,14 @@ input[type=radio] + label {
     top: 13px;
     width: 10px;
     height: 7px;
-    background-image: url("/assets/app/img/common/mo/chk_bg2.png");
+    background-image: url("../images/chk_bg2.png");
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: 0 0;
   }
 
   .my_infomation .modify_complete .marketing_agree .marketing_chk .box.box_type2 .list li.on::before {
-    background-image: url("/assets/app/img/common/mo/chk_bg2.png");
+    background-image: url("../images/chk_bg2.png");
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: 0 -7px;
