@@ -7,6 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.hmall.team04.dto.user.UserDTO;
 import com.hmall.team04.service.user.UserService;
 
 import lombok.extern.log4j.Log4j;
@@ -61,9 +65,39 @@ public class UserController {
 		return "user.find.findId";
 	}
 	
+	
 	@PostMapping("/findIdNameEmail")
-	public String findIdNameEmail(String usernm, String email, Model model) {
-		userService.findIdbyNameEmail(usernm, email);
-		return "user/find/findId";
+	public String findIdNameEmail(@RequestParam String emailName, @RequestParam String email, Model model) {
+		UserDTO userDTO = new UserDTO();
+		try {
+			userDTO = userService.findIdbyNameEmail(emailName, email);
+			model.addAttribute("userDTO", userDTO);
+			return "user.find.findIdSuccessResult";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return "user.find.findIdFailResult";
+		}
+		
 	}
+	
+	@GetMapping("/findPwd")
+	public String findPwd() {
+		log.info("find pwd");
+		return "user.find.findPwd";
+	}
+	
+	@PostMapping("/findPwd")
+	@ResponseBody
+	public String findPwd(@RequestParam String id, @RequestParam String email, @RequestParam String pno, Model model) throws Exception {
+		log.info("----------------test " + email);
+		
+		int findpw = userService.findPwd(id, email, pno);
+		if (findpw == 1) {
+			return "1";
+		}
+		else {
+			return "0";
+		}
+	}
+	
 }

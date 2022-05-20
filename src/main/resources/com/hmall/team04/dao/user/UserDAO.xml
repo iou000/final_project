@@ -45,4 +45,12 @@
 		WHERE user_nm = #{usernm} and email = #{email}
 	</select>
 	
+	<select id="findPwd" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			user_t 
+		WHERE user_id = #{user_id} and email = #{email} and hp_no = #{hp_no}
+	</select>
+	
 </mapper>

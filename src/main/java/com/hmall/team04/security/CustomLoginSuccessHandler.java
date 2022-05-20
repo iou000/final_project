@@ -28,33 +28,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 				HttpServletResponse response, Authentication authentication)
 				throws IOException, ServletException {
 		 	ObjectMapper mapper = new ObjectMapper();	//JSON 변경용
-	    	String rememeberID = (String) request.getAttribute("rememberId");
-	    	//아이디 저장을 체크했을 때
-	    	log.info("---------------------test: " + request.getAttribute("rememberId"));
-	    	if (rememeberID.equals("r")) {
-	    		log.info("-----------------test----------------------------");
-	    		// 쿠키에 ID를 저장한다. 저장하는 아이디는 하루동안 쿠키에 저장하는 걸로 설정
-	    		Cookie oldCookie = null;
-			    Cookie[] cookies = request.getCookies();
-	    		if (cookies != null) {
-			        for (Cookie cookie : cookies) {
-			            if (cookie.getName().equals("REMEMBERID")) {
-			            	oldCookie = cookie;
-			            }
-			        }
-			    }
-	    		if (oldCookie != null) {
-	    			oldCookie.setMaxAge(60 * 60 * 24);
-	    			oldCookie.setValue(authentication.getName());
-	            	response.addCookie(oldCookie);
-	    		}
-	    		else {
-	    			Cookie newCookie = new Cookie("REMEMBERID", authentication.getName());
-	    			newCookie.setMaxAge(60 * 60 * 24);
-	    			newCookie.setValue(authentication.getName());
-	            	response.addCookie(newCookie);
-	    		}
-	    	}
+	    	
 	    	ResponseDataDTO responseDataDTO = new ResponseDataDTO();
 	    	responseDataDTO.setCode(ResponseDataCode.SUCCESS);
 	    	responseDataDTO.setStatus(ResponseDataStatus.SUCCESS);
