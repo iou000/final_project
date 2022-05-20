@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="app" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
-
+ 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
     <style>
         .hidden {
             display: none !important;
@@ -46,6 +49,12 @@
             background: #f8f8f8;
             border-radius: 5px;
         }
+        
+        .btngroup {
+    	display: inline-block !important;
+    	justify-content: space-between;
+    
+    	}
     </style>
     <script type="text/javascript">
         function checkCseg() {
@@ -142,14 +151,7 @@
 
     </script>
 </head>
-<body>
-    <div class="wrap customer-center">
-        <main class="cmain customer" role="main" id="mainContents">
-            <!-- 마이페이지 'mypage' 클래스 추가 -->
-            <div class="container">
                 <div class="contents">
-                    <!--search : 자주 묻는 질문-->
-                    <!--1:1문의하기 / 공지사항-->
                     <div class="cus-wrap noti">
                       <!--공지사항-->
                         <div class="noti-wrap">
@@ -725,10 +727,6 @@
 
                 </div>
                 <!-- // .contents -->
-            </div>
-            <!-- //.container -->
-        </main>
-    </div>
 </body>
 
 </html>

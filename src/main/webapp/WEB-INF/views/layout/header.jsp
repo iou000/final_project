@@ -16,10 +16,7 @@
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/layout.css"><!-- 공통 Layout css -->
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/popup.css"><!-- 공통 Popup css -->
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/jquery-ui.css"><!-- jQuery UI css -->
-<link rel="stylesheet" type="text/css" href="${app}/resources/css/login.css">
-<link rel="stylesheet" type="text/css" href="${app}/resources/css/screen.ui.css">
-<link rel="stylesheet" type="text/css" href="${app}/resources/css/swiper.min.css">
- <link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css"> 
+ 
 <script type="text/javascript">
 
 
