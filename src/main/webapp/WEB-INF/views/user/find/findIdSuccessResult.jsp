@@ -1,13 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+	prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="app" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/login.css">
+<script src="//image.hmall.com/p/js/co/jquery-3.4.1.min.js"></script><!-- jQuery Plugin -->
+<script src="//image.hmall.com/p/js/co/jquery.easing.min.js"></script><!-- jQuery UI Effect -->
+<script src="//image.hmall.com/p/js/co/jquery-ui.1.12.1.min.js"></script><!-- jQuery UI js -->
+<script src="//image.hmall.com/p/js/co/ukDetect.min.js"></script><!-- UI에 사용하는 Detect -->
+<script src="//image.hmall.com/p/js/co/slick.min.js"></script><!-- 공통 Slide 플러그인 -->
+<script src="//image.hmall.com/p/js/co/common.js"></script><!-- UI에 사용하는 기본 js  -->
+<script src="//image.hmall.com/p/js/co/co.js"></script><!-- UI에 사용하는 기본 js  -->
+<script src="//image.hmall.com/p/js/co/jquery.cookie.js"></script>
+<script src="//image.hmall.com/p/js/co/commonFunction.js"></script><!-- as-is common.js 상속  -->
+<script src="//image.hmall.com/p/js/co/reDirectExceptUrlList.js"></script><!-- 로그인버튼 click 리다이렉트 예외 url리스트  -->
+
 </head>
 <body>
-	<main class="cmain main" role="main" id="mainContents"><!-- 메인페이지 'main' 클래스 추가 -->
+
+<main class="cmain main" role="main" id="mainContents"><!-- 메인페이지 'main' 클래스 추가 -->
         <div class="container">
             <div class="cbody gird-full">
                 <div class="contents w520">
@@ -18,32 +34,27 @@
                         </dl>
                         <!--//tit-wrap-->
                         <!--아코디언-->
-                        <form id = "findIdForm" name="findIdForm" method="post" action="" >
+                        <form id = "findIdForm" name="findIdForm" method="post" action="${app}/findIdNameEmail" >
+                        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <div class="accparent">
                                 <!--등록된 이메일로 찾기--> 
                                 <h3 class="selected">
-                                    <button data-modules-collapse="parent:.accparent;" class="accordion-trigger" aria-expanded="false">
                                         <span><span class="bgcircle"><i class="icon user-email"></i></span>등록된 이메일로 찾기</span>
-                                    </button>
                                 </h3>
                                 <div class="accordion-panel user-find-id-email selected" role="user-find-id-email" aria-label="등록된 이메일로 찾기">
                                     <!--inputbox fail일 경우 class="failed" 붙여줘야함-->
-                                    <div class="inputbox" id="divEmailName">
-                                        <label class="inplabel">
-                                            <input type="text" id="emailName" name="emailName" placeholder="이름">
-                                        </label>
-                                        <button class="btn ico-clearabled"><i class="icon"></i><span class="hiding">지우기</span></button>
-                                    </div>
-                                    <div class="inputbox" id="divEmailId">
-                                        <label class="inplabel"><input type="text" id="email" name="email" placeholder="이메일"></label>
-                                        <button class="btn ico-clearabled"><i class="icon"></i><span class="hiding">지우기</span></button>
-                                    </div>
-                                    <!-- fail일 경우 메세지 출력 alertEmailName alertEmail 합침-->
+                                    <p style="text-align:center;">
+                                    	등록된 이메일로 찾는 아이디는 <span style="color:#FF5340;"><strong>"${userDTO.user_id}"</strong></span> 입니다.
+                                    </p>
+                                    <br />
+                                    <br />
+                                    <p style="text-align:center;">
+                                    	회원님의 아이디는 <fmt:formatDate value="${userDTO.ins_dt}" pattern="yyyy-MM-dd"/> hmall 홈페이지 회원으로 가입하셨습니다.<br />
+                                    </p>
                                     <p class="failed-msg" id="alertEmail" style="display:none;">
                                         <i class="icon error"></i>
                                         <span>이메일을 입력해주세요.</span>
                                     </p>
-                                    <button class="btn btn-linered medium" type="button" onclick="sendEmail();"><span>확 인</span></button>
                                 </div>
 
                             </div>

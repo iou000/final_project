@@ -30,54 +30,7 @@
             });
 
             $("input[name='emailName']").blur(function() {
-                var emailName = $("input[name='emailName']").val();
-                var alertSpan = $("#alertEmail span");
-                $("#divEmailName").addClass('failed');
-                var v_num  = 0;
-                var v_spe  = 0;
-                var pattern1 = /\s{2,}/g; //2021.07.23 KJH 공백 1개만 허용
-
-                if (isEmpty(emailName)) {
-                    isValidEmailName = false;
-                    $("#alertEmail").show();
-                    alertSpan.text("이름을 입력해 주세요.");
-                    return;
-                } else if (pattern1.test(emailName)){
-                    isValidEmailName = false;
-                    $("#alertEmail").show();
-                    alertSpan.text("공백은 연속해서 입력할 수 없습니다.");
-                    return;
-                } else if (emailName[0] == " " || emailName[0] == "\t") {
-		            isValidName = false;
-		            $("#alertEmail").show();
-		            alertSpan.text("이름은 공백으로 시작할 수 없습니다.").show();
-		            return;
-                } else if (emailName[emailName.length-1] == " " || emailName[emailName.length-1] == "\t") {
-		            isValidName = false;
-		            $("#alertEmail").show();
-		            alertSpan.text("이름은 공백으로 끝날 수 없습니다.").show();
-		            return;
-		        } else {
-
-                    //1.이름에 포함된 숫자,특수문자구분
-                    for(var i=0;i<emailName.length;i++){
-                        if(ufn_ASCII(emailName,i)>=48 && ufn_ASCII(emailName,i)<=57){ v_num = 1; }//숫자
-                        else if((ufn_ASCII(emailName,i)>=33 && ufn_ASCII(emailName,i)<=47)||(ufn_ASCII(emailName,i)>=58 && ufn_ASCII(emailName,i)<=64)||(ufn_ASCII(emailName,i)>=91 && ufn_ASCII(emailName,i)<=96)||(ufn_ASCII(emailName,i)>=123 && ufn_ASCII(emailName,i)<=126)){
-                            v_spe = 1;//특수문자
-                        }
-                    }
-
-                    if((v_num+v_spe) > 0 || /[^(가-힣a-zA-Z\s)]/.test(emailName)){ //2021.07.23 KJH 공백 1개만 허용
-                        isValidEmailName = false;
-                        $("#alertEmail").show();
-                        alertSpan.text("이름에 숫자, 특수문자는 들어갈 수 없습니다.");
-                    } else {
-                        isValidEmailName = true;
-                        $("div#divEmailName").removeClass('failed');
-                        $("#alertEmail").hide();
-                    }
-
-                }
+                checkName();
             });
 
             $("input[name='email']").blur(function() {
@@ -85,6 +38,41 @@
             });
 
         });
+        
+        function checkName() {
+        	var emailName = $("input[name='emailName']").val();
+            var alertSpan = $("#alertEmail span");
+            $("#divEmailName").addClass('failed');
+            var v_num  = 0;
+            var v_spe  = 0;
+            var pattern1 = /\s{2,}/g; //2021.07.23 KJH 공백 1개만 허용
+
+            if (isEmpty(emailName)) {
+                isValidEmailName = false;
+                $("#alertEmail").show();
+                alertSpan.text("이름을 입력해 주세요.");
+                return;
+            } else if (pattern1.test(emailName)){
+            	isValidEmailName = false;
+                $("#alertEmail").show();
+                alertSpan.text("공백은 연속해서 입력할 수 없습니다.");
+                return;
+            } else if (emailName[0] == " " || emailName[0] == "\t") {
+            	isValidEmailName = false;
+	            $("#alertEmail").show();
+	            alertSpan.text("이름은 공백으로 시작할 수 없습니다.").show();
+	            return;
+            } else if (emailName[emailName.length-1] == " " || emailName[emailName.length-1] == "\t") {
+            	isValidEmailName = false;
+	            $("#alertEmail").show();
+	            alertSpan.text("이름은 공백으로 끝날 수 없습니다.").show();
+	            return;
+	        } else {
+                    isValidEmailName = true;
+                    $("#divEmailName").removeClass('failed');
+                    $("#alertEmail").hide();
+            }
+        }
         
         function checkEmail() {
             var divChk      = $("#divEmailId");
@@ -141,7 +129,6 @@
             }
             // 이메일 유효성 체크
             if (!isValidEmail) {
-                $("input[name='email']").focus();
                 $("#alertEmail").show();
                 return;
             }
@@ -193,13 +180,7 @@
             return true;
         }
    
-        function findPwd(){
-            location.href= "/p/cob/findPwdPupEmail.do";
-            $("#findIdForm")[0].reset();
-            $("#emailName").val('');
-            $("#email").val('');
-        }
-
+	
     </script>
 </head>
 <body>
@@ -214,14 +195,12 @@
                             <dt class="title24">아이디 찾기</dt>
                         </dl>
                         <!--//tit-wrap-->
-                        <!--아코디언-->
                         <form id = "findIdForm" name="findIdForm" method="post" action="${app}/findIdNameEmail" >
+                        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <div class="accparent">
                                 <!--등록된 이메일로 찾기--> 
                                 <h3 class="selected">
-                                    <button data-modules-collapse="parent:.accparent;" class="accordion-trigger" aria-expanded="false">
                                         <span><span class="bgcircle"><i class="icon user-email"></i></span>등록된 이메일로 찾기</span>
-                                    </button>
                                 </h3>
                                 <div class="accordion-panel user-find-id-email selected" role="user-find-id-email" aria-label="등록된 이메일로 찾기">
                                     <!--inputbox fail일 경우 class="failed" 붙여줘야함-->
@@ -240,23 +219,22 @@
                                         <i class="icon error"></i>
                                         <span>이메일을 입력해주세요.</span>
                                     </p>
-                                    <button class="btn btn-linered medium" type="button" onclick="sendEmail();"><span>확 인</span></button>
+                                    <button class="btn btn-linered medium" type="submit"><span>확 인</span></button>
                                 </div>
 
                             </div>
                         </form>
-                        <!--//아코디언-->
 
-                        <!--아코디언 footer-->
+                        <!--footer-->
                         <div class="acc-footinfo">
                             <p class="text-msg">아이디/패스워드 찾기가 안될 경우,</p>
                             <p class="text-msg">고객센터 <a href="tel:1600-0000" class="tel">1600-0000</a>으로 문의하시기 바랍니다.</p>
                             <div class="linkwrap">
                                 <span class="txt">비밀번호를 찾으시나요?</span>
-                                <a href="#" onclick="findPwd();" class="alink"><span>비밀번호 찾기</span></a>
+                                <a href="./findPwd" class="alink"><span>비밀번호 찾기</span></a>
                             </div>
                         </div>
-                        <!--//아코디언 footer-->
+                        <!--//footer-->
                     </div>
                     <!--inner-box-->
                 </div>

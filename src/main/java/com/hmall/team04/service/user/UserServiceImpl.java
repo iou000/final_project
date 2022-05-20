@@ -18,9 +18,21 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public UserDTO findIdbyNameEmail(String usernm, String email) {
+	public UserDTO findIdbyNameEmail(String usernm, String email) throws Exception {
 		// TODO Auto-generated method stub
-		return userDAO.findIdbyNameEmail(usernm, email);
+		UserDTO userDTO = userDAO.findIdbyNameEmail(usernm, email);
+		if(userDTO == null) {
+			log.info("id 혹은 이메일이 존재하지 않습니다");
+			throw new Exception("id 혹은 이메일이 존재하지 않습니다");
+		}
+		return userDTO;
+	}
+
+	@Override
+	public int findPwd(String id, String email, String pno) throws Exception {
+		// TODO Auto-generated method stub
+		log.info("--------------test-------------" + email);
+		return userDAO.findPwd(id, email, pno);
 	}
 
 }
