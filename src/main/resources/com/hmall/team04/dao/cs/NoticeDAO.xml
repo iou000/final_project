@@ -42,8 +42,27 @@
 		FROM
 		    notice_v
 		ORDER BY article_id DESC
-		) a
+		) a 
 	where a.article_id = #{articleid}
+	</select>
+	
+	<select id="getNoticeListFive" resultType="NoticeDTO">
+	<![CDATA[	
+		SELECT 
+  			 noti.title 
+ 			,noti.ins_dt
+ 			,noti.article_id
+			FROM 
+  				(SELECT 
+  					 rownum AS ROW_num
+ 					,title
+ 					,article_id 
+ 					,ins_dt
+  					FROM notice_v
+  				) noti
+  			WHERE row_num <6
+ 			ORDER BY ins_dt DESC
+	]]>
 	</select>
 	
 	<!-- <select id="getBoardListPage" parameterType="long" resultType="NoticeDTO">

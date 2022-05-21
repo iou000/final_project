@@ -190,7 +190,6 @@
                 });
             }
         }
-
     </script>
 </head>
 <div class="contents">
@@ -199,7 +198,7 @@
         <div class="noti-wrap">
             <div class="tit-wrap">
                 <h3>공지사항</h3>
-                <p><a href="/p/ccb/noticeList.do">전체보기</a></p>
+                <p><a href="${app}/cs/noticeList.do">전체보기</a></p>
             </div>
             <!--tblwrap tbl-list-->
             <div class="tblwrap tbl-list">
@@ -210,47 +209,29 @@
                         <col style="width:75px">
                     </colgroup>
                     <tbody>
+                    <c:forEach items="${Nlist}" var="nlist" varStatus="vs">
                         <tr>
-                            <td class="nowrap"><a href="/p/ccb/noticeView.do?ancmId=53744&page=1">현대홈쇼핑
-                                    멤버십 제도 개편 안내</a></td>
-                            <td class="txt-center"><span class="date">2022.05.02</span></td>
+                            <td class="nowrap"><a href="${app}/cs/noticeView.do?articleid=${nlist.article_id}">${nlist.title}</a></td>
+                            <td class="txt-center"><span class="date"><fmt:formatDate value="${nlist.ins_dt}" type="date" /></span></td>
                         </tr>
-                        <tr>
-                            <td class="nowrap"><a href="/p/ccb/noticeView.do?ancmId=53740&page=1">현대홈쇼핑
-                                    상시채용 안내</a></td>
-                            <td class="txt-center"><span class="date">2022.04.15</span></td>
-                        </tr>
-                        <tr>
-                            <td class="nowrap"><a href="/p/ccb/noticeView.do?ancmId=53722&page=1">개인정보처리방침
-                                    변경
-                                    안내(01/27)</a></td>
-                            <td class="txt-center"><span class="date">2022.01.27</span></td>
-                        </tr>
-                        <tr>
-                            <td class="nowrap"><a href="/p/ccb/noticeView.do?ancmId=53597&page=1">현대홈쇼핑
-                                    금융소비자보호 내부통제기준 및 금융소비자보호기준</a></td>
-                            <td class="txt-center"><span class="date">2021.09.24</span></td>
-                        </tr>
-                        <tr>
-                            <td class="nowrap"><a href="/p/ccb/noticeView.do?ancmId=53596&page=1">현대홈쇼핑
-                                    보험대리점등록증</a></td>
-                            <td class="txt-center"><span class="date">2021.09.24</span></td>
-                        </tr>
+                    </c:forEach>    
                     </tbody>
                 </table>
             </div>
             <!--//tblwrap tbl-list-->
         </div>
-   
+
 
         <!--1:1 문의하기-->
         <div class="question-wrap">
             <h3>1:1 문의하기</h3>
             <div class="btngroup">
-                <button class="btn btn-chat" type="button" onclick="openCnslChat();"><span><i class="icon"></i>1:1 문의하기
-                    </span></button>
-                <button class="btn btn-board" onclick="openCnslAcptPup(); return false;"><span><i class="icon"></i>내
-                        상담내역 조회</span></button>
+                <button class="btn btn-chat" type="button" onclick="window.open('${app}/cs/qnaInsPopUp','1:1 문의하기','width=756,height=700')">
+                	<span><i class="icon"></i>1:1 문의하기</span>
+                </button>
+                <button class="btn btn-board" onclick="location.href='${app}/cs/qna.do'">
+                	<span><i class="icon"></i>내 상담내역 조회</span>
+                </button>
 
             </div>
         </div>
