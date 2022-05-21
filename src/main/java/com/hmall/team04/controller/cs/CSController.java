@@ -39,7 +39,9 @@ public class CSController {
 	public String main(Model model) throws Exception {
 		try {
 			List<FaqDTO> list = faqService.getfaqList(); 
+			List<NoticeDTO> Nlist = noticeService.getNoticeListFive();
 			model.addAttribute("list", list);
+			model.addAttribute("Nlist",Nlist);
 			return "cs.faq.faqMainList";
 		}
 		catch(Exception e ) {
@@ -114,4 +116,15 @@ public class CSController {
 	public String findInCart() {
 		return "cs/qna/cartListPopup";
 	}
+	
+	@GetMapping("/qna.do")
+	public String qnaList() {
+		return "cs.qna.qnaList";
+	}
+	
+	@GetMapping("/faq.do")
+	public String faqList() {
+		return "cs.faq.faqList";
+	}
+	
 }

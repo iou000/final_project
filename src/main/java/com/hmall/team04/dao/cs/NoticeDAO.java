@@ -9,5 +9,7 @@ public interface NoticeDAO {
 	List<NoticeDTO> getNoticeList() throws Exception;
 
 	NoticeDTO getNoticeArticle(String articleid) throws Exception;
+	
+	List<NoticeDTO> getNoticeListFive() throws Exception;
 
 }

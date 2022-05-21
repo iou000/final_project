@@ -32,5 +32,11 @@ public class NoticeServiceImpl implements NoticeService {
 	public NoticeDTO getNoticeArticle(String articleid) throws Exception {
 		return noticeDAO.getNoticeArticle(articleid);
 	}
+
+	@Override
+	public List<NoticeDTO> getNoticeListFive() throws Exception {
+		
+		return noticeDAO.getNoticeListFive();
+	}
 	
 }
