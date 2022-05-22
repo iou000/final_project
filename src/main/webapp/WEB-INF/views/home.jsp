@@ -38,128 +38,54 @@ $(document).ready(function() {
 });
 
 </script>
-<div class="main-contents-area">
+	<div class="main-contents-area">
 
-
-<div class="home-section pd-wrap">
-	<!-- part0 index.jsp에서 prd_board 보여주는 basic -->
-	<div class="goodluckTem">
-		<div class="titArea">
-			<h3>part0 index.jsp에서 prd_board 보여주는 basic 형태</h3>
+		<div class="home-section pd-wrap">
+			<div class="titArea">
+				<h3>Basic</h3>
+			</div>
 		</div>
-		
-		<!-- pdlist-wrap -->
-		<div class="pdlist-wrap pdeal">
-			<ul>
-			<c:forEach items="${productboadrList}" var="dto">
-			
-					<li class="pdthumb" ga-custom-title="" ga-custom-name="" ga-custom-position="" ga-custom-creative="" ga-custom-id="" ga-custom-etc="">
-					
-					<!-- 눈에 보이는 보드 사진으로서 클릭 시 해당 상품상세피이지로 간다. -->
-					<a href="javascript:;" onclick="goItemDetail('${app}/pda/selectBoard?prd_board_id=${dto.prd_board_id }', this);">
-							<div class="thumb ">
-								<img
-									src="${dto.upload_path }"
-									alt="${dto.prd_board_id }"
-									onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=orgxorg&amp;AR=0')">
-								</div>
-							<div class="figcaption">
 
-								<div class="pdname"
-									aria-label="${dto.prd_board_id }">${dto.prd_board_id }
-								</div>
-
-								<div class="pdprice">
-									<span class="rateprice" aria-label="할인율이 적용된 가격">
-										<em class="rate" aria-label="할인율">${dto.discount_rate }<i>%</i></em>
-										<p class="discount" aria-label="할인가">
-											<em>${dto.price }</em>원 外
-										</p>
-										<del class="normal" aria-label="정상가">${dto.price }</del>
-									</span>
-								</div>
-
-								<div class="pdinfo">
-									<div class="benefits">
-										<span>굿럭템</span> <span>무료배송</span>
+		<div class="home-section pd-wrap">
+				<!-- pdlist-wrap -->
+				<div class="pdlist-wrap pdeal">
+					<ul>
+						<c:forEach items="${productboadrList}" var="dto">
+							<li class="pdthumb">
+								<!-- 눈에 보이는 보드 사진으로서 클릭 시 해당 상품상세피이지로 간다. --> 
+								<a href="javascript:;" onclick="goItemDetail('${app}/pda/selectBoard?prd_board_id=${dto.prd_board_id }', this);">
+									<div class="thumb ">
+										<img src="${dto.upload_path }"
+										onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=orgxorg&amp;AR=0')">
 									</div>
-									
-									<p class="like-count">
-										<!-- 옵션상품 && 딜상품 -->
-										<em>11</em><b>개 구매중</b>
-									</p>
-								</div>
-							</div>
-					</a>
-					<a href="javascript:;" class="hoverview" onclick="goItemDetail('/pda/product', this , '_blank');">
-					<i class="icon"></i>새창열기</a></li>
-				</c:forEach>
+									<div class="figcaption">
 
-			</ul>
-		</div>
+										<div class="pdname" aria-label="${dto.title }">${dto.title }
+										</div>
 
-		<!-- // pdlist-wrap -->
-	</div>
+										<div class="pdprice">
+											<span class="rateprice" aria-label="정상가"> 
+												<p class="price" aria-label="정상가">
+													<em>${dto.price }</em>원
+												</p>
+											</span>
+										</div>
 
-	<!-- part1 전체 board 중 top 3 -->
-	<div class="goodluckTem">
-		<div class="titArea">
-			<h3>prd_board_table 전체에서 상품평점, review cnt 순 top 3 예정 ; 상단 basic을 변형 및 rownum 3 할 예정</h3>
-		</div>
-		
-		<!-- pdlist-wrap -->
-		<div class="pdlist-wrap pdeal">
-			<ul>
-			<c:forEach items="${productboadrList}" var="dto">
-			
-					<li class="pdthumb" ga-custom-title="" ga-custom-name="" ga-custom-position="" ga-custom-creative="" ga-custom-id="" ga-custom-etc="">
-					
-					<!-- 눈에 보이는 보드 사진으로서 클릭 시 해당 상품상세피이지로 간다. -->
-					<a href="javascript:;" onclick="goItemDetail('${app}/pda/product', this);">
-							<div class="thumb ">
-								<img
-									src="http://via.placeholder.com/250/ff9900/000000"
-									alt="${dto.prd_board_id }"
-									onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=orgxorg&amp;AR=0')">
-								</div>
-							<div class="figcaption">
-
-								<div class="pdname"
-									aria-label="${dto.prd_board_id }">${dto.prd_board_id }
-								</div>
-
-								<div class="pdprice">
-									<span class="rateprice" aria-label="할인율이 적용된 가격">
-										<em class="rate" aria-label="할인율">${dto.discount_rate }<i>%</i></em>
-										<p class="discount" aria-label="할인가">
-											<em>${dto.price }</em>원 外
-										</p>
-										<del class="normal" aria-label="정상가">${dto.price }</del>
-									</span>
-								</div>
-
-								<div class="pdinfo">
-									<div class="benefits">
-										<span>굿럭템</span> <span>무료배송</span>
+										<div class="pdinfo">
+											<p class="like-count">
+												<!-- 옵션상품 && 딜상품 -->
+												<em>11</em><b>개 구매중</b>
+											</p>
+										</div>
 									</div>
-									
-									<p class="like-count">
-										<!-- 옵션상품 && 딜상품 -->
-										<em>11</em><b>개 구매중</b>
-									</p>
-								</div>
-							</div>
-					</a>
-					<a href="javascript:;" class="hoverview" onclick="goItemDetail('/pda/product', this , '_blank');">
-					<i class="icon"></i>새창열기</a></li>
-				</c:forEach>
-
-			</ul>
+							</li>
+						</c:forEach>
+					</ul>
+				</div>
+				<!-- // pdlist-wrap -->
 		</div>
-
 	</div>
-</div>
-</div><!-- //main-contents-area -->
+	<!-- //main-contents-area -->
 
 	<h1>Hello world!</h1>
 

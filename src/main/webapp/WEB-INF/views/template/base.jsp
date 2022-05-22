@@ -1048,19 +1048,6 @@ function DirectCopnDownload(prmoNo){
 </head>
 <!--head_stop_flag-->
 
-<style>
-.adam_main_container {
-	width: 100%;
-	background: #7c7c7c;
-}
-
-.adam_product_contents {
-	position: relative;
-    width: 1081px;
-    margin: 0 auto;
-	background: #afafaf;
-}
-</style>
 
 
 <body>
@@ -1068,9 +1055,13 @@ function DirectCopnDownload(prmoNo){
 	<tiles:insertAttribute name="header" />
 	
 	<div class="container">
-
 		<div class="contents">
+		<div class="main-contents-area">
+		<div class="homeshoping-wrap">
+		
 			<tiles:insertAttribute name="body" />
+		</div>
+		</div>
 		</div>
 		
 	</div>
