@@ -1,4 +1,4 @@
-package com.hmall.team04.security.dao.category;
+package com.hmall.team04.dao.category;
 
 
 import java.sql.SQLException;
