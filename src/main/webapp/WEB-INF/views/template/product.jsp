@@ -24,31 +24,28 @@
 </head>
 
 <style>
-.content {
-	/*color for checking area of this css of menu*/
-	/*if component of content has white background, so it will be hided*/
-	/*background-color: #EAEAEA;*/
-	
+.adam_product_container {
+	width: 100%;
+    min-height: calc(100vh - 369px);
+   	background: #7c7c7c;
 }
 
-.menu {
-	/*margin: 0% 0% 0% 20%;
-	float: left;*/
-	
-}
-
-.page_content {
-	margin: 2% 10%;
+.adam_product_contents {
+	position: relative;
+    width: 1081px;
+    margin: 0 auto;
+	background: #afafaf;
 }
 </style>
 
 <body>
 
 	<tiles:insertAttribute name="header" />
-	<div class='page_content'>
-		<tiles:insertAttribute name="body" />
+	<div class="container">
+		<div class='contents'>
+			<tiles:insertAttribute name="body" />
+		</div>
 	</div>
-
 	<tiles:insertAttribute name="footer" />
 
 </body>

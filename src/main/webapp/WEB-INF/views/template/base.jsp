@@ -1049,13 +1049,15 @@ function DirectCopnDownload(prmoNo){
 <!--head_stop_flag-->
 
 <style>
-.content {
+.adam_main_container {
 	width: 100%;
 	background: #7c7c7c;
 }
 
-.page_content {
-	margin: 5% 21%;
+.adam_product_contents {
+	position: relative;
+    width: 1081px;
+    margin: 0 auto;
 	background: #afafaf;
 }
 </style>
@@ -1065,9 +1067,9 @@ function DirectCopnDownload(prmoNo){
 
 	<tiles:insertAttribute name="header" />
 	
-	<div class="content">
+	<div class="container">
 
-		<div class="page_content">
+		<div class="contents">
 			<tiles:insertAttribute name="body" />
 		</div>
 		

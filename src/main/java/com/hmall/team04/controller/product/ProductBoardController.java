@@ -30,9 +30,9 @@ public class ProductBoardController {
 		
 		try {
 			ProductBoardDTO productboadDTO = productboardService.getProductBoard(prd_board_id);
-			model.addAttribute("productboadDTO", productboadDTO);
+			log.info(productboadDTO.toString());
+			model.addAttribute("productboaddto", productboadDTO);
 			
-			log.info(productboadDTO);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

@@ -32,6 +32,13 @@
 		<put-attribute name="body" value="/WEB-INF/views/product/{1}.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
+		
+	<!-- 주문결제 페이지 -->
+	<definition name="order.*" template="/WEB-INF/views/template/order.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/order/{1}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
 	
 	<!-- 회원가입 -->
 	<definition name="user.signup.*" template="/WEB-INF/views/template/signUpLayout.jsp">

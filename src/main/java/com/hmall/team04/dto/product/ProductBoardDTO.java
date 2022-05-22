@@ -1,7 +1,5 @@
 package com.hmall.team04.dto.product;
 
-import java.sql.Blob;
-import java.sql.Clob;
 
 import lombok.Data;
 
@@ -18,6 +16,8 @@ public class ProductBoardDTO {
 	
 	// prd_t 
 	private String prd_id;
+	private String option1;
+	private String option2;
 	
 	// file_t
 	private String upload_path;
