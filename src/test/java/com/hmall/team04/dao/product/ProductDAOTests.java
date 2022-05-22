@@ -1,4 +1,4 @@
-package com.hmall.team04.security.dao.product;
+package com.hmall.team04.dao.product;
 
 
 import java.sql.SQLException;
