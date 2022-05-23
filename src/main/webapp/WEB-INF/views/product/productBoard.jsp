@@ -17,39 +17,34 @@
 				<!--20200902 ui 변경-->
 				<div class="product-banner-wrap">
 					<div data-modules-imageviewer="">
-						<div class="product-mainbanner slick-initialized slick-slider"
-							data-modules-slick="draggable:false; dots:false; infinite:true; thumbnaiList:.slider-thumbnaii;thumbnailsToShow:5;">
+						<div
+							class="product-mainbanner slick-initialized slick-slider slick-single"
+							data-modules-slick="draggable:false; dots:false; infinite:true; thumbnaiList:.slider-thumbnaii;thumbnailsToShow:1;">
 							<div class="slick-list">
 								<div class="slick-track"
-									style="opacity: 1; width: 2080px; transform: translate(-520px, 0px);">
-									<img src="${productboaddto.upload_path }">
-									<div class="slick-slide slick-cloned" data-slick-index="-1"
-										aria-hidden="true" style="width: 520px;" tabindex="-1">
-										<img src="${productboaddto.upload_path }">
+									style="opacity: 1; width: 520px; transform: translate(0px, 0px);">
+									<div class="slick-slide slick-current slick-active"
+										data-slick-index="0" aria-hidden="false" style="width: 520px;">
 										<div>
 											<div class="item" data-item=""
-												data-outputsrc="${productboaddto.upload_path }"
-												onerror="this.src='${productboaddto.upload_path }'"
+												data-outputsrc="${productboadDTO.upload_path}"
+												onerror="this.src='https://image.hmall.com/hmall/pd/no_image_600x600.jpg'"
 												style="width: 100%; display: inline-block; vertical-align: top;">
-												<img src="${productboaddto.upload_path }"> <a
-													href="javascript:;"
-													onclick="goGaEvent('상품상세','상단_이미지확대','')" tabindex="-1">
-													<img src="${productboaddto.upload_path }"
-													alt="2141123908_0.jpg"
-													onerror="noImage(this, '${productboaddto.upload_path }')">
-												</a>
+												<a href="javascript:;"
+													onclick="goGaEvent('상품상세','상단_이미지확대','')" tabindex="0"><img
+													src="${productboadDTO.upload_path}"
+													alt="2140365970_0.jpg"
+													onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=520x520&amp;AR=0')"></a>
 											</div>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
-
-
 						<div class="ui-angle"
-							style="display: none; width: 260px; height: 260px; top: 260px; left: 0px;"></div>
+							style="display: none; width: 260px; height: 260px; top: 0px; left: 230.5px;"></div>
 					</div>
+
 				</div>
 				<!-- // 상품 이미지 영역 끝 -->
 
@@ -67,7 +62,7 @@
 					<!-- 브랜드샵 -->
 
 					<div class="brand-info">
-						<a ga-custom-etc="urlAction"> <span class="brand-name">${productboaddto.brand}<i
+						<a ga-custom-etc="urlAction"> <span class="brand-name">${productboadDTO.brand}<i
 								class="icon icon-arrow"></i>
 						</span>
 						</a>
@@ -78,7 +73,7 @@
 					<!--prduct-title-info-->
 					<div class="prduct-title-info">
 
-						<strong class="prduct-name">${productboaddto.prd_board_id}</strong>
+						<strong class="prduct-name">${productboadDTO.prd_board_id}</strong>
 
 					</div>
 					<!--//prduct-title-info-->
@@ -109,14 +104,14 @@
 					<div class="pdprice">
 
 						<span class="rateprice" aria-label="할인율이 적용된 가격"> <em
-							class="rate" aria-label="할인율">${productboaddto.discount_rate }%</em>
+							class="rate" aria-label="할인율">${productboadDTO.discount_rate }%</em>
 
 							<!-- (우수고객혜택가) -->
 							<p class="discount" aria-label="할인가">
-								<em>${productboaddto.price * (100-productboaddto.discount_rate)/100 }</em>
+								<em>${productboadDTO.price * (100-productboadDTO.discount_rate)/100 }</em>
 								<b>원</b>
 							</p> <del class="normal" aria-label="정상가">
-								<em>${productboaddto.price }</em>원
+								<em>${productboadDTO.price }</em>원
 							</del> <!--옵션값이있을경우-->
 
 						</span>
@@ -127,7 +122,7 @@
 
 					<div class="pdinfo">
 						<span class="rateprice" aria-label="적립금"> <em
-							class="rate_save" aria-label="적립률">적립금 </em> <em>${productboaddto.price * (10)/100 }</em><b>원</b>
+							class="rate_save" aria-label="적립률">적립금 </em> <em>${productboadDTO.price * (10)/100 }</em><b>원</b>
 
 						</span>
 					</div>
@@ -164,9 +159,9 @@
 							<div class="product-info">
 								<div class="figcaption">
 									<c:choose>
-										<c:when test="${productboaddto.option1 == null}">
-											<span class="option">색상/속성 없음<em></em>
-											</span>
+										<c:when test="${productboadDTO.option1 == null}">
+											<em>${productboadDTO.prd_nm}</em><br>
+											<span class="option">색상/속성 없음</span>
 										</c:when>
 
 										<c:otherwise>
@@ -246,7 +241,7 @@
 					<div class="price-wrap">
 						<p class="total-price">
 
-							<strong>${productboaddto.price * (100-productboaddto.discount_rate)/100 }</strong>원
+							<strong>${productboadDTO.price * (100-productboadDTO.discount_rate)/100 }</strong>원
 
 						</p>
 					</div>
@@ -266,7 +261,7 @@
 					<!-- 엄지펀딩의 경우 장바구니 비노출 시작-->
 
 					<button class="btn btn-linelgray large btn-cart"
-						onclick="addCart(this);">
+						onclick="addCartCore(this);">
 						<span>장바구니</span>
 					</button>
 
@@ -280,7 +275,7 @@
 					<!-- 선물하기 끝-->
 
 					<button class="btn btn-default large btn-buy"
-						onclick="buyProduct(this);">
+						onclick="buyProductCore(this);">
 						<span>바로구매</span>
 					</button>
 
@@ -337,7 +332,7 @@
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>
-											<img src="${productboaddto.upload_path }">
+											<img src="${productboadDTO.upload_path }">
 										</p>
 										<p>&nbsp;</p>
 
@@ -531,15 +526,14 @@
 	<!--//scrollspy-wrap-->
 
 
-
 	<!-- .// product-detail-content -->
 </div>
 
 
 
 <script>
-	// 바로구매
-	function buyProduct(obj) {
+	// 장바구니
+	function addCartCore(obj) {
 		var token = $("input[name='_csrf']").val();
 		var header = "X-CSRF-TOKEN";
 
@@ -550,13 +544,52 @@
 				.val();
 
 		alert(cur_ordQty);
+		
+		$.ajax({
+			url : "${app}/team04/odb/basktList.do",
+			method : "POST",
+
+			data : {
+				ordQty : cur_ordQty
+			},
+			dataType : 'json',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+
+				location.href = '${app}/team04/odb/basktList.do';
+			}
+		});
+
+		alert('hi2');
+
+	}
+</script>
+
+<script>
+	// 바로구매
+	function buyProductCore(obj) {
+		var token = $("input[name='_csrf']").val();
+		var header = "X-CSRF-TOKEN";
+
+		var targetCssHeader = ".product-option-wrap:first";
+		var cur_ordQty = $(
+				targetCssHeader
+						+ " .select-product-list .pditem input[name='ordQty']")
+				.val();
+
+		alert(cur_ordQty);
+		
+		val_prd_board_id=$("${productboadDTO.prd_board_id }").val();
 
 		$.ajax({
 			url : "${app}/team04/oda/order.do",
 			method : "POST",
 
 			data : {
-				ordQty : cur_ordQty
+				ordQty : cur_ordQty,
+				prd_board_id : val_prd_board_id
 			},
 			dataType : 'json',
 			beforeSend : function(xhr) {
@@ -582,7 +615,7 @@
                 targetCssHeader + " .select-product-list .pditem input[name='ordQty']"
             ).val();
 
-		discount_payment =${productboaddto.price * (100-productboaddto.discount_rate)/100 };
+		discount_payment =${productboadDTO.price * (100-productboadDTO.discount_rate)/100 };
 		
         totSellPrcPayment = ordQty * discount_payment;
 

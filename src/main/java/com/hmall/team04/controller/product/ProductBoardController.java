@@ -41,7 +41,7 @@ public class ProductBoardController {
 			ArrayList<ReviewDTO> reviewList = reviewService.getReviewList(prd_board_id);
 			log.info(reviewList.toString());
 			
-			model.addAttribute("productboaddto", productboadDTO);
+			model.addAttribute("productboadDTO", productboadDTO);
 			model.addAttribute("reviewList", reviewList);
 			
 		} catch (Exception e) {

@@ -1,5 +1,10 @@
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+	language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- cbody -->
+
+<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+
 <div class="cbody">
 	<div class="contents">
 		<div class="csection">
@@ -9,7 +14,7 @@
 				<div class="cart-head">
 					<div class="cart-top">
 						<div class="cart-all">
-							<strong>장바구니</strong> <span>(<em class="cart-count">1</em>)
+							<strong>장바구니</strong> <span>
 							</span>
 						</div>
 						<ol class="cart-list-num">
@@ -39,17 +44,20 @@
 							<!-- //.cart-check -->
 
 							<!-- 초기화 -->
+						<c:forEach items="${cartList}" var="cart">
 							<div class="shipping-list" id="gen">
-								<div class="pdwrap pdlist ml" style="display:;" id="011380_000000_111">
+								<div class="pdwrap pdlist ml" style="display:;"
+									id="011380_000000_111">
 
 									<div class="checkbox">
-										<label class="chklabel">
-										<input type="checkbox" name="basktInf" value="2139567673|00001|0|4|88290" onclick="check(this, 'gen', '2139567673', '00001');">
-										<i class="icon"></i>
-										<span>[SJYP] 하프 슬리브 스웨트셔츠(PW2C3TTO559WLG)</span>
+										<label class="chklabel"> 
+											<input type="checkbox" name="basktInf" value="2139567673|00001|0|4|88290" onclick="check(this, 'gen', '2139567673', '00001');">
+											<i class="icon"></i>
+											<span>${cart.prd_nm } | ${cart.prd_cart_id }</span>
 										</label>
 									</div>
-									<button type="button" class="btn btn-cart-del" onclick="deleteBasktSlitem('2139567673|00001|0|4|88290');">
+
+									<button type="button" class="btn btn-cart-del" onclick="deleteBaskt('${cart.prd_cart_id }');">
 										<i class="icon cart-del"></i>
 										<span class="hiding">삭제</span>
 									</button>
@@ -59,17 +67,15 @@
 											<figure class="pdthumb">
 												<a href="http://www.hmall.com/p/pda/itemPtc.do?slitmCd=2139567673&amp;sectId=2731740">
 													<div class="thumb">
-														<img
-															src="https://image.hmall.com/static/6/7/56/39/2139567673_0.jpg?RS=120x120&amp;AR=0"
-															onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=120x120&amp;AR=0')">
+														<img src="${cart.upload_path }" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=120x120&amp;AR=0')">
 													</div>
 												</a>
 												<figcaption>
-													<a href="http://www.hmall.com/p/pda/itemPtc.do?slitmCd=2139567673&amp;sectId=2731740">
+													<a href="#">
 														<div class="pdprice">
 
 															<ins class="normal" aria-label="정상가">
-																<em>353,160</em><b>원</b>
+																<em>${cart.prd_price }</em><b>원</b>
 															</ins>
 
 														</div>
@@ -79,69 +85,69 @@
 
 														</div>
 
-
 														<div class="pdoption" aria-label="옵션/수량">
-															<span class="option">옵션: <em>PW2C3TTO559WLG/2</em></span>
-															<span class="count">수량: <em>4개</em></span>
+															<span class="option">옵션1: <em>${cart.option1 }</em></span>
+															<span class="option">옵션2: <em>${cart.option2 }</em></span>
+															<span class="count">수량: <em>${cart.amount }</em></span>
 														</div>
+
 													</a>
 												</figcaption>
 											</figure>
 										</div>
 										<!-- //.pditem -->
 
-										<!-- gifts-area : 필수사은품 -->
 
-										<!-- //.gifts-area -->
-
-										<!-- btngroup: 수량,속성변경 / 선물하기 / 스토어픽 구매 / 바로구매 -->
+										<!-- btngroup: 수량 변경 -->
 										<div class="btngroup">
-											<div class="prop-change selected" id="chgUitmLayer_2139567673_00001">
-												
-												<div class="optgroup">
 
+											<div class="prop-change selected" id="chgUitmLayer_2139567673_00001">
+												<div class="optgroup">
 													<div class="quantity" id="uitm">
-														<input type="hidden" name="uitmCd" value="00001">
 														<div class="count">
-															<button type="button" class="btn btn-minus"
-																aria-label="수량 감소" onclick="uitmMinus(this, '0')">
-																<i class="icon"></i><span class="hiding">감소</span>
+															<button type="button" class="btn btn-minus" aria-label="수량 감소" onclick="uitmMinus(this, '0')">
+																<i class="icon"></i>
+																<span class="hiding">감소</span>
 															</button>
 															<div class="inputbox">
-																<label class="inplabel"><input type="number"
-																	name="ordQty" maxlength="2" value="4"
-																	onkeyup="uCheckOrdQty(this,'99', '0')" title="입력하세요"></label>
+																<label class="inplabel">
+																<input type="number" name="ordQty" maxlength="2" value="4" onkeyup="uCheckOrdQty(this,'99', '0')" title="입력하세요">
+																</label>
 															</div>
-															<button type="button" class="btn btn-plus"
-																aria-label="수량 증가" onclick="uitmPlus(this, '99')">
-																<i class="icon"></i><span class="hiding">증가</span>
+															<button type="button" class="btn btn-plus" aria-label="수량 증가" onclick="uitmPlus(this, '99')">
+																<i class="icon"></i>
+																<span class="hiding">증가</span>
 															</button>
 														</div>
-													<button type="button" class="btn btn-linelgray small30" onclick="changeBasktItemUitmInf('2139567673', '00001');">
-														<span>변경적용</span>
-													</button>
+
+														<button type="button" class="btn btn-linelgray small30"
+															onclick="changeBasktItemUitmInf('2139567673', '00001');">
+															<span>변경적용</span>
+														</button>
+														
 													</div>
 												</div>
 											</div>
-											
-											<button type="button" class="btn btn-default"
-												onclick="setGiftOrder('N');buyDirect(this);"
-												id="buyDirectBtn_2139567673">
+
+										</div>
+
+										<div class="btngroup">
+											<button type="button" class="btn btn-default" onclick="setGiftOrder('N');buyDirect(this);" id="buyDirectBtn_2139567673">
 												<span>바로구매</span>
 											</button>
-													
 										</div>
-										<!-- // btngroup: 수량,속성변경 / 선물하기 / 스토어픽 구매 / 바로구매 -->
-
+										<!-- // btngroup: 수량 변경 -->
 									</div>
+									<br> <br> <br>
 									<!-- //.pdlist-wrap -->
 								</div>
 								<!-- //.pdwrap -->
 
 							</div>
-							<!-- //.shipping-list -->
+						</c:forEach>
+						<!-- //.shipping-list -->
 
-						</div>
+					</div>
 						<!-- //.shipping-listwrap  일반상품 -->
 				</div>
 				<!-- //.cart-body -->
@@ -158,10 +164,6 @@
 				style="top: 40px;">
 				<div class="sticky-inner">
 					<div class="result">
-						<p class="sel-tit">
-							선택한 상품<span>(<em id="selCnt">1</em>)
-							</span>
-						</p>
 						<p>
 							<strong>상품금액</strong>
 							<ins>
@@ -182,16 +184,13 @@
 							<em id="selOrdAmt">353,160</em><b>원</b>
 						</ins>
 					</div>
-					<div id="uobtnprsnbox" class="btngroup _gift" style="">
-						<button class="btn btn-linelgray"
-							onclick="setGiftOrder('Y');orderSelect();">
-							<span>선물하기</span>
-						</button>
-						<button class="btn btn-purchase"
-							onclick="setGiftOrder('N');orderSelect();">
-							<span>바로구매</span>
-						</button>
-					</div>
+										<div class="btngroup">
+											<button type="button" class="btn btn-default"
+												onclick="setGiftOrder('N');buyDirect(this);"
+												id="buyDirectBtn_2139567673">
+												<span>바로구매</span>
+											</button>
+										</div>
 				</div>
 			</div>
 		</div>
@@ -232,3 +231,91 @@
 	</div>
 </div>
 <!-- //.cfoot -->
+
+<script>
+	// 바로구매
+	function buyProduct(obj) {
+		var token = $("input[name='_csrf']").val();
+		var header = "X-CSRF-TOKEN";
+
+		var targetCssHeader = ".product-option-wrap:first";
+		var cur_ordQty = $(
+				targetCssHeader
+						+ " .select-product-list .pditem input[name='ordQty']")
+				.val();
+
+		alert(cur_ordQty);
+
+		$.ajax({
+			url : "${app}/team04/oda/order.do",
+			method : "POST",
+
+			data : {
+				ordQty : cur_ordQty
+			},
+			dataType : 'json',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+
+				location.href = '${app}/team04/oda/order.do';
+			}
+		});
+
+		alert('hi2');
+
+	}
+</script>
+
+	<script>
+
+		// reply delete jquery fn
+		function deleteBaskt(prd_cart_id) {
+			var token = $("input[name='_csrf']").val();
+			var header = "X-CSRF-TOKEN";
+			
+
+			$.ajax({
+				url : "${app}/team04/odb/deletePrdCartId",
+				method : "POST",
+				
+				data : {
+					prd_cart_id : prd_cart_id
+				},
+				
+				dataType : "json",
+				beforeSend : function(xhr) { xhr.setRequestHeader(header, token); },
+				success : function(data) {
+					if (data.delete_PrdCartId_Success == "True") {
+						location.reload();
+					}
+				}
+			})
+			
+			alert('hi');
+
+		}
+
+		// reply update jquery fn
+		function selectReply(reply_id) {
+			//alert(reply_id)
+			
+			$.ajax({
+				url : "${app}/selectreply",
+				method : "POST",
+				data : {
+					reply_id : reply_id
+				},
+				dataType : "json",
+				
+				success : function(data) {
+					//alert(JSON.stringify(data));
+					if (data.select_reply_Success == "True") {
+						location.reload();
+					}
+				}
+			})	
+		}
+				
+	</script>
