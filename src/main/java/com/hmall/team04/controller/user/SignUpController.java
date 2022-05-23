@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.hmall.team04.dto.user.SignUpRequestDTO;
 import com.hmall.team04.service.user.SignUpService;
@@ -25,7 +24,7 @@ import lombok.extern.log4j.Log4j;
 @RequiredArgsConstructor
 public class SignUpController {
 	
-	final SignUpService signUpService;
+	private final SignUpService signUpService;
 	
 	
 	@GetMapping("/signUpStart")
@@ -67,22 +66,25 @@ public class SignUpController {
 		//@Valid
 		if(br.hasErrors()) {
 			log.info("검증 에러 : "+br.toString());
+			
+			//패스워드 일치 검사
+			boolean check = signUpRequestDTO.isPwEqualToCheckPw();
+			if(!check) {
+				log.info("패스워드 불일치");
+	            br.rejectValue("check_password", "noMatch", "비밀번호가 일치하지 않습니다.");
+	            return "user.signup.step2";
+	        }
+
 			return "user.signup.step2";
 		}
 		
-		//@Valid 성공 후 패스워드 일치 검사
-		boolean check = signUpRequestDTO.isPwEqualToCheckPw();
-		if(!check) {
-            br.rejectValue("check_password", "noMatch", "비밀번호를 확인해주세요.");
-            return "user.signup.step2";
-        }
 		
 		try {
 			signUpService.signUp(signUpRequestDTO);
+			return "user.signup.step3";
 		} catch (Exception e) {
-			
+			e.printStackTrace();
+			return "user.signup.step2";
 		}
-		
-		return "user.signup.step3";
 	}
 }
