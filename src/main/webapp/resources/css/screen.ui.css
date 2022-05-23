@@ -3396,7 +3396,7 @@ input[type=radio] + label {
   top: 1px;
   width: 26px;
   height: 26px;
-  background-image: url("/assets/app/img/common/rdo_bg1.png");
+  background-image: url("../images/chk_bg1.png");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: 0 0;
