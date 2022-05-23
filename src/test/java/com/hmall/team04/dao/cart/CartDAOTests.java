@@ -1,4 +1,4 @@
-package com.hmall.team04.dao.product;
+package com.hmall.team04.dao.cart;
 
 
 import java.sql.SQLException;
@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hmall.team04.dao.product.ProductBoardDAO;
 import com.hmall.team04.dao.review.ReviewDAO;
+import com.hmall.team04.dto.cart.CartDTO;
 import com.hmall.team04.dto.product.ProductBoardDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
 
@@ -21,20 +22,17 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class ProductBoardDAOTests {
+public class CartDAOTests {
 	
 	@Setter(onMethod_ = @Autowired)
-	private ProductBoardDAO productboardDAO;
-	
-	@Setter(onMethod_ = @Autowired)
-	private ReviewDAO reviewDAO;
+	private CartDAO cartDAO;
 	
 	@Test
-	public void testGetProductBoardList() {
+	public void testGetCartList() {
 		
-		ArrayList<ProductBoardDTO> list;
+		ArrayList<CartDTO> list;
 		try {
-			list = productboardDAO.getProductBoardList();
+			list = cartDAO.getCartList("1");
 			
 			for(int i=0;i<list.size();i++) {
 				log.info(list.get(i));
@@ -47,30 +45,12 @@ public class ProductBoardDAOTests {
 	}
 	
 	@Test
-	public void testGetProductBoard() {
+	public void testDeleteCart() {
 		
-		ProductBoardDTO productboardDTO;
+		CartDTO cartDTO = new CartDTO();
+		cartDTO.setPrd_cart_id("prd_cart_id_tmp1");
 		try {
-			productboardDTO = productboardDAO.getProductBoard("prd_board_id_tmp1");
-			
-			System.out.println(productboardDTO.toString());
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	@Test
-	public void testGetReviewProductBoard() {
-		
-		ArrayList<ReviewDTO> list;
-		try {
-			list = reviewDAO.getReviewList("prd_board_id_tmp1");
-			
-			for(int i=0;i<list.size();i++) {
-				log.info(list.get(i));
-			}
+			cartDAO.deleteCart(cartDTO);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
