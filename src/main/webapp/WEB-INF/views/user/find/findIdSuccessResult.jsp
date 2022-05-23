@@ -67,7 +67,7 @@
                             <p class="text-msg">고객센터 <a href="tel:1600-0000" class="tel">1600-0000</a>으로 문의하시기 바랍니다.</p>
                             <div class="linkwrap">
                                 <span class="txt">비밀번호를 찾으시나요?</span>
-                                <a href="#" onclick="findPwd();" class="alink"><span>비밀번호 찾기</span></a>
+                                <a href="./findPwd" class="alink"><span>비밀번호 찾기</span></a>
                             </div>
                         </div>
                         <!--//아코디언 footer-->

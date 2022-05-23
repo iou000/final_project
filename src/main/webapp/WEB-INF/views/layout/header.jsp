@@ -47,6 +47,12 @@ $(document).ready(function() {
     function Logout(){
     	logoutForm.submit();
     }
+  	//이외 영역 클릭 시 카테고리 메뉴 숨김 처리
+	$(document).on("click", function() {
+		if($('.category-menu-wrap').is(':visible')){
+			$('.category-menu-wrap').hide();
+		}
+	});
 
 });
 var app = getContextPath();

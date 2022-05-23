@@ -15,19 +15,25 @@
 	 <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	 <bean id="customUserDetailsService" class="com.hmall.team04.security.CustomUserDetailsService" />
 
-
-	<security:http auto-config="true" use-expressions="true">
+	<security:http pattern="/cs/qnaInsPopUp" auto-config="true" use-expressions="true">
 		<security:form-login 
 			password-parameter="pwd" 
 			username-parameter="id" 
 			login-page="/loginpopup" 
 			authentication-success-handler-ref="customLoginSuccess" 
 			authentication-failure-handler-ref="customLoginFail"/>
-
-		
-		
 		<security:access-denied-handler ref="customAccessDenied"/>
-
+		<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me, JSESSION_ID" logout-success-url="/"/>
+	</security:http>
+	
+	<security:http auto-config="true" use-expressions="true">
+		<security:form-login 
+			password-parameter="pwd" 
+			username-parameter="id" 
+			login-page="/login" 
+			authentication-success-handler-ref="customLoginSuccess" 
+			authentication-failure-handler-ref="customLoginFail"/>
+		<security:access-denied-handler ref="customAccessDenied"/>
 		<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me, JSESSION_ID" logout-success-url="/"/>
 	</security:http>
 	
