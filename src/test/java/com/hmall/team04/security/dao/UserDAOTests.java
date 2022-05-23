@@ -27,14 +27,8 @@ public class UserDAOTests {
 	@Autowired
     BCryptPasswordEncoder passwordEncoder;
 	
-	@Test
-	public void testfindIdByNameEmail() {
-		System.out.println("-----------test result :  " + userDAO.findIdbyNameEmail("김경섭", "test@naver.com1"));
-	}
-	
 	
 	@Test
-	@Ignore
 	public void testEncodePwd() {
 		String rawPassword = "12345678!A";                //인코딩 전 메서드
         String encdoePassword1;                        // 인코딩된 메서드

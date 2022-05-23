@@ -39,6 +39,13 @@ public class UserController {
 		return "user/login/loginPopup";
 	}
 	
+	@GetMapping("/login")
+	public String login(HttpServletRequest request, Model model){
+		String referrer = request.getHeader("Referer");
+	    request.getSession().setAttribute("prevPage", referrer);
+		return "user.login.login";
+	}
+	
 	@GetMapping("/customLogin")
 	   public void loginInput(String error, String logout, Model model) {
 	      log.info("error" + error);

@@ -11,11 +11,8 @@
 <html>
 <head>
 <link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="${app}/resources/css/common.css"><!-- 공통 css -->
-<link rel="stylesheet" type="text/css" href="${app}/resources/css/layout.css"><!-- 공통 Layout css -->
-<link rel="stylesheet" type="text/css" href="${app}/resources/css/popup.css"><!-- 공통 Popup css -->
-<link rel="stylesheet" type="text/css" href="${app}/resources/css/jquery-ui.css"><!-- jQuery UI css -->
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/login.css">
+<link rel="stylesheet" type="text/css" href="${app}/resources/css/popup.css">
 <script type="text/javascript"
 	src="<c:url value="/webjars/jquery/3.6.0/dist/jquery.js" />"></script>
 <script type="text/javascript">
@@ -76,6 +73,7 @@ function chkPW(){
 	 var num = pw.search(/[0-9]/g);
 	 var eng = pw.search(/[a-z]/ig);
 	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
 	 if(pw.length < 8 || pw.length > 20){
 	  alert("8자리 ~ 20자리 이내로 입력해주세요.");
 	  return false;
@@ -95,10 +93,13 @@ $(function(){
 		login();
 	})		
 })
+
 /**
 * 로그인 
 */
+
 var loginUrl = $("#login-url").val();
+
 function login(){
 	if(chkPW()){
 		$.ajax({
@@ -120,8 +121,7 @@ function login(){
 			success : function(response){
 				if(response.code == "200"){
 					// 정상 처리 된 경우	
-					window.opener.location.href = response.item.url; //부모창 이전페이지로
-					self.close(); //팝업창 닫기
+					window.location.href = response.item.url; //이전페이지로
 				} else {
 					alert(response.message);
 				}
@@ -136,23 +136,22 @@ function login(){
 }
 //하드코딩 된 부분!!! 나중에 수정할 것 05/20 아이디 찾기 클릭 시 찾는 url
 function findId(){
-    opener.location.href="./findIdNameEmail";
-    self.close();
+	window.location.href="./findIdNameEmail";
 }
 function findPwd(){
-    opener.location.href="./findPwd";
-    self.close();
+	window.location.href="./findPwd";
 }
 </script>
 </head>
 <body>
 
-<div class="popup-win wp-log-hmall">
-    <div class="pop-wrap" tabindex="0">
-        <div class="pop-content-wrap">
-            <strong class="pop-title">Hmall 로그인</strong>
-            <div class="pop-content">
-                <div class="tabgroup bdline">
+<main class="cmain main" role="main" id="mainContents"><!-- 메인페이지 'main' 클래스 추가 -->
+		<div class="container">
+			<div class="cbody gird-full">
+				<div class="contents w520">
+					<div class="inner-box">
+						<div class="tabgroup bdline">
+						<p style="color: #ff5340; font-size:20px"><strong class="pop-title">Hmall 로그인</strong>
                     <div class="tab-content">
                     <div role="tabpanel" class="tab-pane ui-active" id="hmallLogin">
                     			<!-- login-form -->
@@ -218,5 +217,6 @@ function findPwd(){
 		</div>
 	</div>
 </div>
+</main>
 </body>
 </html>
