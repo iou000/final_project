@@ -24,5 +24,22 @@ public class FaqServiceImpl implements FaqService{
 		
 		return faqDAO.getfaqList();
 	}
+	
+	@Override
+	public List<FaqDTO> getfaqListFlag(String faq_flag) throws Exception {
+		
+		return faqDAO.getfaqListFlag(faq_flag);
+	}
+	
+	@Override
+	public List<FaqDTO> getfaqListAll() throws Exception {
+		
+		return faqDAO.getfaqListAll();
+	}
+	@Override
+	public List<FaqDTO> getfaqListFind(String keyword) throws Exception {
+	
+		return faqDAO.getfaqListFind(keyword);
+	}
 
 }
