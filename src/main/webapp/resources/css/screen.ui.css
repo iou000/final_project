@@ -3689,7 +3689,7 @@ input[type=radio] + label {
   font-weight: 400;
   font-size: 18px;
   color: #111;
-  background-image: url("/assets/app/img/common/ic_arrow2.png");
+  background-image: url("../images/ic_arrow2.png");
   background-repeat: no-repeat;
   background-size: auto;
   background-position: right center;
@@ -3743,7 +3743,7 @@ input[type=radio] + label {
   font-size: 18px;
   color: #111;
   padding: 0 60px 0 30px;
-  background-image: url("/assets/app/img/common/ic_arrow2.png");
+  background-image: url("../images/ic_arrow2.png");
   background-repeat: no-repeat;
   background-size: auto;
   background-position: calc(100% - 30px) center;
@@ -4801,7 +4801,7 @@ input[type=radio] + label {
   top: 50%;
   right: 0;
   margin-top: -5px;
-  background-image: url("/assets/app/img/common/ic_arrow2.png");
+  background-image: url("../images/ic_arrow2.png");
   background-repeat: no-repeat;
   background-size: auto 100%;
   background-position: 50% 50%;

@@ -64,83 +64,116 @@
 										<!-- 회원 정보 입력 -->
 										<div class="wrap_terms_agree">
 											<div>
-												<ul class="tAgreeList">
-													<li><span class="checkbox_ui type1"> <label
-															for="user_id"> <span class="c_bl">[필수]</span> 회원
-																아이디
-														</label> <input type="text" name="user_id" value="${signUpRequestDTO.user_id}"
-															style="border: 1px solid black;" /> <form:errors path="user_id" />
-													</span></li>
-													
-													<li><span class="checkbox_ui type1"> <label
-															for="email"> <span class="c_bl">[필수]</span>
-																이메일주소
-														</label> <input type="email" name="email" value="${signUpRequestDTO.email}"
-															style="border: 1px solid black;" /> <form:errors path="email" />
-													</span></li>
-													
-													<li><span class="checkbox_ui type1"> <label
-															for="password"> <span class="c_bl">[필수]</span>
-																비밀번호
-														</label> <input type="text" name="password" value="${signUpRequestDTO.password}"
-															style="border: 1px solid black;" /> <form:errors path="password" />
-													</span></li>
-													
-													<li><span class="checkbox_ui type1"> <label
-															for="check_password"> <span class="c_bl">[필수]</span>
-																비밀번호 확인
-														</label> <input type="text" name="check_password" value="${signUpRequestDTO.check_password}"
-															style="border: 1px solid black;" /> <form:errors path="check_password" />
-													</span></li>
-													
-													<li><span class="checkbox_ui type1"> <label
-															for="user_nm"> <span class="c_bl">[필수]</span>
-																이름
-														</label> <input type="text" name="user_nm" value="${signUpRequestDTO.user_nm}"
-															style="border: 1px solid black;" /> <form:errors path="user_nm" />
-													</span></li>
 
-													<li>
-													<div class="checkbox_ui type1"> 
-														<label for="gender"> 
-															<span class="c_bl">[필수]</span> 성별
-														</label>
-														<br />
-														<input type="checkbox" name="gender1" value="female" checked="checked"> <label>여</label>
-														<input type="checkbox" name="gender1" value="male"><label>남</label> 
+												<!-- 회원 아이디 -->
+												<div class="wrap_inp">
+													<label for="user_id" class="inp_tit">아이디<span class="nec">*</span></label>
+													<div class="inp_bundle">
+														<input type="text" name="user_id" class="inp flex" value="${signUpRequestDTO.user_id}" />
 													</div>
-													</li> <form:errors path="gender" />
+													<form:errors path="user_id" />
+													<ul class="bullet_type1 mark1 inp_mt">
+														<li>4~20자의 영문 또는 영문 + 숫자만 입력해주세요.</li>
+														<li>아이디는 대소문자 구분합니다.</li>
+													</ul>
+												</div>
+												
+												<!-- 이메일 -->
+												<div class="wrap_inp">
+													<label for="email" class="inp_tit">이메일<span class="nec">*</span></label>
+													<div class="inp_bundle email_bundle emailCheckMsg">
+														<input type="email" title="이메일 아이디 입력" id="registerEmail" name="email" value="${signUpRequestDTO.email}" maxlength="80" class="inp flex" placeholder="이메일">
+														<select class="select flex" id="registerWrite3_3" title="이메일 도메인 선택">
+															<option value="00">직접입력</option>
+															<option value="01">@naver.com</option>
+															<option value="02">@hanmail.net</option>
+															<option value="03">@daum.net</option>
+															<option value="04">@gmail.com</option>
+															<option value="05">@nate.com</option>
+														</select>
+													</div>
+													<p class="t_error" id="emailCheckMsg" style="display:none">이메일 주소를 정확히 입력해 주세요.</p>
+													<p class="cmt_guide1 mark1 inp_mt">특수문자[-], [_]만 사용 가능합니다.</p>
+													<form:errors path="email" />
+												</div>
 
-													<li><span class="checkbox_ui type1"> <label
-															for="birth"> <span class="c_bl">[필수]</span>
-																생년월일
-														</label>
-													</span><input type="date" name="birth" value="<fmt:formatDate value="${signUpRequestDTO.birth}" pattern = "yyyy-MM-dd"/>"
-															style="border: 1px solid black;" /></li> <form:errors path="birth" />
+												<!-- 비밀번호 -->
+												<div class="wrap_inp">
+													<label for="password" class="inp_tit">비밀번호<span class="nec">*</span></label>
+													<div class="inp_bundle">
+														<input type="password" name="password" class="inp flex" value="${signUpRequestDTO.password}" />
+													</div>
+													<form:errors path="password" />
+													<p class="cmt_guide1 mark1 inp_mt">8~30 자리로 입력해주세요.</p>
+												</div>
+												
+												<!-- 비밀번호 확인 -->
+												<div class="wrap_inp">
+													<label for="check_password" class="inp_tit">비밀번호 확인<span class="nec">*</span></label>
+													<div class="inp_bundle">
+														<input type="password" name="check_password" class="inp flex" value="${signUpRequestDTO.check_password}" />
+													</div>
+													<form:errors path="check_password" />
+												</div>
+												
+												<!-- 이름 -->
+												<div class="wrap_inp">
+													<label for="user_nm" class="inp_tit">이름<span class="nec">*</span></label>
+													<div class="inp_bundle">
+														<input type="text" name="user_nm" class="inp flex" value="${signUpRequestDTO.user_nm}" />
+													</div>
+													<form:errors path="user_nm" />
+												</div>
+												
+												<!-- 성별 -->
+												<div class="wrap_inp">
+													<label for="gender" class="inp_tit">성별<span class="nec">*</span></label>
+													<div class="inp_bundle" style="background:#ffffff; border: none;">
+													<div class="radio_ui type1">
+														<input type="radio" name="gender" id="gender_female" value="female" checked="checked"> <label for="gender_female">여</label>
+														<input type="radio" name="gender" id="gender_male"value="male"> <label for="gender_male">남</label> 
+													</div>
+													</div>
 													
-													<li><span class="checkbox_ui type1"> <label
-															for="address_f"> <span class="c_bl">[필수]</span>
-																주소(우편번호)
-														</label> <input type="text" name="address_f" value="${signUpRequestDTO.address_f}"
-															style="border: 1px solid black;" /> <form:errors path="address_f" />
-													</span></li>
+													<form:errors path="user_nm" />
+												</div>
+
+												<div class="wrap_inp">
+													<label for="birth" class="inp_tit">생년월일<span class="nec">*</span></label>
+													<div class="inp_bundle">
+														<input type="date" name="birth" class="inp flex" 
+															value="<fmt:formatDate value="${signUpRequestDTO.birth}" pattern = "yyyy-MM-dd"/>" />
+													</div> 
+													<form:errors path="birth" />
+												</div>
+												
+												<!-- 주소(우편번호) -->
+												<div class="wrap_inp">
+													<label for="address_f" class="inp_tit">주소(우편번호)<span class="nec">*</span></label>
+													<div class="inp_bundle">
+														<input type="text" name="address_f" class="inp flex" value="${signUpRequestDTO.address_f}" />
+													</div>
+													<form:errors path="address_f" />
+												</div>
+												
+												<!-- 주소 -->
+												<div class="wrap_inp">
+													<label for="address_l" class="inp_tit">주소<span class="nec">*</span></label>
+													<div class="inp_bundle">
+														<input type="text" name="address_l" class="inp flex" value="${signUpRequestDTO.address_l}" />
+													</div>
+													<form:errors path="address_l" />
+												</div>
+												
+												<!-- 휴대폰 번호 -->
+												<div class="wrap_inp">
+													<label for="hp_no" class="inp_tit">휴대폰 번호<span class="nec">*</span></label>
+													<div class="inp_bundle">
+														<input type="text" name="hp_no" class="inp flex" value="${signUpRequestDTO.hp_no}" />
+													</div>
+													<form:errors path="hp_no" />
+												</div>
 													
-													<li><span class="checkbox_ui type1"> <label
-															for="address_l"> <span class="c_bl">[필수]</span>
-																주소
-														</label> <input type="text" name="address_l" value="${signUpRequestDTO.address_l}"
-															style="border: 1px solid black;" /> <form:errors path="address_l" />
-													</span></li>
-													
-													<li><span class="checkbox_ui type1"> <label
-															for="hp_no"> <span class="c_bl">[필수]</span>
-																휴대전화번호
-														</label> <input type="text" name="hp_no" value="${signUpRequestDTO.hp_no}"
-															style="border: 1px solid black;" /> <form:errors path="hp_no" />
-													</span></li>
-													
-													
-												</ul>
 											</div>
 										</div>
 										
@@ -175,9 +208,11 @@
 			
 			$("#UserInfoForm").submit();
 
-			
-			
 		}
+		
+		$("input[name='gender']").click(function() {
+			console.log($('input[name="gender"]:checked').val())
+		});
 		
 	</script>
 </body>

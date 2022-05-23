@@ -22,7 +22,7 @@
         ]]>
     </select>
     
-    <!-- email 중복 확인 (함수) -->
+    <!-- 회원가입 유저 생성 (프로시저) -->
     <select id="insertUser" parameterType="SignUpRequestDTO" statementType="CALLABLE" resultType="SignUpRequestDTO">
 
            { CALL user_t_insert_user(#{user_id}, #{email}, #{password}, #{user_nm}, #{birth}, #{address_f}, #{address_l}, #{hp_no}, #{auth}) }

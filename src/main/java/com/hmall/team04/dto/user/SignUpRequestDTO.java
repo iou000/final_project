@@ -38,10 +38,10 @@ public class SignUpRequestDTO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birth;
 	
-	@NotEmpty(message="우편번호를 입력해주세요.")
+	@NotEmpty(message = "우편번호를 입력해주세요.")
 	private String address_f;
 	
-	@NotEmpty(message="주소를 입력해주세요.")
+	@NotEmpty(message = "주소를 입력해주세요.")
 	private String address_l;
 	
 	//@NotEmpty(message="휴대폰 번호를 입력해주세요.")
