@@ -2,6 +2,7 @@ package com.hmall.team04.controller.cs;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -117,14 +118,26 @@ public class CSController {
 		return "cs/qna/cartListPopup";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping("/qna.do")
 	public String qnaList() {
 		return "cs.qna.qnaList";
 	}
 	
 	@GetMapping("/faq.do")
-	public String faqList() {
-		return "cs.faq.faqList";
+	public String faqList(Model model) {
+		try {
+			List<FaqDTO> list = faqService.getfaqListAll(); 
+			model.addAttribute("list", list);
+			return "cs.faq.faqList";
+		}
+		catch(Exception e ) {
+			model.addAttribute("msg","list 출력 에러");
+			model.addAttribute("url","index"); 
+			return "result";
+		}
+		
 	}
+	
 	
 }

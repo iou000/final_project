@@ -158,7 +158,7 @@
 
         //검색하여 리스트 출력
         function searchCntn() {
-            var ancmCntn = $("input[name='ancmCntn']").val().trim();
+            var ancmCntn = $("input[name='keyword']").val().trim();
             if (ancmCntn == "") {
                 alert("검색어를 입력해 주세요.");
                 return false;
@@ -270,18 +270,14 @@
  
         <div class="search-area">
             <h3>FAQ 검색</h3>
-            <form name="searchForm" method="get" action="/p/ccc/faqList.do">
+            <form name="searchForm" method="get" action="${app}/cs/faq.do/faqSearch">
                 <div class="inputbox">
                     <input hidden="hidden" />
-                    <label class="inplabel icon-find"><input type="text" name="ancmCntn" placeholder="질문을 검색해보세요"
+                    <label class="inplabel icon-find"><input type="text" name="keyword" placeholder="질문을 검색해보세요"
                             title="검색어 입력" value=""></label>
                     <button type="button" class="btn btn-find" onclick="searchCntn();"><i class="icon find-sm"></i><span
                             class="hiding">검색</span></button>
-                    <button type="button" class="btn ico-clearabled"><i class="icon"></i><span
-                            class="hiding">지우기</span></button>
                 </div>
-                <input type="hidden" name="sort" id="sort" value="false" />
-                <input type="hidden" name="faqMCsfNo" id="faqMCsfNo" value="" />
             </form>
         </div>
     </div>
