@@ -33,6 +33,13 @@
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
 		
+	<!-- 장바구니 페이지 -->
+	<definition name="cart.*" template="/WEB-INF/views/template/cart.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/cart/{1}.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+		
 	<!-- 주문결제 페이지 -->
 	<definition name="order.*" template="/WEB-INF/views/template/order.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />

@@ -44,24 +44,18 @@
 <script src="//image.hmall.com/p/js/co/reDirectExceptUrlList.js"></script><!-- 로그인버튼 click 리다이렉트 예외 url리스트  -->
 
 <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/od/order.css">
+<link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/od/cart.css">
 </head>
 
 
 <body>
 
 	<tiles:insertAttribute name="header" />
-	
 	<main class="cmain bgcmain" role="main" id="mainContents">
 		<div class="container">
-			<div class="cbody">
-				<div class='contents'>
 					<tiles:insertAttribute name="body" />
-				</div>
-			</div>
 		</div>
 	</main>
-	
 	<tiles:insertAttribute name="footer" />
-
 </body>
 </html>

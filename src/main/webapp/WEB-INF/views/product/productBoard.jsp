@@ -2,6 +2,7 @@
 	language="java"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 
@@ -310,13 +311,11 @@
 					<li role="presentation"><a href="#viewPage03"
 						class="gp_className" ga-category="상품상세" ga-action="탭"
 						ga-label="상품평"><span>상품평<em>2</em></span></a></li>
-					<li role="presentation"><a href="#viewPage04"
-						class="gp_className" ga-category="상품상세" ga-action="탭"
-						ga-label="Q&amp;A"><span>Q&amp;A<em>5</em></span></a></li>
 				</ul>
 			</div>
 		</div>
 		<!--//scrollspy-tab-->
+		
 		<div class="pages page1" id="viewPage01">
 			<div class="content-area prod_detail_view open">
 				<div class="view_cont">
@@ -352,7 +351,6 @@
 		</div>
 
 		<div class="pages page2" id="viewPage02">
-
 
 
 			<!--content-area // 상품필수정보 및 유의사항-->
@@ -417,7 +415,7 @@
 								<span class="hiding">5점</span>
 							</p>
 						</div>
-						<span class="like-point" aria-label="포인트"><em>5.0</em></span>
+						<span class="like-point" aria-label="포인트"><em>5.0, 추후 plsql 생성 시 리뷰마다 업데이트 예정</em></span>
 					</div>
 					<!-- //.review-star -->
 				</div>
@@ -427,7 +425,8 @@
 				<div class="content-area txt-review" id="reviewContentArea">
 
 					<h3>
-						상품평 <em class="total-num">2</em>건 <a href="javascript://"
+						상품평 <em class="total-num">2</em>건 
+						<a href="javascript://"
 							onclick="openItemQNAPopupNew('2140365970')"
 							class="btn btn-lineblack small gp_className"><span>상품평
 								달기</span></a>
@@ -435,29 +434,21 @@
 
 					<!--review-list-->
 					<ul class="txt-review-list">
-
+<c:forEach items="${reviewList}" var="dto">
 						<li class="review-item">
 
 							<div class="review-top">
 								<div class="top-left">
 									<div class="starbg pt10">
 										<p class="score">
-											<span class="hiding">100점</span>
+											<span class="hiding">${dto.star }</span>
 										</p>
 									</div>
-									<span class="nick">yus****</span>
+									<span class="nick">${dto.user_id }</span>
 
 								</div>
 								<div class="top-right">
-									<span class="date">2022-05-21</span> <span
-										class="accuse user-info">
-										<button class="btn-accuse user-info-alarm">
-											<span>신고</span> <input type="hidden" name="ITEM_EVAL_COMT_NO"
-												value="48122177441531"> <input type="hidden"
-												name="ASCT_ITNT_ID" value="yusune"> <input
-												type="hidden" name="SLITM_CD" value="2140365970">
-										</button>
-									</span>
+									<span class="date"><fmt:formatDate value="${dto.ins_dt}" type="date" /></span>
 								</div>
 							</div> <!--review-option-->
 							<div class="review-option"></div> <!--//review-option--> <!-- pdwrap -->
@@ -514,18 +505,12 @@
 								</div>
 							</div> <!-- 동영상 --> <!-- 동영상 --> <!-- //.pdwrap --> <!--review-content-->
 							<div class="review-content">
-								<!--20200911 금요일 스크립트 적용 완료 // 스크립트 구조상 ui 변경-->
-								<a role="button" class="inq-question">
-									<div class="overflow-text" data-modules-customtoggle="">
-										<div class="review-txt">
-											땀많은 아들래미 방에 에어컨 설치가 어려워 고민 많았는데 요새 이렇게 좋은 물건이 나와서 너무 좋네요.<br>물빠짐
-											배수도 걱정없고 계절따라 창고로 이동도 가능하니 정말 마음에 쏙 들어요!
-										</div>
+									<div class="review-txt">
+										${dto.content }
 									</div>
-								</a>
 							</div> <!--//review-content-->
 						</li>
-
+</c:forEach>
 					</ul>
 
 				</div>
@@ -536,116 +521,11 @@
 				<!-- 만족도 -->
 
 				<!--// 만족도 -->
-
-				<script type="text/javascript">
-
-
-$(document).on('click', '.video-thumb', function() {
-    setBizSpring("review_play_btn");
-});
-
-$(document).on('click', '.user-info-alarm', function() {
-    setBizSpring("user_info_alram","","","");
-});
-
-$(document).on('click', '.recommend-btn', function() {
-    if($(this).hasClass('on') == true){
-        setBizSpring("recommend_btn_off");
-    }else{
-        setBizSpring("recommend_btn_on");
-    }
-});
-</script>
 			</div>
 
 
 		</div>
 		<!--// 상품평 tab -->
-
-		<!-- Q&A -->
-		<div class="pages page4" id="viewPage04">
-			<!--content-area // 문의버튼-->
-			<div class="content-area btngroup">
-				<a href="/p/ccd/selectCnslOrdReqDtl.do"
-					onclick="GA_Event('상품상세','Q&amp;A','배송/회수문의');" target="_blank"
-					class="btn btn-lineblack small"><span>배송/회수 문의</span></a> <a
-					href="javascript://" ga-category="상품상세" ga-action="Q&amp;A"
-					ga-label="상품문의" onclick="openItemQNAPopupNew('2140365970')"
-					class="btn btn-lineblack small gp_className"><span>질문하기</span></a>
-			</div>
-			<!--//content-area // 문의버튼-->
-			<!-- content-area // 상품 옵션 시작 -->
-
-			<!-- // content-area // 상품 옵션 끝 -->
-
-			<div id="itemOptQnAInfo">
-
-				<div class="content-area inquiry-wrap">
-
-					<ul class="inquiry-list">
-
-						<li class="inquiry-item">
-							<div class="inq-content">
-								<a role="button" class="inq-question"
-									data-modules-customtoggle="parent:.inquiry-item;">
-									<div class="inq-tit-wrap ui-active">
-
-										<div class="inq-tit">
-											<div class="txt">설치기사님 방문</div>
-
-										</div>
-									</div>
-
-									<div class="inq-info">
-										<span>lim***</span> <span>2022.05.18</span>
-										<!-- 비밀글일때 미노출_2020.12.14 -->
-
-
-
-										<span>주문/배송</span>
-
-
-									</div>
-
-
-
-
-									<div class="btngroup more">
-										<span class="btn btn-showdetail"><span class="ui-text">더보기</span><i
-											class="icon arrow"></i></span> <span
-											class="btn btn-showdetail collapse"><span>닫기</span><i
-											class="icon arrow"></i></span>
-									</div>
-
-									<div class="inq-txt">
-										<p class="txt">기사님이 방문해서 설치해주시는 건가요? 따로 요청을 해야하는 건가요?</p>
-									</div>
-
-
-								</a>
-							</div>
-
-
-
-
-							<div class="inq-replay">
-								<div class="inq-txt">
-									<div class="txt">안녕하십니까 고객님 해당 제품은 엘지 물류 직배송설치상품으로 엘지 물류
-										기사 통해 제품 배송 및 설치까지 진행됩니다 감사합니다</div>
-								</div>
-								<div class="inq-info">
-									<span>협력사</span> <span>2022.05.19</span>
-								</div>
-							</div> <input type="hidden" name="itemQnaQstnNo" value="4392933">
-							<input type="hidden" value="Y">
-						</li>
-
-					</ul>
-
-				</div>
-			</div>
-		</div>
-		<!--// Q&A -->
 
 	</div>
 	<!--//scrollspy-wrap-->
