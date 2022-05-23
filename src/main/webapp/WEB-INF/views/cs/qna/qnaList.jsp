@@ -90,7 +90,7 @@
                 언제나 고객님의 입장에서 빠르고 정확한 답변을 드리는 홈쇼핑이 되겠습니다.
             </p>
             <div class="oneaone-div">
-                <button class="btn_basic">1:1 문의하기</button>
+                <button class="btn_basic" onClick="window.open('${app}/cs/qnaInsPopUp','1:1 문의하기','width=756,height=700')">1:1 문의하기</button>
             </div>
             <!--tblwrap tbl-list-->
             <div class="tblwrap tbl-list">

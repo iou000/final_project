@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="app" value="${pageContext.request.contextPath}" />
@@ -8,97 +8,96 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="${app}/resources/css/customer.css">
 
-    <style>
-        .hidden {
-            display: none !important;
-        }
+<style>
+.hidden {
+	display: none !important;
+}
 
-        .cus-wrap.noti .noti-wrap {
-            /*공지사항과 옆 쪽 마진 삭제 */
-            width: 480px;
-            margin-left: 0px !important;
-        }
+.cus-wrap.noti .noti-wrap {
+	/*공지사항과 옆 쪽 마진 삭제 */
+	width: 480px;
+	margin-left: 0px !important;
+}
 
-        .cus-wrap.monitering a {
-            display: inline-block;
-            width: 235px !important;
-        }
+.cus-wrap.monitering a {
+	display: inline-block;
+	width: 235px !important;
+}
 
-        .cus-wrap.monitering a+a {
-            position: relative;
-            padding-left: 18px !important;
-        }
+.cus-wrap.monitering a+a {
+	position: relative;
+	padding-left: 18px !important;
+}
 
-        .cus-wrap.monitering {
-            padding: 20px 32px 19px 32px !important;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-        }
+.cus-wrap.monitering {
+	padding: 20px 32px 19px 32px !important;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	overflow: hidden;
+}
 
-        .cus-wrap.monitering dl dt {
-            margin-bottom: 7px;
-            font-size: 17px;
-            line-height: 70px !important;
-            font-weight: 700;
-        }
+.cus-wrap.monitering dl dt {
+	margin-bottom: 7px;
+	font-size: 17px;
+	line-height: 70px !important;
+	font-weight: 700;
+}
 
-        .cus-wrap .search-area {
-            padding: 20px 33px !important;
-            background: #f8f8f8;
-            border-radius: 5px;
-        }
+.cus-wrap .search-area {
+	padding: 20px 33px !important;
+	background: #f8f8f8;
+	border-radius: 5px;
+}
 
-        .btngroup {
-            display: inline-block !important;
-            justify-content: space-between;
+.btngroup {
+	display: inline-block !important;
+	justify-content: space-between;
+}
 
-        }
+dt, dd {
+	padding: 10px;
+}
 
-        dt,
-        dd {
-            padding: 10px;
-        }
+dt {
+	margin-bottom: 5px;
+}
 
-        dt {
-            margin-bottom: 5px;
-        }
+dt span {
+	display: inline-block;
+	width: 5px;
+	height: 5px;
+	background-color: transparent;
+	vertical-align: middle;
+	margin-right: 10px;
+}
 
-        dt span {
-            display: inline-block;
-            width: 5px;
-            height: 5px;
-            background-color: transparent;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
+dt.on span {
+	background-color: #666;
+}
 
-        dt.on span {
-            background-color: #666;
-        }
+dd {
+	background-color: #F8F8F8;
+	margin-bottom: 5px;
+	display: none;
+}
 
-        dd {
-            background-color: #F8F8F8;
-            margin-bottom: 5px;
-            display: none;
-        }
-        
-        dt.arcordian {
-    		padding: 20px;
-    		color: #333;
-    		font-size: 15px;
-		}
-		
-		dd.arcordian-down {
-    		padding: 20px;
-   		 	color: #333;
-    		font-size: 15px;
-		}
-    </style>
-    <script type="text/javascript">
+dt.arcordian {
+	padding: 20px;
+	color: #333;
+	font-size: 15px;
+}
+
+dd.arcordian-down {
+	padding: 20px;
+	color: #333;
+	font-size: 15px;
+}
+</style>
+<script type="text/javascript">
         function checkCseg() {
             if (isLoginChk == "true") {
 
@@ -237,37 +236,32 @@
         </div>
         <!--//1:1 문의하기-->
 
-
-    </div>
-    <!--//1:1문의하기 / 공지사항-->
-
+	</div>
+	<!--//1:1문의하기 / 공지사항-->
 
 
 
-<!-- // 퀵메뉴 시작 -->
-    <div class="cus-wrap monitering">
-        <h3>Quick 메뉴</h3>
-        <a href="javascript:checkCseg()">
-            <dl class="cus-rating">
-                <dt>주문 / 배송조회</dt>
-            </dl>
-        </a>
-        <a href="javascript:checkMtrg()">
-            <dl class="cus-channel">
-                <dt>아이디 찾기</dt>
-            </dl>
-        </a>
-        <a href="javascript:checkMtrg()">
-            <dl class="cus-channel">
-                <dt>비밀번호 찾기</dt>
-            </dl>
-        </a>
-    </div>
-<!-- // 퀵메뉴 끝  -->
 
-    <div class="cus-wrap">
+	<!-- // 퀵메뉴 시작 -->
+	<div class="cus-wrap monitering">
+		<h3>Quick 메뉴</h3>
+		<a href="javascript:checkCseg()">
+			<dl class="cus-rating">
+				<dt>주문 / 배송조회</dt>
+			</dl>
+		</a> <a href="javascript:checkMtrg()">
+			<dl class="cus-channel">
+				<dt>아이디 찾기</dt>
+			</dl>
+		</a> <a href="javascript:checkMtrg()">
+			<dl class="cus-channel">
+				<dt>비밀번호 찾기</dt>
+			</dl>
+		</a>
+	</div>
+	<!-- // 퀵메뉴 끝  -->
 
- 
+	<div class="cus-wrap"> 
         <div class="search-area">
             <h3>FAQ 검색</h3>
             <form name="searchForm" method="get" action="${app}/cs/faq.do/faqSearch">
@@ -283,22 +277,23 @@
     </div>
     <!--//search : 자주 묻는 질문-->
 
-    <!--베스트 FAQ 10-->
-    <div class="cus-wrap">
-        <div class="tit-wrap">
-            <h3>자주 찾는 질문</h3>
-        </div>
-        <!--accparent-->
-        <div class="accparent">
-        	<c:forEach items="${list}" var="dto" varStatus="vs">
-            <dl>
-                <dt class = "arcordian"><span></span>${dto.title}</dt>
-                <dd class = "arcordian-down">${dto.content}</dd>
-            </dl>
-        	</c:forEach>
-        </div>
-        <!--//accparent-->
-        <script type="text/javascript">
+	<!--베스트 FAQ 10-->
+	<div class="cus-wrap">
+		<div class="tit-wrap">
+			<h3>자주 찾는 질문</h3>
+		</div>
+		<!--accparent-->
+		<div class="accparent">
+			<c:forEach items="${list}" var="dto" varStatus="vs">
+				<dl>
+					<dt class="arcordian">
+						<span></span>${dto.title}</dt>
+					<dd class="arcordian-down">${dto.content}</dd>
+				</dl>
+			</c:forEach>
+		</div>
+		<!--//accparent-->
+		<script type="text/javascript">
             $('dt').on('click', function () {
 
                 if ($(this).hasClass('on')) {
@@ -312,7 +307,7 @@
                 };
             })
         </script>
-    </div>
+	</div>
 </div>
 <!-- // .contents -->
 </body>
