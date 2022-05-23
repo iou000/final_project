@@ -37,12 +37,12 @@
 		<property name="sqlSessionFactory" ref="boardSqlSession" />
 		<property name="mapperInterface" value="com.hmall.team04.dao.BoardDAO" />
 	</bean>	
-	
-	<bean id="hotboardDAO"	class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="sqlSessionFactory" ref="boardSqlSession" />
-		<property name="mapperInterface" value="com.hmall.team04.dao.HotBoardDAO" />
-	</bean>	
 	-->
+	
+	<bean id="qnaDAO"	class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="team04SqlSession" />
+		<property name="mapperInterface" value="com.hmall.team04.dao.cs.QnaDAO" />
+	</bean>	
 
 	<bean id="noticeDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="team04SqlSession" />

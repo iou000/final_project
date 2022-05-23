@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmall.team04.dao.cs.QnaDAO">
+
+	<insert id="insertQna" parameterType="QnaDTO">
+		<!-- INSERT INTO qna_t(user_id, title, content, type, private_yn, file_yn, prd_id, prd_orderdetail_id)
+		VALUES(#{user_id}, #{title}, #{content}, #{type}, #{private_yn}, #{file_yn}, #{prd_id}, #{prd_orderdetail_id}) -->
+		INSERT INTO qna_t(qna_id, user_id, title, content, type)
+		VALUES(qna_t_qna_id_seq.nextval, #{user_id}, #{title}, #{content}, #{type})
+	</insert>
+	 
+</mapper>
