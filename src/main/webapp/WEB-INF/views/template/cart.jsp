@@ -13,8 +13,6 @@
 
 
 <!-- Main Contents css = Contents css부분은 각페이지마다 다르게 해당되는 css가 호출 됨(폴더 구조별)  -->
-<link rel="stylesheet" type="text/css"
-	href="//image.hmall.com/p/css/pd/product.css">
 <script type="text/javascript"
 	src="//image.hmall.com/p/js/co/jquery.form.js"></script>
 <script type="text/javascript"
