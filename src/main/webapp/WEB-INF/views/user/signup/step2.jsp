@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,70 +69,74 @@
 															for="user_id"> <span class="c_bl">[필수]</span> 회원
 																아이디
 														</label> <input type="text" name="user_id" value="${signUpRequestDTO.user_id}"
-															style="border: 1px solid black;" />
+															style="border: 1px solid black;" /> <form:errors path="user_id" />
 													</span></li>
 													
 													<li><span class="checkbox_ui type1"> <label
-															for="user_id"> <span class="c_bl">[필수]</span>
+															for="email"> <span class="c_bl">[필수]</span>
 																이메일주소
-														</label> <input type="text" name="email" value="${signUpRequestDTO.email}"
+														</label> <input type="email" name="email" value="${signUpRequestDTO.email}"
 															style="border: 1px solid black;" /> <form:errors path="email" />
 													</span></li>
 													
 													<li><span class="checkbox_ui type1"> <label
-															for="user_id"> <span class="c_bl">[필수]</span>
+															for="password"> <span class="c_bl">[필수]</span>
 																비밀번호
 														</label> <input type="text" name="password" value="${signUpRequestDTO.password}"
-															style="border: 1px solid black;" />
+															style="border: 1px solid black;" /> <form:errors path="password" />
 													</span></li>
 													
 													<li><span class="checkbox_ui type1"> <label
-															for="user_id"> <span class="c_bl">[필수]</span>
+															for="check_password"> <span class="c_bl">[필수]</span>
 																비밀번호 확인
 														</label> <input type="text" name="check_password" value="${signUpRequestDTO.check_password}"
 															style="border: 1px solid black;" /> <form:errors path="check_password" />
 													</span></li>
 													
 													<li><span class="checkbox_ui type1"> <label
-															for="user_id"> <span class="c_bl">[필수]</span>
+															for="user_nm"> <span class="c_bl">[필수]</span>
 																이름
-														</label> <input type="text" name="user_nm"
-															style="border: 1px solid black;" />
+														</label> <input type="text" name="user_nm" value="${signUpRequestDTO.user_nm}"
+															style="border: 1px solid black;" /> <form:errors path="user_nm" />
 													</span></li>
-													
+
+													<li>
+													<div class="checkbox_ui type1"> 
+														<label for="gender"> 
+															<span class="c_bl">[필수]</span> 성별
+														</label>
+														<br />
+														<input type="checkbox" name="gender1" value="female" checked="checked"> <label>여</label>
+														<input type="checkbox" name="gender1" value="male"><label>남</label> 
+													</div>
+													</li> <form:errors path="gender" />
+
 													<li><span class="checkbox_ui type1"> <label
-															for="user_id"> <span class="c_bl">[필수]</span>
-																성별
-														</label> <input type="text" name="gender"
-															style="border: 1px solid black;" />
-													</span></li>
-													
-													<li><span class="checkbox_ui type1"> <label
-															for="user_id"> <span class="c_bl">[필수]</span>
+															for="birth"> <span class="c_bl">[필수]</span>
 																생년월일
-														</label> <input type="text" name="birth"
-															style="border: 1px solid black;" />
-													</span></li>
+														</label>
+													</span><input type="date" name="birth" value="<fmt:formatDate value="${signUpRequestDTO.birth}" pattern = "yyyy-MM-dd"/>"
+															style="border: 1px solid black;" /></li> <form:errors path="birth" />
 													
 													<li><span class="checkbox_ui type1"> <label
-															for="user_id"> <span class="c_bl">[필수]</span>
+															for="address_f"> <span class="c_bl">[필수]</span>
 																주소(우편번호)
-														</label> <input type="text" name="address_f"
-															style="border: 1px solid black;" />
+														</label> <input type="text" name="address_f" value="${signUpRequestDTO.address_f}"
+															style="border: 1px solid black;" /> <form:errors path="address_f" />
 													</span></li>
 													
 													<li><span class="checkbox_ui type1"> <label
-															for="user_id"> <span class="c_bl">[필수]</span>
+															for="address_l"> <span class="c_bl">[필수]</span>
 																주소
-														</label> <input type="text" name="address_l"
-															style="border: 1px solid black;" />
+														</label> <input type="text" name="address_l" value="${signUpRequestDTO.address_l}"
+															style="border: 1px solid black;" /> <form:errors path="address_l" />
 													</span></li>
 													
 													<li><span class="checkbox_ui type1"> <label
-															for="user_id"> <span class="c_bl">[필수]</span>
+															for="hp_no"> <span class="c_bl">[필수]</span>
 																휴대전화번호
-														</label> <input type="text" name="hp_no"
-															style="border: 1px solid black;" />
+														</label> <input type="text" name="hp_no" value="${signUpRequestDTO.hp_no}"
+															style="border: 1px solid black;" /> <form:errors path="hp_no" />
 													</span></li>
 													
 													
