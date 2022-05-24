@@ -3,14 +3,17 @@ package com.hmall.team04.controller.user;
 
 import javax.validation.Valid;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hmall.team04.dto.user.SignUpRequestDTO;
 import com.hmall.team04.service.user.SignUpService;
@@ -87,4 +90,25 @@ public class SignUpController {
 			return "user.signup.step2";
 		}
 	}
+	
+	@PostMapping(value = "/checkIdDupJSON", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String checkIdDupJSON(@RequestBody String userId) { // Y, N 만 보내주면 되기 때문에 String으로 리턴 : ajax에서 받을 때 dataType: 'text'
+		
+		log.info("중복 확인할 아이디 : "+userId);
+		//아이디 중복 확인
+		String checkIdDupJSON;
+		try {
+			checkIdDupJSON = signUpService.checkIdDup(userId);
+			log.info("아이디 중복 여부: "+checkIdDupJSON);
+			return checkIdDupJSON;  //JSON으로 데이터 리턴
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Y";
+		}
+		
+	}
+	
+	
+	
+	
 }

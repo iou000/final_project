@@ -6,4 +6,6 @@ public interface SignUpService {
 	
 	void signUp(SignUpRequestDTO signUpRequestDTO) throws Exception;
 
+	String checkIdDup(String userId) throws Exception;
+
 }
