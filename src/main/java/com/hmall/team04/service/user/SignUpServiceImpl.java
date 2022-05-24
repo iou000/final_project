@@ -53,4 +53,10 @@ public class SignUpServiceImpl implements SignUpService{
         
 	}
 
+	@Override
+	public String checkIdDup(String userId) throws Exception {
+		
+		return signUpDAO.checkUserIdYn(userId); // userId가 존재하면 Y, 존재하지 않으면 N 리턴.
+	}
+
 }

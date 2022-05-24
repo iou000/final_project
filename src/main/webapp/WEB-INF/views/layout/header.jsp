@@ -12,7 +12,11 @@
 
 <script type="text/javascript" src="${app}/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="${app}/resources/js/common-pub.js"></script>
-		
+<script type="text/javascript">
+			$(function(){
+    			commonPub.common();
+			})
+</script>		
 <link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
 <!-- UI/UX Style -->
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/common.css"><!-- 공통 css -->
