@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 우편번호 -->
 
 <style type="text/css">
 	.msg_warn {
@@ -173,20 +174,22 @@
 												<div class="wrap_inp">
 													<label for="address_f" class="inp_tit">주소(우편번호)<span class="nec">*</span></label>
 													<div class="inp_bundle address_zip">
-														<input type="text" name="address_f" class="inp flex" value="${signUpRequestDTO.address_f}" />
-														<button type="button" class="button flex">
+														<input type="text" name="address_f" id="address_f" class="inp flex" value="${signUpRequestDTO.address_f}" />
+														<button type="button" id="kakaopostBtn" class="button flex" onclick="kakaopost()">
 															우편번호 찾기
 														</button>
 													</div>
+													<p class="t_error" id="addrZipcodeCheckSpan" style="display:none" >우편번호를 입력해주세요.</p>
 													<form:errors path="address_f" cssClass="msg_warn"/>
 												</div>
 												
-												<!-- 주소 -->
+												<!-- 상세 주소 -->
 												<div class="wrap_inp">
-													<label for="address_l" class="inp_tit">주소<span class="nec">*</span></label>
-													<div class="inp_bundle">
-														<input type="text" name="address_l" class="inp flex" value="${signUpRequestDTO.address_l}" />
+													<label for="address_l" class="inp_tit">주소(상세주소)<span class="nec">*</span></label>
+													<div class="inp_bundle address_detail">
+														<input type="text" name="address_l" id="address_l" class="inp flex" value="${signUpRequestDTO.address_l}" />
 													</div>
+													<p class="t_error" id="addrDetailCheckSpan" style="display:none" >상세주소를 입력해주세요.</p>
 													<form:errors path="address_l" cssClass="msg_warn"/>
 												</div>
 												
@@ -226,8 +229,10 @@
 	</div>
 	
 	<script type="text/javascript">
-	
+		document.title = "정보 입력 | 현대Hmall 회원가입";
+		
 		$(document).ready(function(){
+			//AJAX 요청에 CSRF 추가
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
 			$(document).ajaxSend(function(e, xhr, options) {
@@ -236,6 +241,30 @@
 			
 		})
 		
+		/* 카카오 우편번호 */
+		function kakaopost() {
+		    new daum.Postcode({
+		    	// oncomplete : 주소 선택 후 콜백
+		        oncomplete: function(data) {
+		        	// kakaoPost에서 가져온 우편번호, 주소값을 저장
+		           $("#address_f").val(data.zonecode);
+		           $("#address_l").val(data.address+", ");
+		           $('#address_f').attr('readonly', true);
+		           
+		           // readonly로 바꿔줌
+		           $(".inp_bundle.address_zip").css("background-color", "#e5e5e5");
+		           $('#address_f').css("background-color", "#e5e5e5");
+		           
+		           //상세주소 입력을 위한 포커스
+		           $(".inp_bundle.address_zip").removeClass("error");
+		           $("#addrZipcodeCheckSpan").hide();
+		           $(".inp_bundle.address_zip").addClass("focus");
+		           $("#address_l").focus();
+		        }
+		    }).open();
+		}
+		
+		/* Datepicker */
 		$(function() {
 	       //input을 datepicker로 선언
 			$("#datepicker1").datepicker({
@@ -261,68 +290,21 @@
 				}
 	       });                    
 	       //초기값 오늘 날짜로 설정.
-	       $('#datepicker1').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
+	       //$('#datepicker1').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
    		
 		});
 		
-		$("#datepicker1").blur(function() {
-			if ($("#datepicker1").val() === null || $("#datepicker1").val() === '') {
-				$(".inp_bundle.registerBirth").addClass("error");
-			} else{
-				$(".inp_bundle.registerBirth").removeClass("error");
-			}
-		});
 		
-	
-	
-	
-	
-		document.title = "정보 입력 | 현대Hmall 회원가입";
 
-		//필수 약관 동의 후 다음 페이지 요청
+		/* 서버에 회원가입 요청 */
 		function submitUserInfo(){
-			
+			//유효성 검사 모두 통과해야 요청 가능
 			if (validateJoinForm()){
 				$("#signUpUserForm").submit();
 			}
-
 		}
 		
-		$("input[name='gender']").click(function() {
-			console.log($('input[name="gender"]:checked').val())
-		});
-		
-		
-		/* ------------------------------------ */
-
-		var isLoading = false;
-		$("#registerCustId").blur( checkDuplicateId);
-		
-		function checkDuplicateId() {
-			
-			var msg = "사용 가능한 아이디입니다.";
-			var idValidResult = hdgm.validation.isValidCustId($("input[name=user_id]").val());
-			if(!idValidResult) {
-			    msg = hdgm.validation.getMessage();
-				$(".inp_bundle.registerCustId").addClass("error");
-				$("#idCheckSpan").removeClass("t_success");
-				$("#idCheckSpan").addClass("t_error");
-			}else{
-				$("#idCheckSpan").removeClass("t_error");
-				$("#idCheckSpan").addClass("t_success");
-			}
-			
-			
-			$("#idCheckSpan").text(msg);
-			$("#idCheckSpan").show();
-			
-			//return false;
-		}
-		
-		
-
-		
-		//bcheck가 true면 회원가입 완료해주면 됨.
+		/* 회원가입 요청 폼 유효성 검사 */
 		function validateJoinForm() {
 			$("#idCheckSpan, #pwdCheckMsg1,#pwdCheckMsg2,#emailCheckMsg").hide();
 			
@@ -445,6 +427,30 @@
 			
 			
 			//우편번호 체크
+			if ($("#address_f").val() === null || $("#address_f").val() === '') { //비어있다면
+				if( bCheck) {
+					$("#address_f").focus();
+					$(".inp_bundle.address_zip").addClass("error");
+					$("#addrZipcodeCheckSpan").show();
+				}
+				bCheck = false;
+			} else{
+				$(".inp_bundle.address_zip").removeClass("error");
+				$("#addrZipcodeCheckSpan").hide();
+			}
+			
+			//상세주소 체크
+			if ($("#address_l").val() === null || $("#address_l").val() === '') { //비어있다면
+				if( bCheck) {
+					$("#address_l").focus();
+					$(".inp_bundle.address_detail").addClass("error");
+					$("#addrDetailCheckSpan").show();
+				}
+				bCheck = false;
+			} else{
+				$(".inp_bundle.address_detail").removeClass("error");
+				$("#addrDetailCheckSpan").hide();
+			}
 			
 			
 			//휴재폰 번호 체크
@@ -457,23 +463,82 @@
 			}
 			
 			
-			return bCheck;
+			return bCheck; //검사를 모두 통과하면 true 리턴
 		}
-		  
+		/* -- //회원가입 요청 폼 유효성 검사 -- */
 		
+		// 생년월일(달력) 입력시 체크
+		$("#datepicker1").blur(function() {
+			if ($("#datepicker1").val() === null || $("#datepicker1").val() === '') {
+				$(".inp_bundle.registerBirth").addClass("error");
+			} else{
+				$(".inp_bundle.registerBirth").removeClass("error");
+			}
+		});
 		
+		//우편번호 입력시 체크
+		$("#address_f").blur(function() {
+			if ($("#address_f").val() === null || $("#address_f").val() === '') { // 입력값이 비어있으면
+				$(".inp_bundle.address_zip").addClass("error");
+				$("#addrZipcodeCheckSpan").show();
+			} else{
+				$(".inp_bundle.address_zip").removeClass("error");
+				$("#addrZipcodeCheckSpan").hide();
+			}
+			
+		});
 		
-		// 이메일체크
+		// 상세주소 입력시 체크
+		$("#address_l").blur(function() {
+			if ($("#address_l").val() === null || $("#address_l").val() === '') { // 입력값이 비어있으면
+				$(".inp_bundle.address_detail").addClass("error");
+				$("#addrDetailCheckSpan").show();
+			} else{
+				$(".inp_bundle.address_detail").removeClass("error");
+				$("#addrDetailCheckSpan").hide();
+			}
+			
+		});
+		
+		// 아이디 입력시 체크
+		$("#registerCustId").blur( checkDuplicateId);
+		// 이메일(@앞 입력시) 체크
 		$("#registerWrite3_3").change(function(e) {
 			checkEmailFormat();
 		});
-		
-		// 이메일체크
+		// 이메일(@뒤 입력시) 체크
 		$("#registerEmail").blur(function(e) {
 			checkEmailFormat();
 		});
+		// 이름 입력시 체크
+		$("#user_nm").blur(checkUserNm);
+		// 휴대폰 번호 입력시 체크
+		$("#hp_no").blur( checkHpNo);
 		
 		
+		/* 아이디 중복 검사 */
+		function checkDuplicateId() {
+			
+			var msg = "사용 가능한 아이디입니다.";
+			var idValidResult = hdgm.validation.isValidCustId($("input[name=user_id]").val());
+			if(!idValidResult) {
+			    msg = hdgm.validation.getMessage();
+				$(".inp_bundle.registerCustId").addClass("error");
+				$("#idCheckSpan").removeClass("t_success");
+				$("#idCheckSpan").addClass("t_error");
+			}else{
+				$("#idCheckSpan").removeClass("t_error");
+				$("#idCheckSpan").addClass("t_success");
+			}
+			
+			
+			$("#idCheckSpan").text(msg);
+			$("#idCheckSpan").show();
+			
+			//return false;
+		}
+		
+		/* 이메일 중복 검사 */
 		function checkEmailFormat()
 		{
 			$("#emailCheckMsg").hide();
@@ -525,20 +590,94 @@
 			}
 		}
 		
-		// 한글명, 영문명 앞뒤 공백체크
-		function fnIsNotValidNameBlank1(a) {
-		return /^ +| +$/g.test(a);
-		}
+		/* 패스워드 검사 (일치검사까지 한번에 함) */
+		$("#registerPwd1, #registerPwd2").blur( function(){
+			
+			hdgm.validation.preparePasswordValidation($("input[name=user_id]").val(), $("#registerPwd1").val(), $("#registerPwd2").val());
+			if(!hdgm.validation.isValidPasswordJustOnefield()) {
 
-		// 한글명, 영문명 중간 공백체크
-		function fnIsNotValidNameBlank2(a) {
-		return / {2,}/g.test(a);
+				$("#pwdCheckMsg1").text(hdgm.validation.getMessage()).show();
+				
+				if( !hdgm.validation.getValidFlag())
+				{
+					$(".inp_bundle.registerPwd1").addClass("error");
+					bCheck = false;
+				}
+			} else {
+				$("#pwdCheckMsg1").hide();
+			}
+			
+			if(hdgm.validation.isValidPasswordJustOnefield() && hdgm.validation.getNewPassword() != hdgm.validation.getConfirmPassword()){
+				$("#pwdCheckMsg2").text("동일한 값을 입력해주시기 바랍니다.").show();
+			} 
+			
+			if(hdgm.validation.isValidPasswordJustOnefield() && hdgm.validation.getNewPassword() == hdgm.validation.getConfirmPassword()){
+				$("#pwdCheckMsg2").hide();
+			} 
+			
+		});
+		
+		/* 이름 검사 */
+		function checkUserNm() {
+			var reg_user_nm = /^[가-힣]{2,8}/; // 한글만
+			if(!reg_user_nm.test($("input[name=user_nm]").val())) { //정규식 만족하지 못한다면
+				
+				$(".inp_bundle.registerUserNm").addClass("error");
+				$("#userNmCheckSpan").show();
+				return false
+					
+			} else {
+				$(".inp_bundle.registerUserNm").removeClass("error");
+				$("#userNmCheckSpan").hide();
+			}
+			
+			return true
 		}
+		
+		
+		/* 휴대폰 번호 검사 */
+		function checkHpNo() {
+			
+			var msg = "";
+			var idValidResult = hdgm.validation.isValidCellNo($("input[name=hp_no]").val());
+			if(!idValidResult) {
+			    msg = hdgm.validation.getMessage();
+			    console.log(msg)
+				$(".inp_bundle.registerHpNo").addClass("error");
+				$("#hpNoCheckSpan").removeClass("t_success");
+				$("#hpNoCheckSpan").addClass("t_error");
+				$("#hpNoCheckSpan").text(msg);
+				$("#hpNoCheckSpan").show();
+				return false
+			}else{
+				console.log(msg)
+				$("#hpNoCheckSpan").removeClass("t_error");
+				$("#hpNoCheckSpan").addClass("t_success");
+				$("#hpNoCheckSpan").hide();
+				$("#hpNoCheckSpan").text(msg);
+				$("#hpNoCheckSpan").show();
+			}
+			
+			return true
+			
+		}
+		
+		
+		
+		//// 한글명, 영문명 앞뒤 공백체크
+		//function fnIsNotValidNameBlank1(a) {
+		//return /^ +| +$/g.test(a);
+		//}
 
-		// 영문대문자, 공백만 체크
-		function fnIsUpperAlphaBlank(a) {
-		return /^[A-Z ]+$/g.test(a);
-		}
+		//// 한글명, 영문명 중간 공백체크
+		//function fnIsNotValidNameBlank2(a) {
+		//return / {2,}/g.test(a);
+		//}
+
+		//// 영문대문자, 공백만 체크
+		//function fnIsUpperAlphaBlank(a) {
+		//return /^[A-Z ]+$/g.test(a);
+		//}
 		
 
 		//날짜 유효성 체크(YYYY-MM-DD)
@@ -586,88 +725,12 @@
 
 			return vLeaf;
 		}
-
-
-		$("#registerPwd1, #registerPwd2").blur( function(){
-			
-			hdgm.validation.preparePasswordValidation($("input[name=user_id]").val(), $("#registerPwd1").val(), $("#registerPwd2").val());
-			if(!hdgm.validation.isValidPasswordJustOnefield()) {
-
-				$("#pwdCheckMsg1").text(hdgm.validation.getMessage()).show();
-				
-				if( !hdgm.validation.getValidFlag())
-				{
-					$(".inp_bundle.registerPwd1").addClass("error");
-					bCheck = false;
-				}
-			} else {
-				$("#pwdCheckMsg1").hide();
-			}
-			
-			if(hdgm.validation.isValidPasswordJustOnefield() && hdgm.validation.getNewPassword() != hdgm.validation.getConfirmPassword()){
-				$("#pwdCheckMsg2").text("동일한 값을 입력해주시기 바랍니다.").show();
-			} 
-			
-			if(hdgm.validation.isValidPasswordJustOnefield() && hdgm.validation.getNewPassword() == hdgm.validation.getConfirmPassword()){
-				$("#pwdCheckMsg2").hide();
-			} 
-			
-		});
 		
-		
-		//휴대폰번호 "-" 자동 추가
+		//휴대폰 번호 "-" 자동 추가 함수
 		$(document).on("keyup", "#hp_no", function() { 
 			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
 		});
-		
-		$("#hp_no").blur( checkHpNo);
-		
-		// 비밀번호 체크
-		function checkHpNo() {
-			
-			var msg = "";
-			var idValidResult = hdgm.validation.isValidCellNo($("input[name=hp_no]").val());
-			if(!idValidResult) {
-			    msg = hdgm.validation.getMessage();
-			    console.log(msg)
-				$(".inp_bundle.registerHpNo").addClass("error");
-				$("#hpNoCheckSpan").removeClass("t_success");
-				$("#hpNoCheckSpan").addClass("t_error");
-				$("#hpNoCheckSpan").text(msg);
-				$("#hpNoCheckSpan").show();
-				return false
-			}else{
-				console.log(msg)
-				$("#hpNoCheckSpan").removeClass("t_error");
-				$("#hpNoCheckSpan").addClass("t_success");
-				$("#hpNoCheckSpan").hide();
-				$("#hpNoCheckSpan").text(msg);
-				$("#hpNoCheckSpan").show();
-			}
-			
-			return true
-			
-		}
-		
-		$("#user_nm").blur(checkUserNm);
-		
-		//이름 체크
-		function checkUserNm() {
-			var reg_user_nm = /^[가-힣]{2,8}/; // 한글만
-			if(!reg_user_nm.test($("input[name=user_nm]").val())) { //정규식 만족하지 못한다면
-				
-				$(".inp_bundle.registerUserNm").addClass("error");
-				$("#userNmCheckSpan").show();
-				return false
-					
-			} else {
-				$(".inp_bundle.registerUserNm").removeClass("error");
-				$("#userNmCheckSpan").hide();
-			}
-			
-			return true
-		}
-		
+
 		
 		
 </script>
