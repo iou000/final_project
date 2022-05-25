@@ -215,27 +215,8 @@
 				<div class="sum-price" style="">
 					<div class="sum-title">
 						<!--20200916 수요일 변경 : pc레이아웃 공통 icon class 변경-->
-						<strong>총 상품 금액<a href="#tooltipCont6"
-							data-modules-tooltip=""> <i class="icon que-mark"></i>
-						</a>
+						<strong>총 상품 금액
 						</strong>
-						<!--tooltip-box 20200916 수요일 추가 pc레이아웃 공통-->
-						<div class="tooltip-box" id="tooltipCont6">
-							<div class="thead">
-								<p class="tit">총 상품금액 안내</p>
-							</div>
-							<p class="txt">
-								선택하실 수 있는 할인혜택이 모두 적용된 금액입니다.<br>배송비가 포함이 되어 있지 않은 금액으로,
-								결제시 배송비가 추가될 수 있습니다.
-							</p>
-							<button class="btn-close">
-								<i class="icon"></i> <span class="hiding">닫기</span>
-							</button>
-							<button class="btn-close">
-								<i class="icon"></i> <span class="hiding">닫기</span>
-							</button>
-						</div>
-						<!--//tooltip-box-->
 					</div>
 
 					<div class="price-wrap">
@@ -252,9 +233,9 @@
 				<!-- btngroup -->
 				<div class="btngroup prdBtnBoxGroup pd_shipping_type_nomral type04">
 
-					<button class="btn btn-linelgray large btn-like"
-						onclick="goChioceProcess('','019472','','2140365970', event);">
-						<i class="icon"></i> <span class="count">35</span>
+					<button class="btn btn-linelgray large btn-like" onclick="goChioceProcess('','019472','','2140365970', event);">
+						<i class="icon"></i>
+						<span class="count">35</span>
 					</button>
 
 					<input type="hidden" name="buyYn" value="Y">
@@ -562,7 +543,7 @@
 			}
 		});
 
-		alert('hi2');
+		alert('goto cart');
 
 	}
 </script>

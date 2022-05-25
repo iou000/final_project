@@ -34,4 +34,11 @@ public class CartServiceImpl implements CartService {
 	}
 
 
+	@Override
+	public void updatePrdCartQty(CartDTO cartDTO) throws Exception {
+		// TODO Auto-generated method stub
+		cartDAO.updatePrdCartQty(cartDTO);
+	}
+
+
 }

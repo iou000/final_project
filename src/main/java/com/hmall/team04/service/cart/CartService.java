@@ -10,4 +10,6 @@ public interface CartService {
 
 	void deletePrdCartId(CartDTO cartDTO) throws Exception;
 
+	void updatePrdCartQty(CartDTO cartDTO) throws Exception;
+
 }

@@ -4,12 +4,13 @@
 <!-- cbody -->
 
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+	
 
 <div class="cbody">
 	<div class="contents">
 		<div class="csection">
-		
 			<div class="cart-area">
+			
 				<!-- cart-head -->
 				<div class="cart-head">
 					<div class="cart-top">
@@ -29,128 +30,156 @@
 				<!-- cart-body -->
 				<div class="cart-body">
 						<!-- 일반상품 -->
-						<div class="shipping-listwrap" aria-label="일반상품">
-						
-							<!-- cart-check -->
-							<div class="cart-check">
-								<div class="checkbox">
-									<label class="chklabel">
-									<input type="checkbox" name="all" id="gen" onclick="check(this, 'gen', 'all', '');">
-										<i class="icon"></i>
-										<span>전체상품</span>
+					<div class="shipping-listwrap" aria-label="일반상품">
+
+						<!-- cart-check -->
+						<div class="cart-check">
+							<div class="checkbox">
+								<div class="all_check_input_div">
+									<label class="chklabel"> <input type="checkbox"
+										class="all_check_input input_size_20" id="cbx_chkAll">
+										<i class="icon"></i><span>전체선택</span>
 									</label>
 								</div>
 							</div>
-							<!-- //.cart-check -->
-
+						</div>
+						<!-- //.cart-check -->
+						<div class="shipping-list" id="gen">
 							<!-- 초기화 -->
-						<c:forEach items="${cartList}" var="cart">
-							<div class="shipping-list" id="gen">
-								<div class="pdwrap pdlist ml" style="display:;"
-									id="011380_000000_111">
 
-									<div class="checkbox">
-										<label class="chklabel"> 
-											<input type="checkbox" name="basktInf" value="2139567673|00001|0|4|88290" onclick="check(this, 'gen', '2139567673', '00001');">
-											<i class="icon"></i>
-											<span>${cart.prd_nm } | ${cart.prd_cart_id }</span>
-										</label>
-									</div>
-
-									<button type="button" class="btn btn-cart-del" onclick="deleteBaskt('${cart.prd_cart_id }');">
-										<i class="icon cart-del"></i>
-										<span class="hiding">삭제</span>
-									</button>
-									
-									<div class="pdlist-wrap">
-										<div class="pditem">
-											<figure class="pdthumb">
-												<a href="http://www.hmall.com/p/pda/itemPtc.do?slitmCd=2139567673&amp;sectId=2731740">
-													<div class="thumb">
-														<img src="${cart.upload_path }" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=120x120&amp;AR=0')">
+							<table>
+								<thead>
+									<tr>
+										<td></td>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${cartList}" var="cart">
+										<tr>
+											<td class="td_width_1 cart_info_td">
+												<div class="cart-check">
+													<div class="checkbox">
+														<label class="chklabel"> <input type="checkbox"
+															class="individual_cart_checkbox input_size_20" name="chk">
+															<i class="icon"></i><strong>${cart.prd_board_id }</strong>
+														</label>
 													</div>
-												</a>
-												<figcaption>
-													<a href="#">
-														<div class="pdprice">
+												</div> 
+												<input type="hidden" class="individual_bookPrice_input" value="${cart.prd_price}">
+												<input type="hidden" class="individual_salePrice_input" value="${cart.prd_price}">
+												<input type="hidden" class="individual_bookCount_input" value="${cart.amount}"> 
+												<input type="hidden" class="individual_totalPrice_input" value="${cart.prd_price * cart.amount}">
+												<input type="hidden" class="individual_point_input" value="${ci.point}"> 
+												<input type="hidden" class="individual_totalPoint_input" value="${ci.totalPoint}">
 
-															<ins class="normal" aria-label="정상가">
-																<em>${cart.prd_price }</em><b>원</b>
-															</ins>
+												<div class="pdwrap pdlist ml">
 
+													
+
+													<button type="button" class="btn btn-cart-del"
+														onclick="deleteBasktCore('${cart.prd_cart_id }');">
+														<i class="icon cart-del"></i><span class="hiding">삭제</span>
+													</button>
+
+													<div class="pdlist-wrap">
+														<div class="pditem">
+															<figure class="pdthumb">
+																<!-- 장바구니에서 사진 클릭 시 다시 상품상세로 이동하는 부분 -->
+																<a href="#">
+																	<div class="thumb">
+																		<img src="${cart.upload_path }"
+																			onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=120x120&amp;AR=0')">
+																	</div>
+																</a>
+
+																<figcaption>
+																	<a href="#">
+																		<div class="pdprice">
+
+																			<ins class="normal" aria-label="정상가">
+																				<em>${cart.prd_price }</em><b>원</b>
+																			</ins>
+
+																		</div>
+																		<div class="benefits">
+
+																			<span>쿠폰 10% </span>
+
+																		</div>
+
+																		<div class="pdoption" aria-label="옵션/수량">
+																			<span class="option">옵션1: <em>${cart.option1 }</em></span>
+																			<span class="option">옵션2: <em>${cart.option2 }</em></span>
+																			<span class="count">수량: <em>${cart.amount }</em></span>
+																		</div>
+
+																	</a>
+																</figcaption>
+															</figure>
 														</div>
-														<div class="benefits">
+														<!-- //.pditem -->
 
-															<span>쿠폰 10% </span>
+														<!-- btngroup: 수량 변경 -->
+														<div class="btngroup">
+															<div class="prop-change selected">
+																<div class="optgroup">
+																	<strong>${cart.prd_nm }</strong>
+																	<div class="quantity" id="uitm">
 
-														</div>
+																		<div class="count">
+																			<button type="button" class="btn btn-minus"
+																				aria-label="수량 감소"
+																				onclick="minusOrdQtyCore(this, '0')">
+																				<i class="icon"></i> <span class="hiding">감소</span>
+																			</button>
+																			<div class="inputbox">
+																				<label class="inplabel"> <input
+																					type="number" name="ordQty" maxlength="2"
+																					value="${cart.amount }"
+																					onkeyup="uCheckOrdQty(this,'99', '0')"
+																					title="입력하세요">
+																				</label>
+																			</div>
+																			<button type="button" class="btn btn-plus"
+																				aria-label="수량 증가"
+																				onclick="plusOrdQtyCore(this, '99')">
+																				<i class="icon"></i> <span class="hiding">증가</span>
+																			</button>
+																		</div>
 
-														<div class="pdoption" aria-label="옵션/수량">
-															<span class="option">옵션1: <em>${cart.option1 }</em></span>
-															<span class="option">옵션2: <em>${cart.option2 }</em></span>
-															<span class="count">수량: <em>${cart.amount }</em></span>
-														</div>
+																		<button type="button"
+																			class="btn btn-linelgray small30"
+																			onclick="changeBasktItemCore(this,'${cart.prd_cart_id }');">
+																			<span>변경적용</span>
+																		</button>
 
-													</a>
-												</figcaption>
-											</figure>
-										</div>
-										<!-- //.pditem -->
-
-
-										<!-- btngroup: 수량 변경 -->
-										<div class="btngroup">
-
-											<div class="prop-change selected" id="chgUitmLayer_2139567673_00001">
-												<div class="optgroup">
-													<div class="quantity" id="uitm">
-														<div class="count">
-															<button type="button" class="btn btn-minus" aria-label="수량 감소" onclick="uitmMinus(this, '0')">
-																<i class="icon"></i>
-																<span class="hiding">감소</span>
-															</button>
-															<div class="inputbox">
-																<label class="inplabel">
-																<input type="number" name="ordQty" maxlength="2" value="4" onkeyup="uCheckOrdQty(this,'99', '0')" title="입력하세요">
-																</label>
+																	</div>
+																</div>
+																
 															</div>
-															<button type="button" class="btn btn-plus" aria-label="수량 증가" onclick="uitmPlus(this, '99')">
-																<i class="icon"></i>
-																<span class="hiding">증가</span>
-															</button>
 														</div>
 
-														<button type="button" class="btn btn-linelgray small30"
-															onclick="changeBasktItemUitmInf('2139567673', '00001');">
-															<span>변경적용</span>
-														</button>
-														
+														<div class="btngroup">
+															<button type="button" class="btn btn-default"
+																onclick="setGiftOrder('N');buyDirect(this);"
+																id="buyDirectBtn_2132577147">
+																<span>바로구매</span>
+															</button>
+														</div>
 													</div>
 												</div>
-											</div>
+											</td>
+										</tr>
 
-										</div>
+									</c:forEach>
 
-										<div class="btngroup">
-											<button type="button" class="btn btn-default" onclick="setGiftOrder('N');buyDirect(this);" id="buyDirectBtn_2139567673">
-												<span>바로구매</span>
-											</button>
-										</div>
-										<!-- // btngroup: 수량 변경 -->
-									</div>
-									<br> <br> <br>
-									<!-- //.pdlist-wrap -->
-								</div>
-								<!-- //.pdwrap -->
-
-							</div>
-						</c:forEach>
-						<!-- //.shipping-list -->
-
-					</div>
+								</tbody>
+							</table>
+							<!-- //.shipping-list -->
+						</div>
 						<!-- //.shipping-listwrap  일반상품 -->
-				</div>
-				<!-- //.cart-body -->
+					</div>
+					<!-- //.cart-body -->
 			</div>
 			<!-- //.cart-area -->
 		</div>
@@ -159,17 +188,20 @@
 		<!-- 상품리스트에 하나라도 체크되면 활성화됨 -->
 		<div class="sticky-ui-wrapper util-option-sticky">
 			<div class="sticky-placeholder" style="height: 270px;"></div>
-			<div class="util-option sticky fixed"
-				data-modules-sticky="padding:-40;breakPoint:.container;className:util-option-sticky;"
-				style="top: 40px;">
+			<div class="util-option sticky fixed" data-modules-sticky="padding:-40;breakPoint:.container;className:util-option-sticky;" style="top: 40px;">
 				<div class="sticky-inner">
+
 					<div class="result">
+						<p class="sel-tit">선택한 상품<span>
+							</span>
+						</p>
 						<p>
 							<strong>상품금액</strong>
 							<ins>
-								<em id="selSlitmAmt">353,160</em><b>원</b>
+								<em id="totalPrice"></em><b>원</b>
 							</ins>
 						</p>
+						<!-- <p class="sale"><strong>할인</strong><ins><em class="off">0</em><b>원</b></ins></p>-->
 						<p class="ship-fee">
 							<strong>배송비</strong>
 							<ins>
@@ -178,19 +210,21 @@
 						</p>
 						<!-- 선택한 상품이 없을 경우 em에 class="off" 붙여주세요.  -->
 					</div>
+
 					<div class="total-price">
 						<a href="javascript:;" class="btn-total"><span>총 주문 금액</span></a>
 						<ins>
 							<em id="selOrdAmt">353,160</em><b>원</b>
 						</ins>
 					</div>
-										<div class="btngroup">
-											<button type="button" class="btn btn-default"
-												onclick="setGiftOrder('N');buyDirect(this);"
-												id="buyDirectBtn_2139567673">
-												<span>바로구매</span>
-											</button>
-										</div>
+					<div class="btngroup">
+						<button type="button" class="btn btn-default"
+							onclick="setGiftOrder('N');buyDirect(this);"
+							id="buyDirectBtn_2139567673">
+							<span>전체바로구매</span>
+						</button>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -232,50 +266,129 @@
 </div>
 <!-- //.cfoot -->
 
+	
 <script>
-	// 바로구매
-	function buyProduct(obj) {
-		var token = $("input[name='_csrf']").val();
-		var header = "X-CSRF-TOKEN";
+$(document).ready(function() {
+	//
+	$(".all_check_input").prop("checked", true);
+	$(".individual_cart_checkbox").prop("checked", true);
+	
+	setTotalInfo();	
 
-		var targetCssHeader = ".product-option-wrap:first";
-		var cur_ordQty = $(
-				targetCssHeader
-						+ " .select-product-list .pditem input[name='ordQty']")
-				.val();
+	/* 체크박스 전체 선택 */
+	$("#cbx_chkAll").on("click", function(){
+		
+		/* 체크박스 체크/해제 */
+		if($("#cbx_chkAll").is(":checked")){
+			$("input[name=chk]").prop("checked", true);
+		} else{
+			$("input[name=chk]").prop("checked", false);
+		}
+		
+		/* 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수, 종류) */
+		setTotalInfo($(".cart_info_td"));	
+		
+	});
+	
+	/* 체크여부에따른 종합 정보 변화 */
+	$(".individual_cart_checkbox").on("change", function(){
+		/* 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수, 종류) */
+		setTotalInfo($(".cart_info_td"));
 
-		alert(cur_ordQty);
+		var total = $("input[name=chk]").length;
+		var checked = $("input[name=chk]:checked").length;
 
-		$.ajax({
-			url : "${app}/team04/oda/order.do",
-			method : "POST",
+		if(total != checked){
+			$(".all_check_input").prop("checked", false);
+		} else{
+			$(".all_check_input").prop("checked", true); 
+		}
+	});
+	
 
-			data : {
-				ordQty : cur_ordQty
-			},
-			dataType : 'json',
-			beforeSend : function(xhr) {
-				xhr.setRequestHeader(header, token);
-			},
-			success : function(data) {
-
-				location.href = '${app}/team04/oda/order.do';
-			}
-		});
-
-		alert('hi2');
-
-	}
+	
+});
 </script>
 
-	<script>
+<script type="text/javascript">
+/* 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수, 종류) */
+function setTotalInfo(){
+	
+	let totalPrice = 0;				// 총 가격
+	let totalCount = 0;				// 총 갯수
+	let totalKind = 0;				// 총 종류
+	let totalPoint = 0;				// 총 마일리지
+	let deliveryPrice = 0;			// 배송비
+	let finalTotalPrice = 0; 		// 최종 가격(총 가격 + 배송비)
+	
+	$(".cart_info_td").each(function(index, element){
+		
+		if($(element).find(".individual_cart_checkbox").is(":checked") === true){
+			// 총 가격
+			totalPrice += parseInt($(element).find(".individual_totalPrice_input").val());
+			// 총 갯수
+			//totalCount += parseInt($(element).find(".individual_bookCount_input").val());
+			// 총 종류
+			//totalKind += 1;
+			// 총 마일리지
+			//totalPoint += parseInt($(element).find(".individual_totalPoint_input").val());
+		}
+	});
+	
+	
+	/* 배송비 결정 */
+	if(totalPrice >= 50000){
+		deliveryPrice = 0;
+	} else if(totalPrice == 0){
+		deliveryPrice = 0;
+	} else {
+		deliveryPrice = 3000;	
+	}
+	//alert(deliveryPrice);
+	/* 최종 가격 */
+	finalTotalPrice = totalPrice + deliveryPrice;
+	//alert('최종가격');
+	//alert(finalTotalPrice);
+	
+	/* ※ 세자리 컴마 Javscript Number 객체의 toLocaleString() */
+	
+	// 총 가격
+	$(".totalPrice_span").text(totalPrice.toLocaleString());
+	// 총 갯수
+	$(".totalCount_span").text(totalCount);
+	// 총 종류
+	$(".totalKind_span").text(totalKind);
+	// 총 마일리지
+	$(".totalPoint_span").text(totalPoint.toLocaleString());
+	// 배송비
+	$(".delivery_price").text(deliveryPrice);	
+	// 최종 가격(총 가격 + 배송비)
+	$(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());
+	
+	/* 값 삽입 */
+	// 총 가격
+	$(".result #totalPrice").text(totalPrice);
+	// 총 갯수
+	//$(".totalCount_span").text(totalCount);
+	// 총 종류
+	//$(".totalKind_span").text(totalKind);
+	// 총 마일리지
+	//$(".totalPoint_span").text(totalPoint);
+	// 배송비
+	$(".result .ship-fee #selDlvAmt").text(deliveryPrice);	
+	// 최종 가격(총 가격 + 배송비)
+	$(".total-price #selOrdAmt").text(finalTotalPrice);
+}
+</script>
 
-		// reply delete jquery fn
-		function deleteBaskt(prd_cart_id) {
-			var token = $("input[name='_csrf']").val();
-			var header = "X-CSRF-TOKEN";
-			
-
+<script>
+function deleteBasktCore(prd_cart_id) {
+	var token = $("input[name='_csrf']").val();
+	var header = "X-CSRF-TOKEN";
+	
+	var result = confirm("해당 상품을 장바구니에서 취소하시겠습니까?");
+	
+	if(result == true){
 			$.ajax({
 				url : "${app}/team04/odb/deletePrdCartId",
 				method : "POST",
@@ -292,30 +405,100 @@
 					}
 				}
 			})
-			
-			alert('hi');
+	}
+	
+	alert('deleteBaskt');
+}
 
+function changeBasktItemCore(obj,prd_cart_id) {
+	var token = $("input[name='_csrf']").val();
+	var header = "X-CSRF-TOKEN";
+	
+	var childObj = $(obj).closest("td");
+	var target_childObj = $(childObj).find("input[name=ordQty]");
+	
+	var amount = Number($(target_childObj).val());
+	
+	$.ajax({
+		url : "${app}/team04/odb/updatePrdCartQty",
+		method : "POST",
+		
+		data : {
+			prd_cart_id : prd_cart_id,
+			amount : amount
+		},
+		
+		dataType : "json",
+		beforeSend : function(xhr) { xhr.setRequestHeader(header, token); },
+		success : function(data) {
+			if (data.update_PrdCartQty_Success == "True") {
+				location.reload();
+			}
 		}
+	})
+	
+	alert('changeBasktItemCore');
+}
 
-		// reply update jquery fn
-		function selectReply(reply_id) {
-			//alert(reply_id)
-			
-			$.ajax({
-				url : "${app}/selectreply",
-				method : "POST",
-				data : {
-					reply_id : reply_id
-				},
-				dataType : "json",
-				
-				success : function(data) {
-					//alert(JSON.stringify(data));
-					if (data.select_reply_Success == "True") {
-						location.reload();
-					}
-				}
-			})	
-		}
-				
-	</script>
+</script>
+
+<script>
+
+/*
+ * 수량 input 변경
+ */
+    function changeOrdQtyCore(obj, limitCnt) {
+        var targetObj = $(obj).closest(".inplabel");
+        var ordQty = $(obj).val();
+        var orgSlitmCd = "";
+        var sellPrc = $("input[name='sellPrc']").val();
+        
+        // 추후 전체 재고량 고려한 안내문 기능 염두
+        // var totalQty = fn_calTotalQty(0, orgSlitmCd, parentObj);
+
+        // if (totalQty > limitCnt) {
+        //     var cnt = limitCnt - (totalQty - ordQty);
+        //     $(obj).val(cnt);
+        //     alert("본상품은 " + limitCnt + "개 이상 주문할 수 없습니다.");
+        //     ordQty = cnt;
+        // }
+
+        calcSellPrcCore(obj);
+    }
+
+    /*
+ * 속성 수량 더하기
+ */
+    function plusOrdQtyCore(obj, limitCnt) {
+
+		var childObj = $(obj).closest("td");
+		var target_childObj = $(childObj).find("input[name=ordQty]");
+		
+		var val_target_childObj = Number($(target_childObj).val());
+	
+		alert(val_target_childObj);
+		
+		$(target_childObj).val(val_target_childObj + 1);
+
+    }
+
+    /*
+ * 속성 수량  빼기
+ */
+    function minusOrdQtyCore(obj, limitCnt) {
+    	
+		var childObj = $(obj).closest("td");
+		var target_childObj = $(childObj).find("input[name=ordQty]");
+		
+		var val_target_childObj = Number($(target_childObj).val());
+	
+        if (val_target_childObj <= 1) {
+            return false;
+        }
+		
+		alert(val_target_childObj);
+		
+		$(target_childObj).val(val_target_childObj - 1);
+    }
+
+</script>

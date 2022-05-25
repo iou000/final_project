@@ -78,5 +78,19 @@ public class CartController {
 		map.put("delete_PrdCartId_Success", "True");
 		
 		return map;
+	}	
+	
+	@RequestMapping(value = "/odb/updatePrdCartQty", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public HashMap<String, String> updatePrdCartQty(CartDTO cartDTO, HttpServletRequest req,HttpServletResponse res) throws Exception {
+		
+		log.info("updatePrdCartQty "+cartDTO.toString());
+		
+		cartService.updatePrdCartQty(cartDTO);
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("update_PrdCartQty_Success", "True");
+		
+		return map;
 	}
 }
