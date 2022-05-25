@@ -51,7 +51,6 @@
 								<thead>
 									<tr>
 										<td></td>
-										<td></td>
 									</tr>
 								</thead>
 								<tbody>
@@ -62,25 +61,20 @@
 													<div class="checkbox">
 														<label class="chklabel"> <input type="checkbox"
 															class="individual_cart_checkbox input_size_20" name="chk">
-															<i class="icon"></i>
+															<i class="icon"></i><strong>${cart.prd_board_id }</strong>
 														</label>
 													</div>
-												</div> <input type="hidden" class="individual_bookPrice_input"
-												value="${cart.prd_price}"> <input type="hidden"
-												class="individual_salePrice_input" value="${cart.prd_price}">
-												<input type="hidden" class="individual_bookCount_input"
-												value="${cart.amount}"> <input type="hidden"
-												class="individual_totalPrice_input"
-												value="${cart.prd_price * cart.amount}"> <input
-												type="hidden" class="individual_point_input"
-												value="${ci.point}"> <input type="hidden"
-												class="individual_totalPoint_input" value="${ci.totalPoint}">
-											</td>
-
-											<td>
+												</div> 
+												<input type="hidden" class="individual_bookPrice_input" value="${cart.prd_price}">
+												<input type="hidden" class="individual_salePrice_input" value="${cart.prd_price}">
+												<input type="hidden" class="individual_bookCount_input" value="${cart.amount}"> 
+												<input type="hidden" class="individual_totalPrice_input" value="${cart.prd_price * cart.amount}">
+												<input type="hidden" class="individual_point_input" value="${ci.point}"> 
+												<input type="hidden" class="individual_totalPoint_input" value="${ci.totalPoint}">
 
 												<div class="pdwrap pdlist ml">
-													<strong>${cart.prd_board_id }</strong>
+
+													
 
 													<button type="button" class="btn btn-cart-del"
 														onclick="deleteBasktCore('${cart.prd_cart_id }');">
