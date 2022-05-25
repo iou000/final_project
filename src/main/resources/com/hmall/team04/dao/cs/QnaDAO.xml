@@ -4,71 +4,76 @@
 <mapper namespace="com.hmall.team04.dao.cs.QnaDAO">
 	<sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach item='type' collection="typeArr">
+			<foreach item='type' collection="cri.typeArr">
 				<trim prefix="OR">
 					<choose>
 						<when test="type == 'T'.toString()">
-							title like '%'||#{keyword}||'%'
+							title like '%'||#{cri.keyword}||'%'
 						</when>
 						<when test="type == 'C'.toString()">
-							content like '%'||#{keyword}||'%'
+							content like '%'||#{cri.keyword}||'%'
 						</when>
 						<when test="type == 'W'.toString()">
-							user_id like '%'||#{keyword}||'%'
+							user_id like '%'||#{cri.keyword}||'%'
 						</when>
 					</choose>
 				</trim>
 			</foreach>
 		</trim>
 	</sql>
-	<select id="getQnaList" resultType="QnaDTO">
-		SELECT	qna_id,
-			    user_id,
-			    ans_user_id,
-			    title,
-			    content,
-			    type,
-			    ans_title,
-			    ans_content,
-			    ins_dt,
-			    ans_ins_dt,
-			    private_yn,
-			    ans_yn,
-			    file_yn,
-			    prd_id,
-			    prd_orderdetail_id
-		FROM
-				(SELECT
-					rownum as rnum,
-				    qna_id,
-				    user_id,
-				    ans_user_id,
-				    title,
-				    content,
-				    type,
-				    ans_title,
-				    ans_content,
-				    ins_dt,
-				    ans_ins_dt,
-				    private_yn,
-				    ans_yn,
-				    file_yn,
-				    prd_id,
-				    prd_orderdetail_id
-				FROM
-				    qna_t
-				WHERE
-					<include refid="criteria"></include>
-			
-					<![CDATA[
-					 rownum <= #{pageNum} * #{amount}
-				AND	user_id = #{userid}
-				ORDER BY qna_id DESC)
-		WHERE rnum > (#{pageNum} - 1) * #{amount}
+	
+	<sql id="type_dtl">
+		(SELECT dtl_nm FROM CODE_DTL_T cd WHERE qna_t.TYPE = cd.DTL_CD AND grp_cd = 'FAQ') AS type
+	</sql>
+	
+	<select id="getQnaList" parameterType="map" resultType="QnaDTO">
+		SELECT   qna_id,
+	             user_id,
+	             ans_user_id,
+	             title,
+	             content,
+	             type,
+	             ans_title,
+	             ans_content,
+	             ins_dt,
+	             ans_ins_dt,
+	             private_yn,
+	             ans_yn,
+	             file_yn,
+	             prd_id,
+	             prd_orderdetail_id
+	      FROM
+	            (SELECT
+	               rownum as rnum,
+	                qna_id,
+	                user_id,
+	                ans_user_id,
+	                title,
+	                content,
+	                <include refid="type_dtl"></include>,
+	                ans_title,
+	                ans_content,
+	                ins_dt,
+	                ans_ins_dt,
+	                private_yn,
+	                ans_yn,
+	                file_yn,
+	                prd_id,
+	                prd_orderdetail_id
+	            FROM
+	                qna_t
+	            WHERE
+	               <include refid="criteria"></include>
+	         
+	               <![CDATA[
+	                rownum <= #{cri.pageNum} * #{cri.amount}
+	            AND   user_id = #{userid}
+	            ORDER BY qna_id DESC)
+	      WHERE rnum > (#{cri.pageNum} - 1) * #{cri.amount}
 		]]>
 	</select>
 	
-	<select id="getBoardCount" resultType="int">
+	<select id="getBoardCount" parameterType="map" resultType="int">
 		select count(*)
 		from qna_t
 		where <include refid="criteria"></include>
