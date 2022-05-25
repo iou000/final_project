@@ -18,24 +18,9 @@
 					</div>
 				</div>
 				<div class="wrap_sign_step">
-					<ol class="clear">
-						<li class="step1 on">
-							<div class="num">1</div>
-							<p class="txt">본인인증</p>
-						</li>
-						<li class="step2">
-							<div class="num">2</div>
-							<p class="txt">약관동의</p>
-						</li>
-						<li class="step3">
-							<div class="num">3</div>
-							<p class="txt" onclick="kkoPtcoGateShow();">정보입력</p>
-						</li>
-						<li class="step4">
-							<div class="num">4</div>
-							<p class="txt" onclick="viewAgent();">가입완료</p>
-						</li>
-					</ol>
+					<div class="btn_area btn_ac">
+						<a class="btn_typeB2" href="./step1" style="color:snow; margin-bottom:80px;"><span>회원가입 시작하기</span></a>
+					</div>
 				</div>
 			</div>
 		</div>

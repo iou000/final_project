@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="app" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -15,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/layout.css"><!-- 공통 Layout css -->
     <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/popup.css"><!-- 공통 Popup css -->
     <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/jquery-ui.css"><!-- jQuery UI css -->
+   	<link rel="stylesheet" type="text/css" href="${app}/resources/css/screen.ui.css">
     <style>
         .product_line {
             display: inline-flex;
@@ -66,6 +68,23 @@
             margin-left: 10px;
             margin-bottom: 21px;
         }
+        body {
+    		padding: 35px;
+		}
+		input[type="button"] {
+    		padding: 5px;
+   			margin-right: 10px;
+    		border-radius: 6px;
+    		border: 1px solid #C0C0C0C0;
+		}
+		
+        input[type="submit"] {
+        	padding: 5px;
+   			margin-right: 10px;
+    		border-radius: 6px;
+    		border: 1px solid #C0C0C0C0;
+		}
+        
     </style>
 </head>
 
@@ -76,6 +95,12 @@
             문의하고자 하시는 내용을 작성해주세요. 빠른 답변 드리겠습니다.<br />고객센터 > 고객상담실 > 내 상담내역 조회에서
             확인하실 수 있습니다.
         </h5>
+        <form action="${app}/cs/qnaInsert" method="post">
+        <sec:csrfInput />
+        <sec:authentication property="principal" var="pinfo"/>
+        <sec:authorize access="isAuthenticated()">
+        	<input type="hidden" name="user_id" value="${pinfo.username}">
+        </sec:authorize>
         <table>
             <caption>테이블 제목</caption>
             <colgroup>
@@ -85,28 +110,28 @@
             <tbody>
                 <tr>
                     <th scope="row">문의 유형 선택</th>
-                    <td><select name="questype">
-                            <option value="" selected="selected">유형을 선택해주세요</option>
-                            <option value="교환">교환문의</option>
-                            <option value="반품">반품문의</option>
-                            <option value="환불">환불문의</option>
-                            <option value="취소">취소문의</option>
-                            <option value="배송">배송문의</option>
-                            <option value="배송일정">배송일정문의</option>
-                            <option value="사이트">사이트 이용문의</option>
-                            <option value="제안">제안</option>
-                            <option value="기타">기타문의</option>
+                    <td><select name="type" required>
+                            <option value="">유형을 선택해주세요</option>
+                            <option value="U">회원문의</option>
+                            <option value="P">상품문의</option>
+                            <option value="O">주문/결제문의</option>
+                            <option value="D">배송문의</option>
+                            <option value="C">취소 교환반품문의</option>
+                            <option value="R">적립금 포인트문의</option>
+                            <option value="S">사이트 이용문의</option>
+                            <option value="E">기타문의</option>
                         </select></td>
                 </tr>
                 <tr>
                     <th scope="row" rowspan="2">문의 상품 정보</th>
 
                     <td>
-                        <div class="product_pop"></div>
+                        <div class="product_pop">
                         <a href="#" onClick="window.open('${app}/cs/findInOrder','주문내역에서 찾기','width=756,height=541')">
                             <input type="button" value="주문내역에서 찾기" style="cursor: pointer;"> </a>
                         <a href="#" onClick="window.open('${app}/cs/findInCart','장바구니에서 찾기','width=756,height=541')">
                         	<input type="button" value="장바구니에서 찾기" style="cursor: pointer;"> </a>
+                        </div>
     </div>
     </td>
 
@@ -118,65 +143,22 @@
     </tr>
     <tr>
         <th scope="row">제목</th>
-        <td><input type="text" name="qtitle"></td>
+        <td><input type="text" name="title" required></td>
     </tr>
     <tr>
         <th scope="row">문의 내용</th>
-        <td><input type="text" class="qnacontent" name="qcontent"
-                placeholder="질문하실 내용을 자세하게 적어주시면, 정확하고 빠른 답변에 도움이 됩니다.">
+        <td>
+        	<textarea required="required" rows="5" cols="50" name="content" placeholder ="질문하실 내용을 자세하게 적어주시면, 정확하고 빠른 답변에 도움이 됩니다."></textarea>
         </td>
     </tr>
 
-    <tr>
-        <th scope="row">연락처</th>
-        <td>
-            <div class="product_line">
-                <select name="hp_f">
-                    <option value="" selected="selected">선택</option>
-                    <option value="010">010</option>
-                    <option value="011">011</option>
-                    <option value="070">070</option>
-                    <option value="02">02</option>
-                    <option value="031">031</option>
-                    <option value="032">032</option>
-                    <option value="033">033</option>
-                    <option value="041">041</option>
-                    <option value="042">042</option>
-                    <option value="043">043</option>
-                    <option value="044">044</option>
-                    <option value="051">051</option>
-                    <option value="052">052</option>
-                    <option value="053">053</option>
-                    <option value="054">054</option>
-                    <option value="055">055</option>
-                    <option value="061">061</option>
-                    <option value="062">062</option>
-                    <option value="063">063</option>
-                    <option value="064">064</option>
-                </select>&nbsp;-&nbsp;
-                <input type="text" id="hp_m" required="required" maxlength="4">&nbsp;-&nbsp;
-                <input type="text" id="hp_l" required="required" maxlength="4">
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">이메일</th>
-        <td>
-            <div class="product_line">
-                <input type="text" id="email_f">&nbsp;@&nbsp;<input type="text" id="email_l">
-                <div>
-                    <input type="checkbox" id="email_recv" name="email_recv"> <label for="email_recv">이메일로
-                        답변 받음</label>
-                </div>
-            </div>
-        </td>
-    </tr>
     </tbody>
     </table>
     <div class="suborc">
         <input type="submit" value="문의하기" style="cursor: pointer;">
         <input type="button" value="취소" onClick="window.close()" style="cursor: pointer;">
     </div>
+    </form>
     </div>
 </body>
 

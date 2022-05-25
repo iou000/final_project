@@ -7,7 +7,8 @@
 <html>
   <head>
 	<link rel="stylesheet" type="text/css" href="${app}/resources/css/screen.ui.css">
-	<link rel="stylesheet" type="text/css" href="${app}/resources/css/swiper.min.css">
+	<script type="text/javascript" src="${app}/resources/js/init.js"></script>
+	<script type="text/javascript" src="${app}/resources/js/validation.js"></script>
   </head>
   <body>
   
