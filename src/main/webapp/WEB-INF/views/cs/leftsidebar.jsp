@@ -12,9 +12,9 @@
         <ul>
             <li><a href="#" onClick="window.open('${app}/cs/qnaInsPopUp','1:1 문의하기','width=756,height=700')">1:1 문의하기</a></li>
 
-            <li><a class="#" href="${app}/cs/qnaList.do">내 상담내역 조회</a></li>
+            <li><a href="#" onclick='javascript:location.href="${app}/cs/qna.do"'>내 상담내역 조회</a></li>
 
-            <li><a class="#" href="${app}/cs/faqList.do">자주 묻는 질문</a></li>
+            <li><a class="#" href="${app}/cs/faq.do">자주 묻는 질문</a></li>
 
             <li><a href="${app}/cs/noticeList.do">공지사항</a></li>
 

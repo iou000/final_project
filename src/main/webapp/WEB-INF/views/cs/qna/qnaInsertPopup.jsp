@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/layout.css"><!-- 공통 Layout css -->
     <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/popup.css"><!-- 공통 Popup css -->
     <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/co/jquery-ui.css"><!-- jQuery UI css -->
+   	<link rel="stylesheet" type="text/css" href="${app}/resources/css/screen.ui.css">
     <style>
         .product_line {
             display: inline-flex;
@@ -67,6 +68,23 @@
             margin-left: 10px;
             margin-bottom: 21px;
         }
+        body {
+    		padding: 35px;
+		}
+		input[type="button"] {
+    		padding: 5px;
+   			margin-right: 10px;
+    		border-radius: 6px;
+    		border: 1px solid #C0C0C0C0;
+		}
+		
+        input[type="submit"] {
+        	padding: 5px;
+   			margin-right: 10px;
+    		border-radius: 6px;
+    		border: 1px solid #C0C0C0C0;
+		}
+        
     </style>
 </head>
 
