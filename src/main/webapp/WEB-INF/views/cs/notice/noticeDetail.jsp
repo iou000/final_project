@@ -43,7 +43,7 @@
 	                                            <dl class="board-file">
 	                                                <dt>첨부파일</dt>
 	
-	                                                <dd><a href="/p/ccb/fileDownload.do?ancmId=53596">현대홈쇼핑 보험대리점등록증.pdf</a>
+	                                                <dd><a href="/p/ccb/fileDownload?ancmId=53596">현대홈쇼핑 보험대리점등록증.pdf</a>
 	                                                </dd>
 	                                            </dl>
                                             </c:if>
@@ -72,7 +72,7 @@
                                         <td class="nowrap txt-left">
                                         <c:choose>
                                         	<c:when test="${article.prev_id != null }">
-                                            	<a href="${app }/cs/noticeView.do?articleid=${article.prev_id}">${article.prev_title }</a>
+                                            	<a href="${app }/cs/noticeView?articleid=${article.prev_id}">${article.prev_title }</a>
 											</c:when>
 											
 											<c:when test="${article.prev_id == null }">
@@ -86,7 +86,7 @@
                                         <td class="nowrap txt-left">
                                         <c:choose>
                                         	<c:when test="${article.next_id != null }">
-                                            	<a href="${app }/cs/noticeView.do?articleid=${article.next_id}">${article.next_title }</a>
+                                            	<a href="${app }/cs/noticeView?articleid=${article.next_id}">${article.next_title }</a>
 											</c:when>
 											
 											<c:when test="${article.next_id == null }">
@@ -99,7 +99,7 @@
                             </table>
                         </div>
                         <div class="btngroup cuslist-btn">
-                            <button onclick="location.href='${app}/cs/noticeList.do?page=1'"
+                            <button onclick="location.href='${app}/cs/noticeList?page=1'"
                                 class="btn btn-linegray small"><span>목록</span></button>
                         </div>
                     </div>

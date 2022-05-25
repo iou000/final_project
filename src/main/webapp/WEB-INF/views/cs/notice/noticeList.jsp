@@ -89,7 +89,7 @@ select {
 		$(".move").on("click", function(e) {
 			e.preventDefault();
 			var aid = $(this).children("input[name='articleid']").val();
-			let uri = "${app}" + '/cs/noticeView.do';
+			let uri = "${app}" + '/cs/noticeView';
 			actionForm.find("input[name='articleid']").val(aid);
 			console.log(uri);
 			actionForm.attr('action', uri);
@@ -120,7 +120,7 @@ select {
 								<c:forEach items="${list}" var="dto" varStatus="vs">
 								<tr>
 									<%-- <td class="nowrap">
-										<a href="${app}/cs/noticeView.do?articleid=${dto.article_id}">${dto.title}</a>
+										<a href="${app}/cs/noticeView?articleid=${dto.article_id}">${dto.title}</a>
 										<c:if test="${dto.file_yn == '1'}">
 											<!-- 파일 있으면 이미지 띄우기 -->
 										</c:if>
@@ -128,7 +128,7 @@ select {
 									<td class="txt-center"><span class="date"><fmt:formatDate value="${dto.ins_dt}" type="date" /></span></td> --%>
 									<%-- <td style="width: 10%" class="text-center">${pageMaker.total - vs.index - ((pageMaker.cri.pageNum-1)*pageMaker.cri.amount)}</td> --%>
 									<td class="nowrap">
-										<a class="move" href="${app }/cs/noticeView.do">
+										<a class="move" href="${app }/cs/noticeView">
 											<input type="hidden" name="articleid" value="<c:out value="${dto.article_id}"></c:out>" /> 
 											${dto.title}</a></td>
 										<%-- <c:if test="${dto.file_yn == '1'}">
@@ -163,7 +163,7 @@ select {
 					</sec:authorize> --%>
 					<br/>
 					<div class="row">
-						<form class="form-inline" id="searchForm" action="${app }/cs/noticeList.do" method="get">
+						<form class="form-inline" id="searchForm" action="${app }/cs/noticeList" method="get">
 							<select class="form-control" name="type">
 								<option value="T"
 									>제목</option>
@@ -212,7 +212,7 @@ select {
 			try {
 				$.ajax({
 					type: "get"
-					, url: "https://wwwca.hmall.com/p/coe/onAirList.do?time=051710"
+					, url: "https://wwwca.hmall.com/p/coe/onAirList?time=051710"
 					, dataType: "html"
 					, async: true
 					, success: function (data) {
@@ -244,7 +244,7 @@ select {
 
 						$.ajax({
 							type: "get"
-							, url: "/p/coe/onAirList.do?time=051710"
+							, url: "/p/coe/onAirList?time=051710"
 							, dataType: "html"
 							, async: true
 							, success: function (data) {
@@ -281,7 +281,7 @@ select {
 			try {
 				$.ajax({
 					type: "get"
-					, url: "https://wwwca.hmall.com/p/coe/onAirCardPrmoList.do?time=051710"
+					, url: "https://wwwca.hmall.com/p/coe/onAirCardPrmoList?time=051710"
 					, dataType: "html"
 					, async: true
 					, success: function (data) {
@@ -295,7 +295,7 @@ select {
 
 						$.ajax({
 							type: "get"
-							, url: "/p/coe/onAirCardPrmoList.do?time=051710"
+							, url: "/p/coe/onAirCardPrmoList?time=051710"
 							, dataType: "html"
 							, async: true
 							, success: function (data) {
@@ -374,7 +374,7 @@ select {
 	<!-- <div class="wing-banner banner-right"
 		data-modules-sticky="padding:0;breakPoint:.header-menu-wrap;className:wing-banner-sticky">
 		fixed 클래스 추가 시 고정
-		<a href="/pevent/eva/evntTmplDivideView.do?prmoNo=00049341">
+		<a href="/pevent/eva/evntTmplDivideView?prmoNo=00049341">
 			<div class="visit-indicator">바로접속
 				<span class="visit-staus on" style="margin-left: 0px">ON</span>
 			</div>

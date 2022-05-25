@@ -76,7 +76,7 @@
                 var ancmId = param;
                 var params = "ancmId=" + ancmId;
                 $.ajax({
-                    url: "/p/ccc/updateFaqCnt.do", data: params, type: "post", success: function (data) {
+                    url: "/p/ccc/updateFaqCnt", data: params, type: "post", success: function (data) {
                         $("#cnt" + ancmId).html(data.qryCnt);
                     }, dataType: "json"
                 });
@@ -165,7 +165,7 @@
                     category = "0" + category;
                 }
                 $.ajax({
-                    url: "/p/cca/FaqCountAjax.do",
+                    url: "/p/cca/FaqCountAjax",
                     data: {
                         "notice_id": notice_id
                         , "category": category
@@ -190,7 +190,7 @@
                     <div class="cus-wrap">
                         <h3>자주 묻는 질문</h3>
                         <div class="search-area">
-                            <form name="searchForm" method="get" action="${app}/cs/faq.do/faqSearch">
+                            <form name="searchForm" method="get" action="${app}/cs/faq/faqSearch">
                                 <div class="inputbox">
                                     <input hidden="hidden" />
                                     <label class="inplabel icon-find"><input type="text" name="keyword"
@@ -208,15 +208,15 @@
                     <div class="cus-wrap">
                         <div class="faq-tab">
                             <ul class="faq-full">
-                                <li><a href="${app}/cs/faq.do"><span>전체</span></a></li>
-                                <li><a href="${app}/cs/faq.do/faqView?faq_flag=U"><span>회원</span></a></li>
-                                <li><a href="${app}/cs/faq.do/faqView?faq_flag=P"><span>상품</span></a></li>
-                                <li><a href="${app}/cs/faq.do/faqView?faq_flag=O"><span>주문/결제</span></a></li>
-                                <li><a href="${app}/cs/faq.do/faqView?faq_flag=D"><span>배송</span></a></li>
-                                <li><a href="${app}/cs/faq.do/faqView?faq_flag=C"><span>취소/교환/반품</span></a></li>
-                                <li><a href="${app}/cs/faq.do/faqView?faq_flag=R"><span>적립금/e포인트/할인쿠폰</span></a></li>
-                                <li><a href="${app}/cs/faq.do/faqView?faq_flag=S"><span>사이트 이용</span></a></li>
-                                <li><a href="${app}/cs/faq.do/faqView?faq_flag=E"><span>기타사항</span></a></li>
+                                <li><a href="${app}/cs/faq"><span>전체</span></a></li>
+                                <li><a href="${app}/cs/faq/faqView?faq_flag=U"><span>회원</span></a></li>
+                                <li><a href="${app}/cs/faq/faqView?faq_flag=P"><span>상품</span></a></li>
+                                <li><a href="${app}/cs/faq/faqView?faq_flag=O"><span>주문/결제</span></a></li>
+                                <li><a href="${app}/cs/faq/faqView?faq_flag=D"><span>배송</span></a></li>
+                                <li><a href="${app}/cs/faq/faqView?faq_flag=C"><span>취소/교환/반품</span></a></li>
+                                <li><a href="${app}/cs/faq/faqView?faq_flag=R"><span>적립금/e포인트/할인쿠폰</span></a></li>
+                                <li><a href="${app}/cs/faq/faqView?faq_flag=S"><span>사이트 이용</span></a></li>
+                                <li><a href="${app}/cs/faq/faqView?faq_flag=E"><span>기타사항</span></a></li>
                             </ul>
                         </div>
                     </div>
