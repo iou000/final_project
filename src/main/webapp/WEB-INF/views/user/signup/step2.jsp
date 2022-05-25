@@ -32,31 +32,29 @@
 				<!-- step -->
 				<div class="wrap_sign_step">
 					<ol class="clear">
-						<li class="step1 on">
-							<div class="num">1</div>
-							<p class="txt">본인인증</p>
-						</li>
 						<li class="step2 on">
-							<div class="num">2</div>
+							<div class="num">1</div>
 							<p class="txt">약관동의</p>
 						</li>
 						<li class="step3 on">
-							<div class="num">3</div>
-							<p class="txt" onclick="kkoPtcoGateShow();">정보입력</p>
+							<div class="num">2</div>
+							<p class="txt">정보입력</p>
 						</li>
 						<li class="step4">
-							<div class="num">4</div>
-							<p class="txt" onclick="viewAgent();">가입완료</p>
+							<div class="num">3</div>
+							<p class="txt">가입완료</p>
 						</li>
 					</ol>
 				</div>
 				<!--// step -->
 
 				<!-- 정보입력 -->
-				<form:form name="UserInfoForm" id="UserInfoForm" commandName="signUpRequestDTO" method="post" action="./step3">
+				<form:form name="signUpUserForm" id="signUpUserForm" commandName="signUpRequestDTO" method="post" action="./step3">
 					<input type="hidden" id="token" data-token-name="${_csrf.headerName}" placeholder="Password" value="${_csrf.token}">
 					<input type="hidden" name="check_agree0" value="N" /> 
 					<input type="hidden" name="check_agree1" value="N" />
+					<input type="hidden" id="email" name="email" value="${signUpRequestDTO.email}">
+					
 					
 					<section class="step3_container regist_id">
 						<div class="layout1">
@@ -73,7 +71,7 @@
 												<div class="wrap_inp">
 													<label for="user_id" class="inp_tit">아이디<span class="nec">*</span></label>
 													<div class="inp_bundle registerCustId">
-														<input type="text" id="registerCustId" name="custId" class="inp flex" value="${signUpRequestDTO.user_id}" />
+														<input type="text" id="registerCustId" name="user_id" class="inp flex" value="${signUpRequestDTO.user_id}" />
 													</div>
 													<p class="t_success" id="idCheckSpan" style="display:none">사용가능한 아이디입니다.</p>
 													<form:errors path="user_id" />
@@ -87,7 +85,7 @@
 												<div class="wrap_inp">
 													<label for="email" class="inp_tit">이메일<span class="nec">*</span></label>
 													<div class="inp_bundle email_bundle emailCheckMsg">
-														<input type="email" title="이메일 아이디 입력" id="registerEmail" name="email" value="${signUpRequestDTO.email}" maxlength="80" class="inp flex" placeholder="이메일">
+														<input type="email" title="이메일 아이디 입력" id="registerEmail" name="registerEmail" value="${signUpRequestDTO.email}" maxlength="80" class="inp flex" placeholder="이메일">
 														<select class="select flex" id="registerWrite3_3" title="이메일 도메인 선택">
 															<option value="00">직접입력</option>
 															<option value="01">@naver.com</option>
@@ -106,9 +104,10 @@
 												<div class="wrap_inp">
 													<label for="password" class="inp_tit">비밀번호<span class="nec">*</span></label>
 													<div class="inp_bundle registerPwd1">
-														<input type="password" title="비밀번호 입력" id="registerPwd1" name="custPwd" class="inp flex" value="${signUpRequestDTO.password}" />
+														<input type="password" title="비밀번호 입력" id="registerPwd1" name="password" class="inp flex" value="${signUpRequestDTO.password}" />
 													</div>
 													<p class="t_error" id="pwdCheckMsg1" style="display:none">패스워드는 8자리 ~ 30자리로 입력해주세요.</p>
+													<p class="cmt_guide1 mark1 inp_mt">영문, 숫자, 특수문자를 포함 8~30 자리로 입력해주세요.</p>
 													<form:errors path="password" />
 												</div>
 												
@@ -116,7 +115,7 @@
 												<div class="wrap_inp">
 													<label for="check_password" class="inp_tit">비밀번호 확인<span class="nec">*</span></label>
 													<div class="inp_bundle registerPwd2">
-														<input type="password" name="registerPwd2" id="registerPwd2" class="inp flex" value="${signUpRequestDTO.check_password}" />
+														<input type="password" name="check_password" id="registerPwd2" class="inp flex" value="${signUpRequestDTO.check_password}" />
 													</div>
 													<p class="t_error" id="pwdCheckMsg2" style="display:none">동일한 값을 입력해주시기 바랍니다.</p>
 													<form:errors path="check_password" />
@@ -141,14 +140,14 @@
 														<input type="radio" name="gender" id="gender_male"value="male"> <label for="gender_male">남</label> 
 													</div>
 													</div>
-													
-													<form:errors path="user_nm" />
+													<form:errors path="gender" />
 												</div>
 												
+												<!-- 생년월일 -->
 												<div class="wrap_inp">
 													<label for="birth" class="inp_tit">생년월일<span class="nec">*</span></label>
-													<div class="inp_bundle">
-														<input type="date" name="birth" class="inp flex" 
+													<div class="inp_bundle registerBirth">
+														<input type="date" id="birth" name="birth" class="inp flex" 
 															value="<fmt:formatDate value="${signUpRequestDTO.birth}" pattern = "yyyy-MM-dd"/>" />
 													</div> 
 													<form:errors path="birth" />
@@ -175,9 +174,10 @@
 												<!-- 휴대폰 번호 -->
 												<div class="wrap_inp">
 													<label for="hp_no" class="inp_tit">휴대폰 번호<span class="nec">*</span></label>
-													<div class="inp_bundle">
-														<input type="text" name="hp_no" class="inp flex" value="${signUpRequestDTO.hp_no}" />
+													<div class="inp_bundle registerHpNo">
+														<input type="text" name="hp_no" id="hp_no" class="inp flex" value="${signUpRequestDTO.hp_no}" />
 													</div>
+													<p class="t_success" id="hpNoCheckSpan"></p>
 													<form:errors path="hp_no" />
 												</div>
 													
@@ -225,8 +225,9 @@
 		//필수 약관 동의 후 다음 페이지 요청
 		function submitUserInfo(){
 			
-			
-			$("#UserInfoForm").submit();
+			if (validateJoinForm()){
+				$("#signUpUserForm").submit();
+			}
 
 		}
 		
@@ -238,11 +239,12 @@
 		/* ------------------------------------ */
 
 		var isLoading = false;
-
+		$("#registerCustId").blur( checkDuplicateId);
+		
 		function checkDuplicateId() {
 			
 			var msg = "사용 가능한 아이디입니다.";
-			var idValidResult = hdgm.validation.isValidCustId($("input[name=custId]").val());
+			var idValidResult = hdgm.validation.isValidCustId($("input[name=user_id]").val());
 			if(!idValidResult) {
 			    msg = hdgm.validation.getMessage();
 				$(".inp_bundle.registerCustId").addClass("error");
@@ -258,26 +260,27 @@
 			$("#idCheckSpan").show();
 			
 			//return false;
-			
 		}
+		
+		
 
 		
-		 
+		//bcheck가 true면 회원가입 완료해주면 됨.
 		function validateJoinForm() {
-			$("#idCheckSpan,#pwdCheckMsg1,#pwdCheckMsg2,#emailCheckMsg, #mainDprtMsg, #mainDprtMsg2, #mainDprtMsg3, #dmOutletMsg, #ntnlGbcdMsg, #selectFrcsMsg").hide();
+			$("#idCheckSpan, #pwdCheckMsg1,#pwdCheckMsg2,#emailCheckMsg").hide();
 			
 			var bCheck = true;
 			
 			
 			//아이디 체크
-			if($("input[name=custId]").length > 0 && !hdgm.validation.isValidCustId($("input[name=custId]").val())) {
+			if($("input[name=user_id]").length > 0 && !hdgm.validation.isValidCustId($("input[name=user_id]").val())) {
 				$("#idCheckSpan").text(hdgm.validation.getMessage());
 				$("#idCheckSpan").show();
 				if( !hdgm.validation.getValidFlag())
 				{
 					if( bCheck)
 					{
-						$("input[name=custId]").focus();
+						$("input[name=user_id]").focus();
 						$(".inp_bundle.registerCustId").addClass("error");
 						$("#idCheckSpan").removeClass("t_success");
 						$("#idCheckSpan").addClass("t_error");
@@ -289,9 +292,19 @@
 				}
 			}
 			
+			//생년월일 날짜 체크
+			if (!fnIsValidDate($("input[name=birth]").val())) {
+				if( bCheck) {
+					$("input[name=birth]").focus();
+					$(".inp_bundle.registerBirth").addClass("error");
+				}
+				bCheck = false;
+			}
+			
+			
 			//비밀번호 체크
-			if($("input[name=custId]").length > 0) {
-				hdgm.validation.preparePasswordValidation($("input[name=custId]").val(), $("#registerPwd1").val(), $("#registerPwd2").val());
+			if($("input[name=user_id]").length > 0) {
+				hdgm.validation.preparePasswordValidation($("input[name=user_id]").val(), $("#registerPwd1").val(), $("#registerPwd2").val());
 				if(!hdgm.validation.isValidPasswordJustOnefield()) {
 	
 					$("#pwdCheckMsg1").text(hdgm.validation.getMessage()).show();
@@ -338,10 +351,10 @@
 				
 				
 				
-				 else {
+				 else { //이메일 형식 검증후 중복검사
 					$.ajax({
-						type : 'post',
-						url : "/cu/join/checkPartnerEmailDup.nhd",
+						type : 'POST',
+						url : "checkPartnerEmailDup",
 						data:	{email : $("#email").val()},
 						async : false,
 						success :	function(data) {
@@ -360,7 +373,9 @@
 			}
 			
 			return bCheck;
-		} 
+		}
+		  
+		
 		
 		
 		// 이메일체크
@@ -404,12 +419,15 @@
 					
 					
 					$.ajax({
-						type : 'post',
-						url : "/cu/join/checkPartnerEmailDup.nhd",
-						data:	{email : $("#email").val()},
+						type : 'POST',
+						url : "checkEmailDupJSON",
+						data: $("#email").val(),
+						dataType: 'text',
+						contentType:'application/json; charset=utf-8',
 						async : false,
-						success :	function(data) {
-								if(data > 0) {
+						success : function(data) {
+								console.log(data);
+								if(data === "Y") {
 									$("#emailCheckMsg").text("현재 사용중인 메일주소 입니다.").show();
 									$("#registerEmail").focus();
 									$(".inp_bundle.email_bundle").addClass("error");
@@ -487,50 +505,6 @@
 		}
 
 		
-		function submitNewCustomer() {
-
-			
-			$('.joinDisabled').show();
-			if( isLoading)
-			{
-				alert("회원가입 진행중입니다.\n잠시기다려 주세요.");
-				return;
-			}
-			isLoading = true;
-			
-			//이메일 체크
-			if($("#registerEmail").length > 0) {
-				if( $("#registerWrite3_3").val() != "00")
-				{
-					$("#email").val( $("#registerEmail").val() + $("#registerWrite3_3 option:selected").text());
-				}
-				else
-				{
-					$("#email").val( $("#registerEmail").val());
-				}
-			}
-		
-			var options = {
-					beforeSubmit : validateJoinForm,
-					success : showResponseJoinForm
-			}
-			
-			var txtResult2="";
-			$("input.mktCheckbox2").each(function() {
-			   var txtYn = "N"; 
-			   if(this.checked) {
-			       txtYn = "Y";
-			   }
-
-			   txtResult2 += this.value+","+txtYn+"/";
-			});
-			
-			
-			$("form[name=joinForm]").ajaxSubmit(options);
-		}
-		 
-		
-		
 		$("#email").blur(function() {
 			//이메일 체크
 			if( $("#registerWrite3_3").val() != "00")
@@ -566,12 +540,10 @@
 		});
 		
 		
-		$("#registerCustId").blur( checkDuplicateId);
-		
 		
 		$("#registerPwd1, #registerPwd2").blur( function(){
 			
-			hdgm.validation.preparePasswordValidation($("input[name=custId]").val(), $("#registerPwd1").val(), $("#registerPwd2").val());
+			hdgm.validation.preparePasswordValidation($("input[name=user_id]").val(), $("#registerPwd1").val(), $("#registerPwd2").val());
 			if(!hdgm.validation.isValidPasswordJustOnefield()) {
 
 				$("#pwdCheckMsg1").text(hdgm.validation.getMessage()).show();
@@ -596,7 +568,35 @@
 		});
 		
 		
+		//휴대폰번호 "-" 자동 추가
+		$(document).on("keyup", "#hp_no", function() { 
+			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+		});
 		
+		$("#hp_no").blur( checkHpNo);
+		
+		function checkHpNo() {
+			
+			var msg = "";
+			var idValidResult = hdgm.validation.isValidCellNo($("input[name=hp_no]").val());
+			if(!idValidResult) {
+			    msg = hdgm.validation.getMessage();
+				$(".inp_bundle.registerHpNo").addClass("error");
+				$("#hpNoCheckSpan").removeClass("t_success");
+				$("#hpNoCheckSpan").addClass("t_error");
+			}else{
+				$("#hpNoCheckSpan").removeClass("t_error");
+				$("#hpNoCheckSpan").addClass("t_success");
+				$("#hpNoCheckSpan").hide();
+			}
+			
+
+			$("#hpNoCheckSpan").text(msg);
+			$("#hpNoCheckSpan").show();
+			
+			//return false;
+			
+		}
 		
 </script>
 	
