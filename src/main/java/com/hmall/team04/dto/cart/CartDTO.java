@@ -12,6 +12,7 @@ public class CartDTO {
 	// prd_t
 	private String prd_nm;
 	private int prd_price;
+	private String prd_board_id;
 	private String option1;
 	private String option2;
 	

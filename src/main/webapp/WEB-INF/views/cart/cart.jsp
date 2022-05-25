@@ -9,8 +9,8 @@
 <div class="cbody">
 	<div class="contents">
 		<div class="csection">
-		
 			<div class="cart-area">
+			
 				<!-- cart-head -->
 				<div class="cart-head">
 					<div class="cart-top">
@@ -29,148 +29,163 @@
 				
 				<!-- cart-body -->
 				<div class="cart-body">
-				
-
-				
 						<!-- 일반상품 -->
-						<div class="shipping-listwrap" aria-label="일반상품">
-						
+					<div class="shipping-listwrap" aria-label="일반상품">
 
-							<!-- 초기화 -->
-						<table>
-						<tbody>
-													<!-- cart-check -->
-							<div class="cart-check">
-								<div class="checkbox">
-									<label class="chklabel">
-										<input type="checkbox" id="cbx_chkAll" />
-										<i class="icon"></i>
-										<span>전체</span>
+						<!-- cart-check -->
+						<div class="cart-check">
+							<div class="checkbox">
+								<div class="all_check_input_div">
+									<label class="chklabel"> <input type="checkbox"
+										class="all_check_input input_size_20" id="cbx_chkAll">
+										<i class="icon"></i><span>전체선택</span>
 									</label>
 								</div>
 							</div>
-							<!-- //.cart-check -->
-							<c:forEach items="${cartList}" var="cart">
-							<tr>
-								<td class="td_width_1 cart_info_td" style="visibility:hidden;">
-								<input type="checkbox" class="individual_cart_checkbox input_size_20" checked="checked">
-									<input type="hidden" class="individual_bookPrice_input" value="${cart.prd_price}">
-									<input type="hidden" class="individual_salePrice_input" value="${cart.prd_price}">
-									<input type="hidden" class="individual_bookCount_input" value="${cart.amount}">
-									<input type="hidden" class="individual_totalPrice_input" value="${cart.prd_price * cart.amount}">
-									<input type="hidden" class="individual_point_input" value="${ci.point}">
-									<input type="hidden" class="individual_totalPoint_input" value="${ci.totalPoint}">
-								</td>
-								<td>
-								
-								</td>
-								<td>column2
+						</div>
+						<!-- //.cart-check -->
+						<div class="shipping-list" id="gen">
+							<!-- 초기화 -->
 
-										<div class="shipping-list" id="gen">
-										
-										
-											<div class="pdwrap pdlist ml" style="display:;">
-												<div class="checkbox">
-													<label class="chklabel">
-														<input type="checkbox" name="chk"> 
-														<i class="icon"></i> <span>${cart.prd_cart_id }</span>
-
-													</label>
-												</div>
-
-												<button type="button" class="btn btn-cart-del"
-													onclick="deleteBasktCore('${cart.prd_cart_id }');">
-													<i class="icon cart-del"></i> <span class="hiding">삭제</span>
-												</button>
-
-												<div class="pdlist-wrap">
-													<div class="pditem">
-														<figure class="pdthumb">
-															<!-- 장바구니에서 사진 클릭 시 다시 상품상세로 이동하는 부분 -->
-															<a href="#">
-																<div class="thumb">
-																	<img src="${cart.upload_path }"
-																		onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=120x120&amp;AR=0')">
-																</div>
-															</a>
-
-															<figcaption>
-																<a href="#">
-																	<div class="pdprice">
-
-																		<ins class="normal" aria-label="정상가">
-																			<em>${cart.prd_price }</em><b>원</b>
-																		</ins>
-
-																	</div>
-																	<div class="benefits">
-
-																		<span>쿠폰 10% </span>
-
-																	</div>
-
-																	<div class="pdoption" aria-label="옵션/수량">
-																		<span class="option">옵션1: <em>${cart.option1 }</em></span>
-																		<span class="option">옵션2: <em>${cart.option2 }</em></span>
-																		<span class="count">수량: <em>${cart.amount }</em></span>
-																	</div>
-
-																</a>
-															</figcaption>
-														</figure>
+							<table>
+								<thead>
+									<tr>
+										<td></td>
+										<td></td>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${cartList}" var="cart">
+										<tr>
+											<td class="td_width_1 cart_info_td">
+												<div class="cart-check">
+													<div class="checkbox">
+														<label class="chklabel"> <input type="checkbox"
+															class="individual_cart_checkbox input_size_20" name="chk">
+															<i class="icon"></i>
+														</label>
 													</div>
-													<!-- //.pditem -->
+												</div> <input type="hidden" class="individual_bookPrice_input"
+												value="${cart.prd_price}"> <input type="hidden"
+												class="individual_salePrice_input" value="${cart.prd_price}">
+												<input type="hidden" class="individual_bookCount_input"
+												value="${cart.amount}"> <input type="hidden"
+												class="individual_totalPrice_input"
+												value="${cart.prd_price * cart.amount}"> <input
+												type="hidden" class="individual_point_input"
+												value="${ci.point}"> <input type="hidden"
+												class="individual_totalPoint_input" value="${ci.totalPoint}">
+											</td>
 
-													<!-- btngroup: 수량 변경 -->
-													<div class="btngroup">
-														<div class="prop-change selected">
-															<div class="optgroup">
-																<strong>${cart.prd_nm }</strong>
-																<div class="quantity" id="uitm">
+											<td>
 
-																	<div class="count">
-																		<button type="button" class="btn btn-minus"
-																			aria-label="수량 감소"
-																			onclick="minusOrdQtyCore(this, '0')">
-																			<i class="icon"></i> <span class="hiding">감소</span>
-																		</button>
-																		<div class="inputbox">
-																			<label class="inplabel"> <input type="number"
-																				name="ordQty" maxlength="2" value="3"
-																				onkeyup="uCheckOrdQty(this,'99', '0')" title="입력하세요">
-																			</label>
-																		</div>
-																		<button type="button" class="btn btn-plus"
-																			aria-label="수량 증가"
-																			onclick="plusOrdQtyCore(this, '99')">
-																			<i class="icon"></i> <span class="hiding">증가</span>
-																		</button>
+												<div class="pdwrap pdlist ml">
+													<strong>${cart.prd_board_id }</strong>
+
+													<button type="button" class="btn btn-cart-del"
+														onclick="deleteBasktCore('${cart.prd_cart_id }');">
+														<i class="icon cart-del"></i><span class="hiding">삭제</span>
+													</button>
+
+													<div class="pdlist-wrap">
+														<div class="pditem">
+															<figure class="pdthumb">
+																<!-- 장바구니에서 사진 클릭 시 다시 상품상세로 이동하는 부분 -->
+																<a href="#">
+																	<div class="thumb">
+																		<img src="${cart.upload_path }"
+																			onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=120x120&amp;AR=0')">
 																	</div>
+																</a>
 
-																	<button type="button" class="btn btn-linelgray small30"
-																		onclick="changeBasktItemCore(this,'${cart.prd_cart_id }');">
-																		<span>변경적용</span>
-																	</button>
+																<figcaption>
+																	<a href="#">
+																		<div class="pdprice">
 
+																			<ins class="normal" aria-label="정상가">
+																				<em>${cart.prd_price }</em><b>원</b>
+																			</ins>
+
+																		</div>
+																		<div class="benefits">
+
+																			<span>쿠폰 10% </span>
+
+																		</div>
+
+																		<div class="pdoption" aria-label="옵션/수량">
+																			<span class="option">옵션1: <em>${cart.option1 }</em></span>
+																			<span class="option">옵션2: <em>${cart.option2 }</em></span>
+																			<span class="count">수량: <em>${cart.amount }</em></span>
+																		</div>
+
+																	</a>
+																</figcaption>
+															</figure>
+														</div>
+														<!-- //.pditem -->
+
+														<!-- btngroup: 수량 변경 -->
+														<div class="btngroup">
+															<div class="prop-change selected">
+																<div class="optgroup">
+																	<strong>${cart.prd_nm }</strong>
+																	<div class="quantity" id="uitm">
+
+																		<div class="count">
+																			<button type="button" class="btn btn-minus"
+																				aria-label="수량 감소"
+																				onclick="minusOrdQtyCore(this, '0')">
+																				<i class="icon"></i> <span class="hiding">감소</span>
+																			</button>
+																			<div class="inputbox">
+																				<label class="inplabel"> <input
+																					type="number" name="ordQty" maxlength="2"
+																					value="${cart.amount }"
+																					onkeyup="uCheckOrdQty(this,'99', '0')"
+																					title="입력하세요">
+																				</label>
+																			</div>
+																			<button type="button" class="btn btn-plus"
+																				aria-label="수량 증가"
+																				onclick="plusOrdQtyCore(this, '99')">
+																				<i class="icon"></i> <span class="hiding">증가</span>
+																			</button>
+																		</div>
+
+																		<button type="button"
+																			class="btn btn-linelgray small30"
+																			onclick="changeBasktItemCore(this,'${cart.prd_cart_id }');">
+																			<span>변경적용</span>
+																		</button>
+
+																	</div>
 																</div>
+																
 															</div>
+														</div>
+
+														<div class="btngroup">
+															<button type="button" class="btn btn-default"
+																onclick="setGiftOrder('N');buyDirect(this);"
+																id="buyDirectBtn_2132577147">
+																<span>바로구매</span>
+															</button>
 														</div>
 													</div>
 												</div>
-											</div>
-									</td>
-							</tr>
-							</c:forEach>
-						</tbody>
-						</table>
-						
-						
-						<!-- //.shipping-list -->
+											</td>
+										</tr>
 
-					</div>
+									</c:forEach>
+
+								</tbody>
+							</table>
+							<!-- //.shipping-list -->
+						</div>
 						<!-- //.shipping-listwrap  일반상품 -->
-				</div>
-				<!-- //.cart-body -->
+					</div>
+					<!-- //.cart-body -->
 			</div>
 			<!-- //.cart-area -->
 		</div>
@@ -260,54 +275,43 @@
 	
 <script>
 $(document).ready(function() {
-	// 처음에 모두 선택
-	
-	$("#cbx_chkAll").click(
-			//전체 선택, 전체 해제
-			function() {
-				if($("#cbx_chkAll").is(":checked")){
-					$("input[name=chk]").prop("checked", true);
-				}
-				else {
-					$("input[name=chk]").prop("checked", false);
-			}
-	});
-
-	$("input[name=chk]").click(
-			
-			// 단일 상품 선택과 해제, 그리고 이에 따른 전체 버튼 체크
-			function() {
-				var total = $("input[name=chk]").length;
-				var checked = $("input[name=chk]:checked").length;
-		
-				if(total != checked) {
-					$("#cbx_chkAll").prop("checked", false);
-				}
-				else {
-					$("#cbx_chkAll").prop("checked", true); 
-			}
-	});
+	//
+	$(".all_check_input").prop("checked", true);
+	$(".individual_cart_checkbox").prop("checked", true);
 	
 	setTotalInfo();	
 
-	/* 체크여부에따른 종합 정보 변화 */
-	$(".individual_cart_checkbox").on("change", function(){
-		/* 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수, 종류) */
-		setTotalInfo($(".cart_info_td"));
-	});
 	/* 체크박스 전체 선택 */
-	$(".all_check_input").on("click", function(){
+	$("#cbx_chkAll").on("click", function(){
+		
 		/* 체크박스 체크/해제 */
-		if($(".all_check_input").prop("checked")){
-			$(".individual_cart_checkbox").attr("checked", true);
+		if($("#cbx_chkAll").is(":checked")){
+			$("input[name=chk]").prop("checked", true);
 		} else{
-			$(".individual_cart_checkbox").attr("checked", false);
+			$("input[name=chk]").prop("checked", false);
 		}
 		
 		/* 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수, 종류) */
 		setTotalInfo($(".cart_info_td"));	
 		
 	});
+	
+	/* 체크여부에따른 종합 정보 변화 */
+	$(".individual_cart_checkbox").on("change", function(){
+		/* 총 주문 정보 세팅(배송비, 총 가격, 마일리지, 물품 수, 종류) */
+		setTotalInfo($(".cart_info_td"));
+
+		var total = $("input[name=chk]").length;
+		var checked = $("input[name=chk]:checked").length;
+
+		if(total != checked){
+			$(".all_check_input").prop("checked", false);
+		} else{
+			$(".all_check_input").prop("checked", true); 
+		}
+	});
+	
+
 	
 });
 </script>
@@ -324,7 +328,6 @@ function setTotalInfo(){
 	let finalTotalPrice = 0; 		// 최종 가격(총 가격 + 배송비)
 	
 	$(".cart_info_td").each(function(index, element){
-		
 		
 		if($(element).find(".individual_cart_checkbox").is(":checked") === true){
 			// 총 가격
