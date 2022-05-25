@@ -10,6 +10,17 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}" />
 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName }" />
 
+<style type="text/css">
+	.msg_warn {
+		color: #ff009d;
+		font-family: "Noto Sans KR";
+	    font-weight: 400;
+	    font-size: 16px;
+	    letter-spacing: -0.5px;
+	    margin-top: 15px;
+	};
+</style>
+
 </head>
 <body>
 
@@ -74,7 +85,7 @@
 														<input type="text" id="registerCustId" name="user_id" class="inp flex" value="${signUpRequestDTO.user_id}" />
 													</div>
 													<p class="t_success" id="idCheckSpan" style="display:none">사용가능한 아이디입니다.</p>
-													<form:errors path="user_id" />
+													<form:errors path="user_id" cssClass="msg_warn"/>
 													<ul class="bullet_type1 mark1 inp_mt">
 														<li>4~20자의 영문 또는 영문 + 숫자만 입력해주세요.</li>
 														<li>아이디는 대소문자 구분합니다.</li>
@@ -85,7 +96,7 @@
 												<div class="wrap_inp">
 													<label for="email" class="inp_tit">이메일<span class="nec">*</span></label>
 													<div class="inp_bundle email_bundle emailCheckMsg">
-														<input type="email" title="이메일 아이디 입력" id="registerEmail" name="registerEmail" value="${signUpRequestDTO.email}" maxlength="80" class="inp flex" placeholder="이메일">
+														<input type="text" title="이메일 아이디 입력" id="registerEmail" name="registerEmail" value="${signUpRequestDTO.email}" maxlength="80" class="inp flex" placeholder="이메일">
 														<select class="select flex" id="registerWrite3_3" title="이메일 도메인 선택">
 															<option value="00">직접입력</option>
 															<option value="01">@naver.com</option>
@@ -97,7 +108,7 @@
 													</div>
 													<p class="t_error" id="emailCheckMsg" style="display:none">이메일 주소를 정확히 입력해 주세요.</p>
 													<p class="cmt_guide1 mark1 inp_mt">특수문자[-], [_]만 사용 가능합니다.</p>
-													<form:errors path="email" />
+													<form:errors path="email" cssClass="msg_warn"/>
 												</div>
 
 												<!-- 비밀번호 -->
@@ -106,9 +117,9 @@
 													<div class="inp_bundle registerPwd1">
 														<input type="password" title="비밀번호 입력" id="registerPwd1" name="password" class="inp flex" value="${signUpRequestDTO.password}" />
 													</div>
+													<form:errors path="password" cssClass="msg_warn"/>
 													<p class="t_error" id="pwdCheckMsg1" style="display:none">패스워드는 8자리 ~ 30자리로 입력해주세요.</p>
 													<p class="cmt_guide1 mark1 inp_mt">영문, 숫자, 특수문자를 포함 8~30 자리로 입력해주세요.</p>
-													<form:errors path="password" />
 												</div>
 												
 												<!-- 비밀번호 확인 -->
@@ -117,18 +128,19 @@
 													<div class="inp_bundle registerPwd2">
 														<input type="password" name="check_password" id="registerPwd2" class="inp flex" value="${signUpRequestDTO.check_password}" />
 													</div>
+													<form:errors path="check_password" cssClass="msg_warn"/>
 													<p class="t_error" id="pwdCheckMsg2" style="display:none">동일한 값을 입력해주시기 바랍니다.</p>
-													<form:errors path="check_password" />
 													
 												</div>
 												
 												<!-- 이름 -->
 												<div class="wrap_inp">
 													<label for="user_nm" class="inp_tit">이름<span class="nec">*</span></label>
-													<div class="inp_bundle">
-														<input type="text" name="user_nm" class="inp flex" value="${signUpRequestDTO.user_nm}" />
+													<div class="inp_bundle registerUserNm">
+														<input type="text" name="user_nm" id="user_nm" class="inp flex" value="${signUpRequestDTO.user_nm}" />
 													</div>
-													<form:errors path="user_nm" />
+													<p class="t_error" id="userNmCheckSpan" style="display:none">이름은 2~8자 한글로 입력해주세요.</p>
+													<form:errors path="user_nm" cssClass="msg_warn"/>
 												</div>
 												
 												<!-- 성별 -->
@@ -140,7 +152,7 @@
 														<input type="radio" name="gender" id="gender_male"value="male"> <label for="gender_male">남</label> 
 													</div>
 													</div>
-													<form:errors path="gender" />
+													<form:errors path="gender" cssClass="msg_warn"/>
 												</div>
 												
 												<!-- 생년월일 -->
@@ -150,16 +162,19 @@
 														<input type="date" id="birth" name="birth" class="inp flex" 
 															value="<fmt:formatDate value="${signUpRequestDTO.birth}" pattern = "yyyy-MM-dd"/>" />
 													</div> 
-													<form:errors path="birth" />
+													<form:errors path="birth" cssClass="msg_warn"/>
 												</div>
 												
 												<!-- 주소(우편번호) -->
 												<div class="wrap_inp">
 													<label for="address_f" class="inp_tit">주소(우편번호)<span class="nec">*</span></label>
-													<div class="inp_bundle">
+													<div class="inp_bundle address_zip">
 														<input type="text" name="address_f" class="inp flex" value="${signUpRequestDTO.address_f}" />
+														<button type="button" class="button flex">
+															우편번호 찾기
+														</button>
 													</div>
-													<form:errors path="address_f" />
+													<form:errors path="address_f" cssClass="msg_warn"/>
 												</div>
 												
 												<!-- 주소 -->
@@ -168,7 +183,7 @@
 													<div class="inp_bundle">
 														<input type="text" name="address_l" class="inp flex" value="${signUpRequestDTO.address_l}" />
 													</div>
-													<form:errors path="address_l" />
+													<form:errors path="address_l" cssClass="msg_warn"/>
 												</div>
 												
 												<!-- 휴대폰 번호 -->
@@ -178,7 +193,7 @@
 														<input type="text" name="hp_no" id="hp_no" class="inp flex" value="${signUpRequestDTO.hp_no}" />
 													</div>
 													<p class="t_success" id="hpNoCheckSpan"></p>
-													<form:errors path="hp_no" />
+													<form:errors path="hp_no" cssClass="msg_warn"/>
 												</div>
 													
 											</div>
@@ -292,13 +307,47 @@
 				}
 			}
 			
-			//생년월일 날짜 체크
-			if (!fnIsValidDate($("input[name=birth]").val())) {
-				if( bCheck) {
-					$("input[name=birth]").focus();
-					$(".inp_bundle.registerBirth").addClass("error");
+			// 이메일 체크
+			if(bCheck && $("#email").length > 0 ) {
+				if(!hdgm.validation.isValidEmail($("#email").val())) { 
+					$("#emailCheckMsg").text(hdgm.validation.getMessage()).show();
+					$(".inp_bundle.emailCheckMsg").addClass("error");
+					
+					if( !hdgm.validation.getValidFlag())
+					{
+						if( bCheck)
+						{
+							$("#registerEmail").focus();
+							$(".inp_bundle.email_bundle").addClass("error");
+						}
+						bCheck = false;
+					}
 				}
-				bCheck = false;
+				else
+				{
+					
+					$.ajax({
+						type : 'POST',
+						url : "checkEmailDupJSON",
+						data: $("#email").val(),
+						dataType: 'text',
+						contentType:'application/json; charset=utf-8',
+						async : false,
+						success : function(data) {
+								console.log(data);
+								if(data === "Y") {
+									$("#emailCheckMsg").text("현재 사용중인 메일주소 입니다.").show();
+									$("#registerEmail").focus();
+									$(".inp_bundle.email_bundle").addClass("error");
+									bCheck = false;
+								} else {
+									$("#emailCheckMsg").hide();
+								}
+							}
+					});
+					
+				}
+				
 			}
 			
 			
@@ -332,45 +381,39 @@
 				}
 			}
 			
-			// 이메일 체크
-			if(bCheck && $("#email").length > 0 ) {
-				if(!hdgm.validation.isValidEmail($("#email").val())) { 
-					$("#emailCheckMsg").text(hdgm.validation.getMessage()).show();
-					$(".inp_bundle.emailCheckMsg").addClass("error");
-					
-					if( !hdgm.validation.getValidFlag())
-					{
-						if( bCheck)
-						{
-							$("#registerEmail").focus();
-							$(".inp_bundle.email_bundle").addClass("error");
-						}
-						bCheck = false;
-					}
+			
+			//이름 체크
+			if (!checkUserNm()) { //체크 실패라면
+				if( bCheck) {
+					$("input[name=user_nm]").focus();
+					$(".inp_bundle.registerUserNm").addClass("error");
 				}
-				
-				
-				
-				 else { //이메일 형식 검증후 중복검사
-					$.ajax({
-						type : 'POST',
-						url : "checkPartnerEmailDup",
-						data:	{email : $("#email").val()},
-						async : false,
-						success :	function(data) {
-								if(data > 0) {
-									$("#emailCheckMsg").text("현재 사용중인 메일주소 입니다.").show();
-									$("#registerEmail").focus();
-									$(".inp_bundle.email_bundle").addClass("error");
-									bCheck = false;
-								} else {
-									$("#emailCheckMsg").hide();
-								}
-							}
-					});
-				}
-				
+				bCheck = false;
 			}
+			
+			
+			//생년월일 날짜 체크
+			if (!fnIsValidDate($("input[name=birth]").val())) {
+				if( bCheck) {
+					$("input[name=birth]").focus();
+					$(".inp_bundle.registerBirth").addClass("error");
+				}
+				bCheck = false;
+			}
+			
+			
+			//우편번호 체크
+			
+			
+			//휴재폰 번호 체크
+			if (!checkHpNo($("input[name=hp_no]").val())) {
+				if( bCheck) {
+					$(".inp_bundle.hpNoCheckSpan").addClass("error");
+					$("input[name=hp_no]").focus();
+				}
+				bCheck = false;
+			}
+			
 			
 			return bCheck;
 		}
@@ -413,11 +456,8 @@
 						$(".inp_bundle.email_bundle").addClass("error");
 						bCheck = false;
 					}
-				}
-				else
-				{
-					
-					
+				}else
+				{					
 					$.ajax({
 						type : 'POST',
 						url : "checkEmailDupJSON",
@@ -433,6 +473,7 @@
 									$(".inp_bundle.email_bundle").addClass("error");
 									bCheck = false;
 								} else {
+									$(".inp_bundle.email_bundle").removeClass("error");
 									$("#emailCheckMsg").hide();
 								}
 							}
@@ -504,41 +545,7 @@
 			return vLeaf;
 		}
 
-		
-		$("#email").blur(function() {
-			//이메일 체크
-			if( $("#registerWrite3_3").val() != "00")
-			{
-				$("#email").val( $("#registerEmail").val() + $("#registerWrite3_3 option:selected").text());
-			}
-			else
-			{
-				$("#email").val( $("#registerEmail").val());
-			}
-			
-			// 이메일 체크
-			if(!hdgm.validation.isValidEmail($("#email").val())) {
-				$("#emailCheckMsg").text(hdgm.validation.getMessage()).show();
-				$(".inp_bundle.emailCheckMsg").addClass("error");
-				if( !hdgm.validation.getValidFlag())
-				{
-					bCheck = false;
-				}
-			} else {
-				$.post("/cu/join/checkPartnerEmailDup.nhd",
-					{email : $("#email").val()},
-					function(data) {
-						if(data > 0) {
-							$("#emailCheckMsg").text("현재 사용중인 메일주소 입니다.").show();
-							bCheck = false;
-						} else {
-							$("#emailCheckMsg").hide();
-						}
-					}
-				);
-			}
-		});
-		
+
 		
 		
 		$("#registerPwd1, #registerPwd2").blur( function(){
@@ -575,28 +582,53 @@
 		
 		$("#hp_no").blur( checkHpNo);
 		
+		// 비밀번호 체크
 		function checkHpNo() {
 			
 			var msg = "";
 			var idValidResult = hdgm.validation.isValidCellNo($("input[name=hp_no]").val());
 			if(!idValidResult) {
 			    msg = hdgm.validation.getMessage();
+			    console.log(msg)
 				$(".inp_bundle.registerHpNo").addClass("error");
 				$("#hpNoCheckSpan").removeClass("t_success");
 				$("#hpNoCheckSpan").addClass("t_error");
+				$("#hpNoCheckSpan").text(msg);
+				$("#hpNoCheckSpan").show();
+				return false
 			}else{
+				console.log(msg)
 				$("#hpNoCheckSpan").removeClass("t_error");
 				$("#hpNoCheckSpan").addClass("t_success");
 				$("#hpNoCheckSpan").hide();
+				$("#hpNoCheckSpan").text(msg);
+				$("#hpNoCheckSpan").show();
 			}
 			
-
-			$("#hpNoCheckSpan").text(msg);
-			$("#hpNoCheckSpan").show();
-			
-			//return false;
+			return true
 			
 		}
+		
+		$("#user_nm").blur(checkUserNm);
+		
+		//이름 체크
+		function checkUserNm() {
+			var reg_user_nm = /^[가-힣]{2,8}/; // 한글만
+			if(!reg_user_nm.test($("input[name=user_nm]").val())) { //정규식 만족하지 못한다면
+				
+				$(".inp_bundle.registerUserNm").addClass("error");
+				$("#userNmCheckSpan").show();
+				return false
+					
+			} else {
+				$(".inp_bundle.registerUserNm").removeClass("error");
+				$("#userNmCheckSpan").hide();
+			}
+			
+			return true
+		}
+		
+		
 		
 </script>
 	
