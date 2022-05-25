@@ -21,4 +21,11 @@
 		where prd_cart_id=#{prd_cart_id}
 	</delete>
 	
+	<!-- update Reply -->
+	<update id="updatePrdCartQty" parameterType="CartDTO">
+		update prd_cart_t
+		set amount = #{amount}
+		where prd_cart_id=#{prd_cart_id}
+	</update>
+
 </mapper>
