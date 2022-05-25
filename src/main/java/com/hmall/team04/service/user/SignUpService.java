@@ -8,4 +8,6 @@ public interface SignUpService {
 
 	String checkIdDup(String userId) throws Exception;
 
+	String checkEmailDup(String email)throws Exception;
+
 }

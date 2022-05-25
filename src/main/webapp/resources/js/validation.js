@@ -4,7 +4,7 @@ hdgm.validation = (function() {
         var userIdRegExp         = /^[a-zA-Z]+[0-9]+[a-zA-Z]*$/;
         var textRegExp           = /[a-zA-Z]+/;
         var numberRegExp         = /[0-9]+/;
-        var cellNoRegExp         = /^\d{7,8}$/;
+		var cellNoRegExp         = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
         var specialCharRegExp    = /[!"#\$%&\'\(\)\*\+,\-\.\/:;<=>?@\[\]\^\_\`\{\|\}~\\]+/;
         
         var message = "", 
@@ -348,15 +348,15 @@ hdgm.validation = (function() {
         };
     
         var isValidCellNo = function(cellNo) {
-            initValidState();
-            
-            if(!cellNoRegExp.test(cellNo)) {
-                setMessage("휴대폰 번호를 입력해주세요.");
-                setValidFlag(false);
-            } 
-            
-            return getValidFlag();
-        };
+			initValidState();
+		
+			if(!cellNoRegExp.test(cellNo)) {
+				setMessage("휴대폰 번호가 올바르지 않습니다.");
+				setValidFlag(false);
+			} 
+			
+			return getValidFlag();
+		};
         
         var isValidOutletCustId = function(iCustId) { // 2019.06.26 김윤실 추가
             
