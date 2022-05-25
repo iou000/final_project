@@ -215,7 +215,7 @@ select {
                     <tbody>
                     	<c:forEach items="${list}" var="dto" varStatus="vs">
                         <tr class="item">
-                            <td class="txt-center"><span>${pageMaker.total - vs.index - ((pageMaker.cri.pageNum-1)*pageMaker.cri.amount)}</span></td>
+                            <td class="txt-center"><span>${vs.count}</span></td>
                             <td class="txt-center"><span>${dto.type}</span></td>
                             <td class="nowrap, txt-center">${dto.title}</td>
                             <td class="txt-center"><span class="date"><fmt:formatDate value="${dto.ins_dt}" type="date" /></span></td>
