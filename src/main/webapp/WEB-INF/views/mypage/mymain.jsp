@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<form id="searchForm" name="searchForm" action="/p/mpa/selectOrdDlvCrst.do" method="get">
+<form id="searchForm" name="searchForm" action="/p/mpa/selectOrdDlvCrst" method="get">
                     <input type='hidden' name='searchType' 		id='searchType' 		value="2" />
                     <input type='hidden' name='ordStrtDt' 		id='ordStrtDt'			value="" />
                     <input type='hidden' name='ordEndDt' 		id='ordEndDt' 			value="" />
@@ -45,7 +45,7 @@
 	                                    </div>
 	                                </li>
 	                                <li>
-	                                    <a href="https://www.hmall.com/p/mpb/selectItemEvalAtclListPagingByCondtion.do">
+	                                    <a href="https://www.hmall.com/p/mpb/selectItemEvalAtclListPagingByCondtion">
 	                                        <strong class="num">1</strong>
 	                                        <span class="txt">작성 가능한 상품평</span>
 	                                    </a>
@@ -130,7 +130,7 @@
 		                                    </div>
 		                                    
 			                                    <div class="abs">
-			                                        <a href="/p/mpa/selectOrdPTCPup.do?ordNo=20220513296480" class="btn alink"><span>주문/배송 상세</span></a>
+			                                        <a href="/p/mpa/selectOrdPTCPup?ordNo=20220513296480" class="btn alink"><span>주문/배송 상세</span></a>
 			                                    </div>
 		                                    
 		                                </dt>
@@ -149,7 +149,7 @@
 	                                    	
 					                            
 					                            
-					                            	<a href="http://www.hmall.com/p/pda/itemPtc.do?slitmCd=2137807436&ordpreview=true">
+					                            	<a href="http://www.hmall.com/p/pda/itemPtc?slitmCd=2137807436&ordpreview=true">
 					                            	<span class="img"><img src="https://image.hmall.com/static/4/7/80/37/2137807436_0.jpg?RS=300x300&AR=0" alt="SPC삼립 돌아온 포켓몬빵 8종 10봉 랜덤배송 (피카츄/푸린/파이리/로켓단/디그다/꼬부기/고오스/발챙이)" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&AR=0')"/></span>
 				                            	
 				                            

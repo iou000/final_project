@@ -103,7 +103,7 @@ dd.arcordian-down {
 
                 $.ajax({
                     type: "post"
-                    , url: "/p/cpa/findUserIsCseg.do"
+                    , url: "/p/cpa/findUserIsCseg"
                     , dataType: "json"
                     , async: false
                     , success: function (data) {
@@ -126,7 +126,7 @@ dd.arcordian-down {
 
         // 마이페이지 주문 배송현황
         function consultPop2() {
-            window.open(serverHost + "/p/mpf/selectMyPageMain.do");
+            window.open(serverHost + "/p/mpf/selectMyPageMain");
         }
 
         function checkMtrg() {
@@ -134,7 +134,7 @@ dd.arcordian-down {
 
                 $.ajax({
                     type: "post"
-                    , url: "/p/cpa/findUserIsMtrg.do"
+                    , url: "/p/cpa/findUserIsMtrg"
                     , dataType: "json"
                     , async: false
                     , success: function (data) {
@@ -172,7 +172,7 @@ dd.arcordian-down {
                     category = "0" + category;
                 }
                 $.ajax({
-                    url: "/p/cca/FaqCountAjax.do",
+                    url: "/p/cca/FaqCountAjax",
                     data: {
                         "notice_id": notice_id
                         , "category": category
@@ -197,7 +197,7 @@ dd.arcordian-down {
         <div class="noti-wrap">
             <div class="tit-wrap">
                 <h3>공지사항</h3>
-                <p><a href="${app}/cs/noticeList.do">전체보기</a></p>
+                <p><a href="${app}/cs/noticeList">전체보기</a></p>
             </div>
             <!--tblwrap tbl-list-->
             <div class="tblwrap tbl-list">
@@ -210,7 +210,7 @@ dd.arcordian-down {
                     <tbody>
                     <c:forEach items="${Nlist}" var="nlist" varStatus="vs">
                         <tr>
-                            <td class="nowrap"><a href="${app}/cs/noticeView.do?articleid=${nlist.article_id}">${nlist.title}</a></td>
+                            <td class="nowrap"><a href="${app}/cs/noticeView?articleid=${nlist.article_id}">${nlist.title}</a></td>
                             <td class="txt-center"><span class="date"><fmt:formatDate value="${nlist.ins_dt}" type="date" /></span></td>
                         </tr>
                     </c:forEach>    
@@ -228,7 +228,7 @@ dd.arcordian-down {
                 <button class="btn btn-chat" type="button" onclick="window.open('${app}/cs/qnaInsPopUp','1:1 문의하기','width=756,height=700')">
                 	<span><i class="icon"></i>1:1 문의하기</span>
                 </button>
-                <button class="btn btn-board" onclick="location.href='${app}/cs/qna.do'">
+                <button class="btn btn-board" onclick="location.href='${app}/cs/qna'">
                 	<span><i class="icon"></i>내 상담내역 조회</span>
                 </button>
 
@@ -264,7 +264,7 @@ dd.arcordian-down {
 	<div class="cus-wrap"> 
         <div class="search-area">
             <h3>FAQ 검색</h3>
-            <form name="searchForm" method="get" action="${app}/cs/faq.do/faqSearch">
+            <form name="searchForm" method="get" action="${app}/cs/faq/faqSearch">
                 <div class="inputbox">
                     <input hidden="hidden" />
                     <label class="inplabel icon-find"><input type="text" name="keyword" placeholder="질문을 검색해보세요"

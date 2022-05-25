@@ -2,7 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hmall.team04.dao.cs.QnaDAO">
-
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							user_id like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	<select id="getQnaList" resultType="QnaDTO">
+		SELECT	qna_id,
+			    user_id,
+			    ans_user_id,
+			    title,
+			    content,
+			    type,
+			    ans_title,
+			    ans_content,
+			    ins_dt,
+			    ans_ins_dt,
+			    private_yn,
+			    ans_yn,
+			    file_yn,
+			    prd_id,
+			    prd_orderdetail_id
+		FROM
+				(SELECT
+					rownum as rnum,
+				    qna_id,
+				    user_id,
+				    ans_user_id,
+				    title,
+				    content,
+				    type,
+				    ans_title,
+				    ans_content,
+				    ins_dt,
+				    ans_ins_dt,
+				    private_yn,
+				    ans_yn,
+				    file_yn,
+				    prd_id,
+				    prd_orderdetail_id
+				FROM
+				    qna_t
+				WHERE
+					<include refid="criteria"></include>
+			
+					<![CDATA[
+					 rownum <= #{pageNum} * #{amount}
+				AND	user_id = #{userid}
+				ORDER BY qna_id DESC)
+		WHERE rnum > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getBoardCount" resultType="int">
+		select count(*)
+		from qna_t
+		where <include refid="criteria"></include>
+		qna_id > 0
+		and user_id = #{userid}
+	</select>
+	
 	<insert id="insertQna" parameterType="QnaDTO">
 		<!-- INSERT INTO qna_t(user_id, title, content, type, private_yn, file_yn, prd_id, prd_orderdetail_id)
 		VALUES(#{user_id}, #{title}, #{content}, #{type}, #{private_yn}, #{file_yn}, #{prd_id}, #{prd_orderdetail_id}) -->

@@ -1,5 +1,6 @@
 package com.hmall.team04.controller.cs;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -47,7 +48,7 @@ public class CSController {
 		this.qnaService = qnaService;
 	}
 
-	@GetMapping("/main.do")
+	@GetMapping("/main")
 	public String main(Model model) throws Exception {
 		try {
 			List<FaqDTO> list = faqService.getfaqList();
@@ -63,7 +64,7 @@ public class CSController {
 
 	}
 
-	@GetMapping("/noticeList.do")
+	@GetMapping("/noticeList")
 	public String noticeList(Criteria cri, Model model) {
 		int total;
 		try {
@@ -76,12 +77,12 @@ public class CSController {
 		} catch (Exception e) {
 			log.info(e);
 			model.addAttribute("msg", "list 출력 에러");
-			model.addAttribute("url", "/cs/main.do");
+			model.addAttribute("url", "/cs/main");
 			return "redirect";
 		}
 	}
 
-	@GetMapping("/noticeView.do")
+	@GetMapping("/noticeView")
 	public String noticeView(@RequestParam String articleid, Model model) {
 
 		NoticeDTO article;
@@ -140,12 +141,25 @@ public class CSController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@GetMapping("/qna.do")
-	public String qnaList() {
-		return "cs.qna.qnaList";
+	@GetMapping("/qna")
+	public String qnaList(Principal principal, Criteria cri, Model model) {
+		int total;
+		try {
+			List<QnaDTO> list = qnaService.getQnaList(principal.getName(), cri);
+			log.info(list);
+			model.addAttribute("list", list);
+			total = qnaService.getBoardCount(principal.getName(), cri);
+			model.addAttribute("pageMaker", new PageDTO(cri, total));
+			return "cs.qna.qnaList";
+		} catch (Exception e) {
+			log.info(e);
+			model.addAttribute("msg", "list 출력 에러");
+			model.addAttribute("url", "/cs/main");
+			return "redirect";
+		}
 	}
 	
-	@GetMapping("/faq.do")
+	@GetMapping("/faq")
 	public String faqList(Model model) {
 		try {
 			List<FaqDTO> list = faqService.getfaqListAll(); 
