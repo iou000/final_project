@@ -21,7 +21,7 @@ public class Criteria {
 	
 	public Criteria() {
 		this.pageNum = 1;
-		this.amount = 20;
+		this.amount = 10;
 	}
 	
 	public Criteria(int pageNum, int amount) {

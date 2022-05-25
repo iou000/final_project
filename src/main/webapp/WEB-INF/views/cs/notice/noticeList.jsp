@@ -8,11 +8,75 @@
 
 <!DOCTYPE html>
 <head>
+<style>
+ul.pagination.justify-content-center {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+li.paginate_button {
+    margin-left: 10px;
+}
+
+li.paginate_button {
+    margin-left: 10px;
+    display: block;
+    border: 1px solid #eee;
+    background: #eee;
+    border-radius: 4px;
+    padding: 2px;
+    text-align: center;
+    font-size: 12px;
+}
+
+li.paginate_button.active {
+    font-family: none;
+    font-weight: 900;
+    font-size: inherit;
+    background: space;
+    border: none;
+}
+
+form#searchForm {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+select.form-control {
+    width: 170px !important;
+}
+
+input.form-control {
+    padding: 8px;
+    border: 1px solid #eee;
+    margin-left: 3px;
+    margin-right: 5px;
+    width: 200px;
+}
+
+select {
+    height: 35px !important;
+}
+
+.btn {
+    height: 35px !important;
+}
+
+.btn-default {
+    background-color: #eee;
+}
+
+</style>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="${app}/resources/css/customer.css">
-	<script type="text/javascript" src="${app}/webjars/jquery/3.6.0/dist/jquery.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
+		console.log("test");
 		var actionForm = $("#actionForm");
 		$(".paginate_button a").on("click", function(e) {
 			e.preventDefault();
@@ -25,7 +89,10 @@
 		$(".move").on("click", function(e) {
 			e.preventDefault();
 			var aid = $(this).children("input[name='articleid']").val();
-			actionForm.attr('action', '${app}/cs/noticeView.do?articleid=');
+			let uri = "${app}" + '/cs/noticeView.do';
+			actionForm.find("input[name='articleid']").val(aid);
+			console.log(uri);
+			actionForm.attr('action', uri);
 			actionForm.submit();
 		});
 	});
@@ -62,7 +129,7 @@
 									<%-- <td style="width: 10%" class="text-center">${pageMaker.total - vs.index - ((pageMaker.cri.pageNum-1)*pageMaker.cri.amount)}</td> --%>
 									<td class="nowrap">
 										<a class="move" href="${app }/cs/noticeView.do">
-											<input type="hidden" name="articleid" value="${dto.article_id}" />
+											<input type="hidden" name="articleid" value="<c:out value="${dto.article_id}"></c:out>" /> 
 											${dto.title}</a></td>
 										<%-- <c:if test="${dto.file_yn == '1'}">
 											<!-- 파일 있으면 이미지 띄우기 -->
@@ -81,8 +148,8 @@
 							</c:if>
 			
 							<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-								<li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active': '' }">
-								<a href="${num }">${num }</a></li>
+								<li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active': '' }"><c:if test="${pageMaker.cri.pageNum != num}">
+								<a href="${num }">${num }</a></c:if><c:if test="${pageMaker.cri.pageNum == num}"><div>${num }</div></c:if></li>
 							</c:forEach>
 			
 							<c:if test="${pageMaker.next }">
@@ -97,7 +164,6 @@
 					<br/>
 					<div class="row">
 						<form class="form-inline" id="searchForm" action="${app }/cs/noticeList.do" method="get">
-							<sec:csrfInput />
 							<select class="form-control" name="type">
 								<option value="T"
 									>제목</option>
@@ -115,7 +181,7 @@
 									>제목
 									+ 작성자 + 내용</option>
 							</select> 
-								<input class="form-control" type="text" name="keyword" style="width: 400px;" value='<c:out value="${pageMaker.cri.keyword }"/>'> 
+								<input class="form-control" type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword }"/>'> 
 								<input type="hidden" value="${pageMaker.cri.pageNum }"> 
 								<input type="hidden" value="${pageMaker.cri.amount }">
 							<button class="btn btn-default">검색</button>
@@ -123,6 +189,7 @@
 					</div>
 					
 					<form id="actionForm" method="get">
+						<input type="hidden" name="articleid"	value="">
 						<input type="hidden" name="pageNum"	value="${pageMaker.cri.pageNum }">
 						<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 		
@@ -304,9 +371,9 @@
 	</script>
 -->
 	<!-- 스카이 스크래퍼 (우측 배너광고) -->
-	<div class="wing-banner banner-right"
+	<!-- <div class="wing-banner banner-right"
 		data-modules-sticky="padding:0;breakPoint:.header-menu-wrap;className:wing-banner-sticky">
-		<!-- fixed 클래스 추가 시 고정 -->
+		fixed 클래스 추가 시 고정
 		<a href="/pevent/eva/evntTmplDivideView.do?prmoNo=00049341">
 			<div class="visit-indicator">바로접속
 				<span class="visit-staus on" style="margin-left: 0px">ON</span>
@@ -320,10 +387,10 @@
 		</div>
 		<div class="wing-slide exhibition01" id="skyScCardArea">
 		</div>
-		<!-- // .wing-slide -->
+		// .wing-slide
 		<div class="btn-top"><a href="javascript:;">TOP</a></div>
 	</div>
-	<!-- // 스카이 스크래퍼 -->
+	// 스카이 스크래퍼
 	<script type="text/javascript">
 		setTimeout(function () {
 			setOnAirSkySc();
@@ -334,6 +401,6 @@
 		}, 300);
 		*/
 	</script>
-	<!-- 스카이스크래퍼 -->
+	스카이스크래퍼 -->
 	</body>
 </html>
