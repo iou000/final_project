@@ -11,7 +11,7 @@ public interface QnaDAO {
 
 	void insertQna(QnaDTO qnadto) throws Exception;
 	
-	int getBoardCount(@Param("userid") String userid, Criteria cri) throws Exception;
+	int getBoardCount(@Param("userid") String userid, @Param("cri") Criteria cri) throws Exception;
 
-	List<QnaDTO> getQnaList(String userid, Criteria cri) throws Exception;
+	List<QnaDTO> getQnaList(@Param("userid") String userid, @Param("cri") Criteria cri) throws Exception;
 }

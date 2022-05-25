@@ -42,6 +42,12 @@
             font-weight: 700;
             line-height: 29px;
         }
+        
+        .cus-wrap .tblwrap table td {
+		    font-size: 15px;
+		    line-height: 15px;
+		    border-bottom: 1px solid #eee;
+		}
 
         .tblwrap table td {
             color: #333;
@@ -55,6 +61,7 @@
             padding: 15px;
             margin-bottom: 15px;
             border-radius: 5px;
+            min-height: 45px;
         }
 
         tr.show {
@@ -211,15 +218,19 @@ select {
                             <td class="txt-center"><span>${pageMaker.total - vs.index - ((pageMaker.cri.pageNum-1)*pageMaker.cri.amount)}</span></td>
                             <td class="txt-center"><span>${dto.type}</span></td>
                             <td class="nowrap, txt-center">${dto.title}</td>
-                            <td class="txt-center"><span class="date">${dto.ins_dt}</span></td>
-                            <td class="txt-center"><span class="date">${dto.ans_ins_dt}</span></td>
+                            <td class="txt-center"><span class="date"><fmt:formatDate value="${dto.ins_dt}" type="date" /></span></td>
+                            <td class="txt-center"><span class="date"><fmt:formatDate value="${dto.ans_ins_dt}" type="date" /></span></td>
                             <td class="txt-center"><span>
-                            	<c:if test="${dto.ans_yn == 0}">처리중</c:if>
-                            	<c:if test="${dto.ans_yn == 1}">답변완료</c:if>
+                            	<c:if test="${dto.ans_yn eq '0'.charAt(0)}">처리중</c:if>
+                            	<c:if test="${dto.ans_yn eq '1'.charAt(0)}">답변완료</c:if>
                             </span></td>
                         </tr>
                         <tr class="hide">
-                            <td colspan="6">
+                        	<td colspan="2" style="text-align: center; letter-spacing: 1px">
+                        		<div class="basic-border-one">질문 내용</div>
+                        		<div class="basic-border-one">답변 내용</div>
+                        	</td>
+                            <td colspan="4">
                                 <div class="basic-border-one">
                                     ${dto.content}
                                 </div>
