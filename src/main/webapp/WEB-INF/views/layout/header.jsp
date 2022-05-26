@@ -11,7 +11,7 @@
 <script type="text/javascript" src="//image.hmall.com/gen/js/searchBrndShopLinkList.js?ver=050417" charset="UTF-8"></script>
 
 <script type="text/javascript"
-	src="<c:url value="/webjars/jquery/3.6.0/dist/jquery.js" />"></script>
+   src="<c:url value="/webjars/jquery/3.6.0/dist/jquery.js" />"></script>
 <script type="text/javascript" src="${app}/resources/js/common-pub.js"></script>
 <script type="text/javascript" src="${app}/resources/js/common.js"></script>
 
@@ -33,16 +33,18 @@
 
 <script>
 $(document).ready(function(){
-	setCategory();
-});
-    var formObj = $("form[role='form']");
-    var logoutForm = $("#logoutForm");
-    
+   setCategory();
+   var formObj = $("form[role='form']");
+   var logoutForm = $("#logoutForm");
+   
    $("#logoutBtn").on("click", function(e) {
-      e.preventDefault();
-      logoutForm.submit();
+     e.preventDefault();
+     logoutForm.submit();
    });
+    
 
+});
+   
     $('#popupBtn').on("click", function() {
        var make_date = $("#make_date").val(); //화면의 파라미터 가져오기
         window.open(app + "/loginpopup", "_blank", "toolbar=yes, menubar=yes, width=540, height=700").focus();
@@ -59,65 +61,65 @@ $(document).ready(function(){
    });
   
    function cate_f_add(data){
-	   var category_menu_wrap = $(".category-menu-wrap"); // 세부카테고리 생성을 위해 그 위에 있는 div 잡기
-	   var cate_id = data.category_id; // 카테고리 n-key
-	   var cate_code = data.cate_detail_lev; //카테고리 디테일 숫자
-	   var cate_name = data.category_name; //입력할 글씨
-	   var ul_list = $("#cate-f"); //ul_list선언
-	   ul_list.append("<li data-catecode="+cate_code+">"+"<a href=#>"+cate_name+"</a></li>"); //ul_list안쪽에 li추가
-	   console.log("test");
-	}    
+      var category_menu_wrap = $(".category-menu-wrap"); // 세부카테고리 생성을 위해 그 위에 있는 div 잡기
+      var cate_id = data.category_id; // 카테고리 n-key
+      var cate_code = data.cate_detail_lev; //카테고리 디테일 숫자
+      var cate_name = data.category_name; //입력할 글씨
+      var ul_list = $("#cate-f"); //ul_list선언
+      ul_list.append("<li data-catecode="+cate_code+">"+"<a href=#>"+cate_name+"</a></li>"); //ul_list안쪽에 li추가
+      console.log("test");
+   }    
    
    /* GNB - 카테고리 vs008 */
-	function setCategory(){
-	    console.log("set category");
-	    var str = "";
-		$.ajax({
-			type : "get"
-			//,url : "/p/coe/getSectCtgr.do"
-			,url : "${app}" + "/category"
-			,crossDomain: true
-			,success : function(data){
-				var parentCategory = [];	
-				var chCategory = [];
-				for(let i = 0; i < data.length; i++){
-					if(data[i].parent_lev == '0'){
-						parentCategory.push(data[i]);
-					}
-					else{
-						chCategory.push(data[i]);
-					}
-				}
-				console.log(parentCategory);
-				console.log(chCategory);
-				var ul_list = $("#cate-f"); //ul_list선언
-				for (i in parentCategory) {
-					cate_f_add(parentCategory[i]);
-				}
-				
-				for (let i = 0; i < parentCategory.length; i++) {
-					str += "<div class='category-list-contents' data-catecode='" + parentCategory[i].cate_detail_lev +"' style='display:none; height: auto;'>"
-					str += "<div class='center-area'>"
-					str += "<strong class='depth1-title'>" + parentCategory[i].category_name + "</strong>";
-					str += "<div class='sub-category-area'><div class='sub-category'><ul>";
-					for (let j = 0; j < chCategory.length; j++) {
-						if (parentCategory[i].cate_detail_lev == chCategory[j].parent_detail_lev) {
-							str += "<li><a href='${contextPath}/product/list?cate=" + chCategory[j].category_id + "'>" + chCategory[j].category_name + "</a></li>";
-						}
-					}
-					str += "</ul></div></div></div></div>";
-				}
-				
-				$(".category-list li:first, .category-list-contents:first").addClass("on");
-				$(".category-menu-wrap").append(str);
-				cateNavigation();
-			},error : function(e) {
-				console.log("카테고리에러");
-			}
-		});
-	}
-	/* GNB - 카테고리 공통 common 동작 추가 (category append 이후 동작 처리) */
-	 function cateNavigation(option) {
+   function setCategory(){
+       console.log("set category");
+       var str = "";
+      $.ajax({
+         type : "get"
+         //,url : "/p/coe/getSectCtgr.do"
+         ,url : "${app}" + "/category"
+         ,crossDomain: true
+         ,success : function(data){
+            var parentCategory = [];   
+            var chCategory = [];
+            for(let i = 0; i < data.length; i++){
+               if(data[i].parent_lev == '0'){
+                  parentCategory.push(data[i]);
+               }
+               else{
+                  chCategory.push(data[i]);
+               }
+            }
+            console.log(parentCategory);
+            console.log(chCategory);
+            var ul_list = $("#cate-f"); //ul_list선언
+            for (i in parentCategory) {
+               cate_f_add(parentCategory[i]);
+            }
+            
+            for (let i = 0; i < parentCategory.length; i++) {
+               str += "<div class='category-list-contents' data-catecode='" + parentCategory[i].cate_detail_lev +"' style='display:none; height: auto;'>"
+               str += "<div class='center-area'>"
+               str += "<strong class='depth1-title'>" + parentCategory[i].category_name + "</strong>";
+               str += "<div class='sub-category-area'><div class='sub-category'><ul>";
+               for (let j = 0; j < chCategory.length; j++) {
+                  if (parentCategory[i].cate_detail_lev == chCategory[j].parent_detail_lev) {
+                     str += "<li><a href='${contextPath}/product/list?cate=" + chCategory[j].category_id + "'>" + chCategory[j].category_name + "</a></li>";
+                  }
+               }
+               str += "</ul></div></div></div></div>";
+            }
+            
+            $(".category-list li:first, .category-list-contents:first").addClass("on");
+            $(".category-menu-wrap").append(str);
+            cateNavigation();
+         },error : function(e) {
+            console.log("카테고리에러");
+         }
+      });
+   }
+   /* GNB - 카테고리 공통 common 동작 추가 (category append 이후 동작 처리) */
+    function cateNavigation(option) {
       var $selector = $('#categoryArea');
       var _default = {
          menuWrap : '.category-menu-wrap',
@@ -185,7 +187,7 @@ $(document).ready(function(){
       return this;
       
    }
- 		
+       
 
 function LoginPopup(){
    var make_date = $("#make_date").val(); //화면의 파라미터 가져오기
@@ -294,7 +296,7 @@ function LoginPopup(){
                         <form id="logoutForm" action="${app}/customLogout" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                      </form> 
-                     <a href="javascript://" onclick="Logout()" id = "logoutBtn">로그아웃</a>
+                     <a href="javascript://" id = "logoutBtn">로그아웃</a>
                      </li>
                      <li><a href="${app}/cs/main.do">고객센터</a></li>
                   </ul>

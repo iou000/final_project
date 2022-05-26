@@ -46,7 +46,13 @@ jQuery(function($) {
     $("#findPwdBtn").click(function() {
     	console.log($("input[name='email']").val());
 		findPwd();
-	})	
+	});
+    
+  //휴대폰 번호 "-" 자동 추가 함수
+	$(document).on("keyup", "#pno", function() { 
+		$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") );
+	});
+    
 });
 
 function checkId() {
@@ -226,7 +232,7 @@ function findPwd(){
 		dataType : "json",
 		data : {
 			id : $("input[name='Id']").val(),
-			email : $("input[name='email']")[1].value,
+			email : $("input[name='email']").val(),
 			pno : $("input[name='pno']").val()
 		},
 		beforeSend : function(xhr)
