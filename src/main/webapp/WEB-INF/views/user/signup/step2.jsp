@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <c:set var="app" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +26,7 @@
 	    letter-spacing: -0.5px;
 	    margin-top: 15px;
 	};
+	
 </style>
 
 </head>
@@ -70,7 +73,7 @@
 					<input type="hidden" name="check_agree0" value="N" /> 
 					<input type="hidden" name="check_agree1" value="N" />
 					<input type="hidden" id="email" name="email" value="${signUpRequestDTO.email}">
-					
+					<input type="hidden" name="phoneChk_Yn" value="N" />
 					
 					<section class="step3_container regist_id">
 						<div class="layout1">
@@ -96,6 +99,32 @@
 														<li>아이디는 대소문자 구분합니다.</li>
 													</ul>
 												</div>
+												
+												<!-- 휴대폰 번호 -->
+												<div class="wrap_inp">
+													<label for="hp_no" class="inp_tit">휴대폰 번호<span class="nec">*</span></label>
+													<div class="inp_bundle registerHpNo">
+														<input type="text" name="hp_no" id="hp_no" class="inp flex" value="${signUpRequestDTO.hp_no}"/>
+														<button type="button" id="phoneChk" class="button flex" >
+															인증번호 보내기
+														</button>
+													</div>
+													<p class="t_success" id="hpNoCheckSpan"></p>
+													<form:errors path="hp_no" cssClass="msg_warn"/>
+												</div>
+												
+												<!-- 휴대폰 인증 -->
+												<div class="wrap_inp">
+													<div class="inp_bundle phoneChk2" style="width:65%; margin-left:35%;">
+														<input type="text" name="hp_no2" id="hp_no2" class="inp flex" style="text-align:center;" />
+														<button type="button" id="phoneChk2" class="button flex" style="display:none;">
+															휴대폰인증
+														</button>
+														<span class="t_error" id="phoneChk2Span" style="margin:0; font-size:14px;">휴대폰 번호 입력후 <br/>인증번호 보내기를 해주세요.</span>
+													</div>
+													<p class="t_error" id="phoneChk2Msg" style="display:none; text-align:right">인증번호가 올바르지 않습니다.</p>
+												</div>
+												
 												
 												<!-- 이메일 -->
 												<div class="wrap_inp">
@@ -193,16 +222,6 @@
 													<form:errors path="address_l" cssClass="msg_warn"/>
 												</div>
 												
-												<!-- 휴대폰 번호 -->
-												<div class="wrap_inp">
-													<label for="hp_no" class="inp_tit">휴대폰 번호<span class="nec">*</span></label>
-													<div class="inp_bundle registerHpNo">
-														<input type="text" name="hp_no" id="hp_no" class="inp flex" value="${signUpRequestDTO.hp_no}" />
-													</div>
-													<p class="t_success" id="hpNoCheckSpan"></p>
-													<form:errors path="hp_no" cssClass="msg_warn"/>
-												</div>
-													
 											</div>
 										</div>
 										
@@ -294,10 +313,87 @@
    		
 		});
 		
+		/* 휴대폰 번호 인증번호 발송 */
+		var code2 = "";
+		$("#phoneChk").click(function(){
+			
+			if (!checkHpNo()){ // 휴대폰 번호가 올바르지 않다면
+				alert("휴대폰 번호가 올바르지 않습니다.");
+				$("input[name=hp_no]").focus();
+				
+			}else { // 올바른 휴대폰 번호라면
+				alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
+				
+				$("input[name=hp_no2]").focus();
+				$("#phoneChk2Msg").hide();
+				
+			
+				var phone = $("#hp_no").val();
+				$.ajax({
+			        type:"GET",
+			        url:"./phoneCheck?phone=" + phone,
+			        cache : false,
+			        success:function(data){
+			        	console.log(data)
+			        	if(data == "error"){
+			        		$("#phoneChk2Span").show()
+							$("#phoneChk2").hide()
+							$("input[name=hp_no]").focus();
+			        	}else{	        		
+			        		$("#phoneChk2Span").hide()
+							$("#phoneChk2").show()
+							$("input[name=hp_no2]").focus();
+			        		code2 = data;
+			        	}
+			        }
+			    });
+			
+			}
+			
+		});
+		
+		/* 휴대폰 번호 인증번호 확인*/
+		$("#phoneChk2").click(function(){
+			if($("#hp_no2").val() == code2){ //인증번호 일치시
+				
+				$(".inp_bundle.phoneChk2, .inp_bundle.registerHpNo").removeClass("error");
+				$(".inp_bundle.phoneChk2, .inp_bundle.registerHpNo").addClass("focus");
+				$("#phoneChk2Msg").hide();
+				
+				$("#phoneChk2Span").removeClass("t_error");
+				$("#phoneChk2Span").addClass("t_success");
+				$("#phoneChk2Span").text("인증번호가 일치합니다.");
+				$("#phoneChk2Span").show();
+				$("#phoneChk2").hide();
+				
+				
+				//휴대폰번호, 인증번호 readonly처리
+				$('#hp_no, #hp_no2').attr('readonly', true);
+				$(".inp_bundle.phoneChk2, .inp_bundle.registerHpNo").css("background-color", "#e5e5e5");
+		        $('#hp_no, #hp_no2').css("background-color", "#e5e5e5");
+		        
+		        
+		        $("#phoneChk").attr("disabled", true);
+		        $("input[name=phoneChk_Yn]").val("Y");
+				
+				
+			}else{ //인증번호 일치하지 않을시
+				$("#phoneChk2Msg").show();
+				alert("인증번호가 일치하지 않습니다. 다시 확인해주세요");
+				$(".inp_bundle.phoneChk2").addClass("error");
+				$("input[name=phoneChk_Yn]").val("N");
+				
+			}
+			
+		});
+		
+		
+		
+		
 		
 
 		/* 서버에 회원가입 요청 */
-		function submitUserInfo(){
+		function submitUserInfo() {
 			//유효성 검사 모두 통과해야 요청 가능
 			if (validateJoinForm()){
 				$("#signUpUserForm").submit();
@@ -331,6 +427,16 @@
 				}
 			}
 			
+			//휴재폰 번호 체크
+			if (!checkHpNo($("input[name=hp_no]").val())) {
+				if( bCheck) {
+					$(".inp_bundle.hpNoCheckSpan").addClass("error");
+					$("input[name=hp_no]").focus();
+				}
+				bCheck = false;
+			}
+			
+			
 			// 이메일 체크
 			if(bCheck && $("#email").length > 0 ) {
 				if(!hdgm.validation.isValidEmail($("#email").val())) { 
@@ -358,7 +464,6 @@
 						contentType:'application/json; charset=utf-8',
 						async : false,
 						success : function(data) {
-								console.log(data);
 								if(data === "Y") {
 									$("#emailCheckMsg").text("현재 사용중인 메일주소 입니다.").show();
 									$("#registerEmail").focus();
@@ -453,18 +558,24 @@
 			}
 			
 			
-			//휴재폰 번호 체크
-			if (!checkHpNo($("input[name=hp_no]").val())) {
-				if( bCheck) {
-					$(".inp_bundle.hpNoCheckSpan").addClass("error");
-					$("input[name=hp_no]").focus();
+			//휴대폰 인증 체크
+			if( $("input[name=phoneChk_Yn]").val() == "N" ) {
+				if (bCheck) {
+					$("#phoneChk").focus();
+					$(".inp_bundle.registerHpNo, .inp_bundle.phoneChk2").removeClass("focus");
+					$(".inp_bundle.registerHpNo, .inp_bundle.phoneChk2").addClass("error");
+					alert("휴대폰 인증을 필수로 해야합니다.");
 				}
+				
 				bCheck = false;
 			}
 			
 			
+			
 			return bCheck; //검사를 모두 통과하면 true 리턴
 		}
+		
+		
 		/* -- //회원가입 요청 폼 유효성 검사 -- */
 		
 		// 생년월일(달력) 입력시 체크
@@ -504,11 +615,14 @@
 		$("#registerCustId").blur( checkDuplicateId);
 		// 이메일(@앞 입력시) 체크
 		$("#registerWrite3_3").change(function(e) {
+			$("#email").val( $("#registerEmail").val() + $("#registerWrite3_3 option:selected").text());
 			checkEmailFormat();
 		});
 		// 이메일(@뒤 입력시) 체크
 		$("#registerEmail").blur(function(e) {
+			$("#email").val( $("#registerEmail").val() + $("#registerWrite3_3 option:selected").text());
 			checkEmailFormat();
+			
 		});
 		// 이름 입력시 체크
 		$("#user_nm").blur(checkUserNm);

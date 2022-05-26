@@ -10,4 +10,6 @@ public interface SignUpService {
 
 	String checkEmailDup(String email)throws Exception;
 
+	void certifiedPhoneNumber(String userPhoneNumber, int randomNumber) throws Exception;
+
 }
