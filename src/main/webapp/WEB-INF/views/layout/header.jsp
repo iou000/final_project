@@ -10,13 +10,17 @@
 <script type="text/javascript" src="//image.hmall.com/gen/js/searchSpecialShopLinkList.js?ver=050417" charset="UTF-8"></script>
 <script type="text/javascript" src="//image.hmall.com/gen/js/searchBrndShopLinkList.js?ver=050417" charset="UTF-8"></script>
 
-<script type="text/javascript" src="${app}/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript"
+	src="<c:url value="/webjars/jquery/3.6.0/dist/jquery.js" />"></script>
 <script type="text/javascript" src="${app}/resources/js/common-pub.js"></script>
+<script type="text/javascript" src="${app}/resources/js/common.js"></script>
+
 <script type="text/javascript">
-			$(function(){
-    			commonPub.common();
-			})
-</script>		
+         $(function(){
+             commonPub.common();
+         })
+</script>   
+
 <link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
 <!-- UI/UX Style -->
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/common.css"><!-- 공통 css -->
@@ -24,47 +28,169 @@
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/popup.css"><!-- 공통 Popup css -->
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/jquery-ui.css"><!-- jQuery UI css -->
 <script src="http://code.jquery.com/jquery-3.5.1.js"
-	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-	crossorigin="anonymous"></script>
-<script>
-function getContextPath() {
-    return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
-}
-$(document).ready(function() {
+   integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+   crossorigin="anonymous"></script>
 
+<script>
+$(document).ready(function(){
+	setCategory();
+});
     var formObj = $("form[role='form']");
     var logoutForm = $("#logoutForm");
-    var app = getContextPath();
-    function getContextPath() {
-        return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
-    }
-	$("#logoutBtn").on("click", function(e) {
-		e.preventDefault();
-		logoutForm.submit();
-	});
+    
+   $("#logoutBtn").on("click", function(e) {
+      e.preventDefault();
+      logoutForm.submit();
+   });
 
     $('#popupBtn').on("click", function() {
-	    var make_date = $("#make_date").val(); //화면의 파라미터 가져오기
-	  	window.open(app + "/loginpopup", "_blank", "toolbar=yes, menubar=yes, width=540, height=700").focus();
+       var make_date = $("#make_date").val(); //화면의 파라미터 가져오기
+        window.open(app + "/loginpopup", "_blank", "toolbar=yes, menubar=yes, width=540, height=700").focus();
     });
-    
+   
     function Logout(){
-    	logoutForm.submit();
+       logoutForm.submit();
     }
-  	//이외 영역 클릭 시 카테고리 메뉴 숨김 처리
-	$(document).on("click", function() {
-		if($('.category-menu-wrap').is(':visible')){
-			$('.category-menu-wrap').hide();
-		}
-	});
+     //이외 영역 클릭 시 카테고리 메뉴 숨김 처리
+   $(document).on("click", function() {
+      if($('.category-menu-wrap').is(':visible')){
+         $('.category-menu-wrap').hide();
+      }
+   });
+  
+   function cate_f_add(data){
+	   var category_menu_wrap = $(".category-menu-wrap"); // 세부카테고리 생성을 위해 그 위에 있는 div 잡기
+	   var cate_id = data.category_id; // 카테고리 n-key
+	   var cate_code = data.cate_detail_lev; //카테고리 디테일 숫자
+	   var cate_name = data.category_name; //입력할 글씨
+	   var ul_list = $("#cate-f"); //ul_list선언
+	   ul_list.append("<li data-catecode="+cate_code+">"+"<a href=#>"+cate_name+"</a></li>"); //ul_list안쪽에 li추가
+	   console.log("test");
+	}    
+   
+   /* GNB - 카테고리 vs008 */
+	function setCategory(){
+	    console.log("set category");
+	    var str = "";
+		$.ajax({
+			type : "get"
+			//,url : "/p/coe/getSectCtgr.do"
+			,url : "${app}" + "/category"
+			,crossDomain: true
+			,success : function(data){
+				var parentCategory = [];	
+				var chCategory = [];
+				for(let i = 0; i < data.length; i++){
+					if(data[i].parent_lev == '0'){
+						parentCategory.push(data[i]);
+					}
+					else{
+						chCategory.push(data[i]);
+					}
+				}
+				console.log(parentCategory);
+				console.log(chCategory);
+				var ul_list = $("#cate-f"); //ul_list선언
+				for (i in parentCategory) {
+					cate_f_add(parentCategory[i]);
+				}
+				
+				for (let i = 0; i < parentCategory.length; i++) {
+					str += "<div class='category-list-contents' data-catecode='" + parentCategory[i].cate_detail_lev +"' style='display:none; height: auto;'>"
+					str += "<div class='center-area'>"
+					str += "<strong class='depth1-title'>" + parentCategory[i].category_name + "</strong>";
+					str += "<div class='sub-category-area'><div class='sub-category'><ul>";
+					for (let j = 0; j < chCategory.length; j++) {
+						if (parentCategory[i].cate_detail_lev == chCategory[j].parent_detail_lev) {
+							str += "<li><a href='${contextPath}/product/list?cate=" + chCategory[j].category_id + "'>" + chCategory[j].category_name + "</a></li>";
+						}
+					}
+					str += "</ul></div></div></div></div>";
+				}
+				
+				$(".category-list li:first, .category-list-contents:first").addClass("on");
+				$(".category-menu-wrap").append(str);
+				cateNavigation();
+			},error : function(e) {
+				console.log("카테고리에러");
+			}
+		});
+	}
+	/* GNB - 카테고리 공통 common 동작 추가 (category append 이후 동작 처리) */
+	 function cateNavigation(option) {
+      var $selector = $('#categoryArea');
+      var _default = {
+         menuWrap : '.category-menu-wrap',
+         btn : '.btn-category',
+         mainList : '.category-list',
+         contents : '.category-list-contents',
+         index : 0,
+      }
+      var _option = $.extend({}, _default, option)
+      var $menuWrap = $(_option["menuWrap"])
+      var $mainMenu = $menuWrap.find(_option.mainList)
+      var $menuList = $menuWrap.find(_option.mainList + ' li')
+      var $contents = $(_option["contents"])
+      var _index = _option["index"]
+      var init_renew = function(){
+         if(!$selector.length){
+            console.log('No elements. "' + _selector + '"')
+         }
+         onClickHandler_renew()
+         onMenuOverHandler_renew()
+      }
+      var onClickHandler_renew = function(){
+         $selector.on('click', _option.btn, function(e){
+            e.stopPropagation()
+            if($menuWrap.is(':visible')){
+               $menuWrap.hide()
+            } else {
+               $menuWrap.show()
+               showMenuByIndex_renew(_index)
+               equalizeHeight_renew(_index)
+               
+               //검색창 숨김 처리
+               $('#search-autowrap').hide();
+               $("#search-popup").hide();
+               $(".header .search").removeClass("selected");
+               
+               //퀵 메뉴 숨김 처리
+               $('.quick-menu-more').removeClass('on');
+            }
+         })
+      }
+      var onMenuOverHandler_renew = function(){
+         $menuList.on('mouseenter', function(e){
+            var index = $(e.target).closest('li').index()
+            showMenuByIndex_renew(index)
+            equalizeHeight_renew(index)
+         })
+      }
+      var showMenuByIndex_renew = function(index){
+         _index = index
+         $menuList.removeClass('on').eq(_index).addClass('on')
+         $contents.hide().closest("[data-catecode='"+$menuList.eq(_index).data('catecode')+"']").show()
+      }
+      var equalizeHeight_renew = function(index){
+         var $currentContents = $contents.hide().closest("[data-catecode='"+$menuList.eq(_index).data('catecode')+"']").show()
+         var maintHeight = $mainMenu.outerHeight()
+         var currentContentsHeight = $currentContents.outerHeight()
+         if(maintHeight > currentContentsHeight){
+            $currentContents.height(maintHeight-2)
+         } else if(currentContentsHeight > maintHeight){
+            $mainMenu.height(currentContentsHeight)
+         }
+      }
+      init_renew()
+      return this;
+      
+   }
+ 		
 
-});
-var app = getContextPath();
 function LoginPopup(){
-	var make_date = $("#make_date").val(); //화면의 파라미터 가져오기
-  	window.open(app + "/loginpopup", "_blank", "toolbar=yes, menubar=yes, width=540, height=700").focus();
+   var make_date = $("#make_date").val(); //화면의 파라미터 가져오기
+     window.open("${app}" + "/loginpopup", "_blank", "toolbar=yes, menubar=yes, width=600, height=700").focus();
 }
-
 
 </script>
 
@@ -73,7 +199,7 @@ function LoginPopup(){
         <iframe id="parent_iframe" src="/extra_banner.html" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="width:100%; height:0;"></iframe>
     </div>
     <div class="header-top">
-        <h1 class="logo"><a href="javascript:;" title="현대Hmall">Hmall</a></h1>
+        <h1 class="logo"><a href="${app}" title="현대Hmall">Hmall</a></h1>
 
         <div class="search" role="search">
             <div class="field">
@@ -121,7 +247,15 @@ function LoginPopup(){
             <div class="category-area" id="categoryArea">
                 <a href="javascript:;" class="btn-category">카테고리</a>
                 <!-- 카테고리 메뉴 시작 -->
-
+            
+               <div class="category-menu-wrap" style="display: none;">
+                  <!-- 카테고리 메뉴 depth1-->
+                  <div class="category-list" style="height: auto;">
+                     <ul id = "cate-f">
+                     </ul>
+                  </div>
+               </div>
+            
             </div>
             <!-- // 카테고리 메뉴 -->
             <!-- 퀵메뉴 -->
@@ -147,24 +281,24 @@ function LoginPopup(){
                 <h2 class="hiding">유틸메뉴</h2>
                 <!-- 로그인 전 -->
                 <sec:authorize access="isAnonymous()">
-	                <ul>
-	                     <li><a href="javascript://" onclick="LoginPopup()">로그인</a></li>
-	                     <li><a href="javascript:bizSpringTag('https://www.hmall.com/p/cua/hmallRegistMember.do', '^헤더^회원가입');">회원가입</a></li>
-	                     <li><a href="${app}/cs/main.do">고객센터</a></li>
-	                </ul>
+                   <ul>
+                        <li><a href="javascript://" onclick="LoginPopup()">로그인</a></li>
+                        <li><a href="${app}/signUp/signUpStart">회원가입</a></li>
+                        <li><a href="${app}/cs/main.do">고객센터</a></li>
+                   </ul>
                 </sec:authorize>
                 <!-- 로그인 후 -->
                 <sec:authorize access="isAuthenticated()">
-                	<ul>
-				   		<li>
-					   		<form id="logoutForm" action="${app}/customLogout" method="post">
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							</form> 
-							<a href="javascript://" onclick="Logout()" id = "logoutBtn">로그아웃</a>
-			      		</li>
-			      		<li><a href="${app}/cs/main.do">고객센터</a></li>
-		      		</ul>
-			  	</sec:authorize>
+                   <ul>
+                     <li>
+                        <form id="logoutForm" action="${app}/customLogout" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                     </form> 
+                     <a href="javascript://" onclick="Logout()" id = "logoutBtn">로그아웃</a>
+                     </li>
+                     <li><a href="${app}/cs/main.do">고객센터</a></li>
+                  </ul>
+              </sec:authorize>
             </div>
 
         </div>

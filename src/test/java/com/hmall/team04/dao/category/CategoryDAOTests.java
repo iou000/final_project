@@ -29,7 +29,7 @@ public class CategoryDAOTests {
 		
 		ArrayList<CategoryDTO> list;
 		try {
-			list = categoryDAO.getCategoryList();
+			list = categoryDAO.getCategory();
 			
 			for(int i=0;i<list.size();i++) {
 				log.info(list.get(i));
