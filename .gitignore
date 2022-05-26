@@ -298,5 +298,6 @@ $RECYCLE.BIN/
 
 *.properties
 
+log4j.xml
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,java,git,eclipse,intellij,maven
 
