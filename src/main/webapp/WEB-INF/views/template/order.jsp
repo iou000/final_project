@@ -51,9 +51,9 @@
 
 	<tiles:insertAttribute name="header" />
 	
-	<main class="cmain main" role="main" id="mainContents">
+	<main class="cmain bgcmain" role="main" id="mainContents">
 		<div class="container">
-			<div class="cbody gird-full">
+			<div class="cbody">
 				<div class='contents'>
 					<tiles:insertAttribute name="body" />
 				</div>

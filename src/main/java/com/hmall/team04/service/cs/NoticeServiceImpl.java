@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.hmall.team04.dao.cs.NoticeDAO;
+import com.hmall.team04.dto.common.Criteria;
 import com.hmall.team04.dto.cs.NoticeDTO;
 
 import lombok.extern.log4j.Log4j;
@@ -24,8 +25,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<NoticeDTO> getNoticeList() throws Exception {
-		return noticeDAO.getNoticeList();
+	public List<NoticeDTO> getNoticeList(Criteria cri) throws Exception {
+		return noticeDAO.getNoticeList(cri);
 	}
 
 	@Override
@@ -37,6 +38,12 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<NoticeDTO> getNoticeListFive() throws Exception {
 		
 		return noticeDAO.getNoticeListFive();
+	}
+
+	@Override
+	public int getBoardCount(Criteria cri) throws Exception {
+		
+		return noticeDAO.getBoardCount(cri);
 	}
 	
 }

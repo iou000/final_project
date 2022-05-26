@@ -2,6 +2,7 @@
 	language="java"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 
@@ -16,39 +17,34 @@
 				<!--20200902 ui 변경-->
 				<div class="product-banner-wrap">
 					<div data-modules-imageviewer="">
-						<div class="product-mainbanner slick-initialized slick-slider"
-							data-modules-slick="draggable:false; dots:false; infinite:true; thumbnaiList:.slider-thumbnaii;thumbnailsToShow:5;">
+						<div
+							class="product-mainbanner slick-initialized slick-slider slick-single"
+							data-modules-slick="draggable:false; dots:false; infinite:true; thumbnaiList:.slider-thumbnaii;thumbnailsToShow:1;">
 							<div class="slick-list">
 								<div class="slick-track"
-									style="opacity: 1; width: 2080px; transform: translate(-520px, 0px);">
-									<img src="${productboaddto.upload_path }">
-									<div class="slick-slide slick-cloned" data-slick-index="-1"
-										aria-hidden="true" style="width: 520px;" tabindex="-1">
-										<img src="${productboaddto.upload_path }">
+									style="opacity: 1; width: 520px; transform: translate(0px, 0px);">
+									<div class="slick-slide slick-current slick-active"
+										data-slick-index="0" aria-hidden="false" style="width: 520px;">
 										<div>
 											<div class="item" data-item=""
-												data-outputsrc="${productboaddto.upload_path }"
-												onerror="this.src='${productboaddto.upload_path }'"
+												data-outputsrc="${productboadDTO.upload_path}"
+												onerror="this.src='https://image.hmall.com/hmall/pd/no_image_600x600.jpg'"
 												style="width: 100%; display: inline-block; vertical-align: top;">
-												<img src="${productboaddto.upload_path }"> <a
-													href="javascript:;"
-													onclick="goGaEvent('상품상세','상단_이미지확대','')" tabindex="-1">
-													<img src="${productboaddto.upload_path }"
-													alt="2141123908_0.jpg"
-													onerror="noImage(this, '${productboaddto.upload_path }')">
-												</a>
+												<a href="javascript:;"
+													onclick="goGaEvent('상품상세','상단_이미지확대','')" tabindex="0"><img
+													src="${productboadDTO.upload_path}"
+													alt="2140365970_0.jpg"
+													onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=520x520&amp;AR=0')"></a>
 											</div>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
-
-
 						<div class="ui-angle"
-							style="display: none; width: 260px; height: 260px; top: 260px; left: 0px;"></div>
+							style="display: none; width: 260px; height: 260px; top: 0px; left: 230.5px;"></div>
 					</div>
+
 				</div>
 				<!-- // 상품 이미지 영역 끝 -->
 
@@ -66,7 +62,7 @@
 					<!-- 브랜드샵 -->
 
 					<div class="brand-info">
-						<a ga-custom-etc="urlAction"> <span class="brand-name">${productboaddto.brand}<i
+						<a ga-custom-etc="urlAction"> <span class="brand-name">${productboadDTO.brand}<i
 								class="icon icon-arrow"></i>
 						</span>
 						</a>
@@ -77,7 +73,7 @@
 					<!--prduct-title-info-->
 					<div class="prduct-title-info">
 
-						<strong class="prduct-name">${productboaddto.prd_board_id}</strong>
+						<strong class="prduct-name">${productboadDTO.prd_board_id}</strong>
 
 					</div>
 					<!--//prduct-title-info-->
@@ -108,14 +104,14 @@
 					<div class="pdprice">
 
 						<span class="rateprice" aria-label="할인율이 적용된 가격"> <em
-							class="rate" aria-label="할인율">${productboaddto.discount_rate }%</em>
+							class="rate" aria-label="할인율">${productboadDTO.discount_rate }%</em>
 
 							<!-- (우수고객혜택가) -->
 							<p class="discount" aria-label="할인가">
-								<em>${productboaddto.price * (100-productboaddto.discount_rate)/100 }</em>
+								<em>${productboadDTO.price * (100-productboadDTO.discount_rate)/100 }</em>
 								<b>원</b>
 							</p> <del class="normal" aria-label="정상가">
-								<em>${productboaddto.price }</em>원
+								<em>${productboadDTO.price }</em>원
 							</del> <!--옵션값이있을경우-->
 
 						</span>
@@ -126,7 +122,7 @@
 
 					<div class="pdinfo">
 						<span class="rateprice" aria-label="적립금"> <em
-							class="rate_save" aria-label="적립률">적립금 </em> <em>${productboaddto.price * (10)/100 }</em><b>원</b>
+							class="rate_save" aria-label="적립률">적립금 </em> <em>${productboadDTO.price * (10)/100 }</em><b>원</b>
 
 						</span>
 					</div>
@@ -163,9 +159,9 @@
 							<div class="product-info">
 								<div class="figcaption">
 									<c:choose>
-										<c:when test="${productboaddto.option1 == null}">
-											<span class="option">색상/속성 없음<em></em>
-											</span>
+										<c:when test="${productboadDTO.option1 == null}">
+											<em>${productboadDTO.prd_nm}</em><br>
+											<span class="option">색상/속성 없음</span>
 										</c:when>
 
 										<c:otherwise>
@@ -219,33 +215,14 @@
 				<div class="sum-price" style="">
 					<div class="sum-title">
 						<!--20200916 수요일 변경 : pc레이아웃 공통 icon class 변경-->
-						<strong>총 상품 금액<a href="#tooltipCont6"
-							data-modules-tooltip=""> <i class="icon que-mark"></i>
-						</a>
+						<strong>총 상품 금액
 						</strong>
-						<!--tooltip-box 20200916 수요일 추가 pc레이아웃 공통-->
-						<div class="tooltip-box" id="tooltipCont6">
-							<div class="thead">
-								<p class="tit">총 상품금액 안내</p>
-							</div>
-							<p class="txt">
-								선택하실 수 있는 할인혜택이 모두 적용된 금액입니다.<br>배송비가 포함이 되어 있지 않은 금액으로,
-								결제시 배송비가 추가될 수 있습니다.
-							</p>
-							<button class="btn-close">
-								<i class="icon"></i> <span class="hiding">닫기</span>
-							</button>
-							<button class="btn-close">
-								<i class="icon"></i> <span class="hiding">닫기</span>
-							</button>
-						</div>
-						<!--//tooltip-box-->
 					</div>
 
 					<div class="price-wrap">
 						<p class="total-price">
 
-							<strong>${productboaddto.price * (100-productboaddto.discount_rate)/100 }</strong>원
+							<strong>${productboadDTO.price * (100-productboadDTO.discount_rate)/100 }</strong>원
 
 						</p>
 					</div>
@@ -256,16 +233,16 @@
 				<!-- btngroup -->
 				<div class="btngroup prdBtnBoxGroup pd_shipping_type_nomral type04">
 
-					<button class="btn btn-linelgray large btn-like"
-						onclick="goChioceProcess('','019472','','2140365970', event);">
-						<i class="icon"></i> <span class="count">35</span>
+					<button class="btn btn-linelgray large btn-like" onclick="goChioceProcess('','019472','','2140365970', event);">
+						<i class="icon"></i>
+						<span class="count">35</span>
 					</button>
 
 					<input type="hidden" name="buyYn" value="Y">
 					<!-- 엄지펀딩의 경우 장바구니 비노출 시작-->
 
 					<button class="btn btn-linelgray large btn-cart"
-						onclick="addCart(this);">
+						onclick="addCartCore(this);">
 						<span>장바구니</span>
 					</button>
 
@@ -279,7 +256,7 @@
 					<!-- 선물하기 끝-->
 
 					<button class="btn btn-default large btn-buy"
-						onclick="buyProduct(this);">
+						onclick="buyProductCore(this);">
 						<span>바로구매</span>
 					</button>
 
@@ -310,13 +287,11 @@
 					<li role="presentation"><a href="#viewPage03"
 						class="gp_className" ga-category="상품상세" ga-action="탭"
 						ga-label="상품평"><span>상품평<em>2</em></span></a></li>
-					<li role="presentation"><a href="#viewPage04"
-						class="gp_className" ga-category="상품상세" ga-action="탭"
-						ga-label="Q&amp;A"><span>Q&amp;A<em>5</em></span></a></li>
 				</ul>
 			</div>
 		</div>
 		<!--//scrollspy-tab-->
+		
 		<div class="pages page1" id="viewPage01">
 			<div class="content-area prod_detail_view open">
 				<div class="view_cont">
@@ -338,7 +313,7 @@
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>
-											<img src="${productboaddto.upload_path }">
+											<img src="${productboadDTO.upload_path }">
 										</p>
 										<p>&nbsp;</p>
 
@@ -352,7 +327,6 @@
 		</div>
 
 		<div class="pages page2" id="viewPage02">
-
 
 
 			<!--content-area // 상품필수정보 및 유의사항-->
@@ -417,7 +391,7 @@
 								<span class="hiding">5점</span>
 							</p>
 						</div>
-						<span class="like-point" aria-label="포인트"><em>5.0</em></span>
+						<span class="like-point" aria-label="포인트"><em>5.0, 추후 plsql 생성 시 리뷰마다 업데이트 예정</em></span>
 					</div>
 					<!-- //.review-star -->
 				</div>
@@ -427,7 +401,8 @@
 				<div class="content-area txt-review" id="reviewContentArea">
 
 					<h3>
-						상품평 <em class="total-num">2</em>건 <a href="javascript://"
+						상품평 <em class="total-num">2</em>건 
+						<a href="javascript://"
 							onclick="openItemQNAPopupNew('2140365970')"
 							class="btn btn-lineblack small gp_className"><span>상품평
 								달기</span></a>
@@ -435,29 +410,21 @@
 
 					<!--review-list-->
 					<ul class="txt-review-list">
-
+<c:forEach items="${reviewList}" var="dto">
 						<li class="review-item">
 
 							<div class="review-top">
 								<div class="top-left">
 									<div class="starbg pt10">
 										<p class="score">
-											<span class="hiding">100점</span>
+											<span class="hiding">${dto.star }</span>
 										</p>
 									</div>
-									<span class="nick">yus****</span>
+									<span class="nick">${dto.user_id }</span>
 
 								</div>
 								<div class="top-right">
-									<span class="date">2022-05-21</span> <span
-										class="accuse user-info">
-										<button class="btn-accuse user-info-alarm">
-											<span>신고</span> <input type="hidden" name="ITEM_EVAL_COMT_NO"
-												value="48122177441531"> <input type="hidden"
-												name="ASCT_ITNT_ID" value="yusune"> <input
-												type="hidden" name="SLITM_CD" value="2140365970">
-										</button>
-									</span>
+									<span class="date"><fmt:formatDate value="${dto.ins_dt}" type="date" /></span>
 								</div>
 							</div> <!--review-option-->
 							<div class="review-option"></div> <!--//review-option--> <!-- pdwrap -->
@@ -514,18 +481,12 @@
 								</div>
 							</div> <!-- 동영상 --> <!-- 동영상 --> <!-- //.pdwrap --> <!--review-content-->
 							<div class="review-content">
-								<!--20200911 금요일 스크립트 적용 완료 // 스크립트 구조상 ui 변경-->
-								<a role="button" class="inq-question">
-									<div class="overflow-text" data-modules-customtoggle="">
-										<div class="review-txt">
-											땀많은 아들래미 방에 에어컨 설치가 어려워 고민 많았는데 요새 이렇게 좋은 물건이 나와서 너무 좋네요.<br>물빠짐
-											배수도 걱정없고 계절따라 창고로 이동도 가능하니 정말 마음에 쏙 들어요!
-										</div>
+									<div class="review-txt">
+										${dto.content }
 									</div>
-								</a>
 							</div> <!--//review-content-->
 						</li>
-
+</c:forEach>
 					</ul>
 
 				</div>
@@ -536,120 +497,14 @@
 				<!-- 만족도 -->
 
 				<!--// 만족도 -->
-
-				<script type="text/javascript">
-
-
-$(document).on('click', '.video-thumb', function() {
-    setBizSpring("review_play_btn");
-});
-
-$(document).on('click', '.user-info-alarm', function() {
-    setBizSpring("user_info_alram","","","");
-});
-
-$(document).on('click', '.recommend-btn', function() {
-    if($(this).hasClass('on') == true){
-        setBizSpring("recommend_btn_off");
-    }else{
-        setBizSpring("recommend_btn_on");
-    }
-});
-</script>
 			</div>
 
 
 		</div>
 		<!--// 상품평 tab -->
 
-		<!-- Q&A -->
-		<div class="pages page4" id="viewPage04">
-			<!--content-area // 문의버튼-->
-			<div class="content-area btngroup">
-				<a href="/p/ccd/selectCnslOrdReqDtl.do"
-					onclick="GA_Event('상품상세','Q&amp;A','배송/회수문의');" target="_blank"
-					class="btn btn-lineblack small"><span>배송/회수 문의</span></a> <a
-					href="javascript://" ga-category="상품상세" ga-action="Q&amp;A"
-					ga-label="상품문의" onclick="openItemQNAPopupNew('2140365970')"
-					class="btn btn-lineblack small gp_className"><span>질문하기</span></a>
-			</div>
-			<!--//content-area // 문의버튼-->
-			<!-- content-area // 상품 옵션 시작 -->
-
-			<!-- // content-area // 상품 옵션 끝 -->
-
-			<div id="itemOptQnAInfo">
-
-				<div class="content-area inquiry-wrap">
-
-					<ul class="inquiry-list">
-
-						<li class="inquiry-item">
-							<div class="inq-content">
-								<a role="button" class="inq-question"
-									data-modules-customtoggle="parent:.inquiry-item;">
-									<div class="inq-tit-wrap ui-active">
-
-										<div class="inq-tit">
-											<div class="txt">설치기사님 방문</div>
-
-										</div>
-									</div>
-
-									<div class="inq-info">
-										<span>lim***</span> <span>2022.05.18</span>
-										<!-- 비밀글일때 미노출_2020.12.14 -->
-
-
-
-										<span>주문/배송</span>
-
-
-									</div>
-
-
-
-
-									<div class="btngroup more">
-										<span class="btn btn-showdetail"><span class="ui-text">더보기</span><i
-											class="icon arrow"></i></span> <span
-											class="btn btn-showdetail collapse"><span>닫기</span><i
-											class="icon arrow"></i></span>
-									</div>
-
-									<div class="inq-txt">
-										<p class="txt">기사님이 방문해서 설치해주시는 건가요? 따로 요청을 해야하는 건가요?</p>
-									</div>
-
-
-								</a>
-							</div>
-
-
-
-
-							<div class="inq-replay">
-								<div class="inq-txt">
-									<div class="txt">안녕하십니까 고객님 해당 제품은 엘지 물류 직배송설치상품으로 엘지 물류
-										기사 통해 제품 배송 및 설치까지 진행됩니다 감사합니다</div>
-								</div>
-								<div class="inq-info">
-									<span>협력사</span> <span>2022.05.19</span>
-								</div>
-							</div> <input type="hidden" name="itemQnaQstnNo" value="4392933">
-							<input type="hidden" value="Y">
-						</li>
-
-					</ul>
-
-				</div>
-			</div>
-		</div>
-		<!--// Q&A -->
-
 	</div>
 	<!--//scrollspy-wrap-->
-
 
 
 	<!-- .// product-detail-content -->
@@ -658,8 +513,8 @@ $(document).on('click', '.recommend-btn', function() {
 
 
 <script>
-	// 바로구매
-	function buyProduct(obj) {
+	// 장바구니
+	function addCartCore(obj) {
 		var token = $("input[name='_csrf']").val();
 		var header = "X-CSRF-TOKEN";
 
@@ -670,13 +525,52 @@ $(document).on('click', '.recommend-btn', function() {
 				.val();
 
 		alert(cur_ordQty);
+		
+		$.ajax({
+			url : "${app}/team04/odb/basktList.do",
+			method : "POST",
+
+			data : {
+				ordQty : cur_ordQty
+			},
+			dataType : 'json',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+
+				location.href = '${app}/team04/odb/basktList.do';
+			}
+		});
+
+		alert('goto cart');
+
+	}
+</script>
+
+<script>
+	// 바로구매
+	function buyProductCore(obj) {
+		var token = $("input[name='_csrf']").val();
+		var header = "X-CSRF-TOKEN";
+
+		var targetCssHeader = ".product-option-wrap:first";
+		var cur_ordQty = $(
+				targetCssHeader
+						+ " .select-product-list .pditem input[name='ordQty']")
+				.val();
+
+		alert(cur_ordQty);
+		
+		val_prd_board_id=$("${productboadDTO.prd_board_id }").val();
 
 		$.ajax({
 			url : "${app}/team04/oda/order.do",
 			method : "POST",
 
 			data : {
-				ordQty : cur_ordQty
+				ordQty : cur_ordQty,
+				prd_board_id : val_prd_board_id
 			},
 			dataType : 'json',
 			beforeSend : function(xhr) {
@@ -702,7 +596,7 @@ $(document).on('click', '.recommend-btn', function() {
                 targetCssHeader + " .select-product-list .pditem input[name='ordQty']"
             ).val();
 
-		discount_payment =${productboaddto.price * (100-productboaddto.discount_rate)/100 };
+		discount_payment =${productboadDTO.price * (100-productboadDTO.discount_rate)/100 };
 		
         totSellPrcPayment = ordQty * discount_payment;
 

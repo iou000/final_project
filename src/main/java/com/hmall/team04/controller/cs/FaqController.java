@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/cs/faq.do")
+@RequestMapping("/cs/faq")
 public class FaqController {
 	
 	private FaqService faqService;

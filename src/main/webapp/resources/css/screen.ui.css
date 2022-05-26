@@ -3621,6 +3621,10 @@ input[type=radio] + label {
   padding: 0 30px;
 }
 
+.inp_bundle.address_zip {
+	width: 380px;
+}
+
 .inp_bundle.focus {
   border-color: #4e2bf4;
   background: #fff;
@@ -3693,6 +3697,21 @@ input[type=radio] + label {
   background-repeat: no-repeat;
   background-size: auto;
   background-position: right center;
+}
+
+.inp_bundle .button {
+	display: inline-block;
+    background: #f1eeff;
+    border: 1px solid #dedede;
+    border-radius: inherit;
+    font-family: "Noto Sans KR";
+    font-weight: 400;
+ 	font-size: 18px;
+  	color: #111;
+  	padding: 8px;
+  	text-align: center;
+  	flex:inherit;
+ 
 }
 
 .inp_bundle .btn_right {
@@ -20046,6 +20065,25 @@ input[type=radio] + label {
     padding-right: 15px;
     background-size: auto 6px;
   }
+  
+  .inp_bundle.address_zip {
+	width: 300px;
+}
+  
+  .inp_bundle .button {
+    display: inline-block;
+    font-size: 14px;
+    background: #f1eeff;
+    border: 1px solid #dedede;
+  	border-radius: inherit;
+  	padding: 8px;
+  	text-align: center;
+  	flex: inherit;
+  	
+  }
+  
+  
+  
 
   .inp_bundle .at {
     font-size: 14px;

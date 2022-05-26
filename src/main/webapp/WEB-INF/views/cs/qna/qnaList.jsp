@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- 스프링 시큐리티 관련 태그 라이브러리 -->
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <c:set var="app" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -39,6 +42,12 @@
             font-weight: 700;
             line-height: 29px;
         }
+        
+        .cus-wrap .tblwrap table td {
+		    font-size: 15px;
+		    line-height: 15px;
+		    border-bottom: 1px solid #eee;
+		}
 
         .tblwrap table td {
             color: #333;
@@ -52,6 +61,7 @@
             padding: 15px;
             margin-bottom: 15px;
             border-radius: 5px;
+            min-height: 45px;
         }
 
         tr.show {
@@ -78,7 +88,80 @@
             font-weight: 600;
         }
         
+        ul.pagination.justify-content-center {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+li.paginate_button {
+    margin-left: 10px;
+}
+
+li.paginate_button {
+    margin-left: 10px;
+    display: block;
+    border: 1px solid #eee;
+    background: #eee;
+    border-radius: 4px;
+    padding: 2px;
+    text-align: center;
+    font-size: 12px;
+}
+
+li.paginate_button.active {
+    font-family: none;
+    font-weight: 900;
+    font-size: inherit;
+    background: space;
+    border: none;
+}
+
+form#searchForm {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+select.form-control {
+    width: 170px !important;
+}
+
+input.form-control {
+    padding: 8px;
+    border: 1px solid #eee;
+    margin-left: 3px;
+    margin-right: 5px;
+    width: 200px;
+}
+
+select {
+    height: 35px !important;
+}
+
+.btn {
+    height: 35px !important;
+}
+
+.btn-default {
+    background-color: #eee;
+}
+        
     </style>
+    <script type="text/javascript">
+	$(document).ready(function() {
+		var actionForm = $("#actionForm");
+		$(".paginate_button a").on("click", function(e) {
+			e.preventDefault();
+			actionForm.find("input[name='pageNum']").val($(this).attr('href'));
+			actionForm.submit();
+		});
+	});
+	</script>
+</head>
     <!-- .contents -->
     <div class="contents">
         <!--공지사항-->
@@ -90,7 +173,7 @@
                 언제나 고객님의 입장에서 빠르고 정확한 답변을 드리는 홈쇼핑이 되겠습니다.
             </p>
             <div class="oneaone-div">
-                <button class="btn_basic">1:1 문의하기</button>
+                <button class="btn_basic" onClick="window.open('${app}/cs/qnaInsPopUp','1:1 문의하기','width=756,height=700')">1:1 문의하기</button>
             </div>
             <!--tblwrap tbl-list-->
             <div class="tblwrap tbl-list">
@@ -130,51 +213,90 @@
                         </tr>
                     </thead>
                     <tbody>
+                    	<c:forEach items="${list}" var="dto" varStatus="vs">
                         <tr class="item">
-                            <td class="txt-center"><span class="date">1</span></td>
-                            <td class="txt-center"><span class="date">취소/교환/반품</span></td>
-                            <td class="nowrap, txt-center">현대홈쇼핑 멤버십 제도 개편 안내</td>
-                            <td class="txt-center"><span class="date">2022.05.02</span></td>
-                            <td class="txt-center"><span class="date">2022.05.02</span></td>
-                            <td class="txt-center"><span class="date">처리중</span></td>
+                            <td class="txt-center"><span>${vs.count}</span></td>
+                            <td class="txt-center"><span>${dto.type}</span></td>
+                            <td class="nowrap, txt-center">${dto.title}</td>
+                            <td class="txt-center"><span class="date"><fmt:formatDate value="${dto.ins_dt}" type="date" /></span></td>
+                            <td class="txt-center"><span class="date"><fmt:formatDate value="${dto.ans_ins_dt}" type="date" /></span></td>
+                            <td class="txt-center"><span>
+                            	<c:if test="${dto.ans_yn eq '0'.charAt(0)}">처리중</c:if>
+                            	<c:if test="${dto.ans_yn eq '1'.charAt(0)}">답변완료</c:if>
+                            </span></td>
                         </tr>
                         <tr class="hide">
-                            <td colspan="6">
+                        	<td colspan="2" style="text-align: center; letter-spacing: 1px">
+                        		<div class="basic-border-one">질문 내용</div>
+                        		<div class="basic-border-one">답변 내용</div>
+                        	</td>
+                            <td colspan="4">
                                 <div class="basic-border-one">
-                                    주문 취소하려고 하는데요 인터넷으로 취소 버튼이 보이지 않네요.
+                                    ${dto.content}
                                 </div>
                                 <div class="basic-border-one">
-                                    아래쪽에 있습니당!
+                                    ${dto.ans_content}
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="txt-center"><span class="date">2</span></td>
-                            <td class="txt-center"><span class="date">취소/교환/반품</span></td>
-                            <td class="nowrap, txt-center"><a
-                                    href="/p/ccb/noticeView.do?ancmId=53597&page=1&topFixYn=N">현대홈쇼핑 금융소비자보호 내부통제기준 및
-                                    금융소비자보호기준</a> <img src="https://image.hmall.com/m/img/co/icon/ico-file.svg"
-                                    alt="첨부파일"></td>
-                            <td class="txt-center"><span class="date">2022.05.02</span></td>
-                            <td class="txt-center"><span class="date">2022.05.02</span></td>
-                            <td class="txt-center"><span class="date">답변완료</span></td>
-                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
             <!--//tblwrap tbl-list-->
             <!--paging-->
-            <div class="paging">
-                <div class="page-prevarea">
-                    <div class="page-prevarea">
-                        <strong aria-label="현재 선택페이지">1</strong>
-                        <a href="/p/ccb/noticeList.do?page=2">2</a>
-                        <a href="/p/ccb/noticeList.do?page=3">3</a>
-                        <a href="/p/ccb/noticeList.do?page=4">4</a>
-                    </div>
-                </div>
-            </div>
-            <!--//paging-->
+			<ul class="pagination justify-content-center">
+					<c:if test="${pageMaker.prev }">
+						<li class="paginate_button previous"><a href="${pageMaker.startPage - 1}">&lt;</a></li>
+					</c:if>
+	
+					<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+						<li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active': '' }"><c:if test="${pageMaker.cri.pageNum != num}">
+						<a href="${num }">${num }</a></c:if><c:if test="${pageMaker.cri.pageNum == num}"><div>${num }</div></c:if></li>
+					</c:forEach>
+	
+					<c:if test="${pageMaker.next }">
+						<li class="paginate_button next">
+						<a href="${pageMaker.endPage + 1}">&gt;</a></li>
+					</c:if>
+			</ul>
+			<!--paging-->
+			<br/>
+					<div class="row">
+						<form class="form-inline" id="searchForm" action="${app }/cs/qna" method="get">
+							<select class="form-control" name="type">
+								<option value="T"
+									>제목</option>
+								<option value="C"
+									>내용</option>
+								<option value="W"
+									>작성자</option>
+								<option value="TC"
+									>제목
+									+ 내용</option>
+								<option value="TW"
+									>제목
+									+ 작성자</option>
+								<option value="TWC"
+									>제목
+									+ 작성자 + 내용</option>
+							</select> 
+								<input class="form-control" type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword }"/>'> 
+								<input type="hidden" value="${pageMaker.cri.pageNum }"> 
+								<input type="hidden" value="${pageMaker.cri.amount }">
+							<button class="btn btn-default">검색</button>
+						</form>
+					</div>
+					
+					<form id="actionForm" method="get">
+						<input type="hidden" name="qnaid"	value="">
+						<input type="hidden" name="pageNum"	value="${pageMaker.cri.pageNum }">
+						<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+		
+						<!-- 페이지 이동 시에도 검색 데이터와 함께 전송 -->
+						<input type="hidden" name="type" value="${pageMaker.cri.type }">
+						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+					</form>
         </div>
         <!--//공지사항-->
     </div>

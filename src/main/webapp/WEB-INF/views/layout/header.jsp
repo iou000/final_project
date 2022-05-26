@@ -20,6 +20,7 @@
              commonPub.common();
          })
 </script>   
+
 <link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
 <!-- UI/UX Style -->
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/common.css"><!-- 공통 css -->

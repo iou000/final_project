@@ -26,21 +26,18 @@
 				<!-- step -->
 				<div class="wrap_sign_step">
 					<ol class="clear">
-						<li class="step1 on">
-							<div class="num">1</div>
-							<p class="txt">본인인증</p>
-						</li>
-						<li class="step2 on">
-							<div class="num">2</div>
+						
+						<li class="step2 on"> 
+							<div class="num">1</div> <!-- step 이랑 숫자랑 안맞는건 이미지 가져오는거 때문 -->
 							<p class="txt">약관동의</p>
 						</li>
 						<li class="step3">
-							<div class="num">3</div>
-							<p class="txt" onclick="kkoPtcoGateShow();">정보입력</p>
+							<div class="num">2</div>
+							<p class="txt">정보입력</p>
 						</li>
 						<li class="step4">
-							<div class="num">4</div>
-							<p class="txt" onclick="viewAgent();">가입완료</p>
+							<div class="num">3</div>
+							<p class="txt">가입완료</p>
 						</li>
 					</ol>
 				</div>
