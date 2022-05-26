@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <c:set var="app" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +49,7 @@
 				</div>
 				<div class="wrap_sign_step">
 					<div class="btn_area btn_ac">
-						<a class="btn_typeB2" href="./step1" style="color:snow; margin-bottom:80px;"><span>로그인 하기</span></a>
+						<a class="btn_typeB2" href="${app}/login" style="color:snow; margin-bottom:80px;"><span>로그인 하기</span></a>
 					</div>
 				</div>
 			</div>

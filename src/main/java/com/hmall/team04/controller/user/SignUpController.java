@@ -1,9 +1,14 @@
 package com.hmall.team04.controller.user;
 
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,11 +36,14 @@ public class SignUpController {
 	
 	private final SignUpService signUpService;
 	
-	
+
 	@GetMapping("/signUpStart")
-	public String signUpStart() {
+	public String signUpStart(Principal principal) {
 		log.info("회원 구분 페이지 요청");
-		return "user.signup.signUpStart";
+		if (principal == null) {
+			return "user.signup.signUpStart";
+		}
+		return "redirect:/";
 	}
 	
 	@GetMapping("/step1")
@@ -61,6 +69,11 @@ public class SignUpController {
 		} else {
 			return "redirect:/";
 		}
+	}
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/step3")
+	public String step3(Principal principal) {
+		return "redirect:/";
 	}
 	
 	@PostMapping("/step3")
