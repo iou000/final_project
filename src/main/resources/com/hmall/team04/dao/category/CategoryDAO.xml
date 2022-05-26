@@ -5,10 +5,29 @@
 
 <mapper namespace="com.hmall.team04.dao.category.CategoryDAO">
 	
-	<select id="getCategoryList" resultType="CategoryDTO">
-		select cate_id,g_id,cate_lev,cate_nm,cate_detail_lev,cate_detail_nm,cate_parent_lev,cate_detail_parent_lev
-		from category_t
-		order by cate_id
+	<resultMap id="CategoryList" type="CategoryDTO">
+		<result property="category_id" column="N_KEY" />
+		<result property="category_name" column="cate_detail_nm" />
+		<result property="parent_lev" column="cate_parent_lev" />
+		<result property="parent_detail_lev" column="cate_detail_parent_lev" />
+		<result property="cate_detail_lev" column="CATE_DETAIL_LEV" />
+	</resultMap>
+	
+	<resultMap id="ChildCateList" type="CategoryDTO">
+		<result property="category_id" column="N_KEY" />
+		<result property="category_name" column="ch_cate_detail_nm" />
+		<result property="parent_lev" column="cate_parent_lev" />
+		<result property="parent_detail_lev" column="cate_detail_parent_lev" />
+	</resultMap>
+	
+	<select id="getCategory" resultMap="CategoryList">
+		select a.cate_id, a.g_id||a.cate_lev||a.cate_detail_lev || a.cate_parent_lev || a.cate_detail_parent_lev as n_key,
+			 a.cate_detail_nm as cate_detail_nm, a.cate_parent_lev as cate_parent_lev ,a.cate_detail_parent_lev as cate_detail_parent_lev,
+			 a.CATE_DETAIL_LEV as CATE_DETAIL_LEV
+		from category_t a
+		left join category_t b 
+		on (a.g_id=b.g_id and a.cate_parent_lev = b.cate_lev and a.cate_detail_parent_lev = b.cate_detail_lev)
+		order by a.cate_id
 	</select>
 	
 </mapper>

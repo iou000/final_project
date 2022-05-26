@@ -1,27 +1,29 @@
 package com.hmall.team04.controller.category;
 
 
-import org.springframework.stereotype.Controller;
+import java.util.ArrayList;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.http.MediaType;
+import com.hmall.team04.dto.category.CategoryDTO;
+import com.hmall.team04.service.category.CategoryService;
 
 import lombok.extern.log4j.Log4j;
 
-@Controller
+@RestController
 @Log4j
-@RequestMapping("/dpa")
 public class CategoryController {
 	
-	@RequestMapping(value = "/depth1", method = RequestMethod.GET)
-	public String level2() {
-		log.info("카테고리 대분류 && 중분류 선택에 따른 페이지");
-		return "category";
+	private CategoryService categoryService;
+	
+	public CategoryController(CategoryService categoryService) {
+		this.categoryService  = categoryService;
 	}
 	
-	@RequestMapping(value = "/depth1/depth2", method = RequestMethod.GET)
-	public String level3() {
-		log.info("카테고리 대분류 && 중분류 && 소분류 선택에 따른 페이지");
-		return "category2";
+	@GetMapping(value="/category", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ArrayList<CategoryDTO> getCategory() throws Exception{
+		return categoryService.getCategory();
 	}
 }

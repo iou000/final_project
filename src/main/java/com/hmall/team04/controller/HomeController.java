@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.hmall.team04.dto.category.CategoryDTO;
 import com.hmall.team04.dto.product.ProductBoardDTO;
+import com.hmall.team04.service.category.CategoryService;
 import com.hmall.team04.service.product.ProductBoardService;
 
 /**
@@ -24,7 +26,8 @@ public class HomeController {
 	
 	@Autowired
 	private ProductBoardService productboardService;
-	
+	@Autowired
+	private CategoryService categoryService;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
