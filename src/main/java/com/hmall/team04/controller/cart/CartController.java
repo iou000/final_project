@@ -33,6 +33,7 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/basktList", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public HashMap<String, String> carttest(CartDTO cartDTO, Principal principal) throws Exception {

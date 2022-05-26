@@ -5,6 +5,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<c:set var="app" value="${pageContext.request.contextPath}" />
+
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 
 <div class="product-detail-wrap">
@@ -234,9 +236,9 @@
 				<!-- btngroup -->
 				<div class="btngroup prdBtnBoxGroup pd_shipping_type_nomral type04">
 
-					<button class="btn btn-linelgray large btn-like" onclick="goChioceProcess('','019472','','2140365970', event);">
+					<button class="btn btn-linelgray large btn-like" onclick="goChioceProcessCore('${productboadDTO.prd_board_id}');">
 						<i class="icon"></i>
-						<span class="count">?</span>
+						<span class="count">${likeCnt}</span>
 					</button>
 
 					<input type="hidden" name="buyYn" value="Y">
@@ -502,9 +504,29 @@
 	<!-- .// product-detail-content -->
 </div>
 
+<h1>${likeIsExist }</h1>
 
 
 <script>
+$(document).ready(function() {
+	// 좋아요 누른 기록 존재 체크
+	var val_likeIsExist=${likeIsExist };
+	alert(val_likeIsExist);
+	
+	if (val_likeIsExist){
+		$(".btn-like").addClass("on");
+	} else{
+		
+	}
+	
+		
+
+	
+});
+</script>
+
+<script>
+
 /*
  * 상품평 쓰기 버튼
  */
@@ -519,13 +541,78 @@ $('.itemEvalRegBtn').on("click",function(e) {
 	const memberId = '1';
 
 	//let popUrl = "/replyEnroll/" + memberId + "?bookId=" + bookId;
-	let popUrl = "${app}/team04/reviewEnroll/" + memberId+ "?prd_board_id=" + prd_board_id;
+	let popUrl = "${app}/reviewEnroll/" + memberId+ "?prd_board_id=" + prd_board_id;
 	console.log(popUrl);
 	let popOption = "width = 490px, height=490px, top=300px, left=300px, scrollbars=yes";
 	
 	window.open(popUrl,"리뷰 쓰기",popOption);
 });
 
+</script>
+
+<script>
+
+// 좋아요 ; 머리속으로는 구분가능하나, 컴퓨터 입장에서는 구분 불가능한 두 부류를 data의 내용의로 구분하려했으나
+// 컨트롤러에서 로그인 정보없으면 하고오게는 되도, 다시 방문할때 success의 data가 undefine임
+// success안 success가 이상함
+ var goActionCnt = 0; // 두번 클릭 방지, 활용하고싶다
+function goChioceProcessCore(prd_board_id) {
+	var token = $("input[name='_csrf']").val();
+	var header = "X-CSRF-TOKEN";
+	
+	alert(prd_board_id);
+	var likeIsExist = "${likeIsExist}";
+	alert(likeIsExist);
+	
+	
+	if(likeIsExist==0){
+		// login check
+		$.ajax({
+			url : "${app}/insertLike",
+			method : "POST",
+			data : {
+				prd_board_id : prd_board_id
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+				alert(data.needLogin);
+				if (data.needLogin) {
+					location.href ='${app}/signUp/step3';
+				} else if(typeof data.data == "undefined" || data.data == null || data.data == ""){
+					alert('welcome login');
+					alert("I Also Like You!");
+					location.reload();
+					
+					alert('welcome login2');
+				} else if(data.likeSuccess){
+					alert("원래 여기 아니니?");
+				}
+			}
+		});
+	} else{
+		$.ajax({
+			url : "${app}/deleteLike",
+			method : "POST",
+			data : {
+				prd_board_id : prd_board_id
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+				if (data.delete_like_Success) {
+					$(".btn-like").removeClass("on");
+					alert("I Still Like You, Good Bye!");
+					location.reload();
+				}
+			}
+		});
+	}
+
+
+}
 </script>
 
 <script>
@@ -545,31 +632,32 @@ $('.itemEvalRegBtn').on("click",function(e) {
 
 		alert(cur_ordQty);
 
-		
 		$.ajax({
-			url : "${app}/team04/basktList",
+			url : "${app}/basktList",
 			method : "POST",
-
 			data : {
 				prd_id : val_prd_id,
 				amount : cur_ordQty
 			},
-			dataType : 'json',
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(data) {
 				// 모달창으로 전환 예정
-				alert('장바구니에 담겼습니다.');
-				var result = confirm("장바구니로 가시겠습니까?");
-				
-				if(result){
-					location.href = '${app}/team04/basktList';
+				if (data.cartSuccess == "True") {
+					alert('장바구니에 담겼습니다.');
+					var result = confirm("장바구니로 가시겠습니까?");
+					
+					if(result){
+						location.href = '${app}/basktList';
+					}
+				} else{
+					location.href = '${app}/basktList';
 				}
 			}
+		
 		});
-
-		alert('goto cart');
+		alert('end');
 
 	}
 </script>
@@ -592,7 +680,7 @@ $('.itemEvalRegBtn').on("click",function(e) {
 		alert(val_prd_board_id);
 
 		$.ajax({
-			url : "${app}/team04/order",
+			url : "${app}/order",
 			method : "POST",
 
 			data : {
@@ -604,8 +692,7 @@ $('.itemEvalRegBtn').on("click",function(e) {
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(data) {
-
-				location.href = '${app}/team04/order';
+				location.href = '${app}/order';
 			}
 		});
 
