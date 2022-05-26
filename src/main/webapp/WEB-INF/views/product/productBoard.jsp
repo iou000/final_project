@@ -534,8 +534,6 @@ $('.itemEvalRegBtn').on("click",function(e) {
 		var token = $("input[name='_csrf']").val();
 		var header = "X-CSRF-TOKEN";
 		
-		alert('장바구니에 담겼습니다.');
-		
 		val_prd_id=('${productboadDTO.prd_id}');
 		alert(val_prd_id);
 		
@@ -562,7 +560,12 @@ $('.itemEvalRegBtn').on("click",function(e) {
 			},
 			success : function(data) {
 				// 모달창으로 전환 예정
-				//location.href = '${app}/team04/basktList';
+				alert('장바구니에 담겼습니다.');
+				var result = confirm("장바구니로 가시겠습니까?");
+				
+				if(result){
+					location.href = '${app}/team04/basktList';
+				}
 			}
 		});
 
