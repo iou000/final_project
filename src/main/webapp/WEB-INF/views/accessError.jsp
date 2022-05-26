@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2><c:out value="${SPRING_SECURITY_403_EXCEPTION.getMessage()}"></c:out></h2>
-<h2><c:out value="${msg}"></c:out></h2>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<lottie-player src="https://assets7.lottiefiles.com/packages/lf20_1n29x8xz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
 </body>
 </html>
