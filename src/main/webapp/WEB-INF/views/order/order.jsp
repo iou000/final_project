@@ -50,21 +50,14 @@
 							</div>
 						</div>
 						<!-- //상품정보 -->
-						
-						<div class="sticky-ui-wrapper util-option-sticky"><div class="sticky-placeholder" style="height: 471px;"></div><div class="util-option sticky fixed" data-modules-sticky="padding:-40;breakPoint:.container;className:util-option-sticky;" style="top: 40px;">
+						<div class="sticky-ui-wrapper util-option-sticky"><div class="sticky-placeholder" style=""></div><div class="util-option sticky" data-modules-sticky="padding:-40;breakPoint:.container;className:util-option-sticky;" style="">
                                 <div class="sticky-inner">
                                     <h4 class="title20">총 결제금액</h4>
                                     <ul class="payment-list">
-
-                                        
-                                            
-                                            
-                                            
-                                            
                                                 <li>
                                                     <div id="orderAmt">
                                                         <span class="tit">총 판매금액</span>
-                                                        <span class="txt"><strong>879,000</strong>원</span>
+                                                        <span class="txt"><strong>89,000</strong>원</span>
                                                     </div>
                                                     
                                                     
@@ -86,57 +79,7 @@
                                                     </div>
 
                                                     
-                                                        <div id="imdtDcAmtDiv">
-                                                            <span class="tit">즉시할인</span>
-                                                            <span class="txt"><strong>-175,800</strong>원</span>
-                                                        </div>
                                                     
-                                                    
-                                                        <div id="copnDcAmtDiv" class="hidden">
-                                                            <span class="tit">쿠폰할인</span>
-                                                            <span class="txt"><strong>0</strong>원</span>
-                                                        </div>
-                                                    
-                                                    <div class="hidden" id="alliDcAmtDiv">
-                                                        <span class="tit">제휴할인</span>
-                                                        <span class="txt"><strong>0</strong>원</span>
-                                                    </div>
-                                                    <div class="hidden" id="stlmDcAmtDiv" style="display: none;">
-                                                        <span class="tit">결제할인</span>
-                                                        <span class="txt"><strong>0</strong>원</span>
-                                                    </div>
-                                                    <div class="hidden" id="crdImdtDcAmtDiv">
-                                                        <span class="tit">카드즉시할인</span>
-                                                        <span class="txt"><strong>0</strong>원</span>
-                                                    </div>
-                                                    <div>
-                                                        <span class="tit">할인 합계금액</span>
-                                                        <span class="txt">
-			                                                <strong id="totDcAmtDd">-175,800</strong>원
-			                                                <em>약 20% 절약</em>
-			                                            </span>
-                                                    </div>
-                                                    <div class="hidden" id="stlmPaperGcAmtDiv">
-                                                        <span class="tit">지류상품권</span>
-                                                        <span class="txt"><strong id="stlmPaperGcAmtDd">0</strong>원</span>
-                                                    </div>
-                                                    
-                                                    
-                                                        
-                                                        <!-- TODO 곽희섭 20170403 통합포인트 소스 추가 시작--> <!-- 상품권/적립금 제외 모두 결제가능 적용 시 H.point 결제 허용 -->
-                                                        
-                                                        
-                                                        <!-- TODO 곽희섭 20170403 통합포인트 소스 추가 끝-->
-                                                        
-                                                        
-                                                        <div class="hidden" id="useOPointDiv">
-                                                            <span class="tit">Oh! point 사용</span>
-                                                            <span class="txt"><strong>0</strong>원</span>
-                                                        </div>
-                                                        <div class="hidden" id="stlmHanaMoneyAmtDiv">
-                                                            <span class="tit">하나머니 사용</span>
-                                                            <span class="txt"><strong>0</strong>원</span>
-                                                        </div>
                                                     
                                                 </li>
                                             
@@ -148,120 +91,28 @@
                                                 
                                                     
                                                     
-                                                        <span class="txt" id="lastStlmAmtDd"><strong>703,200</strong>원</span>
+                                                        <span class="txt" id="lastStlmAmtDd"><strong>89,000</strong>원</span>
                                                     
                                                 
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmCrdAmtDl">
-                                                <span class="tit">신용카드</span>
-                                                <span class="txt"><strong></strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmAlliDcAmtDl" style="display: none;">
-                                                <span class="tit">신용카드</span>
-                                                <span class="txt"><strong></strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmHppCrdAmtDl">
-                                                <span class="tit">H.Point Pay 카드</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmHppAcntAmtDl">
-                                                <span class="tit">H.Point Pay 계좌</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-
-                                            <!-- add. 0511 - 신용카드 분할결제 카드사별 금액 (PRJS-140) -->
-                                            <div class="hidden stlmDpArea" id="stlmCrdAmtDlDiv1">
-                                                <span class="tit _split-payments" style="display: none;">신용카드<br><em></em></span>
-                                                <span class="txt"><strong></strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmCrdAmtDlDiv2">
-                                                <span class="tit _split-payments" style="display: none;">신용카드<br><em></em></span>
-                                                <span class="txt"><strong></strong>원</span>
-                                            </div>
-                                            <!-- // add. 0511 - 신용카드 분할결제 카드사별 금액 (PRJS-140)-->
-
-                                            <div class="hidden stlmDpArea" id="stlmWibkAmtDl">
-                                                <span class="tit">무통장 입금</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmAcntAmtDl">
-                                                <span class="tit">실시간 계좌이체</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmHppayAmtDl">
-                                                <span class="tit">휴대폰결제</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmPaycoAmtDl">
-                                                <span class="tit">PAYCO 결제</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmSspayAmtDl">
-                                                <span class="tit">삼성 페이 결제</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmNaverpayAmtDl">
-                                                <span class="tit">네이버페이 결제</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmSmilepayAmtDl">
-                                                <span class="tit">스마일페이 결제</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmNewkakaopayAmtDl">
-                                                <span class="tit">카카오페이 결제</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmTossAmtDl">
-                                                <span class="tit">토스 결제</span>
-                                                <span class="txt"><strong>0</strong>원</span>
-                                            </div>
-                                            <div class="hidden stlmDpArea" id="stlmHpayAmtDl">
-                                                <span class="tit">Hmall Pay 결제</span>
-                                                <span class="txt"><strong>0</strong>원</span>
                                             </div>
                                         </li>
-                                        <li>
-                                            
-                                                
-                                                    
-                                                    
-                                                
-
-                                            
-                                            
-	                                            <!-- add. 0511 - 신용카드 분할결제 (PRJS-140) -->
-	                                            <ul class="check-list _split-payments" style="display: none;">
-	                                                <li>
-	                                                    결제수단 영역에서 '결제' 버튼을<br>
-	                                                    클릭하여 결제를 진행해주세요.
-	                                                </li>
-	                                            </ul>
-                                            
-                                            <!-- // add. 0511 - 신용카드 분할결제 -->
-                                            
-                                            
-                                                
-                                                    <ul class="check-list agreeCheck">
-                                                        <li>
-                                                            <label class="chklabel sm">
-                                                                <input type="checkbox" id="ordAgreeChk" name="ordAgreeChk">
-                                                                <i class="icon"></i>
-                                                                <span>주문하실 상품의 상품명, 가격,<br>배송정보를 확인하였으며,<br>이에 동의합니다.<br>(전자상거래법 제8조 제2항)</span>
-                                                            </label>
-                                                        </li>
-                                                    </ul>
-                                                
-                                                
-                                                
-                                            
-                                        </li>
+                                        
                                     </ul>
                                     <div class="btngroup agreeCheck">
-                                        <button type="button" class="btn btn-default medium" onclick="order();"><span>결제</span></button>
+                                        <button type="button" class="btn btn-default medium" onclick="order();">
+                                        	<span>
+		                                	
+		                                		
+		                                			결제
+		                                		
+		                                		
+		                                	                                        	
+                                        	</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div></div>
+						
 						
 					</div>
 				</div>

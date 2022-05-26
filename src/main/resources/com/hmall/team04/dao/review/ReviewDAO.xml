@@ -9,38 +9,40 @@
 	<resultMap id="ReviewResult" type="reviewDTO">
 		<result property="content" column="content" jdbcType="CLOB" javaType="java.lang.String" />
 	</resultMap>
-
-	<select id="getReviewList" parameterType="String" resultType="reviewDTO" resultMap="ReviewResult">
+	
+	<select id="getReviewListBasic" parameterType="String" resultType="reviewDTO" resultMap="ReviewResult">
 		select
 		review_id, prd_board_id, user_id, content, star, ins_dt, file_yn
 		from review_t rt
 		WHERE rt.prd_board_id=#{prd_board_id}
 	</select>
-	<!-- 
-	<select id="getReviewProductBoardList" resultType="reviewDTO" resultMap="ReviewResult">
-		select
-		pbt.prd_board_id, pbt.discount_rate, pbt.price, pbt.title, pbt.content, pbt.score, pbt.category, pbt.brand,
-		pt.PRD_ID,
-		ft.UPLOAD_PATH 
-		from prd_board_t pbt
-		LEFT JOIN PRD_T pt on(pbt.PRD_BOARD_ID=pt.PRD_BOARD_ID)
-		LEFT JOIN FILE_T ft on(pbt.PRD_BOARD_ID =ft.ARTICLE_ID)
-		where ft.board_flag='prd'
-		order by prd_board_id
-	</select>
-	 -->
-	<!-- 상품보드와 관련된 prd_board 표시 기본형 -->
-	<!-- 
-	<select id="getProductBoard" parameterType="String" resultType="ProductBoardDTO" resultMap="ProductBoardResult">
-		select
-		pbt.prd_board_id, pbt.discount_rate, pbt.price, pbt.title, pbt.content, pbt.score, pbt.category, pbt.brand,
-		pt.PRD_ID,pt.option1,pt.option2,
-		ft.UPLOAD_PATH 
-		from prd_board_t pbt
-		LEFT JOIN PRD_T pt on(pbt.PRD_BOARD_ID=pt.PRD_BOARD_ID)
-		LEFT JOIN FILE_T ft on(pbt.PRD_BOARD_ID =ft.ARTICLE_ID)
-		WHERE pbt.prd_board_id=#{board_subject} and ft.board_flag='prd'
-		order by prd_board_id
-	</select>
-	 -->
+	
+	<!-- insert review -->
+	<insert id="enrollReview" parameterType="reviewDTO">
+		insert into review_t(review_id,prd_board_id,user_id,content,star,file_yn)
+		values(review_t_review_id_seq.nextval,#{prd_board_id},#{user_id},#{content},#{star},#{file_yn})
+	</insert>
+	
+ 	<!-- 댓글 페이징 -->
+  	<select id="getReviewList" resultType="reviewDTO">
+  	
+  		<![CDATA[
+		select * from(  		
+			select rownum as rn, review_id, prd_board_id, user_id, content, star, ins_dt, file_yn
+			from review_t
+			where rownum <= #{pageNum} * #{amount}  and prd_board_id = #{prd_board_id}	
+			order by ins_dt desc  	
+  			)
+  		where rn > (#{pageNum} -1) * #{amount}
+  		]]>	
+  		
+  	</select>
+  	
+  	<select id="getReviewTotal" resultType="int">
+  	
+  		select count(*)
+  		from review_t
+  		where prd_board_id = #{prd_board_id}
+  	
+  	</select>
 </mapper>

@@ -31,7 +31,7 @@
 						<c:forEach items="${productboadrList}" var="dto">
 							<li class="pdthumb">
 								<!-- 눈에 보이는 보드 사진으로서 클릭 시 해당 상품상세피이지로 간다. --> 
-								<a href="javascript:;" onclick="goItemDetail('${app}/pda/selectBoard?prd_board_id=${dto.prd_board_id }', this);">
+								<a href="javascript:;" onclick="goItemDetail('${app}/selectBoard?prd_board_id=${dto.prd_board_id }', this);">
 									<div class="thumb ">
 										<img src="${dto.upload_path }"
 										onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=orgxorg&amp;AR=0')">
