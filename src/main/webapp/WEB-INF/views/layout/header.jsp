@@ -226,7 +226,7 @@ function LoginPopup(){
         <div class="personal-menu">
             <ul>
                 <li>
-                    <a class="cart" ga-category="헤더" ga-action="장바구니" href="javascript:bizSpringTag('https://www.hmall.com/p/odb/basktList.do','^헤더^장바구니');">
+                    <a class="cart" ga-category="헤더" ga-action="장바구니" href="${app}/basktList">
                         <span>장바구니</span>
                     </a>
                 </li>
