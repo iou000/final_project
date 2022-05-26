@@ -24,6 +24,13 @@
 							<li><strong>03</strong> <span>주문완료</span></li>
 						</ol>
 					</div>
+					<div class="cart-bottom">
+                         <div class="btngroup">
+                         <div style="float: right;">
+                             <button type="button" class="btn btn-cart-del" onclick="deleteBasktAll();"><i class="icon cart-del"></i><span>장바구니 비우기</span></button>
+                         </div>
+                         </div>
+                    </div>
 				</div>
 				<!-- //.cart-head -->
 				
@@ -38,10 +45,11 @@
 								<div class="all_check_input_div">
 									<label class="chklabel"> <input type="checkbox"
 										class="all_check_input input_size_20" id="cbx_chkAll">
-										<i class="icon"></i><span>전체선택</span>
+										<i class="icon"></i><span>전체</span>
 									</label>
 								</div>
 							</div>
+							<button type="button" class="btn btn-linelgray sm" onclick="deleteAllBasktCore(this)"><span>선택삭제</span></button>
 						</div>
 						<!-- //.cart-check -->
 						<div class="shipping-list" id="gen">
@@ -59,11 +67,15 @@
 											<td class="td_width_1 cart_info_td">
 												<div class="cart-check">
 													<div class="checkbox">
-														<label class="chklabel"> <input type="checkbox"
-															class="individual_cart_checkbox input_size_20" name="chk">
+														<label class="chklabel">
+														<input type="checkbox" class="individual_cart_checkbox input_size_20" value='${cart.prd_cart_id }' name="chk">
 															<i class="icon"></i><strong>${cart.prd_board_id }</strong>
 														</label>
 													</div>
+													<button type="button" class="btn btn-cart-del"
+														onclick="deleteBasktCore('${cart.prd_cart_id }','0');">
+														<i class="icon cart-del"></i><span class="hiding">삭제</span>
+													</button>
 												</div> 
 												<input type="hidden" class="individual_bookPrice_input" value="${cart.prd_price}">
 												<input type="hidden" class="individual_salePrice_input" value="${cart.prd_price}">
@@ -71,15 +83,10 @@
 												<input type="hidden" class="individual_totalPrice_input" value="${cart.prd_price * cart.amount}">
 												<input type="hidden" class="individual_point_input" value="${ci.point}"> 
 												<input type="hidden" class="individual_totalPoint_input" value="${ci.totalPoint}">
-
+												
 												<div class="pdwrap pdlist ml">
 
-													
 
-													<button type="button" class="btn btn-cart-del"
-														onclick="deleteBasktCore('${cart.prd_cart_id }');">
-														<i class="icon cart-del"></i><span class="hiding">삭제</span>
-													</button>
 
 													<div class="pdlist-wrap">
 														<div class="pditem">
@@ -270,7 +277,12 @@
 <script>
 $(document).ready(function() {
 	//
-	$(".all_check_input").prop("checked", true);
+	var total = $("input[name=chk]").length;
+	if(total>0){
+		$(".all_check_input").prop("checked", true);
+	} else{
+		$(".all_check_input").prop("checked", false);
+	}
 	$(".individual_cart_checkbox").prop("checked", true);
 	
 	setTotalInfo();	
@@ -382,32 +394,89 @@ function setTotalInfo(){
 </script>
 
 <script>
-function deleteBasktCore(prd_cart_id) {
+
+function deleteBasktCore(prd_cart_id,flag) {
 	var token = $("input[name='_csrf']").val();
 	var header = "X-CSRF-TOKEN";
 	
-	var result = confirm("해당 상품을 장바구니에서 취소하시겠습니까?");
+	
+	if(flag=='0'){
+		var result = confirm("해당 상품을 장바구니에서 취소하시겠습니까?");
+		
+		if(result == true){
+				$.ajax({
+					url : "${app}/team04/deletePrdCartId",
+					method : "POST",
+					
+					data : {
+						prd_cart_id : prd_cart_id
+					},
+					
+					dataType : "json",
+					beforeSend : function(xhr) { xhr.setRequestHeader(header, token); },
+					success : function(data) {
+						if (data.delete_PrdCartId_Success == "True") {
+							location.reload();
+						}
+					}
+				})
+		}
+		
+		alert('deleteBaskt');		
+	} else {
+				$.ajax({
+					url : "${app}/team04/deletePrdCartId",
+					method : "POST",
+					
+					data : {
+						prd_cart_id : prd_cart_id
+					},
+					
+					dataType : "json",
+					beforeSend : function(xhr) { xhr.setRequestHeader(header, token); },
+					success : function(data) {
+						if (data.delete_PrdCartId_Success == "True") {
+							alert('hi');
+						}
+					}
+				})
+		
+		alert('deleteBaskt one');	
+	}
+
+}
+
+function deleteAllBasktCore(prd_cart_id) {
+	var token = $("input[name='_csrf']").val();
+	var header = "X-CSRF-TOKEN";
+	
+	var result = confirm("선택 상품을 장바구니에서 취소하시겠습니까?");
 	
 	if(result == true){
-			$.ajax({
-				url : "${app}/team04/odb/deletePrdCartId",
-				method : "POST",
-				
-				data : {
-					prd_cart_id : prd_cart_id
-				},
-				
-				dataType : "json",
-				beforeSend : function(xhr) { xhr.setRequestHeader(header, token); },
-				success : function(data) {
-					if (data.delete_PrdCartId_Success == "True") {
-						location.reload();
-					}
-				}
-			})
+	  	$("input:checkbox[name=chk]:checked").each(function() {
+	  	  //checkBoxArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+	  	  //console.log(checkBoxArr);
+
+	  	  deleteBasktCore($(this).val(),'1');
+	  	})
+	  	location.reload();
+	  	
+	  	alert('deleteAllBasktCore');		
 	}
+}
+
+function deleteBasktAll() {
+	var token = $("input[name='_csrf']").val();
+	var header = "X-CSRF-TOKEN";
 	
-	alert('deleteBaskt');
+	
+  	$("input:checkbox[name=chk]").each(function() {
+	  deleteBasktCore($(this).val(),'1');
+	})
+	
+	location.reload();
+	
+	alert('deleteAllBaskt');
 }
 
 function changeBasktItemCore(obj,prd_cart_id) {
@@ -420,7 +489,7 @@ function changeBasktItemCore(obj,prd_cart_id) {
 	var amount = Number($(target_childObj).val());
 	
 	$.ajax({
-		url : "${app}/team04/odb/updatePrdCartQty",
+		url : "${app}/team04/updatePrdCartQty",
 		method : "POST",
 		
 		data : {
@@ -439,6 +508,7 @@ function changeBasktItemCore(obj,prd_cart_id) {
 	
 	alert('changeBasktItemCore');
 }
+
 
 </script>
 

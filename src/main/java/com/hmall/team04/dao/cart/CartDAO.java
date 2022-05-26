@@ -13,5 +13,7 @@ public interface CartDAO {
 
 	void updatePrdCartQty(CartDTO cartDTO) throws SQLException;
 
+	void InsertPrdCart(CartDTO cartDTO) throws SQLException;
+
 
 }

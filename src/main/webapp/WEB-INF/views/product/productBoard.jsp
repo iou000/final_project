@@ -2,6 +2,7 @@
 	language="java"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
@@ -235,7 +236,7 @@
 
 					<button class="btn btn-linelgray large btn-like" onclick="goChioceProcess('','019472','','2140365970', event);">
 						<i class="icon"></i>
-						<span class="count">35</span>
+						<span class="count">?</span>
 					</button>
 
 					<input type="hidden" name="buyYn" value="Y">
@@ -278,15 +279,15 @@
 				<ul class="nav-tabs ui-spynav" role="tablist"
 					style="margin-top: -1px; width: 1081px;">
 					<!--class="ui-active"시 현재페이지 보여줌-->
-					<li role="presentation" class="ui-active"><a
-						href="#viewPage01" class="gp_className" ga-category="상품상세"
-						ga-action="탭" ga-label="상세설명"><span>상세설명</span></a></li>
-					<li role="presentation"><a href="#viewPage02"
-						class="gp_className" ga-category="상품상세" ga-action="탭"
-						ga-label="기본정보"><span>배송/교환/반품</span></a></li>
-					<li role="presentation"><a href="#viewPage03"
-						class="gp_className" ga-category="상품상세" ga-action="탭"
-						ga-label="상품평"><span>상품평<em>2</em></span></a></li>
+					<li role="presentation" class="ui-active">
+					<a href="#viewPage01" class="gp_className" ga-category="상품상세" ga-action="탭" ga-label="상세설명"><span>상세설명</span></a>
+					</li>
+					<li role="presentation" class="ui-active">
+					<a href="#viewPage02" class="gp_className" ga-category="상품상세" ga-action="탭" ga-label="기본정보"><span>배송/교환/반품</span></a>
+					</li>
+					<li role="presentation" class="ui-active">
+					<a href="#viewPage03" class="gp_className" ga-category="상품상세" ga-action="탭" ga-label="상품평"><span>상품평</span></a>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -297,7 +298,6 @@
 				<div class="view_cont">
 					<div class="mt25" style="overflow: hidden" id="guidance">
 						<table width="100%" summary="제품설명입니다">
-							<caption>제품설명</caption>
 							<colgroup>
 								<col width="">
 							</colgroup>
@@ -307,18 +307,20 @@
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach items="${fn:split(productboadDTO.content,',')}" var="subcontent">
 								<tr>
 									<td>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>&nbsp;</p>
 										<p>
-											<img src="${productboadDTO.upload_path }">
+											<img src="${subcontent }">
 										</p>
 										<p>&nbsp;</p>
 
 									</td>
 								</tr>
+							</c:forEach>
 							</tbody>
 						</table>
 					</div>
@@ -401,92 +403,88 @@
 				<div class="content-area txt-review" id="reviewContentArea">
 
 					<h3>
-						상품평 <em class="total-num">2</em>건 
-						<a href="javascript://"
-							onclick="openItemQNAPopupNew('2140365970')"
-							class="btn btn-lineblack small gp_className"><span>상품평
-								달기</span></a>
+						상품평 <em class="total-num">?</em>건 
+						<a href="javascript://" onclick="openItemQNAPopupNew('2140365970')" class="btn btn-lineblack small gp_className"><span>상품평 달기</span></a>
 					</h3>
 
 					<!--review-list-->
 					<ul class="txt-review-list">
-<c:forEach items="${reviewList}" var="dto">
-						<li class="review-item">
+						<c:forEach items="${reviewList}" var="dto">
+							<li class="review-item">
 
-							<div class="review-top">
-								<div class="top-left">
-									<div class="starbg pt10">
-										<p class="score">
-											<span class="hiding">${dto.star }</span>
-										</p>
+								<div class="review-top">
+									<div class="top-left">
+										<div class="starbg pt10">
+											<p class="score">
+												<span class="hiding">${dto.star }</span>
+											</p>
+										</div>
+										<span class="nick">${dto.user_id }</span>
+
 									</div>
-									<span class="nick">${dto.user_id }</span>
-
-								</div>
-								<div class="top-right">
-									<span class="date"><fmt:formatDate value="${dto.ins_dt}" type="date" /></span>
-								</div>
-							</div> <!--review-option-->
-							<div class="review-option"></div> <!--//review-option--> <!-- pdwrap -->
-
-							<div class="pdwrap photo-review">
-								<div class="pdlist-wrap" id="review48122177441531">
-
-									<!-- Weanplayer file id -->
-									<!-- Weanplayer instance id -->
-									<!-- Weanplayer path -->
-
-									<div class="pdthumb">
-										<a href="javascript:;">
-
-											<div class="thumb">
-												<img
-													src="//media.hmall.com/hmall/co/editor/20220521/16/m_web_upload2140365970@20220521_165604977.jpg"
-													onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_100x100.jpg')"
-													alt="">
-											</div>
-
-
-										</a>
+									<div class="top-right">
+										<span class="date"><fmt:formatDate
+												value="${dto.ins_dt}" type="date" /></span>
 									</div>
+								</div> <!--review-option-->
+								<div class="review-option"></div> <!--//review-option--> <!-- pdwrap -->
 
-									<div class="pdthumb">
-										<a href="javascript:;">
+								<div class="pdwrap photo-review">
+									<div class="pdlist-wrap" id="review48122177441531">
 
-											<div class="thumb">
-												<img
-													src="//media.hmall.com/hmall/co/editor/20220521/16/m_web_upload2140365970@20220521_165616226.jpg"
-													onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_100x100.jpg')"
-													alt="">
-											</div>
+										<!-- Weanplayer file id -->
+										<!-- Weanplayer instance id -->
+										<!-- Weanplayer path -->
+
+										<div class="pdthumb">
+											<a href="javascript:;">
+
+												<div class="thumb">
+													<img
+														src="//media.hmall.com/hmall/co/editor/20220521/16/m_web_upload2140365970@20220521_165604977.jpg"
+														onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_100x100.jpg')"
+														alt="">
+												</div>
 
 
-										</a>
+											</a>
+										</div>
+
+										<div class="pdthumb">
+											<a href="javascript:;">
+
+												<div class="thumb">
+													<img
+														src="//media.hmall.com/hmall/co/editor/20220521/16/m_web_upload2140365970@20220521_165616226.jpg"
+														onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_100x100.jpg')"
+														alt="">
+												</div>
+
+
+											</a>
+										</div>
+
+										<div class="pdthumb">
+											<a href="javascript:;">
+
+												<div class="thumb">
+													<img
+														src="//media.hmall.com/hmall/co/editor/20220521/16/m_web_upload2140365970@20220521_165609722.jpg"
+														onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_100x100.jpg')"
+														alt="">
+												</div>
+
+
+											</a>
+										</div>
+
 									</div>
-
-									<div class="pdthumb">
-										<a href="javascript:;">
-
-											<div class="thumb">
-												<img
-													src="//media.hmall.com/hmall/co/editor/20220521/16/m_web_upload2140365970@20220521_165609722.jpg"
-													onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_100x100.jpg')"
-													alt="">
-											</div>
-
-
-										</a>
-									</div>
-
-								</div>
-							</div> <!-- 동영상 --> <!-- 동영상 --> <!-- //.pdwrap --> <!--review-content-->
-							<div class="review-content">
-									<div class="review-txt">
-										${dto.content }
-									</div>
-							</div> <!--//review-content-->
-						</li>
-</c:forEach>
+								</div> <!-- 동영상 --> <!-- 동영상 --> <!-- //.pdwrap --> <!--review-content-->
+								<div class="review-content">
+									<div class="review-txt">${dto.content }</div>
+								</div> <!--//review-content-->
+							</li>
+						</c:forEach>
 					</ul>
 
 				</div>
@@ -518,6 +516,9 @@
 		var token = $("input[name='_csrf']").val();
 		var header = "X-CSRF-TOKEN";
 
+		val_prd_id=('${productboadDTO.prd_id}');
+		alert(val_prd_id);
+		
 		var targetCssHeader = ".product-option-wrap:first";
 		var cur_ordQty = $(
 				targetCssHeader
@@ -525,13 +526,15 @@
 				.val();
 
 		alert(cur_ordQty);
+
 		
 		$.ajax({
-			url : "${app}/team04/odb/basktList.do",
+			url : "${app}/team04/basktList",
 			method : "POST",
 
 			data : {
-				ordQty : cur_ordQty
+				prd_id : val_prd_id,
+				amount : cur_ordQty
 			},
 			dataType : 'json',
 			beforeSend : function(xhr) {
@@ -539,7 +542,7 @@
 			},
 			success : function(data) {
 
-				location.href = '${app}/team04/odb/basktList.do';
+				location.href = '${app}/team04/basktList';
 			}
 		});
 
@@ -563,6 +566,7 @@
 		alert(cur_ordQty);
 		
 		val_prd_board_id=$("${productboadDTO.prd_board_id }").val();
+		alert(val_prd_board_id);
 
 		$.ajax({
 			url : "${app}/team04/oda/order.do",

@@ -12,4 +12,6 @@ public interface CartService {
 
 	void updatePrdCartQty(CartDTO cartDTO) throws Exception;
 
+	void InsertPrdCart(CartDTO cartDTO)  throws Exception;
+
 }

@@ -1,6 +1,7 @@
 package com.hmall.team04.controller.cart;
 
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,15 +33,14 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
-	@RequestMapping(value = "/odb/basktList.do", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/basktList", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public HashMap<String, String> carttest(ProductBoardDTO productboardDTO, HttpServletRequest req,HttpServletResponse res) throws Exception {
+	public HashMap<String, String> carttest(CartDTO cartDTO, Principal principal) throws Exception {
 		
-		log.info(productboardDTO.toString());
-		
-		HttpSession session=req.getSession();
-		
-		session.setAttribute("productboardDTO", productboardDTO);
+		cartDTO.setUser_id(principal.getName());
+		log.info(cartDTO.toString());
+
+		cartService.InsertPrdCart(cartDTO);
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("cartSuccess", "True");
@@ -47,14 +48,19 @@ public class CartController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/odb/basktList.do", method= RequestMethod.GET)
-	public String cart(HttpServletRequest req,HttpServletResponse res, Model model) {
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/basktList", method= RequestMethod.GET)
+	public String cart(HttpServletRequest req,HttpServletResponse res, Model model, Principal principal) {
 		
 		HttpSession session=req.getSession();
 		ArrayList<CartDTO> cartList;
 		
+		log.info(session.getAttribute("id"));
+		log.info(principal.getName());
+		
 		try {
-			cartList = cartService.getCartList("1");
+			cartList = cartService.getCartList(principal.getName());
 			log.info(cartList.toString());
 			
 			model.addAttribute("cartList", cartList);
@@ -66,7 +72,7 @@ public class CartController {
 		return "cart.cart";
 	}
 	
-	@RequestMapping(value = "/odb/deletePrdCartId", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/deletePrdCartId", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public HashMap<String, String> deletePrdCartId(CartDTO cartDTO, HttpServletRequest req,HttpServletResponse res) throws Exception {
 		
@@ -80,7 +86,7 @@ public class CartController {
 		return map;
 	}	
 	
-	@RequestMapping(value = "/odb/updatePrdCartQty", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/updatePrdCartQty", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public HashMap<String, String> updatePrdCartQty(CartDTO cartDTO, HttpServletRequest req,HttpServletResponse res) throws Exception {
 		
