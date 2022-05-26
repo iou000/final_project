@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="app" value="${pageContext.request.contextPath}" />
-    
+<c:set var ="flag" value = ""/>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -26,18 +26,19 @@
             margin-bottom: 5px;
         }
 
-        dt span {
-            display: inline-block;
-            width: 5px;
-            height: 5px;
-            background-color: transparent;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
+		dt span {
+		    display: inline-block;
+		    width: 6px;
+		    height: 6px;
+		    background-color: transparent;
+		    border-radius: 7px;
+		    vertical-align: middle;
+		    margin-right: 10px;
+		}
 
-        dt.on span {
-            background-color: #666;
-        }
+		dt.on span {
+    	background-color: #6d8fe2;
+		}
 
         dd {
             background-color: #F8F8F8;
@@ -60,6 +61,19 @@
    			 border: 0;
    			 background: #3ABBD5;
 		}
+		.cus-wrap .faq-tab .faq-full li.on {
+		    border: 0;
+		    background: #6d8fe2 !important;
+		}
+		.cus-wrap .accparent {
+   		
+    		border-top: 2px solid #D3D3D3 !important;
+		}
+
+
+
+		
+		
     </style>
     <script src="//image.hmall.com/p/js/co/jquery-3.4.1.min.js"></script><!-- jQuery Plugin -->
     <script src="//image.hmall.com/p/js/co/jquery.easing.min.js"></script><!-- jQuery UI Effect -->
@@ -67,7 +81,19 @@
 
     <!-- includeScript -->
     <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/cc/customer.css">
+    
+    <!--  자주묻는 질문 버튼 색상 처리  -->
     <script type="text/javascript">
+    	
+    	$(document).ready(function(){    		
+    		var query = new URLSearchParams(location.search).get('faq_flag');
+    		if(query == "" || query == null){
+    			$('#all').addClass('on');	
+    		}else{
+    			$('#' + query).addClass('on');	
+    		} 
+		});
+
         var param = "";
         var faqLCsfCount = "0";
         jQuery(function ($) {
@@ -208,24 +234,21 @@
                     <div class="cus-wrap">
                         <div class="faq-tab">
                             <ul class="faq-full">
-                                <li><a href="${app}/cs/faq"><span>전체</span></a></li>
-                                <li><a href="${app}/cs/faq/faqView?faq_flag=U"><span>회원</span></a></li>
-                                <li><a href="${app}/cs/faq/faqView?faq_flag=P"><span>상품</span></a></li>
-                                <li><a href="${app}/cs/faq/faqView?faq_flag=O"><span>주문/결제</span></a></li>
-                                <li><a href="${app}/cs/faq/faqView?faq_flag=D"><span>배송</span></a></li>
-                                <li><a href="${app}/cs/faq/faqView?faq_flag=C"><span>취소/교환/반품</span></a></li>
-                                <li><a href="${app}/cs/faq/faqView?faq_flag=R"><span>적립금/e포인트/할인쿠폰</span></a></li>
-                                <li><a href="${app}/cs/faq/faqView?faq_flag=S"><span>사이트 이용</span></a></li>
-                                <li><a href="${app}/cs/faq/faqView?faq_flag=E"><span>기타사항</span></a></li>
+                                <li id="all"><a href="${app}/cs/faq"><span>전체</span></a></li>
+                                <li id="U"><a href="${app}/cs/faq/faqView?faq_flag=U"><span>회원</span></a></li>
+                                <li id="P"><a href="${app}/cs/faq/faqView?faq_flag=P"><span>상품</span></a></li>
+                                <li id="O"><a href="${app}/cs/faq/faqView?faq_flag=O"><span>주문/결제</span></a></li>
+                                <li id="D"><a href="${app}/cs/faq/faqView?faq_flag=D"><span>배송</span></a></li>
+                                <li id="C"><a href="${app}/cs/faq/faqView?faq_flag=C"><span>취소/교환/반품</span></a></li>
+                                <li id="R"><a href="${app}/cs/faq/faqView?faq_flag=R"><span>적립금/e포인트/할인쿠폰</span></a></li>
+                                <li id="S"><a href="${app}/cs/faq/faqView?faq_flag=S"><span>사이트 이용</span></a></li>
+                                <li id="E"><a href="${app}/cs/faq/faqView?faq_flag=E"><span>기타사항</span></a></li>
                             </ul>
                         </div>
                     </div>
                     <!-- 버튼클릭후 색상변경 처리하기  -->
                      <script type="text/javascript">
-                     	$('#li').on('click', function(){
-                     		alert("클릭");
-                    	 $(this).addClass('on');
-                    	 })
+
 					</script>
                     <!--//cus-wrap-->
 

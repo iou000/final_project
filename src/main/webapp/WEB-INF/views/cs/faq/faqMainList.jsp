@@ -67,17 +67,24 @@ dt {
 }
 
 dt span {
-	display: inline-block;
-	width: 5px;
-	height: 5px;
-	background-color: transparent;
-	vertical-align: middle;
-	margin-right: 10px;
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+    border-radius: 7px;
+    vertical-align: middle;
+    margin-right: 10px;
 }
 
-dt.on span {
-	background-color: #666;
+.cus-wrap .accparent {
+    border-top: 2px solid #D3D3D3 !important;
 }
+
+
+dt.on span {
+    background-color: #6d8fe2;
+}
+
 
 dd {
 	background-color: #F8F8F8;
