@@ -193,12 +193,11 @@
 		<!-- //.csection -->
 
 		<!-- 상품리스트에 하나라도 체크되면 활성화됨 -->
-		<div class="sticky-ui-wrapper util-option-sticky">
-			<div class="sticky-placeholder" style="height: 270px;"></div>
-			<div class="util-option sticky fixed" data-modules-sticky="padding:-40;breakPoint:.container;className:util-option-sticky;" style="top: 40px;">
-				<div class="sticky-inner">
-
-					<div class="result">
+				<div class="sticky-ui-wrapper util-option-sticky">
+				<div class="sticky-placeholder"></div>
+				<div class="util-option sticky" data-modules-sticky="padding:-40;breakPoint:.container;className:util-option-sticky;" style="">
+					<div class="sticky-inner">
+						<div class="result">
 						<p class="sel-tit">선택한 상품<span>
 							</span>
 						</p>
@@ -235,7 +234,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
+</div>
+
 	<!-- //.util-option -->
 
 </div>

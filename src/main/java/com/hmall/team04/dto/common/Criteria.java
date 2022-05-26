@@ -15,6 +15,8 @@ public class Criteria {
 	private int pageNum;
 	private int amount;
 	
+	private String prd_board_id;
+	
 	// 검색처리
 	private String type;
 	private String keyword;

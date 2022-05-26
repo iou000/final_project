@@ -3,7 +3,6 @@ package com.hmall.team04.dao.product;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,20 +22,46 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class ProductBoardDAOTests {
-	
-	@Setter(onMethod_ = @Autowired)
-	private ProductBoardDAO productboardDAO;
+public class ProductBoardReviewDAOTests {
 	
 	@Setter(onMethod_ = @Autowired)
 	private ReviewDAO reviewDAO;
 	
 	@Test
-	public void testGetProductBoardList() {
+	public void testInsertReviewProductBoard() {
+		// review_t
+		String prd_board_id="prd_board_id_tmp1";
 		
-		ArrayList<ProductBoardDTO> list;
+		String user_id="1";
+		String content="review_content_tmp3";
+		int star=2;
+		int file_yn=1;
+		
+		ReviewDTO reviewDTO = new ReviewDTO();
+		
+		reviewDTO.setPrd_board_id(prd_board_id);
+		reviewDTO.setUser_id(user_id);
+		reviewDTO.setContent(content);
+		reviewDTO.setStar(star);
+		reviewDTO.setFile_yn(file_yn);
+		
+		log.info(reviewDTO);
+		
 		try {
-			list = productboardDAO.getProductBoardList();
+			reviewDAO.enrollReview(reviewDTO);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	@Test
+	public void testGetReviewProductBoard() {
+		
+		ArrayList<ReviewDTO> list;
+		try {
+			list = reviewDAO.getReviewListBasic("prd_board_id_tmp1");
 			
 			for(int i=0;i<list.size();i++) {
 				log.info(list.get(i));
@@ -49,18 +74,19 @@ public class ProductBoardDAOTests {
 	}
 	
 	@Test
-	public void testGetProductBoard() {
+	public void getReviewList() {
+		// review_t
+		String prd_board_id="prd_board_id_tmp1";
 		
-		ProductBoardDTO productboardDTO;
+		Criteria cri = new Criteria();
+		cri.setPrd_board_id(prd_board_id);
+		
+		
 		try {
-			productboardDTO = productboardDAO.getProductBoard("prd_board_id_tmp2");
-			
-			System.out.println(productboardDTO.toString());
+			reviewDAO.getReviewList(cri);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
-
 }

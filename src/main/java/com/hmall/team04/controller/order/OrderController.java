@@ -23,7 +23,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 public class OrderController {
 
-	@RequestMapping(value = "/oda/order.do", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/order", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public HashMap<String, String> ordertest(OrderDTO orderDTO, HttpServletRequest req,HttpServletResponse res) throws Exception {
 		
@@ -40,7 +40,7 @@ public class OrderController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/oda/order.do", method= RequestMethod.GET)
+	@RequestMapping(value = "/order", method= RequestMethod.GET)
 	public String order(OrderDTO orderDTO, HttpServletRequest req,HttpServletResponse res,Model model) {
 		
 		HttpSession session=req.getSession();

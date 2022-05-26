@@ -403,15 +403,21 @@
 				<div class="content-area txt-review" id="reviewContentArea">
 
 					<h3>
-						상품평 <em class="total-num">?</em>건 
-						<a href="javascript://" onclick="openItemQNAPopupNew('2140365970')" class="btn btn-lineblack small gp_className"><span>상품평 달기</span></a>
+						상품평 <em class="total-num">?</em>건
+						<c:if test="${1==1 }">
+						<div style="float: right;">
+							<button ga-category="상품상세" ga-action="상품평" ga-label="상품평 쓰기" class="btn btn-lineblack small itemEvalRegBtn gp_className">
+							<span><i class="icon review"></i>상품평 쓰기</span></button>
+						</div>
+						</c:if>
 					</h3>
 
 					<!--review-list-->
+					<h1>hi, ${productboadDTO.prd_board_id }</h1>
+
 					<ul class="txt-review-list">
 						<c:forEach items="${reviewList}" var="dto">
 							<li class="review-item">
-
 								<div class="review-top">
 									<div class="top-left">
 										<div class="starbg pt10">
@@ -464,20 +470,6 @@
 											</a>
 										</div>
 
-										<div class="pdthumb">
-											<a href="javascript:;">
-
-												<div class="thumb">
-													<img
-														src="//media.hmall.com/hmall/co/editor/20220521/16/m_web_upload2140365970@20220521_165609722.jpg"
-														onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_100x100.jpg')"
-														alt="">
-												</div>
-
-
-											</a>
-										</div>
-
 									</div>
 								</div> <!-- 동영상 --> <!-- 동영상 --> <!-- //.pdwrap --> <!--review-content-->
 								<div class="review-content">
@@ -486,6 +478,8 @@
 							</li>
 						</c:forEach>
 					</ul>
+					<h1>hi2</h1>
+					<!--//review-list-->
 
 				</div>
 				<!--//content-area // 상품평텍스트-->
@@ -511,11 +505,37 @@
 
 
 <script>
+/*
+ * 상품평 쓰기 버튼
+ */
+$('.itemEvalRegBtn').on("click",function(e) {
+	e.preventDefault();
+	
+	//alert('hi');
+
+	//const bookId = '${goodsInfo.bookId}';
+	const prd_board_id = '${productboadDTO.prd_board_id}';
+	//const memberId = '${member.memberId}';
+	const memberId = '1';
+
+	//let popUrl = "/replyEnroll/" + memberId + "?bookId=" + bookId;
+	let popUrl = "${app}/team04/reviewEnroll/" + memberId+ "?prd_board_id=" + prd_board_id;
+	console.log(popUrl);
+	let popOption = "width = 490px, height=490px, top=300px, left=300px, scrollbars=yes";
+	
+	window.open(popUrl,"리뷰 쓰기",popOption);
+});
+
+</script>
+
+<script>
 	// 장바구니
 	function addCartCore(obj) {
 		var token = $("input[name='_csrf']").val();
 		var header = "X-CSRF-TOKEN";
-
+		
+		alert('장바구니에 담겼습니다.');
+		
 		val_prd_id=('${productboadDTO.prd_id}');
 		alert(val_prd_id);
 		
@@ -541,8 +561,8 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(data) {
-
-				location.href = '${app}/team04/basktList';
+				// 모달창으로 전환 예정
+				//location.href = '${app}/team04/basktList';
 			}
 		});
 
@@ -569,7 +589,7 @@
 		alert(val_prd_board_id);
 
 		$.ajax({
-			url : "${app}/team04/oda/order.do",
+			url : "${app}/team04/order",
 			method : "POST",
 
 			data : {
@@ -582,7 +602,7 @@
 			},
 			success : function(data) {
 
-				location.href = '${app}/team04/oda/order.do';
+				location.href = '${app}/team04/order';
 			}
 		});
 
@@ -671,5 +691,4 @@
         calcSellPrcCore(obj);
     }
 </script>
-
 
