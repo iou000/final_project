@@ -24,25 +24,6 @@ public class ProductDAOTests {
 	@Setter(onMethod_ = @Autowired)
 	private CategoryDAO categoryDAO;
 	
-	@Test
-	public void testGetCategoryList() {
-		
-		ArrayList<CategoryDTO> list;
-		try {
-			list = categoryDAO.getCategoryList();
-			
-			for(int i=0;i<list.size();i++) {
-				log.info(list.get(i));
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-				
-//		log.info(vo);
-//		vo.getAuthList().forEach(authVO -> log.info(authVO));
-		
-	}
+
 	
 }

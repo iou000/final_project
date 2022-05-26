@@ -28,4 +28,11 @@
 		where prd_cart_id=#{prd_cart_id}
 	</update>
 
+	<!-- insert Article -->
+	<insert id="InsertPrdCart" parameterType="CartDTO">
+		insert into
+		prd_cart_t(prd_cart_id, user_id, prd_id, amount)
+		values(prd_cart_t_prd_cart_id_seq.nextval,#{user_id},#{prd_id},#{amount})
+	</insert>
+
 </mapper>

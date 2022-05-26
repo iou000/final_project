@@ -51,7 +51,7 @@ public class ProductBoardDAOTests {
 		
 		ProductBoardDTO productboardDTO;
 		try {
-			productboardDTO = productboardDAO.getProductBoard("prd_board_id_tmp1");
+			productboardDTO = productboardDAO.getProductBoard("prd_board_id_tmp2");
 			
 			System.out.println(productboardDTO.toString());
 			
