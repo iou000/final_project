@@ -30,8 +30,6 @@
 		type='hidden' name='selectListSize' id='selectListSize' value="" /> <input
 		type='hidden' name='pageType' id='pageType' value="ALL" />
 </form>
-<div class="contents">
-	<div class="mypage-order-wrap">
 
 		<h3 class="title22">주문/배송 현황</h3>
 		<div class="order-step">

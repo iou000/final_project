@@ -27,9 +27,9 @@ public class LikeServiceImpl implements LikeService {
 	}
 
 	@Override
-	public int likeIsExist(String user_id) throws Exception {
+	public int likeIsExist(LikeDTO likeDTO) throws Exception {
 		// TODO Auto-generated method stub
-		return likeDAO.likeIsExist(user_id);
+		return likeDAO.likeIsExist(likeDTO);
 	}
 
 	@Override
