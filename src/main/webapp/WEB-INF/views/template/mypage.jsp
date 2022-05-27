@@ -6,8 +6,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	   
 	</head>
-
 	<body>
 		<tiles:insertAttribute name="header" />
 		<main class="cmain mypage" role="main" id="mainContents"><!-- 마이페이지 'mypage' 클래스 추가 -->
