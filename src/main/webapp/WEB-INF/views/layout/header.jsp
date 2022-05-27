@@ -230,7 +230,7 @@ function LoginPopup(){
                         <span>장바구니</span>
                     </a>
                 </li>
-                <li><a class="mypage" href="javascript:bizSpringTag('https://www.hmall.com/p/mpf/selectMyPageMain.do','^헤더^마이페이지 레이어^마이페이지');"><span>마이페이지</span></a></li>
+                <li><a class="mypage" href="${app}/mypage/mymain"><span>마이페이지</span></a></li>
                 <li>
                     <a href="javascript:;" class="recently" id="recentlyImg" onclick="openRecentShopping(); return false;">
                         <span>최근본쇼핑</span>
