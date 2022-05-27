@@ -224,6 +224,8 @@
 /* UI-Modal Popup Layer */
 .ui-modal-open {overflow:hidden;}
 .ui-modal-open .ui-modal{overflow:hidden;}
+.modal-open {overflow:hidden;}
+.modal-open .modal{overflow:hidden;}
 /* ui-modal */
 /* ui-modal 기본 width 값 540 , 다른 width 값일 경우 클래스 주어서 width 값 조절하기 */
 .ui-modal{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1000;display:none;overflow:auto;-webkit-overflow-scrolling:touch;outline:0;padding:20px;text-align:center;}
@@ -284,13 +286,20 @@
 .ui-modal.in .ui-modal-dialog{opacity:1;}
 .ui-modal.fade .ui-modal-dialog{transition:opacity .3s ease-out;}
 /* .ui-modal.full .ui-modal-dialog{width:100%;height:100%;} */
-.ui-modal::before{content: "";display:inline-block;vertical-align:middle;height:100%;}
+.ui-modal::before{content: ""; display:inline-block;vertical-align:middle;height:100%;}
 .ui-modal-open .modal{overflow-x:hidden;overflow-y:auto;}
 .ui-modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll;}
 /* ui-modal dim */
 .ui-modal-backdrop{position:fixed;top:0;right:0;bottom:0;left:0;z-index:900;background-color:#000;}
 .ui-modal-backdrop.in{filter:alpha(opacity=70);opacity:.7;}
 .ui-modal-backdrop.fade.in{filter:alpha(opacity=70);opacity:.7;}
+.modal-backdrop.in{height:0;}
+
+.modal-backdrop{position:fixed;top:0;right:0;bottom:0;left:0;z-index:900;background-color:#000;}
+.modal-backdrop.in{filter:alpha(opacity=70);opacity:.7;}
+.modal-backdrop.fade.in{filter:alpha(opacity=70);opacity:.7;}
+.modal-backdrop.in{height:0;}
+
 
 .ui-modal-dialog .btngroup{display:flex;}
 .ui-modal-dialog .btngroup{justify-content:space-between;margin-top:30px;}
