@@ -1,6 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
+<c:set var="app" value="${pageContext.request.contextPath}" />
 
 <main class="cmain main" role="main" id="mainContents">
 	<!-- 메인페이지 'main' 클래스 추가 -->
@@ -11,46 +12,44 @@
 
 
 					<div class="order-content">
-					
 						<!-- 상품정보 -->
 						<h3 class="title22 selected only">
 							<button data-modules-collapse="" class="accordion-trigger"
 								aria-expanded="false">
-								상품정보 <span class="num" id="ordItemCnt">1</span><i class="icon"></i>
+								상품정보 <span class="num" id="ordItemCnt"></span><i class="icon"></i>
 							</button>
 						</h3>
-
+						<c:forEach items="${orderInfo}" var="order">
 						<div class="accordion-panel selected" role="region" aria-label="">
 							<div class="order-list" id="orderItems">
 								<ul>
 
-									<li name="orderItem"><input type="hidden" name="slitmNm"
-										value="[2022년/7형] LG 이동식 에어컨 (PQ07DCWDS)"> 
-										<a href="http://www.hmall.com/p/pda/itemPtc.do?slitmCd=2140365970&amp;sectId=2731250" target="_blank">
+									<li name="orderItem">
+									<input type="hidden" name="slitmNm" value="${order.prd_board_id }"> 
+										<a href="#" target="_blank">
 										<span class="img">
-										<img src="https://image.hmall.com/static/9/5/36/40/2140365970_0.jpg?RS=140x140&amp;AR=0" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=140x140&amp;AR=0')">
+										<img src="#" onerror="#">
 										</span>
 										
 											<div class="box">
-												<span class="tit">${orderInfo.prd_board_id }</span>
+												<span class="tit">${order.prd_board_id }</span>
 												<div class="info">
 													<ul>
 
-														<li>${orderInfo.ordQty }개<input type="hidden" name="ordQty" value="1"
+														<li>${order.ordQty }개<input type="hidden" name="ordQty" value="1"
 															readonly="readonly"></li>
 													</ul>
 												</div>
 
 
-
-												<span class="price"><strong>879,000</strong>원</span>
-
+												<span class="price"><strong></strong>원</span>
 											</div>
 									</a></li>
 
 								</ul>
 							</div>
 						</div>
+						</c:forEach>
 						<!-- //상품정보 -->
 						
 						<div class="sticky-ui-wrapper util-option-sticky"><div class="sticky-placeholder" style=""></div><div class="util-option sticky" data-modules-sticky="padding:-40;breakPoint:.container;className:util-option-sticky;" style="">
@@ -127,40 +126,3 @@
 		<!-- //.container -->
 	</div>
 </main>
-
-<script>
-// 바로구매
-function buyProduct(obj){
-	var token = $("input[name='_csrf']").val();
-	var header = "X-CSRF-TOKEN";
-	
-    var targetCssHeader = ".product-option-wrap:first";
-    var cur_ordQty = $(
-            targetCssHeader + " .select-product-list .pditem input[name='ordQty']"
-        ).val();
-
-    alert(cur_ordQty);
-    
-	
-	$.ajax({
-		url : "${app}/team04/oda/order.do",
-		method : "POST",
-		
-		data : {
-			ordQty : cur_ordQty
-		},
-		dataType:'json',
-		beforeSend : function(xhr) { xhr.setRequestHeader(header, token); },
-		success : function(data) {
-			
-			location.href = '${app}/team04/oda/order.do';
-		}
-	});
-
-	
-	alert('hi2');
-	
-
-}
-
-</script>
