@@ -64,9 +64,12 @@ public class LikeDAOTests {
 	@Test
 	public void testlikeIsExist() {
 		
-		int cnt=0;
+		LikeDTO likeDTO = new LikeDTO();
+		likeDTO.setPrd_board_id("prd_board_id_tmp1");
+		likeDTO.setUser_id("1");
+		
 		try {
-			cnt=likeDAO.likeIsExist("1");
+			int cnt=likeDAO.likeIsExist(likeDTO);
 			log.info(cnt);
 		} catch (SQLException e) {
 			e.printStackTrace();

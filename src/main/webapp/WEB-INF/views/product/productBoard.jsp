@@ -504,13 +504,14 @@
 	<!-- .// product-detail-content -->
 </div>
 
+
 <script>
 $(document).ready(function() {
 	// 좋아요 누른 기록 존재 체크
 	var val_likeIsExist=${likeIsExist };
 	//alert(val_likeIsExist);
 	
-	if (val_likeIsExist){
+	if (val_likeIsExist > 0){
 		$(".btn-like").addClass("on");
 	} else{
 		
@@ -660,7 +661,7 @@ function goChioceProcessCore(prd_board_id) {
 </script>
 
 <script>
-	// 바로구매
+	// 바로구매 from 상품상세 to 주문결제
 	function buyProductCore(obj) {
 		var token = $("input[name='_csrf']").val();
 		var header = "X-CSRF-TOKEN";
@@ -672,24 +673,36 @@ function goChioceProcessCore(prd_board_id) {
 				.val();
 
 		alert(cur_ordQty);
-		
-		val_prd_board_id=$("${productboadDTO.prd_board_id }").val();
+		val_prd_board_id="${productboadDTO.prd_board_id }";
 		alert(val_prd_board_id);
 
+		val_prd_id=('${productboadDTO.prd_id}');
+		alert(val_prd_id);
+		
+		var orderList = [];
+		var order = [val_prd_board_id, val_prd_id, cur_ordQty];
+		orderList.push(order);
+		
+		for(var i=0; i<orderList.length;i++){
+			console.log(orderList[i]);
+		}
+		
 		$.ajax({
 			url : "${app}/order",
 			method : "POST",
-
+			traditional: true,	// ajax 배열 넘기기 옵션!
 			data : {
-				ordQty : cur_ordQty,
-				prd_board_id : val_prd_board_id
+				orderList : orderList
 			},
 			dataType : 'json',
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(data) {
-				location.href = '${app}/order';
+				if(data.orderSuccess=='True'){
+					alert('your choice is order and let us go order page');
+					location.href = '${app}/order';
+				}
 			}
 		});
 

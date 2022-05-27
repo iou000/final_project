@@ -70,12 +70,11 @@
 												<div class="cart-check">
 													<div class="checkbox">
 														<label class="chklabel">
-														<input type="checkbox" class="individual_cart_checkbox input_size_20" value='${cart.prd_cart_id }' name="chk">
-															<i class="icon"></i><strong>${cart.prd_board_id }</strong>
+														<input type="checkbox" class="individual_cart_checkbox input_size_20" value='${cart.prd_board_id }' name="chk">
+															<i class="icon"></i><span>${cart.prd_board_id }</span>
 														</label>
 													</div>
-													<button type="button" class="btn btn-cart-del"
-														onclick="deleteBasktCore('${cart.prd_cart_id }','0');">
+													<button type="button" class="btn btn-cart-del" onclick="deleteBasktCore('${cart.prd_cart_id }','0');">
 														<i class="icon cart-del"></i><span class="hiding">삭제</span>
 													</button>
 												</div> 
@@ -85,6 +84,10 @@
 												<input type="hidden" class="individual_totalPrice_input" value="${cart.prd_price * cart.amount}">
 												<input type="hidden" class="individual_point_input" value="${ci.point}"> 
 												<input type="hidden" class="individual_totalPoint_input" value="${ci.totalPoint}">
+
+												<input type="hidden" class="individual_prd_board_id" value="${cart.prd_board_id }">
+												<input type="hidden" class="individual_prd_id" value="${cart.prd_id }">
+												<input type="hidden" class="individual_amount" value="${cart.amount}">
 												
 												<div class="pdwrap pdlist ml">
 
@@ -220,13 +223,11 @@
 					<div class="total-price">
 						<a href="javascript:;" class="btn-total"><span>총 주문 금액</span></a>
 						<ins>
-							<em id="selOrdAmt">353,160</em><b>원</b>
+							<em id="selOrdAmt">0</em><b>원</b>
 						</ins>
 					</div>
 					<div class="btngroup">
-						<button type="button" class="btn btn-default"
-							onclick="setGiftOrder('N');buyDirect(this);"
-							id="buyDirectBtn_2139567673">
+						<button type="button" class="btn btn-default" onclick="buyProductAllCore(this);">
 							<span>전체바로구매</span>
 						</button>
 					</div>
@@ -575,7 +576,7 @@ function changeBasktItemCore(obj,prd_cart_id) {
 </script>
 
 <script>
-	// 바로구매 from 장바구니 to 주문 결제
+	// 바로구매 from 장바구니 to 주문결제
 	function buyProductCore(obj, prd_board_id, prd_id) {
 		var token = $("input[name='_csrf']").val();
 		var header = "X-CSRF-TOKEN";
@@ -591,14 +592,20 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		
 		alert(prd_id);
 		
+		var orderList = [];
+		var order = [prd_board_id, prd_id,val_target_childObj];
+		orderList.push(order);
+		
+		for(var i=0; i<orderList.length;i++){
+			console.log(orderList[i]);
+		}
+		
 		$.ajax({
 			url : "${app}/order",
 			method : "POST",
-
+			traditional: true,	// ajax 배열 넘기기 옵션!
 			data : {
-				ordQty : val_target_childObj,
-				prd_board_id : prd_board_id,
-				prd_id : prd_id
+				orderList : orderList
 			},
 			dataType : 'json',
 			beforeSend : function(xhr) {
@@ -613,6 +620,60 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		});
 
 		alert('hi2');
+
+	}
+</script>
+
+<script>
+
+	// 바로구매 from 장바구니 to 주문결제
+	function buyProductAllCore(obj) {
+		var token = $("input[name='_csrf']").val();
+		var header = "X-CSRF-TOKEN";
+
+		var orderList = [];
+		
+		$(".cart_info_td").each(function(index, element){
+			
+			if($(element).find(".individual_cart_checkbox").is(":checked") === true){
+				
+				val_prd_board_id = ($(element).find(".individual_prd_board_id").val());
+				alert(val_prd_board_id);
+				val_prd_id = ($(element).find(".individual_prd_id").val());
+				alert(val_prd_id);
+				val_amount = ($(element).find(".individual_amount").val());
+				alert(val_amount);
+				
+				var order = [val_prd_board_id,val_prd_id,val_amount];
+				
+				orderList.push(order);
+			}
+		});
+		
+		for(var i=0; i<orderList.length;i++){
+			console.log(orderList[i]);
+		}
+		
+		$.ajax({
+			url : "${app}/order",
+			method : "POST",
+			traditional: true,	// ajax 배열 넘기기 옵션!
+			data : {
+				orderList : orderList
+			},
+			dataType : 'json',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+				if(data.orderSuccess=='True'){
+					alert('your choiceSSSS is order and let us go order page');
+					location.href = '${app}/order';
+				}
+			}
+		});
+
+		alert('hi3');		
 
 	}
 </script>
