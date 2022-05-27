@@ -55,67 +55,29 @@ function fn_upntPopupClose(){
     <div class="side-menu-list">
         <ul>
             <li>
-                <a href="javascript:;">주문현황</a>
+                <a href="javascript:;">나의 쇼핑내역</a>
                 <ul class="sub-list">
-	                
-	                    
-	                    
-	                        <li><a href="https://www.hmall.com/p/mpa/selectOrdDlvCrst?pageType=ALL">주문/배송현황</a></li>
-	                    
-	                
-                    <li><a href="https://www.hmall.com/p/mpa/selectOrdDlvCrst?pageType=D2">취소/반품/교환/AS현황</a></li>
-                    <li><a href="https://www.hmall.com/p/mpa/selectCashTabMainPage">영수증/세금계산서</a></li>
+	                <li><a href="https://www.hmall.com/p/mpa/selectOrdDlvCrst?pageType=ALL">주문/배송조회</a></li>
+                    <li><a href="https://www.hmall.com/p/mpa/selectOrdDlvCrst?pageType=D2">취소/교환/반품</a></li>
                 </ul>
             </li>
             <li>
-                <a href="javascript:;">쇼핑통장</a>
+                <a href="javascript:;">나의 혜택</a>
                 <ul class="sub-list">
-                    <li><a href="https://www.hmall.com/p/mpe/selectCopnList">쿠폰</a></li>
-                    <li><a href="https://www.hmall.com/p/mpe/selectUPntTabPage">포인트</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">나의 활동</a>
-                <ul class="sub-list">
-                    <li><a href="https://www.hmall.com/p/mpc/sltdItemList">찜</a></li>
-                    <li><a href="https://www.hmall.com/p/mpc/bitmAlrimList">방송알리미</a></li>
-                    <li><a href="https://www.hmall.com/p/mpe/evntEntryDtl">참여이벤트</a></li>
-                    <li><a href="https://www.hmall.com/p/mpb/selectItemEvalAtclListPagingByCondtion">나의 상품평</a></li>
+                	<li><a href="https://www.hmall.com/p/mpe/selectCopnList">적립금</a></li>
+                    <li><a href="https://www.hmall.com/p/mpe/selectCopnList">예치금</a></li>
+                    <li><a href="https://www.hmall.com/p/mpe/selectUPntTabPage">쿠폰</a></li>
                 </ul>
             </li>
             <li>
                 <a href="javascript:;">회원정보</a>
                 <ul class="sub-list">
-	                
-	                	
-	                	
-	                		<li><a href="https://www.hmall.com/p/mpd/changeMemberInfoForm">회원정보관리</a><li>
-	                	
-	                                
-                    <li><a href="https://www.hmall.com/p/mpd/selectMemberDstnAdr">배송지관리</a></li>
-                    <li><a href="javascript:;" onclick="fn_HppManage();">H.Point Pay 관리</a></li>
-                    <li><a href="https://www.hmall.com/p/mpd/selectMemberUseInfo">개인정보 이용현황</a></li>
-	                
-	                	
-	                	
-		                	<li><a href="https://www.hmall.com/p/mpd/leaveMemberForm">회원탈퇴</a></li>
-		                
-	                
+	               	<li><a href="https://www.hmall.com/p/mpd/changeMemberInfoForm">회원정보 변경</a><li>
+                    <li><a href="https://www.hmall.com/p/mpd/selectMemberDstnAdr">비밀번호 변경</a></li>
+                    <li><a href="javascript:;" onclick="fn_HppManage();">배송지 관리</a></li>
+                    <li><a href="https://www.hmall.com/p/mpd/selectMemberUseInfo">회원 탈퇴</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="javascript:;">고객센터</a>
-                <ul class="sub-list">
-                    <li><a href="https://www.hmall.com/p/ccd/selectCnslOrdReqDtl">1:1 상담</a></li>
-                    <li><a href="https://www.hmall.com/p/mpb/selectItemQNAPagingByCondition">상품 Q&A</a></li>
-                </ul>
-            </li>
-            
-			
-			    
-			    
-		    	
-			
         </ul>
     </div>
 </div>
