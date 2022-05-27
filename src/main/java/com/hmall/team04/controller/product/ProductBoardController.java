@@ -54,8 +54,15 @@ public class ProductBoardController {
 		if(principal != null) {
 			// 로그인 상태에서 Like 여부 판단
 			user_id=principal.getName();
+			
+			LikeDTO likeDTO = new LikeDTO();
+			likeDTO.setPrd_board_id(prd_board_id);
+			likeDTO.setUser_id(user_id);
+			
 			try {
-				int likeIsExist = likeService.likeIsExist(prd_board_id, user_id);
+				
+				
+				int likeIsExist = likeService.likeIsExist(likeDTO);
 				log.info(likeIsExist);
 				model.addAttribute("likeIsExist", likeIsExist);
 			} catch (Exception e) {

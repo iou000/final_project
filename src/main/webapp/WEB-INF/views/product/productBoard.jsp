@@ -504,13 +504,15 @@
 	<!-- .// product-detail-content -->
 </div>
 
+<h1>${likeIsExist }</h1>
+
 <script>
 $(document).ready(function() {
 	// 좋아요 누른 기록 존재 체크
 	var val_likeIsExist=${likeIsExist };
 	//alert(val_likeIsExist);
 	
-	if (val_likeIsExist){
+	if (val_likeIsExist > 0){
 		$(".btn-like").addClass("on");
 	} else{
 		
