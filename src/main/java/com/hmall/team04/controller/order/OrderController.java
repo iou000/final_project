@@ -27,7 +27,7 @@ public class OrderController {
 	@ResponseBody
 	public HashMap<String, String> ordertest(OrderDTO orderDTO, HttpServletRequest req,HttpServletResponse res) throws Exception {
 		
-		log.info("hi i am oda order.do");
+		log.info("hi i am oda order controller!");
 		log.info(orderDTO.toString());
 		
 		HttpSession session=req.getSession();

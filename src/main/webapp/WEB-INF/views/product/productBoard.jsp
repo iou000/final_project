@@ -504,14 +504,11 @@
 	<!-- .// product-detail-content -->
 </div>
 
-<h1>${likeIsExist }</h1>
-
-
 <script>
 $(document).ready(function() {
 	// 좋아요 누른 기록 존재 체크
 	var val_likeIsExist=${likeIsExist };
-	alert(val_likeIsExist);
+	//alert(val_likeIsExist);
 	
 	if (val_likeIsExist){
 		$(".btn-like").addClass("on");
@@ -560,9 +557,9 @@ function goChioceProcessCore(prd_board_id) {
 	var token = $("input[name='_csrf']").val();
 	var header = "X-CSRF-TOKEN";
 	
-	alert(prd_board_id);
+	//alert(prd_board_id);
 	var likeIsExist = "${likeIsExist}";
-	alert(likeIsExist);
+	//alert(likeIsExist);
 	
 	
 	if(likeIsExist==0){
@@ -579,13 +576,13 @@ function goChioceProcessCore(prd_board_id) {
 			success : function(data) {
 				alert(data.needLogin);
 				if (data.needLogin) {
-					location.href ='${app}/signUp/step3';
+					location.href ='${app}/login';
 				} else if(typeof data.data == "undefined" || data.data == null || data.data == ""){
-					alert('welcome login');
+					//alert('welcome login');
 					alert("I Also Like You!");
 					location.reload();
 					
-					alert('welcome login2');
+					//alert('welcome login2');
 				} else if(data.likeSuccess){
 					alert("원래 여기 아니니?");
 				}
@@ -652,7 +649,7 @@ function goChioceProcessCore(prd_board_id) {
 						location.href = '${app}/basktList';
 					}
 				} else{
-					location.href = '${app}/basktList';
+					location.href ='${app}/login';
 				}
 			}
 		
