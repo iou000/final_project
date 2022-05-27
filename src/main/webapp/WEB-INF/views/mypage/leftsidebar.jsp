@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="app" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 
 <script type="text/javascript">
@@ -46,19 +50,18 @@ function fn_upntPopupClose(){
     $("#pec001-01").modal().hide();
 }
 </script>
-<!--20170816 박승택 추가 -->
 <form name="upntLeftForm" method="post" target="uPnt">
     <input type="hidden" name="mcustNo" value="" />
 </form>
 <div class="side-content">
-    <h3 class="side-menu-title"><a href="https://www.hmall.com/p/mpf/selectMyPageMain">마이페이지</a></h3>
+    <h3 class="side-menu-title"><a href="${app}/mypage/mymain">마이페이지</a></h3>
     <div class="side-menu-list">
         <ul>
             <li>
                 <a href="javascript:;">나의 쇼핑내역</a>
                 <ul class="sub-list">
-	                <li><a href="https://www.hmall.com/p/mpa/selectOrdDlvCrst?pageType=ALL">주문/배송조회</a></li>
-                    <li><a href="https://www.hmall.com/p/mpa/selectOrdDlvCrst?pageType=D2">취소/교환/반품</a></li>
+	                <li><a href="${app}/mypage/odslist">주문/배송조회</a></li>
+                    <li><a href="${app}/mypage/crelist">취소/교환/반품</a></li>
                 </ul>
             </li>
             <li>
