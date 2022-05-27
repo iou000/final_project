@@ -11,8 +11,19 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/mypage")
 public class MypageController {
 	
-	@GetMapping("/mymain")
-	public String mypage() {
-		return "mypage.mymain";
+	@GetMapping("/odslist")
+	public String odslist() {
+		return "mypage.mypageODSList";
 	}
+	
+	@GetMapping("/mymain") 
+	public String mypage() {
+		return "mypage.mypageMainList";
+	}
+	
+	@GetMapping("/crelist") 
+	public String crelist() {
+		return "mypage.mypageCREList";
+	}
+	
 }
