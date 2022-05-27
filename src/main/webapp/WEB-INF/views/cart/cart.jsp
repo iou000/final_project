@@ -71,7 +71,7 @@
 													<div class="checkbox">
 														<label class="chklabel">
 														<input type="checkbox" class="individual_cart_checkbox input_size_20" value='${cart.prd_cart_id }' name="chk">
-															<i class="icon"></i><strong>${cart.prd_board_id }</strong>
+															<i class="icon"></i><span>${cart.prd_board_id }</span>
 														</label>
 													</div>
 													<button type="button" class="btn btn-cart-del"

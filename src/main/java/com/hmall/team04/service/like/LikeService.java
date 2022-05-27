@@ -8,7 +8,7 @@ public interface LikeService {
 
 	void InsertLike(LikeDTO likeDTO) throws Exception;
 
-	int likeIsExist(String user_id) throws Exception;
+	int likeIsExist(String prd_board_id, String user_id) throws Exception;
 
 	void DeleteLike(LikeDTO likeDTO) throws Exception;
 

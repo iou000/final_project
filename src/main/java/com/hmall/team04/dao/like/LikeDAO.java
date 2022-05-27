@@ -16,7 +16,7 @@ public interface LikeDAO {
 
 	void InsertLike(LikeDTO likeDTO) throws SQLException;
 
-	int likeIsExist(String user_id) throws SQLException;
+	int likeIsExist(String prd_board_id, String user_id) throws SQLException;
 
 	void DeleteLike(LikeDTO likeDTO) throws SQLException;
 	

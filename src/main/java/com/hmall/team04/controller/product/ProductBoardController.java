@@ -55,7 +55,7 @@ public class ProductBoardController {
 			// 로그인 상태에서 Like 여부 판단
 			user_id=principal.getName();
 			try {
-				int likeIsExist = likeService.likeIsExist(user_id);
+				int likeIsExist = likeService.likeIsExist(prd_board_id, user_id);
 				log.info(likeIsExist);
 				model.addAttribute("likeIsExist", likeIsExist);
 			} catch (Exception e) {
