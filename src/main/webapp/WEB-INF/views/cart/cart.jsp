@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- cbody -->
 
+<c:set var="app" value="${pageContext.request.contextPath}" />
+
 <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 	
 
@@ -167,9 +169,7 @@
 														</div>
 
 														<div class="btngroup">
-															<button type="button" class="btn btn-default"
-																onclick="setGiftOrder('N');buyDirect(this);"
-																id="buyDirectBtn_2132577147">
+															<button type="button" class="btn btn-default" onclick="buyProductCore(this,'${cart.prd_board_id }','${cart.prd_id }');" >
 																<span>바로구매</span>
 															</button>
 														</div>
@@ -240,6 +240,7 @@
 
 </div>
 <!-- //.contents -->
+</div>
 <!-- //.cbody -->
 
 <!-- cfoot -->
@@ -405,7 +406,7 @@ function deleteBasktCore(prd_cart_id,flag) {
 		
 		if(result == true){
 				$.ajax({
-					url : "${app}/team04/deletePrdCartId",
+					url : "${app}/deletePrdCartId",
 					method : "POST",
 					
 					data : {
@@ -425,7 +426,7 @@ function deleteBasktCore(prd_cart_id,flag) {
 		alert('deleteBaskt');		
 	} else {
 				$.ajax({
-					url : "${app}/team04/deletePrdCartId",
+					url : "${app}/deletePrdCartId",
 					method : "POST",
 					
 					data : {
@@ -489,7 +490,7 @@ function changeBasktItemCore(obj,prd_cart_id) {
 	var amount = Number($(target_childObj).val());
 	
 	$.ajax({
-		url : "${app}/team04/updatePrdCartQty",
+		url : "${app}/updatePrdCartQty",
 		method : "POST",
 		
 		data : {
@@ -571,4 +572,47 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		$(target_childObj).val(val_target_childObj - 1);
     }
 
+</script>
+
+<script>
+	// 바로구매 from 장바구니 to 주문 결제
+	function buyProductCore(obj, prd_board_id, prd_id) {
+		var token = $("input[name='_csrf']").val();
+		var header = "X-CSRF-TOKEN";
+
+		var childObj = $(obj).closest("td");
+		var target_childObj = $(childObj).find("input[name=ordQty]");
+		
+		var val_target_childObj = Number($(target_childObj).val());
+	
+		alert(val_target_childObj);
+		
+		alert(prd_board_id);
+		
+		alert(prd_id);
+		
+		$.ajax({
+			url : "${app}/order",
+			method : "POST",
+
+			data : {
+				ordQty : val_target_childObj,
+				prd_board_id : prd_board_id,
+				prd_id : prd_id
+			},
+			dataType : 'json',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+				if(data.orderSuccess=='True'){
+					alert('your choice is order and let us go order page');
+					location.href = '${app}/order';
+				}
+			}
+		});
+
+		alert('hi2');
+
+	}
 </script>

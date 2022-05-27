@@ -8,6 +8,8 @@
 		<div class="cbody gird-full">
 			<div class="contents">
 				<div class="order-wrap">
+
+
 					<div class="order-content">
 					
 						<!-- 상품정보 -->
@@ -30,7 +32,7 @@
 										</span>
 										
 											<div class="box">
-												<span class="tit">[2022년/7형] LG 이동식 에어컨 (PQ07DCWDS)</span>
+												<span class="tit">${orderInfo.prd_board_id }</span>
 												<div class="info">
 													<ul>
 
@@ -50,6 +52,7 @@
 							</div>
 						</div>
 						<!-- //상품정보 -->
+						
 						<div class="sticky-ui-wrapper util-option-sticky"><div class="sticky-placeholder" style=""></div><div class="util-option sticky" data-modules-sticky="padding:-40;breakPoint:.container;className:util-option-sticky;" style="">
                                 <div class="sticky-inner">
                                     <h4 class="title20">총 결제금액</h4>
@@ -111,10 +114,13 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div></div>
+                            </div>
+                            </div>
 						
 						
 					</div>
+					
+					
 				</div>
 			</div>
 		</div>

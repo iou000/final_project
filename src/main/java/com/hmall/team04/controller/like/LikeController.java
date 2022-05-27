@@ -65,42 +65,4 @@ public class LikeController {
 		
 		return map;
 	}		
-//	
-//	@PreAuthorize("isAuthenticated()")
-//	@RequestMapping(value = "/basktList", method= RequestMethod.GET)
-//	public String cart(HttpServletRequest req,HttpServletResponse res, Model model, Principal principal) {
-//		
-//		HttpSession session=req.getSession();
-//		ArrayList<CartDTO> cartList;
-//		
-//		log.info(session.getAttribute("id"));
-//		log.info(principal.getName());
-//		
-//		try {
-//			cartList = cartService.getCartList(principal.getName());
-//			log.info(cartList.toString());
-//			
-//			model.addAttribute("cartList", cartList);
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		
-//		return "cart.cart";
-//	}
-//	
-//	
-//	@RequestMapping(value = "/updatePrdCartQty", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
-//	@ResponseBody
-//	public HashMap<String, String> updatePrdCartQty(CartDTO cartDTO, HttpServletRequest req,HttpServletResponse res) throws Exception {
-//		
-//		log.info("updatePrdCartQty "+cartDTO.toString());
-//		
-//		cartService.updatePrdCartQty(cartDTO);
-//		
-//		HashMap<String,String> map = new HashMap<String,String>();
-//		map.put("update_PrdCartQty_Success", "True");
-//		
-//		return map;
-//	}
 }
