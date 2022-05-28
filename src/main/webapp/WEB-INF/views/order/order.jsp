@@ -5,6 +5,7 @@
 
 
 <main class="cmain main" role="main" id="mainContents">
+	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 	<!-- 메인페이지 'main' 클래스 추가 -->
 	<div class="container">
 		<div class="cbody gird-full">
@@ -23,7 +24,7 @@
 						</div>
 						
 						<!-- 배송지 입력 -->
-						<div id="chkStlmType" onclick="changeDstn();">
+						<div id="chkStlmType">
 							<h3 class="title22" id="dlvTitleH3">
 								<span id="dlvTypeTitle">일반배송</span> <span class="txt">배송/결제
 									정보를 정확히 입력해주세요.</span>
@@ -48,14 +49,12 @@
 						<div class="accordion-panel selected" role="region" aria-label="">
 							<div class="order-list" id="orderItems">
 								<ul>
-
 									<li name="orderItem">
 									<input type="hidden" name="slitmNm" value="${order.prd_board_id }"> 
 										<a href="#" target="_blank">
 										<span class="img">
 										<img src="#" onerror="#">
 										</span>
-										
 											<div class="box">
 												<span class="tit">${order.prd_board_id }</span>
 												<div class="info">
@@ -65,12 +64,9 @@
 															readonly="readonly"></li>
 													</ul>
 												</div>
-
-
 												<span class="price"><strong></strong>원</span>
 											</div>
 									</a></li>
-
 								</ul>
 							</div>
 						</div>
@@ -164,96 +160,22 @@
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
+                        	<!-- 배송지 목록 -->
                             <div role="tabpanel" class="tab-pane ui-active" id="addresslist">
-
-							<ul class="addresslist">
-								<li><label class="radlabel"> <input type="radio"
-										name="dstnRadio"> <i class="icon"></i> <span
-										class="hiding">text</span>
-								</label>
-									<div class="info">
-										<p class="name">김지현</p>
-										<p class="add">(06768) 서울특별시 서초구 양재대로2길 34(우면동, 엘에이치서초3단지)
-											304동 2001호</p>
-										<p class="tel">010-9741-4062</p>
-									</div>
-									<div class="btngroup abs">
-										<button class="btn btn-linelgray small30"
-											onclick="modifyAddr(this, 1, &quot;toMod&quot;);">
-											<span>수정</span>
-										</button>
-										<button class="btn btn-linelgray small30"
-											onclick="modifyAddr(this, 1, &quot;delete&quot;);">
-											<span>삭제</span>
-										</button>
-									</div>
-									<input type="hidden" name="custNo" value="202205415238"><input
-									type="hidden" name="dstnSeq" value="0000000002"><input
-									type="hidden" name="rcvCustNm" value="김지현"><input
-									type="hidden" name="dstnNknm" value="김지현"><input
-									type="hidden" name="dstnTela" value=""><input
-									type="hidden" name="dstnTels" value=""><input
-									type="hidden" name="dstnTeli" value=""><input
-									type="hidden" name="dstnExtsTel" value="null"><input
-									type="hidden" name="dstnHpIdntNo" value="010"><input
-									type="hidden" name="dstnHpIntmNo" value="9741"><input
-									type="hidden" name="dstnHpBckNo" value="4062"><input
-									type="hidden" name="adrKndGbcd" value="2"><input
-									type="hidden" name="dstnPostNo" value="06768"><input
-									type="hidden" name="dstnBaseAdr"
-									value="서울특별시 서초구  양재대로2길 34(우면동, 엘에이치서초3단지)"><input
-									type="hidden" name="dstnPtcAdr" value="304동 2001호"><input
-									type="hidden" name="baseYn" value="N"><input
-									type="hidden" name="rmpMemo" value="null"><input
-									type="hidden" name="apocGbcd" value="10"><input
-									type="hidden" name="reUseYn" value="N"></li>
-								<li><label class="radlabel"> <input type="radio"
-										name="dstnRadio"> <i class="icon"></i> <span
-										class="hiding">text</span>
-								</label>
-									<div class="info">
-										<p class="name">김경섭</p>
-										<p class="add">(07038) 서울특별시 동작구 양녕로22마길 6(상도동, 상도세인트빌 E동)
-											301호</p>
-										<p class="tel">010-2792-5361</p>
-									</div>
-									<div class="btngroup abs">
-										<button class="btn btn-linelgray small30"
-											onclick="modifyAddr(this, 1, &quot;toMod&quot;);">
-											<span>수정</span>
-										</button>
-										<button class="btn btn-linelgray small30"
-											onclick="modifyAddr(this, 1, &quot;delete&quot;);">
-											<span>삭제</span>
-										</button>
-									</div>
-									<input type="hidden" name="custNo" value="202205415238"><input
-									type="hidden" name="dstnSeq" value="0000000001"><input
-									type="hidden" name="rcvCustNm" value="김경섭"><input
-									type="hidden" name="dstnNknm" value="김경섭"><input
-									type="hidden" name="dstnTela" value=""><input
-									type="hidden" name="dstnTels" value=""><input
-									type="hidden" name="dstnTeli" value=""><input
-									type="hidden" name="dstnExtsTel" value="null"><input
-									type="hidden" name="dstnHpIdntNo" value="010"><input
-									type="hidden" name="dstnHpIntmNo" value="2792"><input
-									type="hidden" name="dstnHpBckNo" value="5361"><input
-									type="hidden" name="adrKndGbcd" value="2"><input
-									type="hidden" name="dstnPostNo" value="07038"><input
-									type="hidden" name="dstnBaseAdr"
-									value="서울특별시 동작구  양녕로22마길 6(상도동, 상도세인트빌 E동)"><input
-									type="hidden" name="dstnPtcAdr" value="301호"><input
-									type="hidden" name="baseYn" value="N"><input
-									type="hidden" name="rmpMemo" value="null"><input
-									type="hidden" name="apocGbcd" value="10"><input
-									type="hidden" name="reUseYn" value="N"></li>
-							</ul>
-							<!-- 배송지 선택 확인 -->
-							<div class="btngroup">
-                                    <button type="button" class="btn btn-default" onclick="selectDstnAddr();"><span>확인</span></button>
+                                <div class="nodata">
+                                	<span class="bgcircle"><i class="icon nodata-type15"></i></span>
+                                	<p>지정된 배송지가 없습니다.</p>
+                                </div>
+                                
+                                <div class="btngroup">
+                                    <button type="button" class="btn btn-default" onclick="selectDstnAddr();">
+                                    	<span>확인</span>
+                                    </button>
                                     <!-- 데이터 전송 후 클릭시 $(element).modal().hide() -->
                                 </div>
                             </div>
+                            
+                            <!-- 배송지 추가/수정 -->
                             <div role="tabpanel" class="tab-pane" id="addressadd">
                                 <div class="inputbox">
                                     <input type="hidden" name="" value="" id="adrKndGbcd">
@@ -262,7 +184,6 @@
                                     <label class="inplabel"><input type="text" onblur="nameChk(this);" name="" value="" placeholder="받으실 분" id="selectedRcvrNm" maxlength="25"></label>
                                     <button class="btn ico-clearabled"><i class="icon"></i><span class="hiding">지우기</span></button>
                                 </div>
-
                                 <div class="inputbox">
                                     <input type="hidden" name="" value="" id="selectedPost">
                                     <input type="hidden" name="" value="" id="selectedJibunAddr">
@@ -270,7 +191,6 @@
                                     <button type="button" class="btn btn-lineblack btn-confirm" onclick="openSearchAddr();"><span>우편번호 찾기</span></button>
                                     <button class="btn ico-clearabled"><i class="icon"></i><span class="hiding">지우기</span></button>
                                 </div>
-
                                 <div class="inputbox">
                                     <label class="inplabel"><input type="text" name="" value="" placeholder="상세 주소를 입력해주세요." id="selectedDetailAddr" maxlength="100"></label>
                                     <button class="btn ico-clearabled"><i class="icon"></i><span class="hiding">지우기</span></button>
@@ -288,6 +208,7 @@
                                     <i class="icon"></i>
                                     <span>기본배송지로 지정</span>
                                 </label>
+                                
                                 <div class="btngroup">
                                     <button class="btn btn-linelgray" onclick="$('#pec003').modal().hide();"><span>취소</span></button>
                                     <button class="btn btn-default" onclick="modifyAddr('', $(this).parent().parent().find('#dlvType').val(), '');"><span>확인</span></button>
@@ -310,13 +231,113 @@
 
 <script>
 function changeDstn() {
-   
-	//모달 열기
-    $('#pec003').modal("show");
-    // ul, 기본배송지 없는경우 싹 지워줌
+	var token = $("input[name='_csrf']").val();
+	var header = "X-CSRF-TOKEN";
+	
+    // 배송지 목록 싹 지워줌 (배송지가 없는경우, 있는경우 둘 다 지움.)
+    $('#addresslist ul').remove(); //배송지가 있는 경우에도 지워줌
+    $('#addresslist div.nodata').remove(); //배송지가 없는 경우에도 지워줌
+    
     // 유저가 가지고있는 배송지 정보 요청
-    // 가지고 있는 배송지가 없다면 기본배송지가 없다고 해줌(화면)
-    // 있다면 데이터 뿌려줌
+	$.ajax({
+		method : "get",
+		url : "${app}/deliever/selectDelieverList",
+		dataType:"json",
+		contentType: "application/json",
+		success : function(data) {
+			
+			console.log(data);
+			var addrHtml = "";
+			
+			if (data.length == 0) {
+				addrHtml += "<div class='nodata'>";
+                addrHtml += "<span class='bgcircle'><i class='icon nodata-type15'></i></span>";
+                addrHtml += "<p>지정된 배송지가 없습니다.</p>";
+                addrHtml += "</div>";
+			}else {
+				addrHtml += "<ul class='addresslist'>";
+				for (var i=0; i< data.length; i++) {
+					addrHtml += "<li>";
+					addrHtml += "    <label class='radlabel'>";
+                    addrHtml += "        <input type='radio' name='dstnRadio'" + ((data[i].active_yn == "1") ? " checked " : "" ) +" >"; //기본배송지면 checked
+                    addrHtml += "        <i class='icon'></i>";
+                    addrHtml += "        <span class='hiding'>text</span>";
+                    addrHtml += "    </label>";
+                    
+                    addrHtml += "    <div class='info'>";
+                    addrHtml += "        <p class='name'>"+data[i].receiver_nm;
+                    if ( data[i].active_yn == "1" ) { //기본 배송지일 경우 추가
+                        addrHtml += " <span class='tag red'>기본 배송지</span>";
+                    }
+                    addrHtml += "</p>";
+                    addrHtml += "        <p class='add'>("+data[i].address_f+") "+data[i].address_l+"</p>";
+                    addrHtml += "        <p class='tel'>"+data[i].deliever_hp_no+"</p>";
+                    addrHtml += "    </div>"; // end info
+                    
+                    addrHtml += "    <div class='btngroup abs'>";
+                    addrHtml += "        <button class='btn btn-linelgray small30' onclick='modifyAddr(this, \"toMod\");'><span>수정</span></button>";
+                    if ( data[i].active_yn != "1" ) {
+                        addrHtml += "        <button class='btn btn-linelgray small30' onclick='modifyAddr(this, \"delete\");'><span>삭제</span></button>";
+                    }
+                    addrHtml += "    </div>"; //end btngroup abs
+                    
+                    addrHtml += "<input type='hidden' name='user_id' value='"+data[i].user_id+"'/>";
+                    addrHtml += "<input type='hidden' name='deliever_id' value='"+data[i].deliever_id+"'/>";
+                    addrHtml += "<input type='hidden' name='receiver_nm' value='"+data[i].receiver_nm+"'/>";
+                    addrHtml += "<input type='hidden' name='deliever_hp_no' value='"+data[i].deliever_hp_no+"'/>";
+                    addrHtml += "<input type='hidden' name='address_f' value='"+data[i].address_f+"'/>";
+                    addrHtml += "<input type='hidden' name='address_l' value='"+data[i].address_l+"'/>";
+                    addrHtml += "<input type='hidden' name='active_yn' value='"+data[i].active_yn+"'/>";
+                    
+                    addrHtml += "</li>";
+				} //end for
+				
+				addrHtml += "</ul>";
+				
+			} // end if
+			
+			$('#addresslist .btngroup').before(addrHtml); // .before() 선택한 요소 앞에 새 요소를 추가 또는 다른 곳에 있는 요소를 이동시킴
+			$("#pec003 li[role=presentation]").eq(0).addClass("ui-active"); // .eq() : 선택한 요소의 인덱스 번호에 해당하는 요소를 찾음(없으면 null 반환)
+            $("#pec003 div[role=tabpanel]").eq(0).addClass("ui-active"); // 처음에 배송지 목록 ui를 active 해줌.
+            $("#pec003 li[role=presentation]").eq(1).removeClass("ui-active");
+            $("#pec003 div[role=tabpanel]").eq(1).removeClass("ui-active");
+            
+            $('#pec003').modal("show");
+			
+		} //end success
+		,
+		error : function(error) {
+			console.log(error);
+		}
+		
+		
+	});
+	
+	
+    
+    // 가지고 있는 배송지가 없다면 기본배송지가 없다고 해줌(div.nodata)
+    // 있다면 배송지 데이터 뿌려줌 (ul)
+    
+ 	// 배송지에서 수정버튼을 누르면
+    // 배송지 추가/수정 addClass("ui-active") 해줌
+    // hidden input에 있는 데이터를 배송지 추가/수정탭의 input에 넣어줌
+    
+    
+    //배송지에서 삭제버튼을 누르면
+    // modifiyAddr에 삭제파라미터 넣어서 서버에 보냄
+    // 성공시 배송지목록에 데이터 바꿔줌.
+    
+	// 배송지 등록, 배송지 추가/수정을 누르면 인풋 클리어
+    // 배송지 추가/수정에서 취소버튼 누를시 모달을 닫음
+    // 확인버튼 누를시 modifyAddr 입력데이터 검사후 서버에 배송지 데이터를 보내줌 파라미터로 (추가/수정/삭제) 넣어서 보내줌.
+    // 서버에서 처리한 후 배송지 목록 화면에 뿌려줌
+    
+    
+    // 배송지 목록에서 확인버튼 누르면 selectDstnAddr
+  	
+    
+    
+    
     
     
 }
@@ -341,18 +362,22 @@ function buyProduct(obj){
     
 	
 	$.ajax({
+		
+		method : "POST",
 		url : "${app}/team04/oda/order.do",
 		method : "POST",
-		
 		data : {
 			ordQty : cur_ordQty
 		},
 		dataType:'json',
-		beforeSend : function(xhr) { xhr.setRequestHeader(header, token); },
+		beforeSend : function(xhr) { 
+			xhr.setRequestHeader(header, token); 
+		},
 		success : function(data) {
 			
 			location.href = '${app}/team04/oda/order.do';
 		}
+		
 	});
 
 	
