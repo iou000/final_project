@@ -106,11 +106,6 @@
             openPopup("/p/mpa/selectOrdDstnPup.do?ordNo=" + ordNo + "&dstnSeq=" + dstnSeq + "", "selectOrdDstnPup", 820, 930, "yes", $(window).width(), $(window).height());
         }
 
-        //재결제 팝업
-        function openRePaymentPup(ordNo) {
-            openPopup("/p/mpa/selectReOrderPup.do?ordNo=" + ordNo + "", "popupOpenRePayment", 836, 685, "yes", $(window).width(), $(window).height());
-        }
-
         function openDlvTrcUrlPup(ordNo, ordPtcSeq) {
             window.open("/p/mpa/selectDlvTrcUrl.do?ordNo=" + ordNo + "&ordPtcSeq=" + ordPtcSeq + "", "openDlvTrcUrlPup", "toolbar=no, menubar=no, width=510, height=680, scrollbars=yes, resizable=yes");
         }
@@ -153,44 +148,6 @@
             window.location.href = "https://www.hmall.com/p/mpe/selectUPntTabPage.do";
         }
 
-
-        //1:1 상담
-        function openCnslAcptPup(ordNo, ordPtcSeq, gubun) {
-            var url;
-            if (isLogin() == 'true') {
-                if (gubun == "rtp") {
-                    if (confirm("해당 상품은 제품 특성상 즉시 반품신청이 불가합니다.\n1:1 상담신청으로 이동하시겠습니까?")) {
-                        url = "/p/ccd/selectCnslAcptPup.do?ordNo=" + ordNo + "&ordPtcSeq=" + ordPtcSeq + "&claimDiv=return";
-                    } else {
-                        return;
-                    }
-                } else if (gubun == "rtp7") {
-                    if (confirm("구매 후 7일이 경과한 경우 반품신청이 불가합니다.\n1:1 상담신청으로 이동하시겠습니까?")) {
-                        url = "/p/ccd/selectCnslAcptPup.do?ordNo=" + ordNo + "&ordPtcSeq=" + ordPtcSeq + "&claimDiv=return";
-                    } else {
-                        return;
-                    }
-                } else if (gubun == "exch") {
-                    if (confirm("해당 상품은 제품 특성상 즉시 교환신청이 불가합니다.\n1:1 상담신청으로 이동하시겠습니까?")) {
-                        url = "/p/ccd/selectCnslAcptPup.do?ordNo=" + ordNo + "&ordPtcSeq=" + ordPtcSeq + "&claimDiv=change";
-                    } else {
-                        return;
-                    }
-                } else if (gubun == "cncl") {
-                    if (confirm("해당 상품은 제품 특성상 즉시 취소신청이 불가합니다.\n1:1 상담신청으로 이동하시겠습니까?")) {
-                        url = "/p/ccd/selectCnslAcptPup.do?ordNo=" + ordNo + "&ordPtcSeq=" + ordPtcSeq + "&claimDiv=cancle";
-                    } else {
-                        return;
-                    }
-                }
-                var popName = "selectCnslAcptPup";
-                var popOption = "height=660, width=650, fullscreen=no, location=no, scrollbars=yes, menubar=no, toolbar=no, titlebar=no, directories=no, resizable=no";
-                window.open(url, popName, popOption);
-            } else {
-                openLoginPopup();
-            }
-        }
-
         function changeApply(ordNo, ordPtcSeq, claimDiv) {
             if (confirm("교환은 1:1 상담신청을 통해 신청 가능합니다.\n1:1 상담신청으로 이동합니다.")) {
                 location.href = "/p/ccd/selectCnslAcptPup.do?ordNo=" + ordNo + "&ordPtcSeq=" + ordPtcSeq + "&claimDiv=change";
@@ -201,13 +158,6 @@
             var gaLabel = "'" + gaMktg3 + "'";
             GA_Event('마이페이지', '개인화 배너', gaLabel);
             location.href = gaMktgUrl;
-        }
-
-        //엄지펀딩 상품의 경우 주문상태가 접수,결제완료상태가 지난경우 주문취소가 안됨
-        function openOrdMakeItemCncl(ordNo, ordPtcSeq) {
-            if (alert("엄지펀딩 상품의 경우 펀딩종료 후 주문 취소가 불가합니다. \n자세한 내용은 고객센터로 문의바랍니다.")) {
-                window.open("/p/mpa/selectOrdCnclRtpExchAsReqPup.do?ordNo=" + ordNo + "&ordPtcSeq=" + ordPtcSeq + "", "openOrdMakeItemCncl", "toolbar=no, menubar=no, width=820, height=685, scrollbars=yes, resizable=yes");
-            }
         }
 
         //교환접수
@@ -242,17 +192,8 @@
             window.open(url, "_blank");
         }
         _TRK_PI_ = "MYPAGE";
-
-
-
-        // 분할결제 2차결제 팝업 호출
-        function openSplitPayPup(ordNo) {
-            openPopup("/p/mpa/selectSplitPay.do?ordNo=" + ordNo + "", "selectSplitPayPup", 948, 818, "yes", $(window).width(), $(window).height());
-        }
     </script>
 </head>
-
-
                 <!-- 
                     * 회원등급 지정 클래스
                         - TOP CLASS 등급 : topclass-lv
@@ -263,7 +204,7 @@
                     -->
                 <div class="myinfo-area silver-lv">
                     <div>
-                        <p class="myname"><a href="/p/mpd/changeMemberInfoForm.do" class="btn-link"><em>배지현님</em></a>
+                        <p class="myname"><a href="/p/mpd/changeMemberInfoForm.do" class="btn-link"><em>${usernm}</em></a>
                         </p>
                         <div class="rating">
                             <span class="silver-lv"><i class="icon"></i><em>실버</em></span>
@@ -277,21 +218,21 @@
                     <ul class="infowrap">
                         <li>
                             <a href="/p/mpe/selectCopnList.do">
-                                <span class="link"><b>0</b>장</span>
+                                <span class="link"><b>${coupon_cnt}</b>장</span>
                                 <span class="txt">보유 쿠폰</span>
                             </a>
                         </li>
                         <li>
                             <a href="javascript://" onclick="doSearchUPntMainPop()">
                                 <span class="link">
-                                    <b>1000</b>P</span>
+                                    <b>${reserves}</b>P</span>
                                 <span class="txt">적립금</span>
                             </a>
                         </li>
                         <li>
                             <a href="javascript://" onclick="doSearchUPntMainPop()">
                                 <span class="link">
-                                    <b>1</b>P</span>
+                                    <b>${balances}</b>원</span>
                                 <span class="txt">예치금</span>
                             </a>
                         </li>

@@ -168,8 +168,8 @@ public class CSController {
 		}
 		catch(Exception e ) {
 			model.addAttribute("msg","list 출력 에러");
-			model.addAttribute("url","index"); 
-			return "result";
+			model.addAttribute("url","/cs/main"); 
+			return "redirect";
 		}
 	}
 }

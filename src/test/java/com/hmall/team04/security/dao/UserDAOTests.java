@@ -9,6 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hmall.team04.dao.balance.BalanceDAO;
+import com.hmall.team04.dao.coupon.CouponDAO;
+import com.hmall.team04.dao.reserve.ReserveDAO;
 import com.hmall.team04.dao.user.UserDAO;
 import com.hmall.team04.dto.user.UserDTO;
 
@@ -23,12 +26,24 @@ import lombok.extern.log4j.Log4j;
 public class UserDAOTests {
 	
 	@Setter(onMethod_ = @Autowired)
+	
 	private UserDAO userDAO;
+	
+	@Setter(onMethod_ = @Autowired)
+	private CouponDAO couponDAO;
+	
+	@Setter(onMethod_ = @Autowired)
+	private ReserveDAO reserveDAO;
+	
+	@Setter(onMethod_ = @Autowired)
+	private BalanceDAO balanceDAO;
+	
 	@Autowired
     BCryptPasswordEncoder passwordEncoder;
 	
 	
 	@Test
+	@Ignore
 	public void testEncodePwd() {
 		String rawPassword = "12345678!A";                //인코딩 전 메서드
         String encdoePassword1;                        // 인코딩된 메서드
@@ -59,5 +74,18 @@ public class UserDAOTests {
 		vo.getAuthList().forEach(authVO -> log.info(authVO));
 		
 	}
+	
+	@Test
+	public void testID() {
+		try {
+		
+			log.info(balanceDAO.getBalancebyUserId("1"));
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 }

@@ -38,8 +38,8 @@ public class FaqController {
 			return "cs.faq.faqList"; 
 		} catch (Exception e) {
 			model.addAttribute("msg", "list 출력 에러");
-			model.addAttribute("url", "index");
-			return "cs.index";
+			model.addAttribute("url", "/cs/main"); 
+			return "redirect";
 		}
 		
 	}
@@ -53,8 +53,8 @@ public class FaqController {
 			return "cs.faq.faqList"; 
 		} catch (Exception e) {
 			model.addAttribute("msg", "list 출력 에러");
-			model.addAttribute("url", "index");
-			return "cs.index";
+			model.addAttribute("url", "/cs/main");
+			return "redirect";
 		}
 		
 	}
