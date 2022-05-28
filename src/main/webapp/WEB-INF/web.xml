@@ -54,7 +54,7 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+<!-- 
 	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/error/404error.jsp</location>
@@ -78,5 +78,5 @@
 	<error-page>
 		<error-code>405</error-code>
 		<location>/WEB-INF/views/error/error.jsp</location>
-	</error-page>
+	</error-page> -->	
 </web-app>

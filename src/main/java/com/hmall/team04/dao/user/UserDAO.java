@@ -11,4 +11,5 @@ public interface UserDAO {
 
 	public int findPwd(@Param("user_id") String id, @Param("email") String email, @Param("hp_no") String pno) throws Exception;
 	
+	public String getUserNamebyUserId(String userid) throws Exception;
 }

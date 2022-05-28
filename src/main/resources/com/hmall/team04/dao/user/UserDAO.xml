@@ -53,4 +53,11 @@
 		WHERE user_id = #{user_id} and email = #{email} and hp_no = #{hp_no}
 	</select>
 	
+	<select id="getUserNamebyUserId" resultType = "String">
+		select 
+			user_nm
+			from user_t
+			where user_id = #{userid}
+	</select> 
+	
 </mapper>

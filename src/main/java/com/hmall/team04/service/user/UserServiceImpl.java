@@ -35,4 +35,9 @@ public class UserServiceImpl implements UserService {
 		return userDAO.findPwd(id, email, pno);
 	}
 
+	@Override
+	public String getUserNamebyUserId(String userid) throws Exception {
+			return userDAO.getUserNamebyUserId(userid);
+	}
+
 }

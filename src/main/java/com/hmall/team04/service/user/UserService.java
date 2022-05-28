@@ -6,5 +6,6 @@ public interface UserService {
 	UserDTO findIdbyNameEmail(String usernm, String email) throws Exception;
 
 	int findPwd(String id, String email, String pno) throws Exception;
-	
+
+	String getUserNamebyUserId(String userid) throws Exception;	
 }
