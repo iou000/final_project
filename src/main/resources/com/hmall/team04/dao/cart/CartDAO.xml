@@ -7,7 +7,7 @@
 	
 	<select id="getCartList" parameterType="String"  resultType="CartDTO">
 		select pct.prd_cart_id, pct.user_id, pct.prd_id, pct.cart_amount,
-		pt.prd_nm, pt.amount, pt.prd_board_id, pt.option1, pt.option2,
+		pt.prd_nm, pt.prd_price,pt.amount, pt.prd_board_id, pt.option1, pt.option2,
 		ft.upload_path
 		from prd_cart_t pct
 		left join prd_t pt on (pct.prd_id=pt.prd_id)
