@@ -70,7 +70,7 @@
 												<div class="cart-check">
 													<div class="checkbox">
 														<label class="chklabel">
-														<input type="checkbox" class="individual_cart_checkbox input_size_20" value='${cart.prd_board_id }' name="chk">
+														<input type="checkbox" class="individual_cart_checkbox input_size_20" value='${cart.prd_cart_id }' name="chk">
 															<i class="icon"></i><span>${cart.prd_board_id }</span>
 														</label>
 													</div>
@@ -87,7 +87,8 @@
 
 												<input type="hidden" class="individual_prd_board_id" value="${cart.prd_board_id }">
 												<input type="hidden" class="individual_prd_id" value="${cart.prd_id }">
-												<input type="hidden" class="individual_amount" value="${cart.amount}">
+												<input type="hidden" class="individual_cart_amount" value="${cart.cart_amount }">
+												
 												
 												<div class="pdwrap pdlist ml">
 
@@ -122,7 +123,8 @@
 																		<div class="pdoption" aria-label="옵션/수량">
 																			<span class="option">옵션1: <em>${cart.option1 }</em></span>
 																			<span class="option">옵션2: <em>${cart.option2 }</em></span>
-																			<span class="count">수량: <em>${cart.amount }</em></span>
+																			<span class="count">수량: <em>${cart.cart_amount }</em></span>
+																			<span class="count">재고량: <em>${cart.amount }</em></span>
 																		</div>
 
 																	</a>
@@ -145,11 +147,10 @@
 																				<i class="icon"></i> <span class="hiding">감소</span>
 																			</button>
 																			<div class="inputbox">
-																				<label class="inplabel"> <input
-																					type="number" name="ordQty" maxlength="2"
-																					value="${cart.amount }"
-																					onkeyup="uCheckOrdQty(this,'99', '0')"
-																					title="입력하세요">
+																				<label class="inplabel">
+																				<input type="number" name="ordQty" maxlength="2" value="${cart.cart_amount }" onkeyup="uCheckOrdQty(this,'99', '0')" title="입력하세요">
+																				<!-- 상품별 재고량 -->
+																				<input type="hidden" name="leftQty" value="${cart.amount}">
 																				</label>
 																			</div>
 																			<button type="button" class="btn btn-plus"
@@ -426,6 +427,7 @@ function deleteBasktCore(prd_cart_id,flag) {
 		
 		alert('deleteBaskt');		
 	} else {
+		alert('deleteBaskt one start');
 				$.ajax({
 					url : "${app}/deletePrdCartId",
 					method : "POST",
@@ -443,7 +445,7 @@ function deleteBasktCore(prd_cart_id,flag) {
 					}
 				})
 		
-		alert('deleteBaskt one');	
+		alert('deleteBaskt one end');	
 	}
 
 }
@@ -458,7 +460,7 @@ function deleteAllBasktCore(prd_cart_id) {
 	  	$("input:checkbox[name=chk]:checked").each(function() {
 	  	  //checkBoxArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
 	  	  //console.log(checkBoxArr);
-
+	  	  alert($(this).val());
 	  	  deleteBasktCore($(this).val(),'1');
 	  	})
 	  	location.reload();
@@ -487,8 +489,17 @@ function changeBasktItemCore(obj,prd_cart_id) {
 	
 	var childObj = $(obj).closest("td");
 	var target_childObj = $(childObj).find("input[name=ordQty]");
+	var target_childObj2 = $(childObj).find("input[name=leftQty]");
 	
-	var amount = Number($(target_childObj).val());
+	var change_amount = Number($(target_childObj).val());
+	var target_leftQty = Number($(target_childObj2).val());
+	alert(change_amount);
+	alert(target_leftQty);
+	
+	if(change_amount>target_leftQty){
+		alert('재고량보다 많이 주문할 수 없습니다!');
+		return
+	}
 	
 	$.ajax({
 		url : "${app}/updatePrdCartQty",
@@ -496,7 +507,7 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		
 		data : {
 			prd_cart_id : prd_cart_id,
-			amount : amount
+			cart_amount : change_amount
 		},
 		
 		dataType : "json",
@@ -641,7 +652,7 @@ function changeBasktItemCore(obj,prd_cart_id) {
 				alert(val_prd_board_id);
 				val_prd_id = ($(element).find(".individual_prd_id").val());
 				alert(val_prd_id);
-				val_amount = ($(element).find(".individual_amount").val());
+				val_amount = ($(element).find(".individual_cart_amount").val());
 				alert(val_amount);
 				
 				var order = [val_prd_board_id,val_prd_id,val_amount];

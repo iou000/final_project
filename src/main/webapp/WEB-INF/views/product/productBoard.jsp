@@ -635,7 +635,7 @@ function goChioceProcessCore(prd_board_id) {
 			method : "POST",
 			data : {
 				prd_id : val_prd_id,
-				amount : cur_ordQty
+				cart_amount : cur_ordQty
 			},
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
