@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hmall.team04.dao.product.ProductBoardDAO;
 import com.hmall.team04.dao.review.ReviewDAO;
 import com.hmall.team04.dto.cart.CartDTO;
+import com.hmall.team04.dto.order.OrderCompleteDTO;
 import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.dto.product.ProductBoardDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
@@ -29,11 +30,11 @@ public class OrderDAOTests {
 	private OrderDAO orderDAO;
 	
 	@Test
-	public void testGetCartList() {
+	public void testGetOrderCompleteList() {
 		
-		ArrayList<OrderDTO> list;
+		ArrayList<OrderCompleteDTO> list;
 		try {
-			list = orderDAO.getOrderList("1");
+			list = orderDAO.getOrderCompleteList("1");
 			
 			for(int i=0;i<list.size();i++) {
 				log.info(list.get(i));
@@ -42,7 +43,20 @@ public class OrderDAOTests {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testGetPrdPayment() {
 		
+		OrderCompleteDTO ordercompleteDTO;
+		try {
+			ordercompleteDTO = orderDAO.getPrdPayment("1");
+			
+			log.info(ordercompleteDTO);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

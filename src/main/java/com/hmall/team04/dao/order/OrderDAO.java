@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 import com.hmall.team04.dto.cart.CartDTO;
 import com.hmall.team04.dto.category.CategoryDTO;
+import com.hmall.team04.dto.order.OrderCompleteDTO;
 import com.hmall.team04.dto.order.OrderDTO;
 
 public interface OrderDAO {
-	ArrayList<OrderDTO> getOrderList(String user_id) throws SQLException;
+	ArrayList<OrderCompleteDTO> getOrderCompleteList(String user_id) throws SQLException;
 
+	OrderCompleteDTO getPrdPayment(String user_id) throws SQLException;
 
 
 }
