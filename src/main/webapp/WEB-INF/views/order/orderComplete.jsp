@@ -308,7 +308,7 @@ function requestPay() {
 	IMP.request_pay({
 	    pg : 'html5_inicis',
 	    pay_method : 'vbank',
-	    merchant_uid: "order_no_0001", // 상점에서 관리하는 주문 번호를 전달
+	    merchant_uid: "merchant_" + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
 	    name : '주문명:결제테스트',
 	    amount : 14000,
 	    buyer_email : 'iamport@siot.do',
@@ -355,17 +355,16 @@ function requestPay() {
 		결제 수단 
 	</h3>
 	
-	<button onclick="requestPay()">결제하기</button>
-	<input type="button" id="naverPayBtn" value="네이버페이 결제 버튼">
+	<button onclick="requestPay()">결제 테스트 버튼</button>
 	
 	<div class="payment-way-box" id="payTypeHpp">
 		<ul>
 
-			<!-- 다른 결제수단 -->
-			<li class="payment-group"><input id="payment-type-3"
-				class="payment-title" type="radio" name="payment-type" value="3">
-				<label for="payment-type-3" class="payment-label"> <i
-					class="icon"></i> <span>결제수단</span>
+			<!-- 결제수단 -->
+			<li class="payment-group">
+			<input id="payment-type-3" class="payment-title" type="radio" name="payment-type" value="3">
+				<label for="payment-type-3" class="payment-label">
+				<i class="icon"></i><span>결제수단</span>
 			</label>
 			
 				<div class="payment-content">
@@ -375,29 +374,17 @@ function requestPay() {
 							<span> 
 							<input type="radio" name="payType" id="payType2" value="20"  onclick="requestKcpPay();">
 								<label for="payType2" class="sm50">
-										<!-- add. 0511 - 신용카드 분할결제 토스트 문구 (PRJS-140) --> <!-- // add. 0511 - 신용카드 분할결제 토스트 문구 (PRJS-140)-->
 										<span class="text">무통장입금</span>
 								</label>
 							</span>
 							<!-- // 무통장 입금 -->
 							
-							<!-- Kakao Pay -->
-							<span>
-							<input type="radio" name="payType" id="payType5" value="97" checked="checked" onclick="requestKakaoPay();">
-							<label for="payType5" class="sm50"> 
-									<span class="text">카카오페이</span>
-							</label>
-
-							</span>
-							<!-- //Kakao Pay -->
-
-
-
 						</div>
 
 					</div>
 
-				</div></li>
+				</div>
+			</li>
 		</ul>
 	</div>
 	

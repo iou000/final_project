@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hmall.team04.dao.order.OrderDAO">
+
+	<select id="getOrderList" parameterType="String" resultType="OrderDTO">
+		select pot.prd_order_id,pot.user_id, podt.prd_id
+		from prd_order_t pot
+		left join prd_orderdetail_t podt on (pot.prd_order_id=podt.prd_order_id)
+		where pot.user_id=#{user_id}
+	</select>
+
+</mapper>

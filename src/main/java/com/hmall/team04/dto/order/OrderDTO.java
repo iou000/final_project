@@ -4,6 +4,11 @@ import lombok.Data;
 
 @Data
 public class OrderDTO {
+	// prd_order_t
+	private String prd_order_id;
+	private String user_id;
+	
+	// prd_orderdetail_t
 	private long ordQty;
 	
 	private String prd_board_id;
