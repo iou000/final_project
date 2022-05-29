@@ -308,7 +308,7 @@ function requestPay() {
 	IMP.request_pay({
 	    pg : 'html5_inicis',
 	    pay_method : 'vbank',
-	    merchant_uid: "order_no_0001", // 상점에서 관리하는 주문 번호를 전달
+	    merchant_uid: "merchant_" + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
 	    name : '주문명:결제테스트',
 	    amount : 14000,
 	    buyer_email : 'iamport@siot.do',
@@ -355,17 +355,16 @@ function requestPay() {
 		결제 수단 
 	</h3>
 	
-	<button onclick="requestPay()">결제하기</button>
-	<input type="button" id="naverPayBtn" value="네이버페이 결제 버튼">
+	<button onclick="requestPay()">결제 테스트 버튼</button>
 	
 	<div class="payment-way-box" id="payTypeHpp">
 		<ul>
 
-			<!-- 다른 결제수단 -->
-			<li class="payment-group"><input id="payment-type-3"
-				class="payment-title" type="radio" name="payment-type" value="3">
-				<label for="payment-type-3" class="payment-label"> <i
-					class="icon"></i> <span>결제수단</span>
+			<!-- 결제수단 -->
+			<li class="payment-group">
+			<input id="payment-type-3" class="payment-title" type="radio" name="payment-type" value="3">
+				<label for="payment-type-3" class="payment-label">
+				<i class="icon"></i><span>결제수단</span>
 			</label>
 			
 				<div class="payment-content">
@@ -375,29 +374,17 @@ function requestPay() {
 							<span> 
 							<input type="radio" name="payType" id="payType2" value="20"  onclick="requestKcpPay();">
 								<label for="payType2" class="sm50">
-										<!-- add. 0511 - 신용카드 분할결제 토스트 문구 (PRJS-140) --> <!-- // add. 0511 - 신용카드 분할결제 토스트 문구 (PRJS-140)-->
 										<span class="text">무통장입금</span>
 								</label>
 							</span>
 							<!-- // 무통장 입금 -->
 							
-							<!-- Kakao Pay -->
-							<span>
-							<input type="radio" name="payType" id="payType5" value="97" checked="checked" onclick="requestKakaoPay();">
-							<label for="payType5" class="sm50"> 
-									<span class="text">카카오페이</span>
-							</label>
-
-							</span>
-							<!-- //Kakao Pay -->
-
-
-
 						</div>
 
 					</div>
 
-				</div></li>
+				</div>
+			</li>
 		</ul>
 	</div>
 	
@@ -411,32 +398,23 @@ function requestPay() {
 		<span class="bgcircle check-on-sm"><i class="icon check-on"></i></span>
 		<p class="tit">주문이 완료되었습니다.</p>
 		<p class="txt">
-			(주문번호 : <em>20220527310517</em>)
+			(주문번호 : <em>${prd_order_id }</em>)
 		</p>
 		<div class="btngroup">
-			<button class="btn btn-default medium"
-				onclick="goPage('/p/mpa/selectOrdDlvCrst.do');">
+			<button class="btn btn-default medium" onclick="goPage('/p/mpa/selectOrdDlvCrst.do');">
 				<span>주문 확인&amp;변경</span>
 			</button>
 		</div>
 	</div>
 
-
-
-
-
-
-
 	<h3 class="title22">상품/배송 정보</h3>
-
-
 
 	<div class="order-info-box">
 		<ul class="list">
 			<li>
 				<div class="tit-wrap">주문상품</div>
 				<div class="txt-wrap">
-					<p class="txt">올뉴살롱 22cm 냄비+프라이팬 2P 실속 패키지</p>
+					<p class="txt">${prd_id }</p>
 				</div>
 			</li>
 
@@ -445,66 +423,15 @@ function requestPay() {
 				<div class="tit-wrap">배송지</div>
 				<div class="txt-wrap">
 					<ul class="user-info">
-						<li>나 자신</li>
-						<li>010-8936-2145</li>
+						<li>${user_id }</li>
+						<li>${hp_no }</li>
 					</ul>
-					<p class="txt">서울특별시 강서구 강서로 17(화곡동 903-3) 우리집</p>
+					<p class="txt">${address_dest }</p>
 				</div>
 			</li>
 
 		</ul>
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-	<div class="order-info-box">
-		<div class="line-box">
-			<p class="tit2">김정휴 고객님</p>
-
-
-
-
-
-			<p class="txt2">
-				5월 Hmall에서 <span class="color-ff5340">1건 &amp; 0원 </span> 이상 추가 구매시,
-				<span class="gold-lvtxt">6월 GOLD</span> 등급으로 승급됩니다!
-			</p>
-
-
-
-
-
-
-
-			<button class="btn atext"
-				onclick="location.href='/pevent/eva/evntFamilyZoneMain.do'">
-				<span>등급 혜택 자세히 보기</span><i class="arrow right"></i>
-			</button>
-		</div>
-	</div>
-
-
-
-
-	<h3 class="title22 hidden" id="rcmm1_title">LEVEL UP! 추천상품</h3>
-	<div class="pdlist-wrap col5 hidden" id="rcmm1_list"></div>
-
-	<!-- 오에라 적립 -->
-
-	<!-- //오에라 적립 -->
-
-
-
-
-
 
 	<h3 class="title22">결제 정보</h3>
 	<div class="order-info-box">
@@ -521,7 +448,7 @@ function requestPay() {
 					<th scope="row">주문 금액</th>
 					<td>
 						<p class="price">
-							<strong>89,000</strong>원
+							<strong> ${ordercompleteDTO.pmt_amount } </strong>원
 						</p>
 					</td>
 					<td></td>
@@ -533,30 +460,11 @@ function requestPay() {
 
 					<td>
 						<p class="price">
-							<strong> 89,000 </strong>원
+							<strong> ${ordercompleteDTO.pmt_amount } </strong>원
 						</p>
 					</td>
 					<td>
-
-
-
-
-
-
-
 						<p class="txt">(무통장입금)</p>
-						<button class="btn btn-linelgray small25"
-							onclick="openStlmWayChgPup('20220527310517');">
-							<span>결제수단 변경</span>
-						</button>
-
-
-
-
-
-
-
-
 					</td>
 				</tr>
 
@@ -576,247 +484,7 @@ function requestPay() {
 				수 있습니다.</li>
 		</ul>
 
-
 	</div>
-
-
-
-
-
-
-
-
-
-	<div class="order-bg-white">
-		<h4 class="title20" id="rcmm2_title">구매하신 상품과 연관된 추천상품</h4>
-		<div class="pdlist-wrap col5" id="rcmm2_list">
-
-
-
-
-
-
-
-
-
-
-
-			<ul>
-
-
-
-				<li class="pdthumb"><a
-					href="/p/pda/itemPtc.do?slitmCd=2139082607&amp;bdTrkArea=25&amp;bdTrkAlgrth=1&amp;bdTrkOpt=A"
-					onclick="gaTagging(this, '', '', '');" class="item-box"
-					ga-custom-name="주문완료" ga-custom-position="구매하신 상품과 연관된 추천상품"
-					ga-custom-title="주문/장바구니>주문완료" ga-custom-etc="urlAction"
-					ga-custom-id="2139082607_[런칭가 89900원]J BY 22SS 여성 실크린넨 후디 니트 풀오버"
-					ga-custom-creative="BDA_bdTrkArea=25&amp;bdTrkAlgrth=1_자동">
-						<div class="thumb">
-							<img
-								src="https://image.hmall.com/static/6/2/08/39/2139082607_0.jpg?RS=300x300&amp;AR=0"
-								alt="[런칭가 89900원]J BY 22SS 여성 실크린넨 후디 니트 풀오버"
-								onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
-						</div>
-						<div class="figcaption">
-							<div class="pdname"
-								aria-label="[런칭가 89900원]J BY 22SS 여성 실크린넨 후디 니트 풀오버">[런칭가
-								89900원]J BY 22SS 여성 실크린넨 후디 니트 풀오버</div>
-							<div class="pdprice">
-								<span class="rateprice" aria-label="할인율이 적용된 가격">
-									<p class="discount" aria-label="할인가">
-										<em>69,900</em>원
-									</p>
-								</span>
-							</div>
-
-						</div>
-				</a> <a
-					href="/p/pda/itemPtc.do?slitmCd=2139082607&amp;sectId=&amp;bdTrkArea=25&amp;bdTrkAlgrth=1&amp;bdTrkOpt=A"
-					class="hoverview" target="_blank"
-					onclick="gaTagging(this, '', '', '');" ga-custom-name="주문완료"
-					ga-custom-position="구매하신 상품과 연관된 추천상품"
-					ga-custom-title="주문/장바구니>주문완료" ga-custom-etc="urlAction"
-					ga-custom-id="2139082607_[런칭가 89900원]J BY 22SS 여성 실크린넨 후디 니트 풀오버"
-					customgacreative="2139082607_[런칭가 89900원]J BY 22SS 여성 실크린넨 후디 니트 풀오버"
-					ga-custom-creative="BDA_bdTrkArea=25&amp;bdTrkAlgrth=1_자동"><i
-						class="icon"></i>새창열기</a> <!--// 새창열기 a태그로 변경 후 위치이동 --></li>
-
-
-
-
-
-				<li class="pdthumb"><a
-					href="/p/pda/itemPtc.do?slitmCd=2135588737&amp;bdTrkArea=25&amp;bdTrkAlgrth=1&amp;bdTrkOpt=A"
-					onclick="gaTagging(this, '', '', '');" class="item-box"
-					ga-custom-name="주문완료" ga-custom-position="구매하신 상품과 연관된 추천상품"
-					ga-custom-title="주문/장바구니>주문완료" ga-custom-etc="urlAction"
-					ga-custom-id="2135588737_J BY SUMMER22 슬리브리스 니트탑 4종"
-					ga-custom-creative="BDA_bdTrkArea=25&amp;bdTrkAlgrth=1_자동">
-						<div class="thumb">
-							<img
-								src="https://image.hmall.com/static/7/8/58/35/2135588737_0.jpg?RS=300x300&amp;AR=0"
-								alt="J BY SUMMER22 슬리브리스 니트탑 4종"
-								onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
-						</div>
-						<div class="figcaption">
-							<div class="pdname" aria-label="J BY SUMMER22 슬리브리스 니트탑 4종">J
-								BY SUMMER22 슬리브리스 니트탑 4종</div>
-							<div class="pdprice">
-								<span class="rateprice" aria-label="할인율이 적용된 가격">
-									<p class="discount" aria-label="할인가">
-										<em>69,900</em>원
-									</p>
-								</span>
-							</div>
-
-						</div>
-				</a> <a
-					href="/p/pda/itemPtc.do?slitmCd=2135588737&amp;sectId=&amp;bdTrkArea=25&amp;bdTrkAlgrth=1&amp;bdTrkOpt=A"
-					class="hoverview" target="_blank"
-					onclick="gaTagging(this, '', '', '');" ga-custom-name="주문완료"
-					ga-custom-position="구매하신 상품과 연관된 추천상품"
-					ga-custom-title="주문/장바구니>주문완료" ga-custom-etc="urlAction"
-					ga-custom-id="2135588737_J BY SUMMER22 슬리브리스 니트탑 4종"
-					customgacreative="2135588737_J BY SUMMER22 슬리브리스 니트탑 4종"
-					ga-custom-creative="BDA_bdTrkArea=25&amp;bdTrkAlgrth=1_자동"><i
-						class="icon"></i>새창열기</a> <!--// 새창열기 a태그로 변경 후 위치이동 --></li>
-
-
-
-
-
-				<li class="pdthumb"><a
-					href="/p/pda/itemPtc.do?slitmCd=2136655970&amp;bdTrkArea=25&amp;bdTrkAlgrth=1&amp;bdTrkOpt=A"
-					onclick="gaTagging(this, '', '', '');" class="item-box"
-					ga-custom-name="주문완료" ga-custom-position="구매하신 상품과 연관된 추천상품"
-					ga-custom-title="주문/장바구니>주문완료" ga-custom-etc="urlAction"
-					ga-custom-id="2136655970_[런칭가99000원]J BY SUMMER22 프렌치린넨 블렌드 셔츠카라 원피스"
-					ga-custom-creative="BDA_bdTrkArea=25&amp;bdTrkAlgrth=1_자동">
-						<div class="thumb">
-							<img
-								src="https://image.hmall.com/static/9/5/65/36/2136655970_0.jpg?RS=300x300&amp;AR=0"
-								alt="[런칭가99000원]J BY SUMMER22 프렌치린넨 블렌드 셔츠카라 원피스"
-								onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
-						</div>
-						<div class="figcaption">
-							<div class="pdname"
-								aria-label="[런칭가99000원]J BY SUMMER22 프렌치린넨 블렌드 셔츠카라 원피스">[런칭가99000원]J
-								BY SUMMER22 프렌치린넨 블렌드 셔츠카라 원피스</div>
-							<div class="pdprice">
-								<span class="rateprice" aria-label="할인율이 적용된 가격">
-									<p class="discount" aria-label="할인가">
-										<em>59,000</em>원
-									</p>
-								</span>
-							</div>
-
-						</div>
-				</a> <a
-					href="/p/pda/itemPtc.do?slitmCd=2136655970&amp;sectId=&amp;bdTrkArea=25&amp;bdTrkAlgrth=1&amp;bdTrkOpt=A"
-					class="hoverview" target="_blank"
-					onclick="gaTagging(this, '', '', '');" ga-custom-name="주문완료"
-					ga-custom-position="구매하신 상품과 연관된 추천상품"
-					ga-custom-title="주문/장바구니>주문완료" ga-custom-etc="urlAction"
-					ga-custom-id="2136655970_[런칭가99000원]J BY SUMMER22 프렌치린넨 블렌드 셔츠카라 원피스"
-					customgacreative="2136655970_[런칭가99000원]J BY SUMMER22 프렌치린넨 블렌드 셔츠카라 원피스"
-					ga-custom-creative="BDA_bdTrkArea=25&amp;bdTrkAlgrth=1_자동"><i
-						class="icon"></i>새창열기</a> <!--// 새창열기 a태그로 변경 후 위치이동 --></li>
-
-
-
-
-
-				<li class="pdthumb"><a
-					href="/p/pda/itemPtc.do?slitmCd=2136673415&amp;bdTrkArea=25&amp;bdTrkAlgrth=1&amp;bdTrkOpt=A"
-					onclick="gaTagging(this, '', '', '');" class="item-box"
-					ga-custom-name="주문완료" ga-custom-position="구매하신 상품과 연관된 추천상품"
-					ga-custom-title="주문/장바구니>주문완료" ga-custom-etc="urlAction"
-					ga-custom-id="2136673415_J BY SUMMER22 프렌치린넨 블렌드 수트 팬츠"
-					ga-custom-creative="BDA_bdTrkArea=25&amp;bdTrkAlgrth=1_자동">
-						<div class="thumb">
-							<img
-								src="https://image.hmall.com/static/4/3/67/36/2136673415_0.jpg?RS=300x300&amp;AR=0"
-								alt="J BY SUMMER22 프렌치린넨 블렌드 수트 팬츠"
-								onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
-						</div>
-						<div class="figcaption">
-							<div class="pdname" aria-label="J BY SUMMER22 프렌치린넨 블렌드 수트 팬츠">J
-								BY SUMMER22 프렌치린넨 블렌드 수트 팬츠</div>
-							<div class="pdprice">
-								<span class="rateprice" aria-label="할인율이 적용된 가격">
-									<p class="discount" aria-label="할인가">
-										<em>69,900</em>원
-									</p>
-								</span>
-							</div>
-
-						</div>
-				</a> <a
-					href="/p/pda/itemPtc.do?slitmCd=2136673415&amp;sectId=&amp;bdTrkArea=25&amp;bdTrkAlgrth=1&amp;bdTrkOpt=A"
-					class="hoverview" target="_blank"
-					onclick="gaTagging(this, '', '', '');" ga-custom-name="주문완료"
-					ga-custom-position="구매하신 상품과 연관된 추천상품"
-					ga-custom-title="주문/장바구니>주문완료" ga-custom-etc="urlAction"
-					ga-custom-id="2136673415_J BY SUMMER22 프렌치린넨 블렌드 수트 팬츠"
-					customgacreative="2136673415_J BY SUMMER22 프렌치린넨 블렌드 수트 팬츠"
-					ga-custom-creative="BDA_bdTrkArea=25&amp;bdTrkAlgrth=1_자동"><i
-						class="icon"></i>새창열기</a> <!--// 새창열기 a태그로 변경 후 위치이동 --></li>
-
-
-
-
-
-				<li class="pdthumb"><a
-					href="/p/pda/itemPtc.do?slitmCd=2137028835&amp;bdTrkArea=25&amp;bdTrkAlgrth=1&amp;bdTrkOpt=A"
-					onclick="gaTagging(this, '', '', '');" class="item-box"
-					ga-custom-name="주문완료" ga-custom-position="구매하신 상품과 연관된 추천상품"
-					ga-custom-title="주문/장바구니>주문완료" ga-custom-etc="urlAction"
-					ga-custom-id="2137028835_J BY SUMMER22 시그니처 세미 배기핏 스판팬츠"
-					ga-custom-creative="BDA_bdTrkArea=25&amp;bdTrkAlgrth=1_자동">
-						<div class="thumb">
-							<img
-								src="https://image.hmall.com/static/8/8/02/37/2137028835_0.jpg?RS=300x300&amp;AR=0"
-								alt="J BY SUMMER22 시그니처 세미 배기핏 스판팬츠"
-								onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
-						</div>
-						<div class="figcaption">
-							<div class="pdname" aria-label="J BY SUMMER22 시그니처 세미 배기핏 스판팬츠">J
-								BY SUMMER22 시그니처 세미 배기핏 스판팬츠</div>
-							<div class="pdprice">
-								<span class="rateprice" aria-label="할인율이 적용된 가격">
-									<p class="discount" aria-label="할인가">
-										<em>69,900</em>원
-									</p>
-								</span>
-							</div>
-
-						</div>
-				</a> <a
-					href="/p/pda/itemPtc.do?slitmCd=2137028835&amp;sectId=&amp;bdTrkArea=25&amp;bdTrkAlgrth=1&amp;bdTrkOpt=A"
-					class="hoverview" target="_blank"
-					onclick="gaTagging(this, '', '', '');" ga-custom-name="주문완료"
-					ga-custom-position="구매하신 상품과 연관된 추천상품"
-					ga-custom-title="주문/장바구니>주문완료" ga-custom-etc="urlAction"
-					ga-custom-id="2137028835_J BY SUMMER22 시그니처 세미 배기핏 스판팬츠"
-					customgacreative="2137028835_J BY SUMMER22 시그니처 세미 배기핏 스판팬츠"
-					ga-custom-creative="BDA_bdTrkArea=25&amp;bdTrkAlgrth=1_자동"><i
-						class="icon"></i>새창열기</a> <!--// 새창열기 a태그로 변경 후 위치이동 --></li>
-
-
-
-
-			</ul>
-			<!-- // pdlist-wrap -->
-		</div>
-
-
-
-
-
-
-	</div>
-
 
 
 </div>
