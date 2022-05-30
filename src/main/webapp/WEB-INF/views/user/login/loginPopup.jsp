@@ -71,13 +71,40 @@ function getCookie(cookieName) {
     }
     return unescape(cookieValue);
 }
+// 공백확인 함수    
+function checkExistData(value, dataName) {        
+	if (value == "") {            
+		alert(dataName + " 입력해주세요!");            
+		return false;        
+		}        
+		return true;    
+	}
+
+//아이디 유효성 검사
+function checkUserId() {
+	var id = $("input[name='id']").val();        
+	//Id가 입력되었는지 확인하기        
+	if (!checkExistData(id, "아이디를"))  return false;         
+	var idRegExp = /^[a-zA-z0-9]{4,20}$/; 
+	//아이디 유효성 검사        
+	if (!idRegExp.test(id)) {            
+		alert("아이디는 영문 대소문자와 숫자 4~20자리로 입력해야합니다!");                 
+		$("input[name='id']").focus();            
+		return false;        
+	}        
+	return true; 
+	//확인이 완료되었을 때    
+}
+
+//비밀번호 유효성 검사
 function chkPW(){
 	 var pw = $("input[name='pwd']").val();
 	 var num = pw.search(/[0-9]/g);
 	 var eng = pw.search(/[a-z]/ig);
-	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-	 if(pw.length < 8 || pw.length > 20){
-	  alert("8자리 ~ 20자리 이내로 입력해주세요.");
+	 var spe = pw.search(/[`~!@@#$%^&*-_|₩₩₩'₩";:₩/?]/gi);
+	
+	 if(pw.length < 8 || pw.length > 30){
+	  alert("8자리 ~ 30자리 이내로 입력해주세요.");
 	  return false;
 	 }else if(pw.search(/\s/) != -1){
 	  alert("비밀번호는 공백 없이 입력해주세요.");
@@ -85,7 +112,11 @@ function chkPW(){
 	 }else if(num < 0 || eng < 0 || spe < 0 ){
 	  alert("영문, 숫자, 특수문자를 혼합하여 입력해주세요.");
 	  return false;
-	 }else {
+	 }else if (/(\w)\1\1\1/.test(pw)) {
+       alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
+       return false;
+
+     }else {
 		console.log("통과");
 	    return true;
 	 }
@@ -100,7 +131,7 @@ $(function(){
 */
 var loginUrl = $("#login-url").val();
 function login(){
-	if(chkPW()){
+	if(chkPW() && checkUserId()){
 		$.ajax({
 			url : "./login",
 			type :  "POST",
