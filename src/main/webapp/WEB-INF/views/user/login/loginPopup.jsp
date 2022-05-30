@@ -19,7 +19,19 @@
 <script type="text/javascript"
 	src="<c:url value="/webjars/jquery/3.6.0/dist/jquery.js" />"></script>
 <script type="text/javascript">
+
 $(document).ready(function(){
+	$("input[name='id']").on("keyup",function(key){         
+		if(key.keyCode==13) {       
+			login();       
+			}     
+	});
+	 $("input[name='pwd']").on("keyup",function(key){         
+		if(key.keyCode==13) {             
+			console.log("test");
+			login();       
+			}     
+	});
     var userInputId = getCookie("userInputId");//저장된 쿠기값 가져오기
     $("input[name='id']").val(userInputId); 
     if($("input[name='id']").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩
