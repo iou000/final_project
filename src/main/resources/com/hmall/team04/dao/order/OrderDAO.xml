@@ -24,7 +24,7 @@
 	</select>
 
 	<select id="getOrderByOrderNo" resultType="OrderDTO">
-		select * from order_t where order_id = #{orderNo}
+		select * from prd_order_t where prd_order_id = #{orderNo}
 	</select>
 
 </mapper>

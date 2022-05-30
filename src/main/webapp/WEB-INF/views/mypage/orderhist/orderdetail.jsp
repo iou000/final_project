@@ -11,8 +11,7 @@
 <head>
 <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/mp/mypage.css">
 </head>
-<div class="contents">
-                    <div class="mypage-order-wrap">
+
                         <h3 class="title22">상세 주문 내역</h3>
                         
                         <!-- 주문접수/추가구상품 있는 경우 -->
@@ -21,9 +20,9 @@
                                 <dt>
                                     <div class="date">
                                         <span>주문일</span>
-                                        <strong><fmt:formatDate value="${order_date}" type="date" /></strong>
+                                        <strong><fmt:formatDate value="${list.order_date}" type="date" /></strong>
                                         <span>주문번호</span>
-                                        <strong>${prd_order_id}</strong>
+                                        <strong>${list.prd_order_id}</strong>
                                         <span style="display:none">주문매체</span>
                                         <strong style="display:none">PC주문</strong>
                                     </div>
@@ -141,7 +140,7 @@
 			                                        <!-- span class="tag red">기본 배송지</span 2020.12.09 Hmall기획에서 제거 요청 -->
 		                                        </p>
 												 <!-- 일반주소 -->
-													<p class="add" name="dstnAdr">(${우편번호?} ${deli.address_f}</br>${deli.address_l}</p>
+													<%-- <p class="add" name="dstnAdr">(${우편번호?} ${deli.address_f}</br>${deli.address_l}</p> --%>
 		                                        <p class="tel" name="hpNo">${deli.hp_no}</p>
 		                                        <!-- 전화번호2 추가[2021.01.06] -->
 		                                                <p class="tel" name="telNo"></p>
