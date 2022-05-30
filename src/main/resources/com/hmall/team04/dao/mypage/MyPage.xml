@@ -5,7 +5,8 @@
 
 <mapper namespace="com.hmall.team04.dao.mypage.MypageDAO">
 
-	<select id="">
+	<select id="getPurchasePrd" resultType = "MypageDTO">
+	 <![CDATA[
 		SELECT 
 	        pot.PRD_ORDER_ID
 	       ,podt.PRD_ORDERDETAIL_ID 
@@ -20,8 +21,9 @@
 	    FROM PRD_ORDER_T pot
 	        ,PRD_ORDERDETAIL_T podt 
 	    WHERE podt.prd_order_id = pot.prd_order_id  
-	    AND pot.ORDER_date >= TO_CHAR(SYSDATE-#{},'YYYYMMDD') -- 최근주문 14일 이전까지
-	    AND pot.USER_ID = #{};
+	    AND pot.ORDER_date >= TO_CHAR(SYSDATE-#{day},'YYYYMMDD')
+	    AND pot.USER_ID = #{id}
+	    ]]>
 	</select>
 	
 </mapper>
