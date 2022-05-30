@@ -61,7 +61,7 @@ public class MypageController {
 			int coupon_cnt = couponService.getCouponCountbyUserId(id);
 			int reserves = reserveService.getReservebyUserId(id); //적립금
 			int balances = balanceService.getBalancebyUserId(id); //예치금
-			List<MypageDTO> list = mypageService.getPurchasePrd(id,14); //최근주문내역(최근14일)			
+			List<OrderDTO> list = mypageService.getPurchasePrd(id,14); //최근주문내역(최근14일)			
 			model.addAttribute("list",list);
 			model.addAttribute("usernm",usernm);
 			model.addAttribute("coupon_cnt",coupon_cnt);	
@@ -71,6 +71,7 @@ public class MypageController {
 		
 			
 		} catch (Exception e) {
+			log.info(e.toString());
 			model.addAttribute("msg", "list 출력 에러");
 			model.addAttribute("url", "");
 			return "redirect";

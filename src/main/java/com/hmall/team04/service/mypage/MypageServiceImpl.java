@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.hmall.team04.dao.mypage.MypageDAO;
-import com.hmall.team04.dto.mypage.MypageDTO;
+
+import com.hmall.team04.dto.order.OrderDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -21,7 +22,7 @@ public class MypageServiceImpl implements MypageService{
 	
 	
 	@Override
-	public List<MypageDTO> getPurchasePrd(String id, int day) {
+	public List<OrderDTO> getPurchasePrd(String id, int day) {
 	
 		return mypageDAO.getPurchasePrd(id , day);
 	}

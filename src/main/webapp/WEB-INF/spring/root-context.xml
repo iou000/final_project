@@ -82,6 +82,11 @@
    		<property name = "mapperInterface" value = "com.hmall.team04.dao.balance.BalanceDAO"/>
    </bean>
    
+   <bean id = "mypageDAO" class ="org.mybatis.spring.mapper.MapperFactoryBean">
+   		<property name = "sqlSessionFactory" ref="team04SqlSession"/>
+   		<property name = "mapperInterface" value = "com.hmall.team04.dao.mypage.MypageDAO"/>
+   </bean>
+   
     <mybatis-spring:scan base-package="com.hmall.team04.dao" />
      
    <!-- transaction setting start -->
