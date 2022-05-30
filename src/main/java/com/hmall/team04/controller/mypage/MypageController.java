@@ -81,6 +81,7 @@ public class MypageController {
 		try {
 			mnv.setViewName("mypage.orderhist.orderdetail");
 			List<OrderDTO> list = orderService.getOrderByOrderNo(orderNo);
+			mnv.addObject("list", list);
 		} catch (Exception e) {
 			mnv.addObject("msg", "주문내역 출력 에러");
 			mnv.addObject("url", "../");

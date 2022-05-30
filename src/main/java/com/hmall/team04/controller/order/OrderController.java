@@ -38,14 +38,14 @@ public class OrderController {
 				log.info(arrStr[i]);
 				String[] subitem = arrStr[i].split(",");
 				
-				OrderDTO orderDTO = new OrderDTO();
-				orderDTO.setPrd_board_id(subitem[0]);
-				orderDTO.setPrd_id(subitem[1]);
-				orderDTO.setOrdQty(Integer.parseInt(subitem[2]));
-				
-				log.info(orderDTO);
-				
-				orderList.add(orderDTO);
+//				OrderDTO orderDTO = new OrderDTO();
+//				orderDTO.setPrd_board_id(subitem[0]);
+//				orderDTO.setPrd_id(subitem[1]);
+//				orderDTO.setOrdQty(Integer.parseInt(subitem[2]));
+//				
+//				log.info(orderDTO);
+//				
+//				orderList.add(orderDTO);
 			}
 		}
 		// ArrayList 로 변환 완료
