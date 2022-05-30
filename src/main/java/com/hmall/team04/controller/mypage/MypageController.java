@@ -1,6 +1,7 @@
 package com.hmall.team04.controller.mypage;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hmall.team04.dto.mypage.MypageDTO;
 import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.service.balance.BalanceService;
 import com.hmall.team04.service.coupon.CouponService;
+import com.hmall.team04.service.mypage.MypageService;
 import com.hmall.team04.service.order.OrderService;
 import com.hmall.team04.service.reserve.ReserveService;
 import com.hmall.team04.service.user.UserService;
@@ -31,19 +34,21 @@ public class MypageController {
 	private ReserveService reserveService;
 	private BalanceService balanceService;
 	private OrderService orderService;
+	private MypageService mypageService;
  	
 	public MypageController(UserService userService, CouponService couponService, ReserveService reserveService, BalanceService balanceService,
-							OrderService orderService) {
+							OrderService orderService, MypageService mypageService) {
 		this.userService = userService;
 		this.couponService = couponService;
 		this.reserveService = reserveService;
 		this.balanceService = balanceService;
 		this.orderService = orderService;
+		this.mypageService = mypageService;
 	}
 	
 	@GetMapping("/odslist")
 	public String odslist() {
-		return "mypage.mypageODSList";
+		return "mypage.orderhist.mypageODSList";
 	}
 	
 
@@ -51,16 +56,18 @@ public class MypageController {
 	@GetMapping("/mymain") 
 	public String mypage(Principal principal, Model model) {
 		try {
-			String usernm = userService.getUserNamebyUserId(principal.getName());
-			int coupon_cnt = couponService.getCouponCountbyUserId(principal.getName());
-			int reserves = reserveService.getReservebyUserId(principal.getName()); //적립금
-			int balances = balanceService.getBalancebyUserId(principal.getName()); //예치금
-			
+			String id = principal.getName();
+			String usernm = userService.getUserNamebyUserId(id);
+			int coupon_cnt = couponService.getCouponCountbyUserId(id);
+			int reserves = reserveService.getReservebyUserId(id); //적립금
+			int balances = balanceService.getBalancebyUserId(id); //예치금
+			List<MypageDTO> list = mypageService.getPurchasePrd(id,14); //최근주문내역(최근14일)			
+			model.addAttribute("list",list);
 			model.addAttribute("usernm",usernm);
 			model.addAttribute("coupon_cnt",coupon_cnt);	
 			model.addAttribute("reserves", reserves);
 			model.addAttribute("balances", balances);
-			return "mypage.mypageMainList";
+			return "mypage.orderhist.mypageMainList";
 		
 			
 		} catch (Exception e) {
@@ -73,7 +80,7 @@ public class MypageController {
 	
 	@GetMapping("/crelist") 
 	public String crelist() {
-		return "mypage.mypageCREList";
+		return "mypage.orderhist.mypageCREList";
 	}
 	
 	@GetMapping("/od")
