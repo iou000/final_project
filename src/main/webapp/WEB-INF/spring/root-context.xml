@@ -76,6 +76,7 @@
    		<property name = "mapperInterface" value = "com.hmall.team04.dao.reserve.ReserveDAO"/>
    </bean>
    
+   
    <bean id = "balanceDAO" class ="org.mybatis.spring.mapper.MapperFactoryBean">
    		<property name = "sqlSessionFactory" ref="team04SqlSession"/>
    		<property name = "mapperInterface" value = "com.hmall.team04.dao.balance.BalanceDAO"/>
