@@ -5,22 +5,22 @@
 
 <mapper namespace="com.hmall.team04.dao.order.OrderDAO">
 
-	<select id="getOrderCompleteList" parameterType="String" resultType="OrderCompleteDTO">
+	<select id="getOrderCompleteList" parameterType="OrderCompleteDTO" resultType="OrderCompleteDTO">
 	select pot.prd_order_id,pot.user_id,pot.address_dest,pot.hp_no,
 	podt.prd_id,
 	ppt.pmt_amount
 	from prd_order_t pot
 	left join prd_orderdetail_t podt on (pot.prd_order_id=podt.prd_order_id)
 	left join prd_payment_t ppt on (pot.prd_order_id=ppt.prd_order_id)
-	where pot.user_id=#{user_id}
+	where pot.user_id=#{user_id} and pot.prd_order_id=#{prd_order_id}
 	</select>
 
-	<select id="getPrdPayment" parameterType="String" resultType="OrderCompleteDTO">
+	<select id="getPrdPayment" parameterType="OrderCompleteDTO" resultType="OrderCompleteDTO">
 		select pot.prd_order_id,pot.user_id,pot.address_dest,pot.hp_no,
 		ppt.pmt_amount
 		from prd_order_t pot
 		left join prd_payment_t ppt on (pot.prd_order_id=ppt.prd_order_id)
-		where pot.user_id=#{user_id}
+		where pot.user_id=#{user_id} and ppt.prd_pmt_id=#{prd_pmt_id}
 	</select>
 
 </mapper>
