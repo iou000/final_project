@@ -1,6 +1,7 @@
 package com.hmall.team04.service.order;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.getPrdPayment(user_id);
 	}
 
+	@Override
+	public List<OrderDTO> getOrderByOrderNo(String orderNo) throws Exception {
+		return orderDAO.getOrderByOrderNo(orderNo);
+	}
 
 }

@@ -2,6 +2,7 @@ package com.hmall.team04.dao.order;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.hmall.team04.dto.cart.CartDTO;
 import com.hmall.team04.dto.category.CategoryDTO;
@@ -13,5 +14,6 @@ public interface OrderDAO {
 
 	OrderCompleteDTO getPrdPayment(String user_id) throws SQLException;
 
+	List<OrderDTO> getOrderByOrderNo(String orderNo) throws Exception;
 
 }

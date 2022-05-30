@@ -23,4 +23,8 @@
 		where pot.user_id=#{user_id}
 	</select>
 
+	<select id="getOrderByOrderNo" resultType="OrderDTO">
+		select * from order_t where order_id = #{orderNo}
+	</select>
+
 </mapper>
