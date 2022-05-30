@@ -1,6 +1,7 @@
 package com.hmall.team04.dto.order;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -18,4 +19,5 @@ public class OrderDTO {
 	private String order_comment;
 	private Date order_date;
 	private String prd_pmt_id;
+	private List<OrderDetailDTO> orderDetailList;
 }

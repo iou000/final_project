@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hmall.team04.dao.balance.BalanceDAO;
 import com.hmall.team04.dao.coupon.CouponDAO;
+import com.hmall.team04.dao.mypage.MypageDAO;
+import com.hmall.team04.dao.order.OrderDAO;
 import com.hmall.team04.dao.reserve.ReserveDAO;
 import com.hmall.team04.dao.user.UserDAO;
 import com.hmall.team04.dto.user.UserDTO;
@@ -37,6 +39,9 @@ public class UserDAOTests {
 	
 	@Setter(onMethod_ = @Autowired)
 	private BalanceDAO balanceDAO;
+	
+	@Setter(onMethod_ = @Autowired)
+	private MypageDAO mypageDAO;
 	
 	@Autowired
     BCryptPasswordEncoder passwordEncoder;
@@ -76,10 +81,9 @@ public class UserDAOTests {
 	}
 	
 	@Test
-	public void testID() {
+	public void testOrderList() {
 		try {
-		
-			log.info(balanceDAO.getBalancebyUserId("1"));
+			mypageDAO.getPurchasePrd("user2",14).forEach(orderDetailList -> log.info(orderDetailList));
 		} catch (Exception e) {
 			
 			e.printStackTrace();
