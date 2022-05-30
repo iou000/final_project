@@ -1,10 +1,8 @@
 package com.hmall.team04.dto.deliever;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class DelieverDTO {
 	
 	private String deliever_id;

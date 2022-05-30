@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,8 +41,37 @@ public class DelieverController {
 			e.printStackTrace();
 		}
 		
-		
 		return delieverList;
 	}
+	
+	
+	@PostMapping("/updateDeliever")
+	public String updateDeliever(@ModelAttribute DelieverDTO delieverDTO, Principal principal) {
+		log.info("배송지 업데이트 유저 ID : "+principal.getName());
+		log.info(delieverDTO.toString());
+		
+		
+		return delieverDTO.getDeliever_id();
+	}
+	
+	@PostMapping("/insertDeliever")
+	public String insertDeliever(@ModelAttribute DelieverDTO delieverDTO, Principal principal) {
+		log.info("배송지 추가 유저 ID : "+principal.getName());
+		log.info(delieverDTO.toString());
+		
+		
+		return delieverDTO.getDeliever_id();
+	}
+	
+	@PostMapping("/deleteDeliever")
+	public String deleteDeliever(@ModelAttribute DelieverDTO delieverDTO, Principal principal) {
+		log.info("배송지 삭제 유저 ID : "+principal.getName());
+		log.info(delieverDTO.toString());
+		
+		
+		return delieverDTO.getDeliever_id();
+	}
+	
+	
 	
 }
