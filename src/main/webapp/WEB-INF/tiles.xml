@@ -84,5 +84,12 @@
 		<put-attribute name="leftsidebar" value="/WEB-INF/views/mypage/leftsidebar.jsp" />
 		<put-attribute name="quickmenu" value="/WEB-INF/views/mypage/quickmenu.jsp" />
 	</definition>
+	
+	<!-- 상품리스트페이지 -->
+	<definition name="product.productListBoard" template="/WEB-INF/views/template/productList.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/product/productListBoard.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
 
 </tiles-definitions>

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hmall.team04.dao.product.ProductBoardDAO;
 import com.hmall.team04.dao.review.ReviewDAO;
 import com.hmall.team04.dto.common.Criteria;
+import com.hmall.team04.dto.common.ProductCriteria;
 import com.hmall.team04.dto.product.ProductBoardDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
 
@@ -31,12 +33,14 @@ public class ProductBoardDAOTests {
 	@Setter(onMethod_ = @Autowired)
 	private ReviewDAO reviewDAO;
 	
+	
 	@Test
 	public void testGetProductBoardList() {
 		
 		ArrayList<ProductBoardDTO> list;
+		ProductCriteria cri = new ProductCriteria(1, 30, "A2211");
 		try {
-			list = productboardDAO.getProductBoardList();
+			list = productboardDAO.getProductBoardList(cri);
 			
 			for(int i=0;i<list.size();i++) {
 				log.info(list.get(i));
@@ -49,6 +53,7 @@ public class ProductBoardDAOTests {
 	}
 	
 	@Test
+	@Ignore
 	public void testGetProductBoard() {
 		
 		ProductBoardDTO productboardDTO;

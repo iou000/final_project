@@ -67,7 +67,6 @@ $(document).ready(function(){
       var cate_name = data.category_name; //입력할 글씨
       var ul_list = $("#cate-f"); //ul_list선언
       ul_list.append("<li data-catecode="+cate_code+">"+"<a href=#>"+cate_name+"</a></li>"); //ul_list안쪽에 li추가
-      console.log("test");
    }    
    
    /* GNB - 카테고리 vs008 */
@@ -90,8 +89,6 @@ $(document).ready(function(){
                   chCategory.push(data[i]);
                }
             }
-            console.log(parentCategory);
-            console.log(chCategory);
             var ul_list = $("#cate-f"); //ul_list선언
             for (i in parentCategory) {
                cate_f_add(parentCategory[i]);
@@ -104,7 +101,7 @@ $(document).ready(function(){
                str += "<div class='sub-category-area'><div class='sub-category'><ul>";
                for (let j = 0; j < chCategory.length; j++) {
                   if (parentCategory[i].cate_detail_lev == chCategory[j].parent_detail_lev) {
-                     str += "<li><a href='${contextPath}/product/list?cate=" + chCategory[j].category_id + "'>" + chCategory[j].category_name + "</a></li>";
+                     str += "<li><a href='${app}/p/productlist?category=" + chCategory[j].category_id + "'>" + chCategory[j].category_name + "</a></li>";
                   }
                }
                str += "</ul></div></div></div></div>";

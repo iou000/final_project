@@ -28,36 +28,8 @@
 				<!-- pdlist-wrap -->
 				<div class="pdlist-wrap pdeal">
 					<ul>
-						<c:forEach items="${productboadrList}" var="dto">
-							<li class="pdthumb">
-								<!-- 눈에 보이는 보드 사진으로서 클릭 시 해당 상품상세피이지로 간다. --> 
-								<a href="javascript:;" onclick="goItemDetail('${app}/selectBoard?prd_board_id=${dto.prd_board_id }', this);">
-									<div class="thumb ">
-										<img src="${dto.upload_path }"
-										onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=orgxorg&amp;AR=0')">
-									</div>
-									<div class="figcaption">
-
-										<div class="pdname" aria-label="${dto.title }">${dto.title }
-										</div>
-
-										<div class="pdprice">
-											<span class="rateprice" aria-label="정상가"> 
-												<p class="price" aria-label="정상가">
-													<em>${dto.price }</em>원
-												</p>
-											</span>
-										</div>
-
-										<div class="pdinfo">
-											<p class="like-count">
-												<!-- 옵션상품 && 딜상품 -->
-												<em>11</em><b>개 구매중</b>
-											</p>
-										</div>
-									</div>
-							</li>
-						</c:forEach>
+					<!--  -->
+						
 					</ul>
 				</div>
 				<!-- // pdlist-wrap -->

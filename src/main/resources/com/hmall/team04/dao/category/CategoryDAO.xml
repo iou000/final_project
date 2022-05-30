@@ -30,4 +30,10 @@
 		order by a.cate_id
 	</select>
 	
+	<select id="getCategoryName" resultType="String">
+		select cate_detail_nm
+		from category_n_key_v
+		where n_key = #{category}
+	</select>
+	
 </mapper>

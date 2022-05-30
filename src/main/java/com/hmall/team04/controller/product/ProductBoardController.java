@@ -14,17 +14,21 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hmall.team04.dto.common.Criteria;
+import com.hmall.team04.dto.common.ProductCriteria;
+import com.hmall.team04.dto.common.ProductPageDTO;
 import com.hmall.team04.dto.like.LikeDTO;
 import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.dto.product.ProductBoardDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
 import com.hmall.team04.dto.review.ReviewPageDTO;
+import com.hmall.team04.service.category.CategoryService;
 import com.hmall.team04.service.like.LikeService;
 import com.hmall.team04.service.product.ProductBoardService;
 import com.hmall.team04.service.review.ReviewService;
@@ -33,6 +37,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
+@RequestMapping("/p")
 public class ProductBoardController {
 	
 	@Autowired
@@ -44,8 +49,31 @@ public class ProductBoardController {
 	@Autowired
 	private LikeService likeService;
 	
-	@RequestMapping(value = "/selectBoard", method = RequestMethod.GET)
-	public String product(@RequestParam(name="prd_board_id", defaultValue="1") String prd_board_id, Model model,Principal principal) {
+	@Autowired
+	private CategoryService categoryService;
+	
+	@RequestMapping(value = "/productlist", method = RequestMethod.GET)
+	public String productlist(@RequestParam String category,Model model) {
+		String cate = "";
+		ProductCriteria cri = new ProductCriteria(category);
+		
+ 		try {
+ 			ArrayList<ProductBoardDTO> productBoardDTO = productboardService.getProductBoardListByInsdt(cri);
+ 			int total = productboardService.getProductListCount(category);
+			cate = categoryService.getCategoryName(category);
+			model.addAttribute("pageMaker", new ProductPageDTO(cri, total));
+			model.addAttribute("productBoardDTO", productBoardDTO);
+			model.addAttribute("category", cate);
+			model.addAttribute("categoryCode", category);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "product.productListBoard";
+	}
+	
+	@RequestMapping(value = "/{prd_board_id}", method = RequestMethod.GET)
+	public String product(@PathVariable String prd_board_id, Model model,Principal principal) {
 		log.info("소분류에서 상품 선택에 따른 페이지");
 		log.info(prd_board_id);
 		

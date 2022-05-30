@@ -119,13 +119,11 @@
 
 						</span>
 
-
-
 					</div>
 
 					<div class="pdinfo">
 						<span class="rateprice" aria-label="적립금"> <em
-							class="rate_save" aria-label="적립률">적립금 </em> <em>${productboadDTO.price * (10)/100 }</em><b>원</b>
+							class="rate_save" aria-label="적립률">적립금 </em> <em>${productboadDTO.price * (1)/100 }</em><b>원</b>
 
 						</span>
 					</div>

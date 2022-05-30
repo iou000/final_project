@@ -18,16 +18,64 @@
 		order by prd_board_id
 	</select>
 	 -->
-	<select id="getProductBoardList" resultType="ProductBoardDTO" resultMap="ProductBoardResult">
+	<select id="getProductBoardListByInsdt" resultType="ProductBoardDTO">
+	<![CDATA[
 		select
-		pbt.prd_board_id, pbt.discount_rate, pbt.price, pbt.title, pbt.content, pbt.score, pbt.category, pbt.brand,
-		pt.PRD_ID,
-		ft.UPLOAD_PATH 
-		from prd_board_t pbt
-		LEFT JOIN PRD_T pt on(pbt.PRD_BOARD_ID=pt.PRD_BOARD_ID)
-		LEFT JOIN FILE_T ft on(pbt.PRD_BOARD_ID =ft.ARTICLE_ID)
-		where ft.board_flag='prd'
-		order by prd_board_id
+		prd_board_id, discount_rate, price, title, UPLOAD_PATH 
+		from (
+			select  
+				rownum rn, prd_board_id, discount_rate, price, title, UPLOAD_PATH 
+			from (
+				select pbt.prd_board_id, pbt.discount_rate, pbt.price, pbt.title, pbt.category, ft.UPLOAD_PATH 
+				from prd_board_t pbt
+				LEFT JOIN FILE_T ft on(pbt.PRD_BOARD_ID =ft.ARTICLE_ID AND ft.board_flag='prd')
+				where pbt.category = #{categoryCode}
+				order by pbt.ins_dt desc
+			)
+			where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getProductBoardListByHighPrice" resultType="ProductBoardDTO">
+	<![CDATA[
+		select
+		prd_board_id, discount_rate, price, title, UPLOAD_PATH 
+		from (
+			select  
+				rownum rn, prd_board_id, discount_rate, price, title, UPLOAD_PATH 
+			from (
+				select pbt.prd_board_id, pbt.discount_rate, pbt.price, pbt.title, pbt.category, ft.UPLOAD_PATH 
+				from prd_board_t pbt
+				LEFT JOIN FILE_T ft on(pbt.PRD_BOARD_ID =ft.ARTICLE_ID AND ft.board_flag='prd')
+				where pbt.category = #{categoryCode}
+				order by (pbt.price * (1-(pbt.DISCOUNT_RATE / 100))) desc  
+			)
+			where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getProductBoardListByRowPrice" resultType="ProductBoardDTO">
+	<![CDATA[
+		select
+		prd_board_id, discount_rate, price, title, UPLOAD_PATH 
+		from (
+			select  
+				rownum rn, prd_board_id, discount_rate, price, title, UPLOAD_PATH 
+			from (
+				select pbt.prd_board_id, pbt.discount_rate, pbt.price, pbt.title, pbt.category, ft.UPLOAD_PATH 
+				from prd_board_t pbt
+				LEFT JOIN FILE_T ft on(pbt.PRD_BOARD_ID =ft.ARTICLE_ID AND ft.board_flag='prd')
+				where pbt.category = #{categoryCode}
+				order by (pbt.price * (1-(pbt.DISCOUNT_RATE / 100)))
+			)
+			where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
 	</select>
 
 	<!-- 상품보드와 관련된 prd_board 표시 기본형 -->
@@ -43,5 +91,10 @@
 		WHERE pbt.prd_board_id=#{prd_board_id} and ft.board_flag='prd'
 		order by prd_board_id
 	</select>
-
+	
+	<select id="getProductListCount" resultType="int">
+		select count(*)
+		from prd_board_t
+		where category = #{category}
+	</select>
 </mapper>
