@@ -33,8 +33,12 @@ public class OrderDAOTests {
 	public void testGetOrderCompleteList() {
 		
 		ArrayList<OrderCompleteDTO> list;
+		
+		OrderCompleteDTO ordercompleteDTO = new OrderCompleteDTO();
+		ordercompleteDTO.setPrd_order_id("merchant_1653809215425");
+		ordercompleteDTO.setUser_id("1");
 		try {
-			list = orderDAO.getOrderCompleteList("1");
+			list = orderDAO.getOrderCompleteList(ordercompleteDTO);
 			
 			for(int i=0;i<list.size();i++) {
 				log.info(list.get(i));
@@ -48,9 +52,12 @@ public class OrderDAOTests {
 	@Test
 	public void testGetPrdPayment() {
 		
-		OrderCompleteDTO ordercompleteDTO;
+		OrderCompleteDTO ordercompleteDTO = new OrderCompleteDTO();
+		ordercompleteDTO.setUser_id("1");
+		ordercompleteDTO.setPrd_pmt_id("StdpayVBNKINIpayTest20220529162715283069");
+		
 		try {
-			ordercompleteDTO = orderDAO.getPrdPayment("1");
+			ordercompleteDTO = orderDAO.getPrdPayment(ordercompleteDTO);
 			
 			log.info(ordercompleteDTO);
 			

@@ -180,7 +180,7 @@ var min = 1000*60;
 var hr = min*60;
 var dy = hr*24;
 
-function requestPay() {
+function requestPay00000() {
 	IMP.request_pay({
 		pay_method : 'card', // 기능 없음.
 		merchant_uid : "merchant_" + new Date().getTime(), // 상점에서 관리하는 주문 번호
@@ -293,37 +293,53 @@ function requestKcpPay() {
 	
 </script>
 
-<!-- try 1.1 무통장 kcp -->
+<!-- try 1.2 KG이니시스-->
 
 <script>
 var IMP = window.IMP; // 생략 가능
 IMP.init("imp49827942"); // 예: imp00000000
 
-// 1 minute = 1 second * 60 = 1000 miliseconds * 60
-var min = 1000*60;
-var hr = min*60;
-var dy = hr*24;
+var today = new Date();
+
+var year = today.getFullYear();
+var month = ('0' + (today.getMonth() + 1)).slice(-2);
+var day = ('0' + today.getDate()).slice(-2);
+var hours = ('0' + today.getHours()).slice(-2); 
+var minutes = ('0' + today.getMinutes()).slice(-2);
+var seconds = ('0' + today.getSeconds()).slice(-2);
+
+val_merchant_uid=year+month+day+hours+minutes+seconds;
+
+console.log(val_merchant_uid);
+
+var val_prd_order_id = "merchant_" + new Date().getTime();
+var val_name = '주문명:결제테스트'; // prd_board_id 정도가 적절
+var val_amount = 14000; // 주문화면에서 최종주문금액(총액 - 할인가격) for 결제테이블
+var val_buyer_email = 'iamport@siot.do'; // 주문화면의 사용자 이메일 email
+var val_buyer_name = '구매자이름(김경철)'; // 주문화면의 user_nm
+var val_buyer_tel = '010-1234-5678'; // 주문화면의 user_t.hp_no
+var val_buyer_addr = '서울특별시 강남구 삼성동';// 주문화면의 user_t.address_f || user_t.address_l
+var val_notice_url = 'https://145a-58-143-54-209.jp.ngrok.io/team04/orderPayComplete';//
 
 function requestPay() {
 	IMP.request_pay({
 	    pg : 'html5_inicis',
-	    pay_method : 'vbank',
-	    merchant_uid: "merchant_" + new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
-	    name : '주문명:결제테스트',
-	    amount : 14000,
-	    buyer_email : 'iamport@siot.do',
-	    buyer_name : '구매자이름',
-	    buyer_tel : '010-1234-5678',
-	    buyer_addr : '서울특별시 강남구 삼성동',
-	    buyer_postcode : '123-456'
+	    pay_method : 'card',
+	    merchant_uid: val_prd_order_id, // 상점에서 관리하는 주문 번호를 전달
+	    name : val_name,
+	    amount : val_amount,
+	    buyer_email : val_buyer_email,
+	    buyer_name : val_buyer_name,
+	    buyer_tel : val_buyer_tel,
+	    buyer_addr : val_buyer_addr,
+	    notice_url : val_notice_url
 	}, function(rsp) {
 		if (rsp.success) {
 			alert('빌링키 발급 성공');
 			console.log('빌링키 발급 성공',rsp)
 			
-			console.log('결제완료일자 ; 일', rsp.paid_at/dy);
-			console.log('결제완료일자 ; 시', rsp.paid_at/hr);
-			console.log('결제완료일자 ; 초', rsp.paid_at/min);
+			// 유효한 결제정보를, ordercomplete post controller로 전송 for 세션에 정보저장
+			
 		} else {
 			alert('빌링키 발급 실패');
 			var msg = '결제에 실패하였습니다.\n';
@@ -335,8 +351,6 @@ function requestPay() {
 }
 	
 </script>
-
-
 
 
 <div class="order-wrap">
@@ -418,7 +432,6 @@ function requestPay() {
 				</div>
 			</li>
 
-
 			<li>
 				<div class="tit-wrap">배송지</div>
 				<div class="txt-wrap">
@@ -448,7 +461,7 @@ function requestPay() {
 					<th scope="row">주문 금액</th>
 					<td>
 						<p class="price">
-							<strong> ${ordercompleteDTO.pmt_amount } </strong>원
+							<strong> ${orderpay.pmt_amount } </strong>원
 						</p>
 					</td>
 					<td></td>
@@ -460,7 +473,7 @@ function requestPay() {
 
 					<td>
 						<p class="price">
-							<strong> ${ordercompleteDTO.pmt_amount } </strong>원
+							<strong> ${orderpay.pmt_amount } </strong>원
 						</p>
 					</td>
 					<td>

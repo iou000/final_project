@@ -16,6 +16,7 @@ public class OrderCompleteDTO {
 	private String prd_id;
 
 	// prd_payment_t
+	private String prd_pmt_id;
 	private int pmt_amount;
-	
+	private String pay_status;
 }

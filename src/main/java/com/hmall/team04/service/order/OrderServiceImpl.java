@@ -27,15 +27,15 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDAO;
 
 	@Override
-	public ArrayList<OrderCompleteDTO> getOrderCompleteList(String user_id) throws Exception {
+	public ArrayList<OrderCompleteDTO> getOrderCompleteList(OrderCompleteDTO ordercompleteDTO) throws Exception {
 		// TODO Auto-generated method stub
-		return orderDAO.getOrderCompleteList(user_id);
+		return orderDAO.getOrderCompleteList(ordercompleteDTO);
 	}
 
 	@Override
-	public OrderCompleteDTO getPrdPayment(String user_id) throws Exception {
+	public OrderCompleteDTO getPrdPayment(OrderCompleteDTO ordercompleteDTO) throws Exception {
 		// TODO Auto-generated method stub
-		return orderDAO.getPrdPayment(user_id);
+		return orderDAO.getPrdPayment(ordercompleteDTO);
 	}
 
 	@Override
