@@ -37,14 +37,14 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		
 		// index화면 호출 시, 관련 product board list 담아주기
-		try {
-			ArrayList<ProductBoardDTO> productboadrList = productboardService.getProductBoardList();
-			model.addAttribute("productboadrList", productboadrList);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.getStackTrace();
-		}
+//		try {
+//			ArrayList<ProductBoardDTO> productboadrList = productboardService.getProductBoardList();
+//			model.addAttribute("productboadrList", productboadrList);
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			e.getStackTrace();
+//		}
 		
 		//
 		logger.info("Welcome home! The client locale is {}.", locale);

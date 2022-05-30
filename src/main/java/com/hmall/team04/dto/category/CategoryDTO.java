@@ -1,9 +1,13 @@
 package com.hmall.team04.dto.category;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategoryDTO {
 	private String category_id;
 	private String category_name;

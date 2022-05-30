@@ -4,6 +4,7 @@ package com.hmall.team04.dao.category;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,17 @@ public class CategoryDAOTests {
 	private CategoryDAO categoryDAO;
 	
 	@Test
+	public void testGetCateName() {
+		try {
+			log.info(categoryDAO.getCategoryName("A2111"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	@Ignore
 	public void testGetCategoryList() {
 		
 		ArrayList<CategoryDTO> list;

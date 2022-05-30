@@ -8,4 +8,6 @@ public interface CategoryService {
 
 	ArrayList<CategoryDTO> getCategory() throws Exception;
 
+	String getCategoryName(String category) throws Exception;
+
 }
