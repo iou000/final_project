@@ -35,24 +35,6 @@ public class ProductBoardDAOTests {
 	
 	
 	@Test
-	public void testGetProductBoardList() {
-		
-		ArrayList<ProductBoardDTO> list;
-		ProductCriteria cri = new ProductCriteria(1, 30, "A2211");
-		try {
-			list = productboardDAO.getProductBoardList(cri);
-			
-			for(int i=0;i<list.size();i++) {
-				log.info(list.get(i));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	@Test
 	@Ignore
 	public void testGetProductBoard() {
 		

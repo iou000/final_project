@@ -314,7 +314,7 @@ console.log(val_merchant_uid);
 
 var val_prd_order_id = "merchant_" + new Date().getTime();
 var val_name = '주문명:결제테스트'; // prd_board_id 정도가 적절
-var val_amount = 14000; // 주문화면에서 최종주문금액(총액 - 할인가격) for 결제테이블
+var val_amount = 100; // 주문화면에서 최종주문금액(총액 - 할인가격) for 결제테이블
 var val_buyer_email = 'iamport@siot.do'; // 주문화면의 사용자 이메일 email
 var val_buyer_name = '구매자이름(김경철)'; // 주문화면의 user_nm
 var val_buyer_tel = '010-1234-5678'; // 주문화면의 user_t.hp_no
