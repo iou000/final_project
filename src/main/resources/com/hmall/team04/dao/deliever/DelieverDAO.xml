@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hmall.team04.dao.deliever.DelieverDAO">
+	
+	<!-- USER의 배송지 리스트를 받아옴 -->
+	<select id="selectDelieverListByUserId" parameterType="String" resultType="DelieverDTO">
+		SELECT
+			deliever_id, user_id, address_f, address_l, deliever_hp_no, receiver_nm, active_yn
+		FROM  deliever_dt_t
+		WHERE user_id = #{userId}
+		ORDER BY active_yn DESC
+	
+	</select>
+	
+	
+	
+    <!-- <select id="checkUserIdYn" resultType="String">
+        <![CDATA[
+            SELECT 
+                fn_check_user_id_yn(#{userId}) AS RESULT_VALUE
+             FROM DUAL
+        ]]>
+    </select>
+    
+	
+    <select id="checkUserEmailYn" resultType="String">
+        <![CDATA[
+            SELECT 
+                fn_check_user_email_yn(#{email}) AS RESULT_VALUE
+            FROM DUAL
+        ]]>
+    </select>
+    
+	
+    <select id="insertUser" parameterType="SignUpRequestDTO" statementType="CALLABLE" resultType="SignUpRequestDTO">
+
+           { CALL user_t_insert_user(#{user_id}, #{email}, #{password}, #{user_nm}, #{gender}, #{birth}, #{address_f}, #{address_l}, #{hp_no}, #{auth}) }
+
+    </select> -->
+    
+    
+	
+</mapper>

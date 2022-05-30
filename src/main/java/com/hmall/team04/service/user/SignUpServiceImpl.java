@@ -44,15 +44,16 @@ public class SignUpServiceImpl implements SignUpService{
         
         signUpRequestDTO.setPassword(passwordEncoder.encode(signUpRequestDTO.getPassword()));
         
-        // 권한 추가
+        // 권한 추가 처음 회원가입시 ROLE_USER 임
         if (signUpRequestDTO.getAuth() == null) {
         	signUpRequestDTO.setAuth("ROLE_USER");
         	log.info("권한 추가 : "+signUpRequestDTO.getAuth());
         }
         
+        // 휴대폰번호 숫제 빼고 다 제거
+        signUpRequestDTO.setHp_no(signUpRequestDTO.getHp_no().replaceAll( "[^0-9]", ""));
         try {
         	signUpDAO.insertUser(signUpRequestDTO);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
