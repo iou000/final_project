@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="app" value="${pageContext.request.contextPath}" />
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 우편번호 -->
 
 <main class="cmain main" role="main" id="mainContents">
 	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
@@ -191,18 +192,16 @@
                                 
                                 <!-- 주소, 우편찾기 -->
                                 <div class="inputbox">
-                                    <input type="hidden" name="" value="" id="selectedAddressF">
-                                    <input type="hidden" name="" value="" id="selectedAddressL">
                                     <label class="inplabel btnlabel">
-                                    	<input type="text" name="" value="" placeholder="주소" id="selectedAddressF" readonly="">
+                                    	<input type="text" name="address_f" value="" placeholder="주소" id="selectedAddressF" readonly="">
                                     </label>
-                                    <button type="button" class="btn btn-lineblack btn-confirm" onclick="openSearchAddr();"><span>우편번호 찾기</span></button>
+                                    <button type="button" class="btn btn-lineblack btn-confirm" onclick="kakaopost();"><span>우편번호 찾기</span></button>
                                 </div>
                                 
                                 <!-- 상세주소 -->
                                 <div class="inputbox">
                                     <label class="inplabel">
-                                    	<input type="text" name="" value="" placeholder="상세 주소를 입력해주세요." id="selectedAddressL" maxlength="100">
+                                    	<input type="text" name="address_l" value="" placeholder="상세 주소를 입력해주세요." id="selectedAddressL" maxlength="100">
                                     </label>
                                 </div>
                                 
@@ -215,7 +214,7 @@
                                 
                                 <!-- 기본 배송지 설정여부 -->
                                 <label class="chklabel">
-                                    <input type="checkbox" name="" id="selectedActiveYn" value="1">
+                                    <input type="checkbox" name="" id="selectedActiveYn" value="">
                                     <i class="icon"></i>
                                     <span>기본배송지로 지정</span>
                                 </label>
@@ -258,6 +257,7 @@ function changeDstn() {
 		method : "get",
 		url : "${app}/deliever/selectDelieverList",
 		dataType:"json",
+		async: true,
 		contentType: "application/json",
 		success : function(data) {
 			
@@ -338,9 +338,10 @@ function changeDstn() {
 function modifyAddr(obj, modType) {
 	
 	//수정버튼을 통해 들어갈시 확인버튼의 onclick 속성의 파라미터를 modSubmit으로 변경
-	$("#updateAddrBtn").removeAttr("onclick");
-	$("#updateAddrBtn").attr("onclick", "modifyAddr('', \"modSubmit\");");
-	
+	if (modType != 'addSubmit') {
+		$("#updateAddrBtn").removeAttr("onclick");
+		$("#updateAddrBtn").attr("onclick", "modifyAddr('', \"modSubmit\");");
+	}
 	
 	// 수정하기 버튼 클릭시
 	if ( modType == "toMod" ) {
@@ -358,14 +359,10 @@ function modifyAddr(obj, modType) {
         //기본 배송지 여부
         if ( $(obj).parent().siblings("input[name=active_yn]").val() == "1" ) {
             $("#pec003 #selectedActiveYn").prop("checked", true);
-            $("#pec003 #selectedActiveYn").prop("type", "radio");
-            $("#pec003 #selectedActiveYn").parent().addClass("radlabel");
-            $("#pec003 #selectedActiveYn").parent().removeClass("chklabel");
+            $("#pec003 #selectedActiveYn").prop("type", "checkbox");
         } else {
             $("#pec003 #selectedActiveYn").prop("checked", false);
             $("#pec003 #selectedActiveYn").prop("type", "checkbox");
-            $("#pec003 #selectedActiveYn").parent().removeClass("radlabel");
-            $("#pec003 #selectedActiveYn").parent().addClass("chklabel");
         }
         return;
     }
@@ -426,7 +423,7 @@ function modifyAddr(obj, modType) {
     	addressF = $("#pec003 #selectedAddressF").val();
     	addressL = $("#pec003 #selectedAddressL").val();
     	delieverHpNo = $("#pec003 #selectedDelieverHpNo").val();
-    	activeYn = $("#pec003 #selectedActiveYn").prop("checked")?"Y":"N";
+    	activeYn = $("#pec003 #selectedActiveYn").prop("checked")?"1":"0";
     	
     	if (modType == "modSubmit") { //수정 요청인 경우
     		url = "${app}/deliever/updateDeliever";
@@ -452,34 +449,19 @@ function modifyAddr(obj, modType) {
         ,beforeSend : function(xhr) { //post요청은 beforeSend 필수 (csrf)
 			xhr.setRequestHeader(header, token);
 		}
-        ,dataType: "json"
+        ,dataType: "text"
         ,async: true
         ,success : function(data) {
-            changeDstn();
+        	console.log(data);
+        	changeDstn();
+        }
+        ,error: function(error) {
+        	console.log(error);
         }
     });
     
     
 }
-
-
-// 배송지에서 수정버튼을 누르면 (완)
-// 배송지 추가/수정 addClass("ui-active") 해줌 (완)
-// hidden input에 있는 데이터를 배송지 추가/수정탭의 input에 넣어줌 (완)
-
-
-//배송지에서 삭제버튼을 누르면
-// modifiyAddr에 삭제파라미터 넣어서 서버에 보냄
-// 성공시 배송지목록에 데이터 바꿔줌.
-
-// 확인버튼 누를시 modifyAddr 입력데이터 검사후 서버에 배송지 데이터를 보내줌 파라미터로 (추가/수정/삭제) 넣어서 보내줌.
-// 서버에서 처리한 후 배송지 목록 화면에 뿌려줌
-
-
-
-// 배송지 목록에서 확인버튼 누르면 selectDstnAddr
-
-
 
 // 배송지 추가/수정 창 인풋 클리어
 function clearAddrInput() {
@@ -493,6 +475,19 @@ function clearAddrInput() {
 	$("#updateAddrBtn").removeAttr("onclick");
 	$("#updateAddrBtn").attr("onclick", "modifyAddr('', \"addSubmit\");");
 }
+
+//배송지 목록에서 확인버튼 누르면 selectDstnAddr
+function selectDstnAddr() {
+	
+	//배송지 선택 안했을 경우
+	if ( $("input[name=dstnRadio]:checked").val() != "on" ) {
+        alert("주소를 선택해주세요.");
+        return;
+    }
+	
+}
+
+
 
 // 휴대폰번호 체크
 function checkMoblie(obj, name) {
@@ -547,6 +542,55 @@ function checkMoblie(obj, name) {
     }
 
     return true;
+}
+
+// 이름 공백 체크
+function nameChk(obj){
+    var pattern1 = /\s{2,}/g;
+    var name = $(obj).val();
+    var vali_1 = false;
+    var vali_2 = false;
+    var vali_3 = false;
+
+    if(pattern1.test(name)){
+        name = name.replaceAll(pattern1,"");
+        vali_1 = true;
+    }
+    if(name[0]== " " || name[0] == "\t"){
+        name = name.slice(1,name.length);
+        vali_2 = true;
+    }
+    if (name[name.length-1] == " " || name[name.length-1] == "\t") {
+        name = name.slice(0,name.length-1);
+        vali_3 = true;
+    }
+
+    if(vali_1){
+        alert("공백은 연속해서 입력할 수 없습니다.");
+    }else if(vali_2){
+        alert("이름은 공백으로 시작할 수 없습니다.");
+    }else if(vali_3){
+        alert("이름은 공백으로 끝날 수 없습니다.");
+    }
+
+    $(obj).val(name);
+}
+
+
+/* 카카오 우편번호 */
+function kakaopost() {
+    new daum.Postcode({
+    	// oncomplete : 주소 선택 후 콜백
+        oncomplete: function(data) {
+        	// kakaoPost에서 가져온 우편번호, 주소값을 저장
+           $("input[name='address_f']").val(data.zonecode);
+           $("input[name='address_l']").val(data.address+", ");
+           $("input[name='address_f']").attr('readonly', true);
+           
+           
+           $("input[name='address_l']").focus();
+        }
+    }).open();
 }
 
 

@@ -6,6 +6,13 @@ import com.hmall.team04.dto.deliever.DelieverDTO;
 
 public interface DelieverDAO {
 
-	List<DelieverDTO> selectDelieverListByUserId(String userId) throws Exception;
+	List<DelieverDTO> selectDelieverListByUserId(String user_id) throws Exception;
 
+	DelieverDTO insertDeliever(DelieverDTO delieverDTO) throws Exception;
+
+	Integer updateDeliever(DelieverDTO delieverDTO) throws Exception;
+
+	Integer deleteDeliever(DelieverDTO delieverDTO) throws Exception;
+	
+	
 }

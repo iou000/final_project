@@ -10,37 +10,37 @@
 		SELECT
 			deliever_id, user_id, address_f, address_l, deliever_hp_no, receiver_nm, active_yn
 		FROM  deliever_dt_t
-		WHERE user_id = #{userId}
+		WHERE user_id = #{user_id}
 		ORDER BY active_yn DESC
-	
 	</select>
 	
+	<!-- 배송지 삽입 -->
+	<select id="insertDeliever" parameterType="DelieverDTO" resultType="DelieverDTO">
+		INSERT INTO deliever_dt_t 
+			(DELIEVER_ID, user_id, address_f, address_l, deliever_hp_no, receiver_nm, active_yn)
+		values
+			(DELIEVER_DT_T_DELIEVER_ID_SEQ.nextval, #{user_id}, #{address_f}, #{address_l}, #{deliever_hp_no}, #{receiver_nm}, #{active_yn} )
+	</select>
 	
+	<!-- 배송지 수정 -->
+	<select id="updateDeliever" parameterType="DelieverDTO" resultType="Integer">
+		UPDATE deliever_dt_t SET
+		    address_f = #{address_f},
+		    address_l = #{address_l},
+		    deliever_hp_no = #{deliever_hp_no},
+		    receiver_nm = #{receiver_nm},
+		    active_yn = #{active_yn}
+		WHERE
+		    user_id = #{user_id} and deliever_id = #{deliever_id}
+	</select>
 	
-    <!-- <select id="checkUserIdYn" resultType="String">
-        <![CDATA[
-            SELECT 
-                fn_check_user_id_yn(#{userId}) AS RESULT_VALUE
-             FROM DUAL
-        ]]>
-    </select>
-    
+	<!-- 배송지 삭제 -->
+	<select id="deleteDeliever" parameterType="DelieverDTO" resultType="Integer">
+		DELETE deliever_dt_t
+		WHERE
+			user_id = #{user_id} and deliever_id = #{deliever_id}
+	</select>
 	
-    <select id="checkUserEmailYn" resultType="String">
-        <![CDATA[
-            SELECT 
-                fn_check_user_email_yn(#{email}) AS RESULT_VALUE
-            FROM DUAL
-        ]]>
-    </select>
-    
-	
-    <select id="insertUser" parameterType="SignUpRequestDTO" statementType="CALLABLE" resultType="SignUpRequestDTO">
-
-           { CALL user_t_insert_user(#{user_id}, #{email}, #{password}, #{user_nm}, #{gender}, #{birth}, #{address_f}, #{address_l}, #{hp_no}, #{auth}) }
-
-    </select> -->
-    
     
 	
 </mapper>
