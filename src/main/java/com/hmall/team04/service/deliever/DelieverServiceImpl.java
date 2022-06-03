@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.hmall.team04.dao.deliever.DelieverDAO;
 import com.hmall.team04.dto.deliever.DelieverDTO;
+import com.hmall.team04.util.PhoneNumberUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -16,12 +17,18 @@ import lombok.extern.log4j.Log4j;
 public class DelieverServiceImpl implements DelieverService {
 	
 	private final DelieverDAO delieverDAO;
+	private final PhoneNumberUtil phoneNumberUtil;
 	
 	// 배송지 리스트 조회
 	@Override
 	public List<DelieverDTO> selectDelieverListByUserId(String user_id) throws Exception {
 		
-		return delieverDAO.selectDelieverListByUserId(user_id);
+		List<DelieverDTO> delieverList = delieverDAO.selectDelieverListByUserId(user_id);
+		for(DelieverDTO dto : delieverList) {
+			dto.setDeliever_hp_no(phoneNumberUtil.phoneNumberHyphenAdd(dto.getDeliever_hp_no(), "N"));
+		}
+		
+		return delieverList;
 	}
 	
 	// 배송지 추가
@@ -44,6 +51,14 @@ public class DelieverServiceImpl implements DelieverService {
 		
 		delieverDAO.deleteDeliever(delieverDTO);
 		
+	}
+	//기본배송지 조회
+	@Override
+	public DelieverDTO selectDelieverActiveYnByUserId(String user_id) throws Exception {
+		DelieverDTO delieverDTO = delieverDAO.selectDelieverActiveYnByUserId(user_id);
+		delieverDTO.setDeliever_hp_no(phoneNumberUtil.phoneNumberHyphenAdd(delieverDTO.getDeliever_hp_no(), "N"));
+		
+		return delieverDTO;
 	}
 
 }
