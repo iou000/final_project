@@ -14,6 +14,8 @@
    src="<c:url value="/webjars/jquery/3.6.0/dist/jquery.js" />"></script>
 <script type="text/javascript" src="${app}/resources/js/common-pub.js"></script>
 <script type="text/javascript" src="${app}/resources/js/common.js"></script>
+<script type="text/javascript" src="${app}/resources/js/common-pub.js"></script>
+<script type="text/javascript" src="${app}/resources/js/commonFunction.js"></script>
 
 <script type="text/javascript">
          $(function(){

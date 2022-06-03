@@ -41,6 +41,14 @@
 			user_id = #{user_id} and deliever_id = #{deliever_id}
 	</select>
 	
+	<!-- USER의 기본 배송지를 받아옴 -->
+	<select id="selectDelieverActiveYnByUserId" parameterType="String" resultType="DelieverDTO">
+		SELECT
+			deliever_id, user_id, address_f, address_l, deliever_hp_no, receiver_nm, active_yn
+		FROM  deliever_dt_t
+		WHERE user_id = #{user_id} and active_yn = 1
+		ORDER BY active_yn DESC
+	</select>
     
 	
 </mapper>

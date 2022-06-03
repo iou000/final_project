@@ -13,6 +13,7 @@ public interface DelieverDAO {
 	Integer updateDeliever(DelieverDTO delieverDTO) throws Exception;
 
 	Integer deleteDeliever(DelieverDTO delieverDTO) throws Exception;
-	
+
+	DelieverDTO selectDelieverActiveYnByUserId(String user_id) throws Exception;
 	
 }

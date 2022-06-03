@@ -18,4 +18,7 @@ public interface DelieverService {
 	//배송지 삭제
 	void deleteDeliever(DelieverDTO delieverDTO) throws Exception;
 
+
+	DelieverDTO selectDelieverActiveYnByUserId(String user_id) throws Exception;
+
 }
