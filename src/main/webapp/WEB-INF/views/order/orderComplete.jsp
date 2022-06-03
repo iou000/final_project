@@ -3,329 +3,106 @@
 
 <c:set var="app" value="${pageContext.request.contextPath}" />
 
+<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+
 <!-- jquery ; already imported -->
 
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
-<!-- try : 1 -->
-<script>
-var IMP = window.IMP; // 생략 가능
-IMP.init("imp50136231"); // 예: imp00000000
-
-var amount=0;
-var buyer_name='아임포트';
-var email="iamport@siot.do";
-
-var hp = "02-1234-1234";
-var addr = "서울특별시 강남구 신사동";
-
-// IMP.request_pay(param, callback) 결제창 호출
-function requestPay0() {
-    IMP.request_pay({ // param
-        pg: "kakaopay",
-        pay_method: 'card',
-        merchant_uid: "merchant_" + new Date().getTime(),
-        name: "Bunddeuk",
-        amount: amount,
-        //customer_uid
-        customer_uid : buyer_name + new Date().getTime(),
-        buyer_email: email,
-        buyer_name: buyer_name,
-        buyer_tel: hp,
-        buyer_addr: addr
-    }, function (rsp) { // callback
-        if (rsp.success) {
-        	alert('빌링키 발급 성공');
-        	console.log('빌링키 발급 성공',rsp)
-            // 결제 성공 시 로직,
-            alert('예약 결제가 완료되었습니다');
-        } else {
-        	alert('빌링키 발급 실패');
-            // 결제 실패 시 로직,
-            var msg = '결제에 실패하였습니다.\n';
-            msg += rsp.error_msg;
-            alert(msg);
-            return false;
-        }
-    	
-    });
-  }
-</script>
-
-<!-- try : 2 ; invalid cid => cid? customer_uid ?-->
-<script>
-var IMP = window.IMP; // 생략 가능
-IMP.init("imp50136231"); // 예: imp00000000
-
-var amount=0;
-var buyer_name='아임포트';
-var email="iamport@siot.do";
-
-var hp = "02-1234-1234";
-var addr = "서울특별시 강남구 신사동";
-
-// IMP.request_pay(param, callback) 결제창 호출
-function requestPay00() {
-    IMP.request_pay({ // param
-        pg: "kakaopay",
-        pay_method: 'card',
-        merchant_uid: "merchant_" + new Date().getTime(),
-        name: "Bunddeuk",
-        amount: amount,
-        customer_uid : "TC0ONETIME",
-        buyer_email: email,
-        buyer_name: buyer_name,
-        buyer_tel: hp,
-        buyer_addr: addr
-    }, function (rsp) { // callback
-        if (rsp.success) {
-        	alert('빌링키 발급 성공');
-        	console.log('빌링키 발급 성공',rsp)
-            // 결제 성공 시 로직,
-            alert('예약 결제가 완료되었습니다');
-        } else {
-        	alert('빌링키 발급 실패');
-            // 결제 실패 시 로직,
-            var msg = '결제에 실패하였습니다.\n';
-            msg += rsp.error_msg;
-            alert(msg);
-            return false;
-        }
-    	
-    });
-  }
-</script>
-
-<!-- try : 2.1 ; https://github.com/iamport/iamport-manual/blob/master/%EB%B9%84%EC%9D%B8%EC%A6%9D%EA%B2%B0%EC%A0%9C/example/kakaopay-request-billing-key.md-->
-<!-- 2.1 빌링키 발급만 요청하기. 에 따라 진행하였지만 빌링키 발급 실패만 떴다 -->
-<!-- 공식문서 번외로 msg를 추가 설정하여 onetime order should have amount라는 에러를 확인함 -->
-<!-- 문서 그대로는 분명 언제나 맞지 않기에 남들이 1주일 걸리거겠지.... -->
+<!-- final-->
 
 <script>
 var IMP = window.IMP; // 생략 가능
 IMP.init("imp49827942"); // 예: imp00000000
-
-function requestPay000() {
-	IMP.request_pay({
-		merchant_uid : "order_monthly_0001", // 상점에서 관리하는 주문 번호
-		name : '최초인증결제',
-		amount : 0, // 빌링키 발급만 진행하며 결제승인을 하지 않습니다.
-		customer_uid : 'TC0ONETIME', // 필수 입력
-		buyer_email : 'iamport@siot.do',
-		buyer_name : '아임포트',
-		buyer_tel : '02-1234-1234'
-	}, function(rsp) {
-		if (rsp.success) {
-			alert('빌링키 발급 성공');
-		} else {
-			alert('빌링키 발급 실패');
-			var msg = '결제에 실패하였습니다.\n';
-            msg += rsp.error_msg;
-            alert(msg);
-            return false;
-		}
-	});
-}
-	
-</script>
-
-<!-- try : 2.2 ; https://github.com/iamport/iamport-manual/blob/master/%EB%B9%84%EC%9D%B8%EC%A6%9D%EA%B2%B0%EC%A0%9C/example/kakaopay-request-billing-key.md-->
-
-<script>
-var IMP = window.IMP; // 생략 가능
-IMP.init("imp49827942"); // 예: imp00000000
-
-var amount=0;
-var buyer_name='아임포트';
-var email="iamport@siot.do";
-
-var hp = "02-1234-1234";
-var addr = "서울특별시 강남구 신사동";
-
-
-function requestPay0000() {
-	IMP.request_pay({
-		pay_method : 'card', // 기능 없음.
-		merchant_uid : "order_monthly_0001", // 상점에서 관리하는 주문 번호
-		name : '최초인증결제',
-		amount : 1004, // 빌링키 발급만 진행하며 결제승인을 하지 않습니다.
-		customer_uid : 'TC0ONETIME', // 필수 입력
-		buyer_email : 'iamport@siot.do',
-		buyer_name : '아임포트',
-		buyer_tel : '02-1234-1234'
-	}, function(rsp) {
-		if (rsp.success) {
-			alert('빌링키 발급 성공');
-		} else {
-			alert('빌링키 발급 실패');
-			var msg = '결제에 실패하였습니다.\n';
-            msg += rsp.error_msg;
-            alert(msg);
-            return false;
-		}
-	});
-}
-	
-</script>
-
-<!-- try 3 -->
-
-<script>
-var IMP = window.IMP; // 생략 가능
-IMP.init("imp49827942"); // 예: imp00000000
-
-// 1 minute = 1 second * 60 = 1000 miliseconds * 60
-var min = 1000*60;
-var hr = min*60;
-var dy = hr*24;
-
-function requestPay00000() {
-	IMP.request_pay({
-		pay_method : 'card', // 기능 없음.
-		merchant_uid : "merchant_" + new Date().getTime(), // 상점에서 관리하는 주문 번호
-		name : '최초인증결제',
-		amount : 1004, // 빌링키 발급만 진행하며 결제승인을 하지 않습니다.
-		customer_uid : 'TC0ONETIME', // 필수 입력
-		buyer_email : 'iamport@siot.do',
-		buyer_name : '아임포트',
-		buyer_tel : '02-1234-1234'
-	}, function(rsp) {
-		if (rsp.success) {
-			alert('빌링키 발급 성공');
-			console.log('빌링키 발급 성공',rsp)
-			
-			console.log('결제완료일자 ; 일', rsp.paid_at/dy);
-			console.log('결제완료일자 ; 시', rsp.paid_at/hr);
-			console.log('결제완료일자 ; 초', rsp.paid_at/min);
-		} else {
-			alert('빌링키 발급 실패');
-			var msg = '결제에 실패하였습니다.\n';
-            msg += rsp.error_msg;
-            alert(msg);
-            return false;
-		}
-	});
-}
-	
-</script>
-
-<!-- try 4 -->
-
-<script>
-var IMP = window.IMP; // 생략 가능
-IMP.init("imp49827942"); // 예: imp00000000
-
-// 1 minute = 1 second * 60 = 1000 miliseconds * 60
-var min = 1000*60;
-var hr = min*60;
-var dy = hr*24;
-
-function requestKakaoPay() {
-	IMP.request_pay({
-		pay_method : 'card', // 기능 없음.
-		merchant_uid : "merchant_" + new Date().getTime(), // 상점에서 관리하는 주문 번호
-		name : '최초인증결제',
-		amount : 1004, // 빌링키 발급만 진행하며 결제승인을 하지 않습니다.
-		customer_uid : 'TC0ONETIME', // 필수 입력
-		buyer_email : 'iamport@siot.do',
-		buyer_name : '아임포트',
-		buyer_tel : '02-1234-1234'
-	}, function(rsp) {
-		if (rsp.success) {
-			alert('빌링키 발급 성공');
-			console.log('빌링키 발급 성공',rsp)
-			
-			console.log('결제완료일자 ; 일', rsp.paid_at/dy);
-			console.log('결제완료일자 ; 시', rsp.paid_at/hr);
-			console.log('결제완료일자 ; 초', rsp.paid_at/min);
-		} else {
-			alert('빌링키 발급 실패');
-			var msg = '결제에 실패하였습니다.\n';
-            msg += rsp.error_msg;
-            alert(msg);
-            return false;
-		}
-	});
-}
-	
-</script>
-
-<!-- try 1.1 무통장 kcp -->
-
-<script>
-var IMP = window.IMP; // 생략 가능
-IMP.init("imp49827942"); // 예: imp00000000
-
-// 1 minute = 1 second * 60 = 1000 miliseconds * 60
-var min = 1000*60;
-var hr = min*60;
-var dy = hr*24;
-
-function requestKcpPay() {
-	IMP.request_pay({
-		pg : 'kcp',
-		pay_method : 'vbank', // 기능 없음.
-		merchant_uid : "merchant_" + new Date().getTime(), // 상점에서 관리하는 주문 번호
-		name : '최초인증결제',
-		amount : 1004, // 빌링키 발급만 진행하며 결제승인을 하지 않습니다.
-		customer_uid : 'TC0ONETIME', // 필수 입력
-		buyer_email : 'iamport@siot.do',
-		buyer_name : '아임포트',
-		buyer_tel : '02-1234-1234'
-	}, function(rsp) {
-		if (rsp.success) {
-			alert('빌링키 발급 성공');
-			console.log('빌링키 발급 성공',rsp)
-			
-			console.log('결제완료일자 ; 일', rsp.paid_at/dy);
-			console.log('결제완료일자 ; 시', rsp.paid_at/hr);
-			console.log('결제완료일자 ; 초', rsp.paid_at/min);
-		} else {
-			alert('빌링키 발급 실패');
-			var msg = '결제에 실패하였습니다.\n';
-            msg += rsp.error_msg;
-            alert(msg);
-            return false;
-		}
-	});
-}
-	
-</script>
-
-<!-- try 1.2 KG이니시스-->
-
-<script>
-var IMP = window.IMP; // 생략 가능
-IMP.init("imp49827942"); // 예: imp00000000
-
-var today = new Date();
-
-var year = today.getFullYear();
-var month = ('0' + (today.getMonth() + 1)).slice(-2);
-var day = ('0' + today.getDate()).slice(-2);
-var hours = ('0' + today.getHours()).slice(-2); 
-var minutes = ('0' + today.getMinutes()).slice(-2);
-var seconds = ('0' + today.getSeconds()).slice(-2);
-
-val_merchant_uid=year+month+day+hours+minutes+seconds;
-
-console.log(val_merchant_uid);
-
-var val_prd_order_id = "merchant_" + new Date().getTime();
-var val_name = '주문명:결제테스트'; // prd_board_id 정도가 적절
-var val_amount = 100; // 주문화면에서 최종주문금액(총액 - 할인가격) for 결제테이블
-var val_buyer_email = 'iamport@siot.do'; // 주문화면의 사용자 이메일 email
-var val_buyer_name = '구매자이름(김경철)'; // 주문화면의 user_nm
-var val_buyer_tel = '010-1234-5678'; // 주문화면의 user_t.hp_no
-var val_buyer_addr = '서울특별시 강남구 삼성동';// 주문화면의 user_t.address_f || user_t.address_l
-var val_notice_url = 'https://145a-58-143-54-209.jp.ngrok.io/team04/orderPayComplete';//
 
 function requestPay() {
+	var token = $("input[name='_csrf']").val();
+	var header = "X-CSRF-TOKEN";
+	
+	// 결제수단 선택과 이에 따른 pg, pay_method 설정
+	var objName = document.getElementsByName("payType");
+	var pay_type='';
+	
+	var val_pg='';
+	var val_pay_method='';
+	
+	for(var i=0; i<objName.length; i++){
+	    if(objName[i].checked){
+		   	alert("선택한 결제수단 번호는 "+objName[i].value+"입니다");
+		   	pay_type=objName[i].value;
+		   	alert(pay_type)
+		}
+	}
+	
+	switch (pay_type) {
+	  case '10':
+		  val_pg='kcp';
+		  val_pay_method='card';
+		  break;
+	  case '20':
+		  val_pg='html5_inicis';
+		  val_pay_method='vbank';
+		  break;
+	  case '30':
+		  val_pg='kakaopay';
+		  val_pay_method='card';
+		  break;
+	  default:
+	    alert( "어떤 값인지 파악이 되지 않습니다." );
+	}
+	
+
+	// 주문번호 생성
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
+	var hours = ('0' + today.getHours()).slice(-2); 
+	var minutes = ('0' + today.getMinutes()).slice(-2);
+	var seconds = ('0' + today.getSeconds()).slice(-2);
+
+	console.log(val_merchant_uid);
+
+	var val_merchant_uid = year+month+day+hours+minutes+seconds;
+	var val_name = '주문명:결제테스트'; // prd_board_id 정도가 적절
+	var val_amount = 100; // 주문화면에서 최종주문금액(총액 - 할인가격) for 결제테이블
+	var val_buyer_email = 'iamport@siot.do'; // 주문화면의 사용자 이메일 email
+	var val_buyer_name = '구매자이름(김경철)'; // 주문화면의 user_nm
+	var val_buyer_tel = '010-1234-5678'; // 주문화면의 user_t.hp_no
+	var val_buyer_addr = '서울특별시 강남구 삼성동';// 주문화면의 user_t.address_f || user_t.address_l
+	var val_notice_url = 'https://145a-58-143-54-209.jp.ngrok.io/team04/orderPayComplete';//
+	
+	// 상단은 아임포트로 request를 날릴때 필요한 정보들이라면, 
+	
+	// 하단은 아임포트로부터 response를 받은 후 AJAX POST로 '/team04/orderComplete'에 보낼 때 필요한 정보들
+	// 결제 관련 테이블들에 Insert되거나 세션에 저장될 정보들
+	var orderCompleteList = [];
+	$(".order-list").each(function(index, element){
+		
+		val_prd_id = ($(element).find("input[name='prd_id']").val());
+		alert(val_prd_id);
+		
+		//val_prd_count = ($(element).find("input[name='prd_count']").val());
+		//alert(val_prd_count);
+		
+		// 우선은 prd_id, prd_count만 생각하지만, 필요 시 위와같이 접근해서 담아 보내면된다.
+		// 아래는 우선 임시값 하드코딩
+		val_prd_count=3;
+		var ordercomplete = [val_prd_id,val_prd_count];
+		
+		orderCompleteList.push(ordercomplete);
+		
+	});
+	
+	for(var i=0; i<orderCompleteList.length;i++){
+		console.log(orderCompleteList[i]);
+	}
+	
 	IMP.request_pay({
-	    pg : 'html5_inicis',
-	    pay_method : 'card',
-	    merchant_uid: val_prd_order_id, // 상점에서 관리하는 주문 번호를 전달
+	    pg : val_pg,
+	    pay_method : val_pay_method,
+	    merchant_uid: val_merchant_uid, // 상점에서 관리하는 주문 번호를 전달
 	    name : val_name,
 	    amount : val_amount,
 	    buyer_email : val_buyer_email,
@@ -338,7 +115,27 @@ function requestPay() {
 			alert('빌링키 발급 성공');
 			console.log('빌링키 발급 성공',rsp)
 			
-			// 유효한 결제정보를, ordercomplete post controller로 전송 for 세션에 정보저장
+			// 유효한 결제정보를, ordercomplete post controller로 전송 for DB 테이블과 세션에 정보저장
+			$.ajax({
+				url : "${app}/orderComplete",
+				method : "POST",
+				traditional: true,	// ajax 배열 넘기기 옵션!
+				data : {
+					orderCompleteList : orderCompleteList
+				},
+				dataType : 'json',
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(header, token);
+				},
+				success : function(data) {
+					if(data.orderCompleteSuccess=='True'){
+						alert('your choiceSSSS is ordercompleted and let us go ordercomplete page');
+						location.href = '${app}/orderComplete';
+					}
+				}
+			});
+
+			alert('after rsp.success, let us go to controller end');	
 			
 		} else {
 			alert('빌링키 발급 실패');
@@ -352,6 +149,28 @@ function requestPay() {
 	
 </script>
 
+<script>
+
+// 주문결제 화면에서 상품정보 foreach문에 정상적으로 접근하는 것을 확인하는 함수
+function AccessToOrderList(obj) {
+	var token = $("input[name='_csrf']").val();
+	var header = "X-CSRF-TOKEN";
+
+	var orderList = [];
+	
+	$(".order-list").each(function(index, element){
+		
+		val_prd_id = ($(element).find("input[name='prd_id']").val());
+		alert(val_prd_id);
+		
+		val_prd_count = ($(element).find("input[name='prd_count']").val());
+		alert(val_prd_count);
+	});
+
+	alert('AccessToOrderList end');		
+
+	}
+</script>
 
 <div class="order-wrap">
 	<div class="order-top">
@@ -364,12 +183,35 @@ function requestPay() {
 	</div>
 
 	<!-- 첫구매 -->
-	<h1>아임포트 임시 테스트 공간 시작</h1>
+	<h1>@@@@@@@@@@@@아임포트 임시 테스트 공간 시작@@@@@@</h1>
+	
+	<h3 class="title22 selected only">
+		<button data-modules-collapse="" class="accordion-trigger"
+			aria-expanded="false">
+			상품정보 <span class="num" id="ordItemCnt"></span><i class="icon"></i>
+		</button>
+	</h3>
+	<button onclick="AccessToOrderList()">#### 상품정보 선택 테스트 버튼 ####</button>
+
+	<c:forEach items="${ordercompleteList}" var="tmp_subitem">
+	<div class="accordion-panel selected" role="region" aria-label="">
+		<div class="order-list" id="orderItems">
+			<ul>
+				<li name="orderItem">
+					<input type="hidden" name="prd_id" value="${tmp_subitem.prd_id}">
+					<input type="hidden" name="prd_count" value="${tmp_subitem.prd_order_id}">
+					<h1>!! 원래는 결제성공 전 상품정보들, prd_id 외 prd_count 등, 를 접근하면 된다 !! test value of input tag  : ${tmp_subitem.prd_order_id}</h1>
+				</li>
+			</ul>
+		</div>
+	</div>
+	</c:forEach>
+
 	<h3 class="title22">
 		결제 수단 
 	</h3>
 	
-	<button onclick="requestPay()">결제 테스트 버튼</button>
+	<button onclick="requestPay()">#### 결제 테스트 버튼 ####</button>
 	
 	<div class="payment-way-box" id="payTypeHpp">
 		<ul>
@@ -384,11 +226,30 @@ function requestPay() {
 				<div class="payment-content">
 					<div id="payTypeDiv">
 						<div class="radio-box pay-radio">
+						
 							<!-- 무통장 입금 -->
 							<span> 
-							<input type="radio" name="payType" id="payType2" value="20"  onclick="requestKcpPay();">
+							<input type="radio" name="payType" id="payType1" value="10" >
+								<label for="payType1" class="sm50">
+										<span class="text">신용카드</span>
+								</label>
+							</span>
+							<!-- // 무통장 입금 -->
+						
+							<!-- 무통장 입금 -->
+							<span> 
+							<input type="radio" name="payType" id="payType2" value="20" >
 								<label for="payType2" class="sm50">
 										<span class="text">무통장입금</span>
+								</label>
+							</span>
+							<!-- // 무통장 입금 -->
+						
+							<!-- 무통장 입금 -->
+							<span> 
+							<input type="radio" name="payType" id="payType3" value="30" >
+								<label for="payType3" class="sm50">
+										<span class="text">카카오페이</span>
 								</label>
 							</span>
 							<!-- // 무통장 입금 -->
@@ -403,7 +264,7 @@ function requestPay() {
 	</div>
 	
 	
-	<h1>아임포트 임시 테스트 공간 끝</h1>
+	<h1>@@@@@@@@@@@@아임포트 임시 테스트 공간 끝@@@@@@</h1>
 	<!-- //첫구매 -->
 
 	<!-- 5만원 이사의 첫 구매가 아닐 때-->

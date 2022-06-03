@@ -10,9 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hmall.team04.dao.file.FileDAO;
 import com.hmall.team04.dao.product.ProductBoardDAO;
 import com.hmall.team04.dao.review.ReviewDAO;
 import com.hmall.team04.dto.common.Criteria;
+import com.hmall.team04.dto.common.ReviewCriteria;
+import com.hmall.team04.dto.common.ReviewPageDTO;
+import com.hmall.team04.dto.file.FileDTO;
 import com.hmall.team04.dto.product.ProductBoardDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
 
@@ -27,14 +31,17 @@ public class ProductBoardReviewDAOTests {
 	@Setter(onMethod_ = @Autowired)
 	private ReviewDAO reviewDAO;
 	
+	@Setter(onMethod_ = @Autowired)
+	private FileDAO fileDAO;
+	
 	@Test
 	public void testInsertReviewProductBoard() {
 		// review_t
 		String prd_board_id="prd_board_id_tmp1";
 		
-		String user_id="1";
-		String content="review_content_tmp3";
-		int star=2;
+		String user_id="22";
+		String content="review_content_tmp"+user_id;
+		int star=3;
 		int file_yn=1;
 		
 		ReviewDTO reviewDTO = new ReviewDTO();
@@ -74,16 +81,42 @@ public class ProductBoardReviewDAOTests {
 	}
 	
 	@Test
-	public void getReviewList() {
+	public void getReviewCount() {
 		// review_t
-		String prd_board_id="prd_board_id_tmp1";
-		
-		Criteria cri = new Criteria();
-		cri.setPrd_board_id(prd_board_id);
-		
 		
 		try {
-			reviewDAO.getReviewList(cri);
+			reviewDAO.getReviewCount("prd_board_id_tmp1");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testgetReviewListByInsdtCore() {
+		// review_t
+		ReviewCriteria reviewcri = new ReviewCriteria(1, 10, "200");
+		ArrayList<ReviewDTO> reviewDTO = null;
+		ReviewPageDTO reviewpageMaker = null;
+		
+		ArrayList<FileDTO> fileDTO = null;
+		
+		try {
+			reviewDTO = reviewDAO.getReviewListByInsdtCore(reviewcri);
+			
+			for(int i=0;i<reviewDTO.size();i++) {
+				log.info(reviewDTO.get(i));
+				
+				if(reviewDTO.get(i).getFile_yn()==1) {
+					FileDTO file = new FileDTO();
+					file.setArticle_id(reviewDTO.get(i).getReview_id());
+					file.setBoard_flag("review");
+					
+					fileDTO = fileDAO.getReviewFileList(file);
+					reviewDTO.get(i).setFileList(fileDTO);
+					log.info(reviewDTO.get(i));
+				}
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

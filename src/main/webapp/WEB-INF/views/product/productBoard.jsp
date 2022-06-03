@@ -539,7 +539,7 @@ $('.itemEvalRegBtn').on("click",function(e) {
 	//let popUrl = "/replyEnroll/" + memberId + "?bookId=" + bookId;
 	let popUrl = "${app}/reviewEnroll/" + memberId+ "?prd_board_id=" + prd_board_id;
 	console.log(popUrl);
-	let popOption = "width = 490px, height=490px, top=300px, left=300px, scrollbars=yes";
+	let popOption = "width = 500px, height=900px, top=300px, left=300px, scrollbars=yes";
 	
 	window.open(popUrl,"리뷰 쓰기",popOption);
 });
