@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hmall.team04.dto.order.OrderCompleteDTO;
+import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.service.order.OrderService;
 
 import lombok.extern.log4j.Log4j;
@@ -32,7 +33,7 @@ public class OrderController2 {
 	//@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/orderComplete", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public HashMap<String, String> orderComplete(OrderCompleteDTO ordercompleteDTO,Principal principal,HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public HashMap<String, String> orderComplete(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 앞선 주문결제화면에서 유효한 거래라면 화면에서 데이터베이스로, 주문테이블, 주문상세테이블, 결제테이블들에 행이 Create된 상태이다.
 		// 다만 여기서 문제는 '주문결제' 화면에서 데이터베이스로 단방향이라는 점이다. 중간에 븥잡을 곳은 컨트롤러간 임시저장소인 세션뿐이다.
@@ -41,15 +42,35 @@ public class OrderController2 {
 		// 왜냐하면 prd_order_id는 pk 설정하면서 인덱스를 설정하기 때문이다.
 		
 		// 주문결제화면에서 주문완료화면으로 넘어갈 때, 세션에 prd_board_id와 user_id가 저장되어있다는 것을 전제한다.
-		ordercompleteDTO.setPrd_order_id("merchant_1653809215425");
-		ordercompleteDTO.setUser_id("1");
-		
-		// 컨트롤러 간 공용 임시저장소인 session 을 불러와, orderInfo라는 key에 orderList를 value로 저장
-		HttpSession session = req.getSession();
-		session.setAttribute("ordercompleteDTO", ordercompleteDTO);
+		// ajax를 통해 넘어온 배열 데이터 선언
+		String[] arrStr = req.getParameterValues("orderCompleteList");
+		log.info(arrStr);
 
+		// 현재 String 배열 안에 String이 있는 상태임, 이걸 ArrayList 형태로 전환
+		ArrayList<OrderCompleteDTO> orderCompleteList = new ArrayList<OrderCompleteDTO>();
+		if (arrStr != null && arrStr.length > 0) {
+			for (int i = 0; i < arrStr.length; i++) {
+				log.info(arrStr[i]);
+				String[] subitem = arrStr[i].split(",");
+				
+				OrderCompleteDTO orderCompleteDTO = new OrderCompleteDTO();
+				orderCompleteDTO.setPrd_id(subitem[0]);
+				orderCompleteDTO.setPrd_count(Integer.parseInt(subitem[1]));
+				
+				log.info(orderCompleteDTO);
+				
+				orderCompleteList.add(orderCompleteDTO);
+			}
+		}
+		// ArrayList 로 변환 완료
+		log.info(orderCompleteList.toString());
+		
+		// 컨트롤러 간 공용 임시저장소인 session 을 불러와, orderCompleteList라는 key에 orderCompleteList를 value로 저장
+//		HttpSession session = req.getSession();
+//		session.setAttribute("orderCompleteList", orderCompleteList);
+		
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("orderSuccess", "True");
+		map.put("orderCompleteSuccess", "True");
 
 		return map;
 	}
@@ -84,8 +105,7 @@ public class OrderController2 {
 			String address_dest = ordercompleteList.get(0).getAddress_dest();
 			String hp_no = ordercompleteList.get(0).getHp_no();
 			
-			
-			//model.addAttribute("ordercompleteList", ordercompleteList);
+			model.addAttribute("ordercompleteList", ordercompleteList);
 			model.addAttribute("prd_order_id", prd_order_id);
 			model.addAttribute("prd_id", prd_id);
 			model.addAttribute("user_id", user_id);

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.hmall.team04.dao.review.ReviewDAO">
 
-	<!-- index.jsp와 관련된 prd_board 표시 기본형 -->
+	<!-- 해당 보드 review 조회 ; 페이징 무관 -->
 	<resultMap id="ReviewResult" type="reviewDTO">
 		<result property="content" column="content" jdbcType="CLOB" javaType="java.lang.String" />
 	</resultMap>
@@ -23,26 +23,74 @@
 		values(review_t_review_id_seq.nextval,#{prd_board_id},#{user_id},#{content},#{star},#{file_yn})
 	</insert>
 	
- 	<!-- 댓글 페이징 -->
-  	<select id="getReviewList" resultType="reviewDTO">
-  	
-  		<![CDATA[
-		select * from(  		
-			select rownum as rn, review_id, prd_board_id, user_id, content, star, ins_dt, file_yn
-			from review_t
-			where rownum <= #{pageNum} * #{amount}  and prd_board_id = #{prd_board_id}	
-			order by ins_dt desc  	
-  			)
-  		where rn > (#{pageNum} -1) * #{amount}
-  		]]>	
-  		
-  	</select>
-  	
-  	<select id="getReviewTotal" resultType="int">
-  	
-  		select count(*)
-  		from review_t
-  		where prd_board_id = #{prd_board_id}
-  	
-  	</select>
+	<!-- 선택한 board의 review 갯수 -->
+	<select id="getReviewCount" resultType="long">
+		select count(*) as cnt
+		from review_t
+		where prd_board_id = #{prd_board_id}
+	</select>
+
+	<!-- 선택한 board의 review list 읽기 -->
+	<select id="getReviewListPage" resultType="ReviewDTO">
+		select
+		B.*
+		from (select rownum as rnum, A.*
+		from( select review_id, prd_board_id, prd_id, user_id, content, star,ins_dt,file_yn
+		from review_t
+		where prd_board_id = #{prd_board_id}
+		order by review_id desc) A ) B
+		where rnum between #{startNum} and #{endNum}
+	</select>
+	
+	<select id="getReviewListByInsdt" resultType="ProductBoardDTO">
+	<![CDATA[
+		select
+		prd_board_id, discount_rate, price, title, UPLOAD_PATH 
+		from (
+			select  
+				rownum rn, prd_board_id, discount_rate, price, title, UPLOAD_PATH 
+			from (
+				select pbt.prd_board_id, pbt.discount_rate, pbt.price, pbt.title, pbt.category, ft.UPLOAD_PATH 
+				from prd_board_t pbt
+				LEFT JOIN FILE_T ft on(pbt.PRD_BOARD_ID =ft.ARTICLE_ID AND ft.board_flag='prd')
+				where pbt.category = #{categoryCode}
+				order by pbt.ins_dt desc
+			)
+			where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getReviewListByInsdtCore" resultType="ReviewDTO">
+	<![CDATA[
+		select
+		review_id, prd_board_id, prd_id, user_id, content,star,ins_dt,file_yn 
+		from (
+			select  
+				rownum rn, review_id, prd_board_id, prd_id, user_id, content,star,ins_dt,file_yn 
+			from (
+				select rt.review_id, rt.prd_board_id, rt.prd_id, rt.user_id, rt.content, rt.star, rt.ins_dt, rt.file_yn
+				from review_t rt
+				where rt.prd_board_id = #{prd_board_id}
+				order by rt.ins_dt desc
+			)
+			where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getReviewListCount" resultType="int">
+		select count(*)
+		from prd_board_t
+		where category = #{category}
+	</select>
+	
+	<select id="getReviewListCountCore" resultType="int">
+		select count(*)
+		from review_t
+		where prd_board_id = #{prd_board_id}
+	</select>
+	
 </mapper>

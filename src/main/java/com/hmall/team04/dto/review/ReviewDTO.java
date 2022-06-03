@@ -9,6 +9,7 @@ public class ReviewDTO {
 	// review_t
 	private String review_id;
 	private String prd_board_id;
+	private String prd_id;
 	private String user_id;
 	private String content;
 	private int star;

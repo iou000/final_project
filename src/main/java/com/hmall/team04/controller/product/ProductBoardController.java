@@ -27,7 +27,6 @@ import com.hmall.team04.dto.like.LikeDTO;
 import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.dto.product.ProductBoardDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
-import com.hmall.team04.dto.review.ReviewPageDTO;
 import com.hmall.team04.service.category.CategoryService;
 import com.hmall.team04.service.like.LikeService;
 import com.hmall.team04.service.product.ProductBoardService;
@@ -113,8 +112,8 @@ public class ProductBoardController {
 			// 상품 게시판 관련 기본댓글 가져오기
 			Criteria cri = new Criteria();
 			cri.setPrd_board_id(prd_board_id);
-			ReviewPageDTO reviewList = reviewService.reviewList(cri);
-			log.info(reviewList.toString());
+			//ReviewPageDTO reviewList = reviewService.reviewList(cri);
+			//log.info(reviewList.toString());
 			
 			
 			

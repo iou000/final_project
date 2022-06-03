@@ -12,8 +12,8 @@ public class OrderCompleteDTO {
 	private String order_date;
 	
 	// prd_orderdetail_t
-	private int ordQty;
 	private String prd_id;
+	private int prd_count;
 
 	// prd_payment_t
 	private String prd_pmt_id;
