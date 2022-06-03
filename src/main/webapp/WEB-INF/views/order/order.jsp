@@ -88,7 +88,7 @@
 											<div class="custom-selectbox" data-modules-selectbox="">
 												<select id="dlvMsgSelect" name="dlvMsgSelect" onchange="changeDlvMsg(this);">
 													<option value="">배송 메시지를 선택해주세요.</option>
-													<option value="부재 시 경비실에 맡겨주세요." selected>부재 시 경비실에 맡겨주세요.</option>
+													<option value="부재 시 경비실에 맡겨주세요.">부재 시 경비실에 맡겨주세요.</option>
 													<option value="부재 시 연락주세요.">부재 시 연락주세요.</option>
 													<option value="배송 전 연락주세요.">배송 전 연락주세요.</option>
 													<option value="직접 입력">직접 입력</option>

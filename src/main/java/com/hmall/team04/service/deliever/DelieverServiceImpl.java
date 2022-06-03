@@ -41,6 +41,12 @@ public class DelieverServiceImpl implements DelieverService {
 	// 배송지 수정
 	@Override
 	public void updateDeliever(DelieverDTO delieverDTO) throws Exception{
+		// delieverDTO의 active_yn이 1이면 user_id에 해당하는 active_yn 전부다 0으로 바꾼다음에 수정시켜줌
+		
+		//기본배송지로 새로 선택했을경우 기존 기본 배송지는 0으로 바꿔줘야함
+		if (delieverDTO.getActive_yn() == '1') {
+			delieverDAO.resetActiveYnByUserId(delieverDTO.getUser_id());
+		}
 		
 		delieverDAO.updateDeliever(delieverDTO);
 	}
@@ -56,7 +62,11 @@ public class DelieverServiceImpl implements DelieverService {
 	@Override
 	public DelieverDTO selectDelieverActiveYnByUserId(String user_id) throws Exception {
 		DelieverDTO delieverDTO = delieverDAO.selectDelieverActiveYnByUserId(user_id);
-		delieverDTO.setDeliever_hp_no(phoneNumberUtil.phoneNumberHyphenAdd(delieverDTO.getDeliever_hp_no(), "N"));
+		
+		//기본 배송지가 있는경우
+		if (delieverDTO != null) {
+			delieverDTO.setDeliever_hp_no(phoneNumberUtil.phoneNumberHyphenAdd(delieverDTO.getDeliever_hp_no(), "N"));
+		}
 		
 		return delieverDTO;
 	}

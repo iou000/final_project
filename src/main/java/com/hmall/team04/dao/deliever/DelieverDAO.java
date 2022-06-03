@@ -15,5 +15,7 @@ public interface DelieverDAO {
 	Integer deleteDeliever(DelieverDTO delieverDTO) throws Exception;
 
 	DelieverDTO selectDelieverActiveYnByUserId(String user_id) throws Exception;
+
+	void resetActiveYnByUserId(String user_id) throws Exception;
 	
 }

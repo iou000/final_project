@@ -25,7 +25,7 @@ public class DelieverController {
 	
 	private final DelieverService delieverService;
 	
-	//배송지 리스트 조회
+	// 배송지 리스트 조회
 	@GetMapping("/selectDelieverList")
 	public List<DelieverDTO> selectDelieverList( Principal principal) {
 		log.info("배송지 정보 요청 유저 ID : "+principal.getName()); //getName()은 현재 User ID를 뜻함.
@@ -43,21 +43,21 @@ public class DelieverController {
 	}
 	
 	// 배송지 추가
-		@PostMapping("/insertDeliever")
-		public String insertDeliever(@ModelAttribute DelieverDTO delieverDTO, Principal principal) {
-			log.info("배송지 추가 유저 ID : "+principal.getName());
-			log.info(delieverDTO.toString());
-			
-			delieverDTO.setUser_id(principal.getName());
-			log.info(delieverDTO.toString());
-			try {
-				delieverService.insertDeliever(delieverDTO);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			return delieverDTO.getDeliever_id();
+	@PostMapping("/insertDeliever")
+	public String insertDeliever(@ModelAttribute DelieverDTO delieverDTO, Principal principal) {
+		log.info("배송지 추가 유저 ID : "+principal.getName());
+		log.info(delieverDTO.toString());
+		
+		delieverDTO.setUser_id(principal.getName());
+		log.info(delieverDTO.toString());
+		try {
+			delieverService.insertDeliever(delieverDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
+		return delieverDTO.getDeliever_id();
+	}
 	
 	// 배송지 수정
 	@PostMapping("/updateDeliever")
