@@ -65,13 +65,15 @@
 	<select id="getReviewListByInsdtCore" resultType="ReviewDTO">
 	<![CDATA[
 		select
-		review_id, prd_board_id, prd_id, user_id, content,star,ins_dt,file_yn 
+		review_id, prd_board_id, prd_id, user_id, content,star,ins_dt,file_yn ,option1,option2
 		from (
 			select  
-				rownum rn, review_id, prd_board_id, prd_id, user_id, content,star,ins_dt,file_yn 
+				rownum rn, review_id, prd_board_id, prd_id, user_id, content,star,ins_dt,file_yn ,option1,option2
 			from (
-				select rt.review_id, rt.prd_board_id, rt.prd_id, rt.user_id, rt.content, rt.star, rt.ins_dt, rt.file_yn
+				select rt.review_id, rt.prd_board_id, rt.prd_id, rt.user_id, rt.content, rt.star, rt.ins_dt, rt.file_yn,
+				pt.option1, pt.option2
 				from review_t rt
+				left join prd_t pt on(rt.prd_id = pt.prd_id)
 				where rt.prd_board_id = #{prd_board_id}
 				order by rt.ins_dt desc
 			)
@@ -92,5 +94,7 @@
 		from review_t
 		where prd_board_id = #{prd_board_id}
 	</select>
+	
+	
 	
 </mapper>

@@ -1,6 +1,9 @@
 package com.hmall.team04.dto.review;
 
 import java.util.Date;
+import java.util.List;
+
+import com.hmall.team04.dto.file.FileDTO;
 
 import lombok.Data;
 
@@ -15,4 +18,11 @@ public class ReviewDTO {
 	private int star;
 	private Date ins_dt;
 	private int file_yn;
+	
+	// prd_t
+	private String option1;
+	private String option2;
+	
+	// files
+	private List<FileDTO> fileList;
 }

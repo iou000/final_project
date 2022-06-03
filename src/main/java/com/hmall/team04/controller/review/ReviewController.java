@@ -79,7 +79,7 @@ public class ReviewController {
  			
  			ArrayList<ReviewDTO> reviewDTO = reviewService.getReviewListByInsdtCore(reviewcri);
  			int totalCore = reviewService.getReviewListCountCore(prd_board_id);
-			
+ 			
 // 			cate = categoryService.getCategoryName(category);
 //			model.addAttribute("pageMaker", new ProductPageDTO(cri, total));
 //			model.addAttribute("productBoardDTO", productBoardDTO);
