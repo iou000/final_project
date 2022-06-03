@@ -49,6 +49,14 @@
 		WHERE user_id = #{user_id} and active_yn = 1
 		ORDER BY active_yn DESC
 	</select>
+	
+	<!-- 기본 배송지 업데이트용 -->
+    <update id="resetActiveYnByUserId" parameterType="String">
+    	UPDATE deliever_dt_t SET
+    		active_yn = '0'
+    	WHERE user_id = #{user_id} AND active_yn = '1'
+    </update>
+    
     
 	
 </mapper>
