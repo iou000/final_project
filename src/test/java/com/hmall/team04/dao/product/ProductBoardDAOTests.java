@@ -35,12 +35,12 @@ public class ProductBoardDAOTests {
 	
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void testGetProductBoard() {
 		
 		ProductBoardDTO productboardDTO;
 		try {
-			productboardDTO = productboardDAO.getProductBoard("prd_board_id_tmp2");
+			productboardDTO = productboardDAO.getProductBoard("200");
 			
 			System.out.println(productboardDTO.toString());
 			
