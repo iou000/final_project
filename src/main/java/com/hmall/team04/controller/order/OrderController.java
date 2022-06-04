@@ -66,7 +66,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/order", method = RequestMethod.GET)
-	public String order(OrderCompleteDTO orderDTO, HttpServletRequest req, HttpServletResponse res, Model model) {
+	public String order(OrderCompleteDTO orderCompleteDTO, HttpServletRequest req, HttpServletResponse res, Model model) {
 
 		// ArrayList 자료형을 가짐
 		// !!! 반드시 c:foreach 로 출력해야함 !!!
