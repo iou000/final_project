@@ -10,4 +10,6 @@ public interface CouponDAO {
 
 	List<CouponDTO> selectCouponListByUserId(String user_id) throws Exception;
 
+	CouponDTO selectCouponTop1ByUserId(String user_id) throws Exception;
+
 }

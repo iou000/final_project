@@ -10,7 +10,7 @@
 		SELECT 
 			count(coupon_id)
 			FROM USER_COUPON_DT_T
-			WHERE user_id = #{user_id}
+			WHERE user_id = #{user_id} AND coupon_active = '1'
 	</select>
 	
 	<select id="selectCouponListByUserId" parameterType="String" resultType = "CouponDTO">
@@ -24,10 +24,24 @@
 		    c.coupon_active
 		FROM user_coupon_dt_t u
 		JOIN coupon_t c ON u.coupon_id = c.coupon_id
-		WHERE user_id = #{user_id}
+		WHERE u.user_id = #{user_id} AND c.coupon_active = '1'
 	</select>
 	
-	
+	<select id="selectCouponTop1ByUserId" parameterType="String" resultType = "CouponDTO">
+		SELECT * FROM( SELECT
+		    				coupon_id,
+		    				coupon_nm,
+		    				coupon_price,
+		    				coupon_valid_dt,
+		    				coupon_min_price,
+		    				coupon_active
+						FROM 
+							coupon_t
+                        WHERE coupon_active = '1'
+        				ORDER BY coupon_price DESC
+        			 )
+		WHERE ROWNUM = 1
+	</select>
 	
 	
 	

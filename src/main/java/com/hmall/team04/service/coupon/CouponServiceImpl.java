@@ -31,5 +31,11 @@ public class CouponServiceImpl implements CouponService{
 
 		return couponDAO.selectCouponListByUserId(user_id);
 	}
+
+	@Override
+	public CouponDTO selectCouponTop1ByUserId(String user_id) throws Exception {
+
+		return couponDAO.selectCouponTop1ByUserId(user_id);
+	}
 	
 }

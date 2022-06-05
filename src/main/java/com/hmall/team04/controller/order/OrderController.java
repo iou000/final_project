@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.hmall.team04.dto.order.OrderCompleteDTO;
+import com.hmall.team04.dto.coupon.CouponDTO;
 import com.hmall.team04.dto.deliever.DelieverDTO;
 
 import com.hmall.team04.dto.order.OrderDTO;
+import com.hmall.team04.service.coupon.CouponService;
 import com.hmall.team04.service.deliever.DelieverService;
 import com.hmall.team04.service.user.UserService;
 
@@ -34,6 +36,7 @@ public class OrderController {
 
 	private final DelieverService delieverService;
 	private final UserService userService;
+	private final CouponService couponService;
 	
 	@RequestMapping(value = "/order", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -89,17 +92,18 @@ public class OrderController {
 		log.info(orderList);
 		
 		DelieverDTO activeDeliever = null;
+		CouponDTO top1Coupon = null;
 		try {
 			activeDeliever = delieverService.selectDelieverActiveYnByUserId(user_id);
 			user_nm = userService.getUserNamebyUserId(user_id);
-			
-			log.info("이이잉이ㅣ이이이이이이이이이이이이이이잉ㅇ"+activeDeliever);
+			top1Coupon = couponService.selectCouponTop1ByUserId(user_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		model.addAttribute("user_nm", user_nm);
 		model.addAttribute("activeDeliever", activeDeliever);
+		model.addAttribute("top1Coupon", top1Coupon);
 		model.addAttribute("orderInfo", orderList);
 		// 우선 사용 완료했으므로 삭제하여 혹시모를 용량문제 해소
 		session.removeAttribute("orderInfo");
