@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="app" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -95,7 +96,7 @@
 								
 										<span class="nick">${dto.review_id }</span>
 										<span class="nick">${dto.user_id }</span>
-	
+										
 									</div>
 									<div class="top-right">
 										<span class="date"><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.ins_dt}"
@@ -135,6 +136,8 @@
 								</div> <!-- 동영상 --> <!-- 동영상 --> <!-- //.pdwrap --> <!--review-content-->
 								<div class="review-content">
 									<div class="review-txt">${dto.content }</div>
+									<h1><sec:authentication property="principal" /></h1><br>
+
 								</div> <!--//review-content-->
 							</li>
 						</c:forEach>
@@ -202,19 +205,15 @@
 $('.itemEvalRegBtn').on("click",function(e) {
 	e.preventDefault();
 	
-	//alert('hi');
-
-	//const bookId = '${goodsInfo.bookId}';
-	const prd_board_id = 'prd_board_id_tmp1';
-	//const memberId = '${member.memberId}';
+	const prd_board_id = '200';
 	const memberId = '1';
 
-	//let popUrl = "/replyEnroll/" + memberId + "?bookId=" + bookId;
 	let popUrl = "${app}/r/Enroll/" + memberId+ "?prd_board_id=" + prd_board_id;
 	console.log(popUrl);
-	let popOption = "width = 500px, height=900px, top=300px, left=300px, scrollbars=yes";
+	let popOption = "width = 600px, height=700px, top=300px, left=300px, scrollbars=yes";
 	
 	window.open(popUrl,"리뷰 쓰기",popOption);
+	
 });
 
 </script>

@@ -54,44 +54,42 @@ public class ReviewController {
 	private CategoryService categoryService;
 	
 	/* 리뷰 쓰기 */
-	@RequestMapping("/Enroll/{memberId}")
-	public String reviewEnrollWindowGET(@PathVariable("memberId")String memberId, String prd_board_id, Model model) {
+	@RequestMapping("/Enroll/{user_id}")
+	public String reviewEnrollWindowGET(@PathVariable("user_id")String memberId,
+															 String prd_board_id,
+															 Principal principal,
+															 Model model) {
 		log.info(prd_board_id);
 		
-		model.addAttribute("memberId", memberId);
-		model.addAttribute("prd_board_id", prd_board_id);
-		
-		return "review/reviewEnroll";
+		if(principal == null) {
+			return "redirect:/loginpopup";
+		} else {
+			
+			model.addAttribute("memberId", memberId);
+			model.addAttribute("prd_board_id", prd_board_id);
+			
+			return "review/reviewEnroll";
+			
+		}
 	}
 	
 	@RequestMapping(value = "/{prd_board_id}", method = RequestMethod.GET)
 	public String productlist(@PathVariable String prd_board_id, Model model) {
-//		String cate = "";
-//		ProductCriteria cri = new ProductCriteria(category);
 		
 		// pathvariable로 전달 받을 예정인 값
 		//String prd_board_id="prd_board_id_tmp1";
 		ReviewCriteria reviewcri = new ReviewCriteria(prd_board_id);
 		
  		try {
-// 			ArrayList<ProductBoardDTO> productBoardDTO = reviewService.getReviewListByInsdt(cri);
-// 			int total = reviewService.getReviewListCount(category);
  			
  			ArrayList<ReviewDTO> reviewDTO = reviewService.getReviewListByInsdtCore(reviewcri);
  			int totalCore = reviewService.getReviewListCountCore(prd_board_id);
- 			
-// 			cate = categoryService.getCategoryName(category);
-//			model.addAttribute("pageMaker", new ProductPageDTO(cri, total));
-//			model.addAttribute("productBoardDTO", productBoardDTO);
 			
 			ReviewPageDTO reviewpageDTO = new ReviewPageDTO(reviewcri, totalCore);
 			log.info(reviewpageDTO);
 			
 			model.addAttribute("reviewpageMaker", new ReviewPageDTO(reviewcri, totalCore));
 			model.addAttribute("reviewDTO", reviewDTO);
-			
-//			model.addAttribute("category", cate);
-//			model.addAttribute("categoryCode", category);
 			
 			model.addAttribute("prd_board_id", prd_board_id);
 			
@@ -102,64 +100,6 @@ public class ReviewController {
 		return "review.review";
 	}
 	
-//	@RequestMapping(value = "/{prd_board_id}", method = RequestMethod.GET)
-//	public String product(@PathVariable String prd_board_id, Model model,Principal principal) {
-//		log.info("소분류에서 상품 선택에 따른 페이지");
-//		log.info(prd_board_id);
-//		
-//		String user_id="";
-//		
-//		if(principal != null) {
-//			// 로그인 상태에서 Like 여부 판단
-//			user_id=principal.getName();
-//			
-//			LikeDTO likeDTO = new LikeDTO();
-//			likeDTO.setPrd_board_id(prd_board_id);
-//			likeDTO.setUser_id(user_id);
-//			
-//			try {
-//				
-//				
-//				int likeIsExist = likeService.likeIsExist(likeDTO);
-//				log.info(likeIsExist);
-//				model.addAttribute("likeIsExist", likeIsExist);
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//			}
-//			
-//		}
-//		
-//		
-//		try {
-//			// 상품 게시판 가져오기
-//			ProductBoardDTO productboadDTO = productboardService.getProductBoard(prd_board_id);
-//			log.info(productboadDTO.toString());
-//
-//			// like
-//			int likeCnt = likeService.getLikeCnt(prd_board_id);
-//			
-//			LikeDTO likeDTO = new LikeDTO();
-//			
-//			// 상품 게시판 관련 기본댓글 가져오기
-//			Criteria cri = new Criteria();
-//			cri.setPrd_board_id(prd_board_id);
-//			//ReviewPageDTO reviewList = reviewService.reviewList(cri);
-//			//log.info(reviewList.toString());
-//			
-//			
-//			
-//			model.addAttribute("productboadDTO", productboadDTO);
-//			model.addAttribute("likeCnt", likeCnt);
-//			
-////			model.addAttribute("reviewList", reviewList);
-//
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		
-//		
-//		return "product.productBoard";
-//	}
 	
 	@RequestMapping(value = "/insertlik", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

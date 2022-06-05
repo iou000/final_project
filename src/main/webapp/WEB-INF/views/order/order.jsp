@@ -134,7 +134,7 @@
 												<div class="info">
 													<ul>
 
-														<li>${order.ordQty }개<input type="hidden" name="ordQty" value="1"
+														<li>${order.prd_count }개<input type="hidden" name="ordQty" value="1"
 															readonly="readonly"></li>
 													</ul>
 												</div>

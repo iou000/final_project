@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
+import com.hmall.team04.dto.order.OrderCompleteDTO;
 import com.hmall.team04.dto.deliever.DelieverDTO;
+
 import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.service.deliever.DelieverService;
 import com.hmall.team04.service.user.UserService;
@@ -42,20 +45,20 @@ public class OrderController {
 		log.info(arrStr);
 		
 		// 현재 String 배열 안에 String이 있는 상태임, 이걸 ArrayList 형태로 전환
-		ArrayList<OrderDTO> orderList = new ArrayList<OrderDTO>();
+		ArrayList<OrderCompleteDTO> orderList = new ArrayList<OrderCompleteDTO>();
 		if (arrStr != null && arrStr.length > 0) {
 			for (int i = 0; i < arrStr.length; i++) {
 				log.info(arrStr[i]);
 				String[] subitem = arrStr[i].split(",");
 				
-//				OrderDTO orderDTO = new OrderDTO();
-//				orderDTO.setPrd_board_id(subitem[0]);
-//				orderDTO.setPrd_id(subitem[1]);
-//				orderDTO.setOrdQty(Integer.parseInt(subitem[2]));
-//				
-//				log.info(orderDTO);
-//				
-//				orderList.add(orderDTO);
+				OrderCompleteDTO orderCompleteDTO = new OrderCompleteDTO();
+				orderCompleteDTO.setPrd_board_id(subitem[0]);
+				orderCompleteDTO.setPrd_id(subitem[1]);
+				orderCompleteDTO.setPrd_count(Integer.parseInt(subitem[2]));
+				
+				log.info(orderCompleteDTO);
+				
+				orderList.add(orderCompleteDTO);
 			}
 		}
 		// ArrayList 로 변환 완료
@@ -73,14 +76,16 @@ public class OrderController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/order", method = RequestMethod.GET)
-	public String order(OrderDTO orderDTO, HttpServletRequest req, HttpServletResponse res, Model model, Principal principal) {
+	public String order(OrderCompleteDTO orderCompleteDTO, HttpServletRequest req, HttpServletResponse res, Model model, Principal principal) {
 		String user_id = principal.getName();
 		String user_nm = "";
+    
 		// ArrayList 자료형을 가짐
 		// !!! 반드시 c:foreach 로 출력해야함 !!!
 		HttpSession session = req.getSession();
-		ArrayList<OrderDTO> orderList = new ArrayList<OrderDTO>();
-		orderList = (ArrayList<OrderDTO>) session.getAttribute("orderInfo");
+		ArrayList<OrderCompleteDTO> orderList = new ArrayList<OrderCompleteDTO>();
+		orderList = (ArrayList<OrderCompleteDTO>) session.getAttribute("orderInfo");
+
 		log.info(orderList);
 		
 		DelieverDTO activeDeliever = null;

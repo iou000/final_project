@@ -82,13 +82,13 @@
 	
 	<select id="getProductBoard" parameterType="String" resultType="ProductBoardDTO" resultMap="ProductBoardResult">
 		select
-		pbt.prd_board_id, pbt.discount_rate, pbt.price, pbt.title, pbt.content, pbt.score, pbt.category, pbt.brand,
+		pbt.prd_board_id, pbt.discount_rate, pbt.price, pbt.title, pbt.content, pbt.star, pbt.category, pbt.brand,
 		pt.PRD_ID,pt.prd_nm,pt.prd_detail,pt.option1,pt.option2,
 		ft.UPLOAD_PATH 
 		from prd_board_t pbt
 		LEFT JOIN PRD_T pt on(pbt.PRD_BOARD_ID=pt.PRD_BOARD_ID)
 		LEFT JOIN FILE_T ft on(pbt.PRD_BOARD_ID =ft.ARTICLE_ID)
-		WHERE pbt.prd_board_id=#{prd_board_id} and ft.board_flag='prd'
+		WHERE pbt.prd_board_id=#{prd_board_id} and ft.board_flag='prd_board'
 		order by prd_board_id
 	</select>
 	

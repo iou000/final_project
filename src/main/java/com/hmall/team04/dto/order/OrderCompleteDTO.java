@@ -4,6 +4,9 @@ import lombok.Data;
 
 @Data
 public class OrderCompleteDTO {
+	// prd_board_t
+	private String prd_board_id;
+	
 	// prd_order_t
 	private String prd_order_id;
 	private String user_id;
@@ -18,5 +21,6 @@ public class OrderCompleteDTO {
 	// prd_payment_t
 	private String prd_pmt_id;
 	private int pmt_amount;
+	private String pay_method;
 	private String pay_status;
 }
