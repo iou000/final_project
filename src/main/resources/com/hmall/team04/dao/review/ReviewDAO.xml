@@ -5,63 +5,6 @@
 
 <mapper namespace="com.hmall.team04.dao.review.ReviewDAO">
 
-	<!-- 해당 보드 review 조회 ; 페이징 무관 -->
-	<resultMap id="ReviewResult" type="reviewDTO">
-		<result property="content" column="content" jdbcType="CLOB" javaType="java.lang.String" />
-	</resultMap>
-	
-	<select id="getReviewListBasic" parameterType="String" resultType="reviewDTO" resultMap="ReviewResult">
-		select
-		review_id, prd_board_id, user_id, content, star, ins_dt, file_yn
-		from review_t rt
-		WHERE rt.prd_board_id=#{prd_board_id}
-	</select>
-	
-	<!-- insert review -->
-	<insert id="enrollReview" parameterType="reviewDTO">
-		insert into review_t(review_id,prd_board_id,user_id,content,star,file_yn)
-		values(review_t_review_id_seq.nextval,#{prd_board_id},#{user_id},#{content},#{star},#{file_yn})
-	</insert>
-	
-	<!-- 선택한 board의 review 갯수 -->
-	<select id="getReviewCount" resultType="long">
-		select count(*) as cnt
-		from review_t
-		where prd_board_id = #{prd_board_id}
-	</select>
-
-	<!-- 선택한 board의 review list 읽기 -->
-	<select id="getReviewListPage" resultType="ReviewDTO">
-		select
-		B.*
-		from (select rownum as rnum, A.*
-		from( select review_id, prd_board_id, prd_id, user_id, content, star,ins_dt,file_yn
-		from review_t
-		where prd_board_id = #{prd_board_id}
-		order by review_id desc) A ) B
-		where rnum between #{startNum} and #{endNum}
-	</select>
-	
-	<select id="getReviewListByInsdt" resultType="ProductBoardDTO">
-	<![CDATA[
-		select
-		prd_board_id, discount_rate, price, title, UPLOAD_PATH 
-		from (
-			select  
-				rownum rn, prd_board_id, discount_rate, price, title, UPLOAD_PATH 
-			from (
-				select pbt.prd_board_id, pbt.discount_rate, pbt.price, pbt.title, pbt.category, ft.UPLOAD_PATH 
-				from prd_board_t pbt
-				LEFT JOIN FILE_T ft on(pbt.PRD_BOARD_ID =ft.ARTICLE_ID AND ft.board_flag='prd')
-				where pbt.category = #{categoryCode}
-				order by pbt.ins_dt desc
-			)
-			where rownum <= #{pageNum} * #{amount}
-			)
-		where rn > (#{pageNum} - 1) * #{amount}
-		]]>
-	</select>
-	
 	<select id="getReviewListByInsdtCore" resultType="ReviewDTO">
 	<![CDATA[
 		select
@@ -83,11 +26,6 @@
 		]]>
 	</select>
 	
-	<select id="getReviewListCount" resultType="int">
-		select count(*)
-		from prd_board_t
-		where category = #{category}
-	</select>
 	
 	<select id="getReviewListCountCore" resultType="int">
 		select count(*)
@@ -95,6 +33,24 @@
 		where prd_board_id = #{prd_board_id}
 	</select>
 	
-	
+		
+	<!-- insert review -->
+	<insert id="enrollReview" parameterType="reviewDTO">
+		insert into review_t(review_id,prd_board_id,user_id,content,star,file_yn)
+		values(review_t_review_id_seq.nextval,#{prd_board_id},#{user_id},#{content},#{star},#{file_yn})
+	</insert>
+
+	<select id="ReviewIsExist" resultType="int">
+		select count(review_id) as cnt
+		from review_t rt
+		where rt.prd_board_id=#{prd_board_id} and rt.user_id=#{user_id}
+	</select>
+
+	<select id="ReviewIsPossible" resultType="int">
+		select count(pot.prd_order_id) as cnt
+		from prd_order_t pot
+		left join prd_orderdetail_t podt on (pot.prd_order_id=podt.prd_order_id)
+		where pot.user_id=#{user_id} and podt.prd_board_id=#{prd_board_id}
+	</select>
 	
 </mapper>

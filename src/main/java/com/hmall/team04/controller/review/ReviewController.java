@@ -14,11 +14,14 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hmall.team04.dto.common.Criteria;
 import com.hmall.team04.dto.common.ProductCriteria;
@@ -54,9 +57,10 @@ public class ReviewController {
 	private CategoryService categoryService;
 	
 	/* 리뷰 쓰기 */
-	@RequestMapping("/Enroll/{user_id}")
-	public String reviewEnrollWindowGET(@PathVariable("user_id")String memberId,
+	@RequestMapping("/insert/{user_id}")
+	public String reviewInsertWindowGET(@PathVariable("user_id")String user_id,
 															 String prd_board_id,
+															 String prd_id,
 															 Principal principal,
 															 Model model) {
 		log.info(prd_board_id);
@@ -65,16 +69,37 @@ public class ReviewController {
 			return "redirect:/loginpopup";
 		} else {
 			
-			model.addAttribute("memberId", memberId);
+			model.addAttribute("user_id", user_id);
 			model.addAttribute("prd_board_id", prd_board_id);
+			model.addAttribute("prd_id", prd_id);
 			
-			return "review/reviewEnroll";
+			return "review/reviewInsert";
 			
 		}
 	}
 	
 	@RequestMapping(value = "/{prd_board_id}", method = RequestMethod.GET)
-	public String productlist(@PathVariable String prd_board_id, Model model) {
+	public String productlist(@PathVariable String prd_board_id, Model model,Principal principal) {
+		
+		if(principal != null) {
+			// 로그인 상태에서 Like 여부 판단
+			String user_id=principal.getName();
+			
+			ReviewDTO reviewDTO = new ReviewDTO();
+			reviewDTO.setPrd_board_id(prd_board_id);
+			reviewDTO.setUser_id(user_id);
+			
+			try {
+				int reviewIsExist = reviewService.ReviewIsExist(reviewDTO);
+				int reviewIsPossible = reviewService.ReviewIsPossible(reviewDTO);
+				log.info(reviewIsPossible);
+				model.addAttribute("reviewIsExist", reviewIsExist);
+				model.addAttribute("reviewIsPossible", reviewIsPossible);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		}
 		
 		// pathvariable로 전달 받을 예정인 값
 		//String prd_board_id="prd_board_id_tmp1";
@@ -100,22 +125,42 @@ public class ReviewController {
 		return "review.review";
 	}
 	
-	
-	@RequestMapping(value = "/insertlik", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/insertReview", method= {RequestMethod.POST})
 	@ResponseBody
-	public HashMap<String, String> ordertest(OrderDTO orderDTO, HttpServletRequest req,HttpServletResponse res) throws Exception {
+	public String insertReview(ReviewDTO reviewDTO) throws Exception {
+		log.info(reviewDTO.toString());
+		System.out.println(reviewDTO.getTest1());
+		System.out.println(reviewDTO.getTest2());
+		//ArrayList fileNames = filemanagement.FileUploader(reviewDTO.getTest3());
 		
-		log.info("hi i am oda order.do");
-		log.info(orderDTO.toString());
-		
-		HttpSession session=req.getSession();
-		
-		session.setAttribute("orderInfo", orderDTO);
-		
-		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("orderSuccess", "True");
-		
-		return map;
+		return "ok";
 	}
 	
+	@RequestMapping(value = "/insertReview2", method= RequestMethod.POST)
+	@ResponseBody
+	public String insertReview2(ReviewDTO reviewDTO) throws Exception {
+		log.info(reviewDTO.toString());
+		System.out.println(reviewDTO.getTest1());
+		System.out.println(reviewDTO.getTest2());
+		//ArrayList fileNames = filemanagement.FileUploader(reviewDTO.getTest3());
+		
+		return "ok";
+	}
+	
+	//${app}/r/fileUpload
+	@PostMapping("/fileUpload")
+	@ResponseBody
+	public int fileUpload(@RequestParam("mediaFile") MultipartFile file,
+	    //@RequestParam("title") String title,
+	    //@RequestParam("content") String content,
+	    Model model) throws IllegalStateException {
+
+
+		log.info(file.toString());
+		
+	    // 이미지는 s3에 업로드 후 리뷰 데이터 저장
+		//reviewService.s3FileUpload(file);
+
+	    return 1;   
+	}
 }
