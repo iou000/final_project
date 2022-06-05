@@ -31,11 +31,84 @@
 									정보를 정확히 입력해주세요.</span>
 							</h3>
 							<div class="shipping-area">
-								<div class="shipping-box" id="singleDstn">
-									<a href="javascript:changeDstn();" class="link-box">
-										<span class="name">선택하여 배송지를 입력해 주세요.</span>
-									</a>
-								</div>
+								<c:choose>
+									<c:when test="${empty activeDeliever}">
+									<!-- 배송지 선택 (기본배송지 없을경우 나옴) //-->
+									<div class="shipping-box" id="singleDstn">
+										<a href="javascript:changeDstn();" class="link-box"> <span
+											class="name">선택하여 배송지를 입력해 주세요.</span>
+										</a>
+									</div>
+									<!-- // 배송지 선택 (기본배송지 없을경우 나옴) -->
+									</c:when>
+								
+									<c:when test="${not empty activeDeliever}">
+									<!-- 배송지 선택하거나 기본 배송지 있으면 나옴 //  -->
+									<div class="shipping-box" id="singleDstn">
+										<!-- divDlvInfArea// -->
+										<div class="hidden" id="divDlvInfArea"> 
+		                                    <input type="hidden" name="receiver_nm" value="${activeDeliever.receiver_nm}">
+		                                    <input type="hidden" name="deliever_hp_no" value="${activeDeliever.deliever_hp_no}">
+		                                    <input type="hidden" name="address_f" value="${activeDeliever.address_f}">
+		                                    <input type="hidden" name="address_l" value="${activeDeliever.address_l}">
+		                                    <input type="hidden" name="active_yn" value="${activeDeliever.active_yn}">
+		                                    <input type="hidden" name="deliever_id" value="${activeDeliever.deliever_id}">
+		                               </div>
+										<a href="javascript:changeDstn();" class="link-box">
+											<span class="name">${activeDeliever.receiver_nm} <em class="tag">기본 배송지</em></span>
+											
+											<span class="txt">${activeDeliever.address_l}</span>
+											<ul class="user-info">
+												<li>${activeDeliever.deliever_hp_no}</li>
+											</ul>
+										</a>
+										<!-- //divDlvInfArea -->
+									</div>
+									<!-- // 배송지 선택하거나 기본 배송지 있으면 나옴 -->
+									</c:when>
+								</c:choose>
+								
+								<div class="shipping-box" id="singleDstnMsg" <c:if test="${empty activeDeliever}">style="display:none;"</c:if>>
+										
+										<div class="bg-box">
+											<span>주문자명</span>
+											<div class="inputbox sm">
+												<label class="inplabel"><input type="text"
+													onblur="nameChk(this);" name="senderName" value="${user_nm}"
+													placeholder="주문자명을 입력하세요" maxlength="25"></label>
+											</div>
+											<button class="btn btn-linelgray small abs"
+												onclick="location.href='/p/mpd/changeMemberInfoForm.do'">
+												<span>회원정보 수정</span>
+											</button>
+										</div>
+	
+										<div class="form-wrap">
+											<input type="hidden" name="deliever_msg" value="" />
+											<div class="custom-selectbox" data-modules-selectbox="">
+												<select id="dlvMsgSelect" name="dlvMsgSelect" onchange="changeDlvMsg(this);">
+													<option value="">배송 메시지를 선택해주세요.</option>
+													<option value="부재 시 경비실에 맡겨주세요.">부재 시 경비실에 맡겨주세요.</option>
+													<option value="부재 시 연락주세요.">부재 시 연락주세요.</option>
+													<option value="배송 전 연락주세요.">배송 전 연락주세요.</option>
+													<option value="직접 입력">직접 입력</option>
+												</select>
+											</div>
+											<!-- 직접 입력 선택시 노출 -->
+											<div class="textareabox" style="display:none">
+												<label class="txtlabel"> <input type="text"
+													name="prsnMsg" placeholder="배송 메시지를 입력해주세요."
+													aria-placeholder="배송 메시지를 입력해주세요."
+													onkeyup="checkBytes(this, 100);">
+												</label> <span class="txtcount"><em id="cntnLen">0</em><b>100</b></span>
+											</div>
+										</div>
+										
+									</div>
+									
+									
+									
+									
 							</div>
 						</div>
 
@@ -248,6 +321,9 @@ function changeDstn() {
 	var token = $("input[name='_csrf']").val();
 	var header = "X-CSRF-TOKEN";
 	
+	var deliever_id = $("#divDlvInfArea input[name='deliever_id']").val();
+	
+	
     // 배송지 목록 싹 지워줌 (배송지가 없는경우, 있는경우 둘 다 지움.)
     $('#addresslist ul').remove(); //배송지가 있는 경우에도 지워줌
     $('#addresslist div.nodata').remove(); //배송지가 없는 경우에도 지워줌
@@ -275,7 +351,7 @@ function changeDstn() {
 				for (var i=0; i< data.length; i++) {
 					addrHtml += "<li>";
 					addrHtml += "    <label class='radlabel'>";
-                    addrHtml += "        <input type='radio' name='dstnRadio'" + ((data[i].active_yn == "1") ? " checked " : "" ) +" >"; //기본배송지면 checked
+                    addrHtml += "        <input type='radio' name='dstnRadio'" + ((data[i].deliever_id == deliever_id) ? " checked " : "" ) +" >"; //기본배송지면 checked
                     addrHtml += "        <i class='icon'></i>";
                     addrHtml += "        <span class='hiding'>text</span>";
                     addrHtml += "    </label>";
@@ -355,7 +431,7 @@ function modifyAddr(obj, modType) {
         $("#pec003 #selectedReceiverNm").val($(obj).parent().siblings("input[name=receiver_nm]").val());
         $("#pec003 #selectedAddressF").val($(obj).parent().siblings("input[name=address_f]").val());
         $("#pec003 #selectedAddressL").val($(obj).parent().siblings("input[name=address_l]").val());
-        $("#pec003 #selectedDelieverHpNo").val($(obj).parent().siblings("input[name=deliever_hp_no]").val());
+        $("#pec003 #selectedDelieverHpNo").val($(obj).parent().siblings("input[name=deliever_hp_no]").val().replace(/[^0-9]/g,""));
         //기본 배송지 여부
         if ( $(obj).parent().siblings("input[name=active_yn]").val() == "1" ) {
             $("#pec003 #selectedActiveYn").prop("checked", true);
@@ -478,13 +554,77 @@ function clearAddrInput() {
 
 //배송지 목록에서 확인버튼 누르면 selectDstnAddr
 function selectDstnAddr() {
-	
+
 	//배송지 선택 안했을 경우
 	if ( $("input[name=dstnRadio]:checked").val() != "on" ) {
         alert("주소를 선택해주세요.");
         return;
     }
 	
+	//모달에 있는 값을 화면에 띄워줘야함/
+	$("#pec003 ul.addresslist input[name=dstnRadio]").each(function(index) {
+		
+		if ( $(this).prop("checked") ) {
+			// 모달창에서 체크되어있는 배송지의 정보들
+			var user_id = $("#pec003 ul.addresslist input[name=user_id]").eq(index).val();
+			var deliever_id = $("#pec003 ul.addresslist input[name=deliever_id]").eq(index).val();
+			var receiver_nm = $("#pec003 ul.addresslist input[name=receiver_nm]").eq(index).val();
+			var deliever_hp_no =  $("#pec003 ul.addresslist input[name=deliever_hp_no]").eq(index).val();
+			var address_f = $("#pec003 ul.addresslist input[name=address_f]").eq(index).val();
+			var address_l = $("#pec003 ul.addresslist input[name=address_l]").eq(index).val();
+			var active_yn = $("#pec003 ul.addresslist input[name=active_yn]").eq(index).val();
+			
+			//배송지정보 먼저 초기화 후 모달에 있는값으로 바꿔줌
+			$("#singleDstn").empty();
+			var addInfoHtml = "";
+			addInfoHtml += "<div class='hidden' id='divDlvInfArea'>";
+			addInfoHtml += "	<input type='hidden' name='user_id' value="+user_id+">";
+			addInfoHtml += "	<input type='hidden' name='deliever_id' value="+deliever_id+">";
+			addInfoHtml += "	<input type='hidden' name='receiver_nm' value="+receiver_nm+">";
+			addInfoHtml += "	<input type='hidden' name='deliever_hp_no' value="+deliever_hp_no+">";
+			addInfoHtml += "	<input type='hidden' name='address_f' value="+address_f+">";
+			addInfoHtml += "	<input type='hidden' name='address_l' value="+address_l+">";
+			addInfoHtml += "	<input type='hidden' name='active_yn' value="+active_yn+">";
+			addInfoHtml += "</div>";
+			addInfoHtml += "<a href='javascript:changeDstn();' class='link-box'>";
+			addInfoHtml += "	<span class='name'>"+receiver_nm;
+			if(active_yn == "1"){
+				addInfoHtml += "	<em class='tag'>기본 배송지</em>";
+			}
+			addInfoHtml += "	</span>";
+			addInfoHtml += "	<span class='txt'>"+address_l+"</span>";
+			addInfoHtml += "	<ul class='user-info'>";
+			addInfoHtml += "		<li>"+deliever_hp_no+"</li>";
+			addInfoHtml += "	</ul>";
+			addInfoHtml += "</a>";
+			$("#singleDstn").append(addInfoHtml);
+			
+			
+			//배송 메시지 초기화
+			$("#dlvMsgSelect").find('option:first').prop('selected',true);
+			changeDlvMsg($("#dlvMsgSelect")[0] );
+			$(".ui-label a").text($("#dlvMsgSelect").find("option:selected").text());
+			
+		}
+	});
+	
+	$('#singleDstnMsg').show();
+	$('#pec003').modal("hide");
+	
+}
+
+
+//배송지 선택시 배송메시지
+function changeDlvMsg(obj) {
+	$("input[name=deliever_msg]").val($(obj).find("option:selected").val());
+    var sel = $(obj).find("option:selected").val();
+    $(obj).parent().parent().parent().find("div.textareabox").hide();
+    $(obj).parent().parent().parent().find("input[name=prsnMsg]").val(sel);
+    if ( sel == "직접 입력" ) {
+        $(obj).parent().parent().parent().find("div.textareabox").show();
+        $(obj).parent().parent().parent().find("input[name=prsnMsg]").val("");
+        $(obj).parent().parent().parent().find("span.txtcount em").html("0");
+    }
 }
 
 
@@ -575,6 +715,45 @@ function nameChk(obj){
 
     $(obj).val(name);
 }
+
+/* 배송 요청사항 (직접입력시) */
+function checkBytes(obj, limitByte) {
+    var inputStr = $(obj).val();
+
+    var iByteLength = 0;
+    for (var i = 0; i < inputStr.length; i++) {
+        var sChar = escape(inputStr.charAt(i));
+        iByteLength += calculateByte(sChar);
+        
+        if(iByteLength > limitByte){
+            alert('최대 '+limitByte+'Byte 까지 입력가능합니다.');
+            $(obj).val(inputStr.substring(0, i));
+            iByteLength = iByteLength - calculateByte(escape(inputStr.charAt(i)));
+
+            break;
+        }
+    }
+    $("input[name=deliever_msg]").val($("input[name=prsnMsg]").val());
+    $(obj).parent().parent().find("span em").text(iByteLength);
+}
+/**
+ * 바이트 계산
+ * @param sChar
+ * @returns {Number}
+ */
+function calculateByte(sChar) {
+    var byte = 0;
+    if (sChar.length == 1 ) {
+        byte = 1;
+    } else if (sChar.indexOf("%u") != -1) {
+        byte = 2;
+    } else if (sChar.indexOf("%") != -1) {
+        byte = 3;
+    }
+
+    return byte;
+}
+
 
 
 /* 카카오 우편번호 */

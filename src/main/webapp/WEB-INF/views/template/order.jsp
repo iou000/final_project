@@ -13,8 +13,7 @@
 
 
 <!-- Main Contents css = Contents css부분은 각페이지마다 다르게 해당되는 css가 호출 됨(폴더 구조별)  -->
-<link rel="stylesheet" type="text/css"
-	href="//image.hmall.com/p/css/pd/product.css">
+
 <script type="text/javascript"
 	src="//image.hmall.com/p/js/co/jquery.form.js"></script>
 <script type="text/javascript"
@@ -37,10 +36,8 @@
 <script src="//image.hmall.com/p/js/co/jquery-ui.1.12.1.min.js"></script><!-- jQuery UI js -->
 <script src="//image.hmall.com/p/js/co/ukDetect.min.js"></script><!-- UI에 사용하는 Detect -->
 <script src="//image.hmall.com/p/js/co/slick.min.js"></script><!-- 공통 Slide 플러그인 -->
-<script src="//image.hmall.com/p/js/co/common.js"></script><!-- UI에 사용하는 기본 js  -->
 <script src="//image.hmall.com/p/js/co/co.js"></script><!-- UI에 사용하는 기본 js  -->
 <script src="//image.hmall.com/p/js/co/jquery.cookie.js"></script>
-<script src="//image.hmall.com/p/js/co/commonFunction.js"></script><!-- as-is common.js 상속  -->
 <script src="//image.hmall.com/p/js/co/reDirectExceptUrlList.js"></script><!-- 로그인버튼 click 리다이렉트 예외 url리스트  -->
 
 <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/od/order.css">
