@@ -147,6 +147,66 @@
 						</c:forEach>
 						<!-- //상품정보 -->
 						
+						<!-- 할인/포인트 적용 // -->
+						<div id="chkStlmType">
+							<h3 class="title22">할인/포인트 적용</h3>
+							<div class="discount-box">
+								<!-- 쿠폰 -->
+								<div class="coupon-area">
+									<ul class="row-list">
+										<li id="copnSaleDiv">
+											<div class="row-title">
+												<label class="chklabel"> 
+													<input type="checkbox" name="copnDcAply" onclick="applyCopnDc();" checked>
+													<i class="icon"></i> 
+													<span>쿠폰</span>
+												</label>
+												<button class="btn btn-linelgray small34" onclick="selectCouponList();">
+													<span>조회/변경</span>
+												</button>
+											</div>
+											<div class="row-value">
+												<p class="price">
+													<strong id="copnDcAplyAmt">0</strong>원
+												</p>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<!-- 적립금 -->
+								<div class="point-area">
+									<ul class="row-list">
+										<li id="hpointUseLi">
+											<div class="row-title">
+												<label class="chklabel"> <input type="checkbox"
+													name="upointCheck" onclick="useUpoint()"> <i
+													class="icon"></i> <span>적립금 <em class="num">1,001</em></span>
+													<input type="hidden" name="uPoint" value="1001">
+												</label>
+												<button type="button" class="btn-tooltip"
+													onclick="$('#pec009').modal().show();">
+													<i class="icon que-mark"></i><span class="hiding">툴팁</span>
+												</button>
+											</div>
+											<div class="row-value">
+												<div class="inputbox sm">
+													<label class="inplabel"><input type="text"
+														oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g, '$1');"
+														name="useUPoint" value="" placeholder="0"
+														onchange="directInsertUPoint(this);"></label> <span
+														class="unit point">P</span>
+													<button class="btn ico-clearabled">
+														<i class="icon"></i><span class="hiding">지우기</span>
+													</button>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- // 할인/포인트 적용 -->
+
 						<!-- 결제정보// -->
 						<div class="sticky-ui-wrapper util-option-sticky">
 							<div class="sticky-placeholder" style=""></div>
@@ -212,7 +272,9 @@
 							</div>
 						</div>
 						<!-- //결제정보 -->
-
+						
+						
+						
 
 					</div>
 				</div>
@@ -220,6 +282,7 @@
 		</div>
 	</div>
 	<!-- //.container -->
+	
 	<!-- 배송지 모달 -->
 	<div class="ui-modal pop-pec003" id="pec003" tabindex="-1" role="dialog" aria-label="배송지 입력" style="z-index: 1031; display: none; padding-right: 0px;">
         <div class="ui-modal-dialog" role="document">
@@ -310,6 +373,131 @@
         <!-- //.ui-modal-dialog -->
     </div>
 	
+	<!-- 쿠폰 모달 -->
+	<div class="ui-modal in" id="pec007" tabindex="-1" role="dialog" aria-label="쿠폰 할인" style="z-index: 1031; display: none;">
+		<div class="ui-modal-dialog" role="document">
+			<div class="content">
+				<p class="ui-title">쿠폰 할인</p>
+				<div class="content-body">
+
+					<div class="order-box">
+						<p>[스케쳐스] 여성 고워크 에볼루션 울트라_올블랙 (SP0WW22X091)[블랙_225]</p>
+
+						<div class="row-wrap" name="copnDcDiv">
+							<span class="row-title">쿠폰할인</span>
+							<div class="inputbox">
+								<input type="hidden" name="copnInf" value="00100634|2139868733|00002|0|1|40|1|0||0|03|40|N">
+								<input type="hidden" name="copnDcAmt" value=""> 
+								<label class="inplabel btnlabel">
+									<input type="text" value="0원" id="gnrlCopn_2139868733_00002_0_0" disabled="">
+								</label>
+								<button class="btn btn-lineblack btn-confirm" onclick="$('#select_coupon_layer').modal('show');">
+									<span>쿠폰선택</span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="order-box">
+						<p>[브이앤에이]안티옥시던트 래디언스 앰플2개 세트[윌리엄모리스+조지바비어]</p>
+						<div class="row-wrap" name="copnDcDiv">
+							<span class="row-title">쿠폰할인</span>
+							<div class="inputbox">
+								<input type="hidden" name="copnInf" value="00004161|2138263418|00002|0|1|15|1|0||0|03|40|N">
+								<input type="hidden" name="copnDcAmt" value=""> 
+								<label class="inplabel btnlabel">
+									<input type="text" value="0원" id="gnrlCopn_2138263418_00002_0_0" disabled="">
+								</label>
+								<button class="btn btn-lineblack btn-confirm" onclick="$('#select_coupon_layer').modal('show');">
+									<span>쿠폰선택</span>
+								</button>
+							</div>
+						</div>
+					</div>
+					
+					<div class="btngroup">
+						<button class="btn btn-linelgray" onclick="$('input[name=copnDcAply]').prop('checked', false);applyCopnDc();$('#pec007').modal('hide');">
+							<span>적용 안함</span>
+						</button>
+						<button class="btn btn-default" onclick="aplyCopn();$('#pec007').modal('hide');">
+							<span>적용하기</span>
+						</button>
+					</div>
+				</div>
+				<!-- //.content-body -->
+
+				<button class="btn btn-close" data-dismiss="modal">
+					<i class="icon xico"></i><span class="hiding">레이어 닫기</span>
+				</button>
+			</div>
+			<!-- //.content -->
+		</div>
+		<!-- //.ui-modal-dialog -->
+	</div>
+	
+	<!-- 쿠폰 선택 모달 -->
+	<div class="ui-modal pop-pec007-01 in coupon-detail-select_gnrlCopn_2138263418_00002_0_0 gnrlCopn" id="select_coupon_layer" tabindex="-1" role="dialog" aria-label="쿠폰 할인" style="z-index: 1041; display: none;">
+                <div class="ui-modal-dialog" role="document">
+                    <div class="content">
+                        <p class="ui-title">쿠폰 할인</p>
+                        <div class="content-body">
+                            <div class="mycoupon-body">
+                                <div class="coupon-list">
+                                    <input type="hidden" name="copnTypeCd" value="gnrlCopn">
+                                    <input type="hidden" name="isCuponAreaShowN" value="">
+                                    <input type="hidden" name="sellPrcForCopn" value="104000">
+                                    <input type="hidden" name="exstCopnDcAmt" value="0">
+                                    <input type="hidden" name="copnSlitmCd" value="2138263418">
+                                    <input type="hidden" name="copnUitmCd" value="00002">
+                                    <input type="hidden" name="copnItemIdx" value="0">
+                                    <input type="hidden" name="slitmSellPrc" value="104000">
+                                    <input type="hidden" name="setAutoDcDupYn" value="">
+                                    <input type="hidden" name="copnInf" class="gnrlCopn" id="gnrlCopn_2138263418_00002_0_0" value="">
+
+                                    <div class="coupon-box" style="display:none;">
+                                        <input type="radio" class="noneCopn" name="gnrlCopn_2138263418_00002_0_0" id="dc-select-gcpn-0" checked="true" value="|2138263418|00002|0|||1|0|||">
+                                        <label for="dc-select-gcpn-0">적용안함</label>
+                                    </div>
+
+                                    
+                                    <div class="coupon-box">
+                                        <div class="coupon">
+                                            <p class="discount"><strong>15</strong><b>%</b></p>
+                                            <div class="coupon-info">
+                                                <p class="title"><strong>15% 바로사용쿠폰</strong></p>
+                                                
+                                                <label class="radlabel">
+                                                    <input type="radio" name="gnrlCopn_2138263418_00002_0_0" id="dc-select-gcpn-0-" value="00004161|2138263418|00002|0|1|15|1|0||0|03|40|N">
+                                                    <i class="icon"></i>
+                                                    <span class="hiding">Default</span>
+                                                </label>
+                                            </div>
+                                            <!-- // .coupon-info -->
+                                        </div>
+                                        <!-- // .coupon -->
+                                        <div class="coupon-bg"><div></div><div></div></div>
+                                    </div>
+                                    <!-- //.coupon-box -->
+                                    
+                                </div>
+                                <!-- //.coupon-list -->
+                            </div>
+							
+                            <div class="btngroup">
+                                <button class="btn btn-linelgray" onclick="$('input[name=gnrlCopn_2138263418_00002_0_0]').eq(0).prop('checked', true);selectCopn('gnrlCopn_2138263418_00002_0_0');"><span>적용 안함</span></button>
+                                <button class="btn btn-default" onclick="selectCopn('gnrlCopn_2138263418_00002_0_0');"><span>적용하기</span></button>
+                                <!-- 데이터 전송 후 클릭시 $(element).modal().hide() -->
+                            </div>
+                        </div>
+                        <!-- //.content-body -->
+
+                        <button class="btn btn-close" data-dismiss="modal"><i class="icon xico"></i><span class="hiding">레이어 닫기</span></button>
+                    </div>
+                    <!-- //.content -->
+                </div>
+                <!-- //.ui-modal-dialog -->
+            </div>
+
 </main>
 
 <script>
@@ -773,6 +961,28 @@ function kakaopost() {
 }
 
 
+/* 쿠폰 리스트 받아오기 */
+function selectCouponList() {
+
+    $.ajax({
+		method : "get",
+		url : "${app}/coupon/selectCouponList",
+		dataType:"json",
+		async: true,
+		contentType: "application/json",
+		success : function(data) {
+	        console.log(data);
+	    },
+		error: function(error) {
+			console.log(error);
+		}
+	
+    });
+    
+    $('#pec007').modal('show');
+
+
+}
 
 </script>
 
