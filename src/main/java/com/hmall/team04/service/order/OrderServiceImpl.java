@@ -13,6 +13,7 @@ import com.hmall.team04.dao.product.ProductBoardDAO;
 import com.hmall.team04.dto.cart.CartDTO;
 import com.hmall.team04.dto.order.OrderCompleteDTO;
 import com.hmall.team04.dto.order.OrderDTO;
+import com.hmall.team04.dto.order.OrderDetailDTO;
 import com.hmall.team04.dto.product.ProductBoardDTO;
 
 import lombok.Setter;
@@ -39,8 +40,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderDTO> getOrderByOrderNo(String orderNo) throws Exception {
-		return orderDAO.getOrderByOrderNo(orderNo);
+	public OrderDTO getOrderByOrderNo(String userid, String orderNo) throws Exception {
+		return orderDAO.getOrderByOrderNo(userid, orderNo);
+	}
+
+	@Override
+	public OrderDetailDTO getOrderDetail(String orderDetailNo) throws Exception {
+		return orderDAO.getOrderDetail(orderDetailNo);
 	}
 
 }

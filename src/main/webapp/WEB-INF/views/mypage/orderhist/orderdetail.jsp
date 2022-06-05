@@ -10,6 +10,7 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="//image.hmall.com/p/css/mp/mypage.css">
+<script type="text/javascript" src="//image.hmall.com/p/js/co/jquery.form.js"></script>
 </head>
 
                         <h3 class="title22">상세 주문 내역</h3>
@@ -20,93 +21,98 @@
                                 <dt>
                                     <div class="date">
                                         <span>주문일</span>
-                                        <strong><fmt:formatDate value="${list.order_date}" type="date" /></strong>
+                                        <strong><fmt:formatDate value="${orderDTO.order_date}" type="date" /></strong>
                                         <span>주문번호</span>
-                                        <strong>${list.prd_order_id}</strong>
+                                        <strong>${orderDTO.prd_order_id}</strong>
                                         <span style="display:none">주문매체</span>
                                         <strong style="display:none">PC주문</strong>
                                     </div>
-	                                    <div class="abs">
-	                                        <!-- 20200915 총결제금액 삭제 주문내역삭제 버튼 추가 (시안 09/11 기준) -->
+<!-- 	                                    <div class="abs">
+	                                        20200915 총결제금액 삭제 주문내역삭제 버튼 추가 (시안 09/11 기준)
 	                                        <button class="btn atext" onclick="openLayerPup('ordHidePupLayer');"><span>주문내역 삭제</span><i class="icon xiconsm"></i></button>
-	                                    </div>
-                                </dt> 
+	                                    </div> -->
+                                </dt>
+                                	<c:forEach items="${orderDTO.orderDetailList}" var="list" varStatus="vs">
 										<!--상품 및 배송지 정보 그룹-->
 										<!--상품정보 테이블 컨테이너-->
 			                                <!-- 주소정보 시작 -------------------------------------------------------- -->
 		                                    <!-- 주소정보 종료 -------------------------------------------------------- -->
 		                                    <!--  2020.07.31 박민성 묶음상품 조건 추가  -->
 		                                    <!-- 상품정보 시작 -------------------------------------------------------- -->
-				                                <input type="hidden" name="lastOrdStatGbcdNm"    value="주문취소"/>
+				                                <!-- <input type="hidden" name="lastOrdStatGbcdNm"    value="주문취소"/> -->
 				                                <!-- 20201230 날짜 조건추가  -->
 			                                    <!-- 배송비 변경 버튼 제어 조건  -->
 			                                    <!-- 묶음 상품일 경우 배송비비용발생번호와 같은 상품들끼리 카운트 및 추가 배송비를 합한다. -->
 		                                        <!-- 배송사 코드  -->
 			                                    <!-- 상품정보 세팅 -->
-			                                    <c:forEach items="list" var="dto" varStatus="vs">
-			                                    <c:choose>
+			                                    <%-- <c:choose>
 												    <c:when test="${fn:length(list) == 1}">
 												    	<dd class="btn-col"><!-- 버튼 1개일경우 class="btn-col" 추가, 버튼 2개 이상일경우 class="btn-col2" 추가 -->
-												    </c:when>
-												    <c:otherwise>
-												    	<dd class="btn-col2"><!-- 버튼 1개일경우 class="btn-col" 추가, 버튼 2개 이상일경우 class="btn-col2" 추가 -->
+												</c:when>
+												    <c:otherwise> --%>
+												    	<dd class="btn-col2"><!-- 버튼 1개일경우 class="btn-col" 추가, 버튼 2개 이상일경우 class="btn-col2" 추가 --> <%--
 												    </c:otherwise> 
-												</c:choose>
-				                                    <a href="javascript:goItemDetail('2126575418');">
-				                                        <span class="img"><img src="https://image.hmall.com/static/4/5/57/26/2126575418_0.jpg?RS=300x300&AR=0" alt="(아워홈) 가마솥 찌개용 국산콩두부 300g" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&AR=0')"/></span>
+												</c:choose> --%>
+				                                    <a href="${app}/p/${list.prd_board_id}">
+				                                        <span class="img"><img src="${list.upload_path}" alt="${list.prd_nm}" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&AR=0')"/></span>
 				                                        <div class="box">
 				                                        	<c:choose>
-				                                        		<c:when test="flag가 주문 취소일경우">
-				                                        			<span class="state red">주문취소
-						                                            <em class="color-999">
-						                                            </em>
+				                                        		<c:when test="${list.order_flag == '주문취소'}">
+				                                        			<span class="state red">
 				                                        		</c:when>
-				                                            	<c:when test="주문접수">
-				                                        			<span class="state red">주문접수
-				                                        			<em class="color-999">
-						                                            </em>
-				                                        		</c:when>
-				                                        		<c:when test="결제완료">
-				                                        			<span class="state red">결제완료
-						                                            <em class="color-999">
-						                                            </em>
-				                                        		</c:when>
-				                                        		<c:when test="상품준비중">
-				                                        			<span class="state red">상품준비중
-																	<em class="color-999">
-						                                            </em>
-				                                        		</c:when>
-				                                        		<c:when test="상품발송">
-				                                        			<span class="state red">상품발송
-						                                            <em class="color-999"> 
-						                                            </em>
-				                                        		</c:when>
-				                                            </span>
-				                                            </c:choose>
-				                                            <span class="tit">${dto.prd_nm}</span>
+				                                            	<c:otherwise>
+				                                            		<span class="state sky">
+				                                            	</c:otherwise>
+				                                        		</c:choose>
+				                                        		${list.order_flag}
+				                                        		<em class="color-999">
+						                                        </em>
+						                                        </span>
+				                                            <span class="tit">${list.prd_nm}</span>
 			                                                <!--엄지펀딩 배송예정시작일 시작-->
 			                                                <!--엄지펀딩 배송예정시작일 끝-->
 				                                            <div ttt class="info" >
 				                                                <ul>
-				                                                    <li>
-		                                                                       ${orderdto.prd_count}개
-				                                                    </li>
+				                                                    <li>${list.prd_count}개</li>
 				                                                </ul>
-				                                            </div>
+				                                            </div>			
 				                                            <span class="price">
-	                                                                    <strong><fmt:formatNumber value="${dto.price}" pattern="#,###"/></strong>원
+																<strong><fmt:formatNumber value="${list.prd_price}" pattern="#,###"/></strong>원
 				                                            </span>
 				                                            <!-- 2017.11.07 최연태 설치상품 배송예정일 노출 -->
 				                                        </div>
 				                                    </a>
-													<!-- [01/04]_수정(마크업 추가) -->
-													<!-- [01/04]_수정(마크업 추가) -->
-				                                    <!-- asis테이블 항목 중 tobe에서 제외된 항목 시작 -->
-                                                    <!-- asis테이블 항목 중 tobe에서 제외된 항목 종료 -->
-				                                    <div class="btngroup">  
-				                                    </div>
-				                                </dd> <!-- //.btn-col2 -->
-				                                </c:forEach>
+													
+													<c:if test="${list.order_flag == '주문접수' || list.order_flag == '결제완료' || list.order_flag == '상품준비중'}">
+													<div class="btngroup">
+						                            	<button class="btn btn-linelgray small30" type="button"
+							                            	onclick="location.href='${app}/mypage/oc?orderDetailNo=${list.prd_orderdetail_id}'">
+							                            	<span>주문취소</span>
+						                            	</button>
+						                            </div>
+													</c:if>
+													<c:if test="${list.order_flag == '상품발송' || list.order_flag == '배송완료'}">
+													<div class="btngroup">
+														<button class="btn btn-linelgray small30" type="button"
+															onclick="openCnslAcptPup('20220527277541','1','rtp');">
+															<span>반품신청</span>
+														</button>
+														<button class="btn btn-linelgray small30" type="button"
+															onclick="openCnslAcptPup('20220527277541','1','exch');">
+															<span>교환신청</span>
+														</button>
+														<button class="btn btn-linelgray small30" type="button"
+															onclick="openDlvTrcUrlPup('20220527277541', '1')">
+															<span>배송조회</span>
+														</button>
+														<button class="btn btn-linelgray small30" type="button"
+															onclick="openItemEvalPopup('2068295310', '00005', '20220527277541')">
+															<span>상품평쓰기</span>
+														</button>
+													</div>
+													</c:if>
+											</dd> <!-- //.btn-col2 -->
+				                 </c:forEach>
 				                                <!-- 선물하기 합주문 - 배송정보 나뉘는것 방지 -->
 			                                <!-- 2020.12.21 선물하기 케이스 UI변경(상단 주소지 정보에서 보여주던 방식에서 스토어픽 형태로 보여주는 방식으로 변경한다.) -->
                             </dl>
@@ -136,12 +142,12 @@
                                                 <input type="hidden" name="halfDlvYn" value="N">
                                             </form>
 		                                    <div class="top-box">
-		                                        <p class="name" name="rcvCustNm">${deli.RECIPIENT}
+		                                        <p class="name" name="rcvCustNm">${orderDTO.recipient}
 			                                        <!-- span class="tag red">기본 배송지</span 2020.12.09 Hmall기획에서 제거 요청 -->
 		                                        </p>
 												 <!-- 일반주소 -->
 													<%-- <p class="add" name="dstnAdr">(${우편번호?} ${deli.address_f}</br>${deli.address_l}</p> --%>
-		                                        <p class="tel" name="hpNo">${deli.hp_no}</p>
+		                                        <p class="tel" name="hpNo">${orderDTO.hp_no}</p>
 		                                        <!-- 전화번호2 추가[2021.01.06] -->
 		                                                <p class="tel" name="telNo"></p>
 		                                        <!-- 주소 변경 버튼 조회 기준 변경[2021.01.20] -->
@@ -150,12 +156,12 @@
 		                                    <div class="bottom-box">
 		                                        <dl>
 		                                            <dt>주문자명</dt>
-		                                            <dd name="ordCustNm">${user_nm}</dd>
+		                                            <dd name="ordCustNm">${orderDTO.user_id}</dd>
 		                                        </dl>
                                                 <dl>
                                                     <dt>배송메모</dt>
                                                     <dd name="dsrvCoMsg">
-                                                    	${배송메모}
+                                                    	${orderDTO.order_comment}
                                                     </dd>
                                                 </dl>
 		                                    </div>
@@ -167,7 +173,7 @@
                                     <dl class="between top">
                                         <dt>총 주문금액</dt>
                                         <dd>
-													<strong>${total_amount}</strong>원
+													<strong><fmt:formatNumber value="${orderDTO.total_amount}" pattern="#,###"/></strong>원
                                         </dd>
                                     </dl>
                                 </li>
@@ -175,7 +181,7 @@
                                     <span class="minus-icon"><i class="icon"></i></span>
                                     <dl class="between top">
                                         <dt>할인금액</dt>
-                                        <dd><strong><span class="sumjH">${discount_amount}</strong>원</dd>
+                                        <dd><strong><span class="sumjH"><fmt:formatNumber value="${orderDTO.discount_amount}" pattern="#,###"/></span></strong>원</dd>
                                     </dl>
                                 </li>
                                 <li>
@@ -183,7 +189,7 @@
                                     <dl class="between top">
                                         <dt>결제하신 금액</dt>
                                         <dd class="result">
-                                        	<strong>${pmt_amount}</strong>원
+                                        	<strong><fmt:formatNumber value="${orderDTO.pmt_amount}" pattern="#,###"/></strong>원
                                         </dd>
                                     </dl>
                                     <div class="detail-info">
@@ -201,39 +207,33 @@
 	                            </div>
 	                        </h3>
 			                        <div class="history-box">
-				                        <p class="ctypo15 bold">[결제] <fmt:formatDate value="${order_date}" type="date" pattern="yy.MM.dd"/></p>
+				                        <p class="ctypo15 bold">[결제] <fmt:formatDate value="${orderDTO.order_date}" type="date" pattern="yyyy. MM. dd"/></p>
 					                    <ul>
-							                        <!-- TODO 곽희섭 20170328 통합포인트 추가 시작 -->
-				                                           <li>
-				                                               <div class="tit-wrap">H.Point</div>
-				                                               <div class="txt-wrap"><strong><fmt:formatNumber value="${userdto.balance}" pattern="#,###"/></strong>P (에누리 대상 5)</div>
-				                                           </li>
-							                        <!-- TODO 곽희섭 20170328 통합포인트 추가 시작 -->
-							                        <!-- TODO 곽희섭 20170328 통합포인트 추가 시작 -->
-							                        <!-- TODO 곽희섭 20170328 통합포인트 추가 시작 -->
-														<li>
-															<div class="tit-wrap">H.Point Pay 카드 [비씨카드 일시불]</div>
-															<div class="txt-wrap"><strong>3,155</strong>원</div>
-														</li>
+					                    	<c:if test="${orderDTO.reserve_discount_amount != 0}">
+											<li>
+											    <div class="tit-wrap">H.Point</div>
+											    <div class="txt-wrap"><strong><fmt:formatNumber value="${orderDTO.reserve_discount_amount}" pattern="#,###"/></strong>P (에누리 대상 5)</div>
+											</li>
+											</c:if>
+											<li>
+												<div class="tit-wrap">${orderDTO.pay_method}</div>
+												<div class="txt-wrap"><strong><fmt:formatNumber value="${orderDTO.pmt_amount}" pattern="#,###"/></strong>원</div>
+											</li>
 					                    </ul>
 			                        </div>
+			                        <c:forEach items="${orderDTO.orderDetailList}" var="odl">
+			                        <c:if test="${odl.cancel_date != null}">
 			                        <div class="history-box">
-				                        <p class="ctypo15 bold">[취소] 2022. 05. 26</p>
+				                        <p class="ctypo15 bold">[취소] <fmt:formatDate value="${odl.cancel_date}" type="date" pattern="yyyy. MM. dd"/></p>
 					                    <ul>
-							                        <!-- TODO 곽희섭 20170328 통합포인트 추가 시작 -->
-				                                           <li>
-				                                               <div class="tit-wrap">H.Point</div>
-				                                               <div class="txt-wrap"><strong>2,345</strong>P (에누리 대상 5)</div>
-				                                           </li>
-							                        <!-- TODO 곽희섭 20170328 통합포인트 추가 시작 -->
-							                        <!-- TODO 곽희섭 20170328 통합포인트 추가 시작 -->
-							                        <!-- TODO 곽희섭 20170328 통합포인트 추가 시작 -->
-														<li>
-															<div class="tit-wrap">H.Point Pay 카드 [비씨카드 일시불]</div>
-															<div class="txt-wrap"><strong>3,155</strong>원</div>
-														</li>
+											<li>
+												<div class="tit-wrap">${orderDTO.pay_method}</div>
+												<div class="txt-wrap"><strong><fmt:formatNumber value="${odl.prd_price}" pattern="#,###"/></strong>원</div>
+											</li>
 					                    </ul>
 			                        </div>
+			                        </c:if>
+			                        </c:forEach>
                         <!-- [2020.12.09] 기획에서 서비스 안내 영역 제거 요청
                         <div class="guide-box">
                             <h4 class="ctypo18">서비스 안내</h4>
@@ -264,8 +264,7 @@
                                 <li>주문과 관련하여 문의사항이 있으실 경우 고객센터(1600-0000) 혹은 Hmall 1:1상담신청을 통해 문의 바랍니다.</li>
 	                            <li class="non-dot">
 	                            	<strong class="title16 color-666">1:1상담신청</strong>
-		                                <button type="button" class="btn btn-linelgray small25" name="pop820x685" onClick="openCnslAcptPupAll(20220526293164);"><span>1:1 게시판상담</span></button>
-			                        			<button type="button" class="btn btn-linelgray small25" name="pop820x685" onclick = "sellerTalkOpen('1')"><span>1:1: 채팅상담</span></button>
+		                                <button type="button" class="btn btn-linelgray small25" name="pop820x685" onClick="window.open('${app}/cs/qnaInsPopUp','1:1 문의하기','width=756,height=700')"><span>1:1 게시판상담</span></button>
                                 </li>
                             </ul>
                         </div>
