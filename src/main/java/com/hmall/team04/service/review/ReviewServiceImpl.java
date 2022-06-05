@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hmall.team04.dao.file.FileDAO;
 import com.hmall.team04.dao.product.ProductBoardDAO;
@@ -33,47 +34,6 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	private int pageSize=10;
 
-	@Override
-	public void enrollReview(ReviewDTO reviewDTO) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-//	@Setter(onMethod_ = { @Autowired })
-//	private ProductBoardDAO productboardDAO;
-//	
-//	@Override
-//	public ProductBoardDTO getProductBoard(String prd_board_id) throws Exception {
-//		// TODO Auto-generated method stub
-//		return productboardDAO.getProductBoard(prd_board_id);
-//	}
-//	
-	@Override
-	public long getReviewCount(String prd_board_id) throws Exception {
-		// TODO Auto-generated method stub
-		return reviewDAO.getReviewCount(prd_board_id);
-	}
-
-	@Override
-	public List<ReviewDTO> getReviewListPage(String prd_board_id, long pg) throws Exception {
-		// TODO Auto-generated method stub
-		long startNum = (pg - 1) * pageSize + 1;
-		long endNum   = pg * pageSize;
-		
-		return reviewDAO.getReviewListPage(prd_board_id, startNum, endNum);
-	}
-	
-	@Override
-	public ArrayList<ProductBoardDTO> getReviewListByInsdt(ProductCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return reviewDAO.getReviewListByInsdt(cri);
-	}
-	
-	@Override
-	public int getReviewListCount(String category) throws Exception{
-		// TODO Auto-generated method stub
-		return reviewDAO.getReviewListCount(category);
-	}
 	
 	@Override
 	public ArrayList<ReviewDTO> getReviewListByInsdtCore(ReviewCriteria reviewcri) throws Exception {
@@ -97,6 +57,54 @@ public class ReviewServiceImpl implements ReviewService {
 	public int getReviewListCountCore(String prd_board_id) throws Exception{
 		// TODO Auto-generated method stub
 		return reviewDAO.getReviewListCountCore(prd_board_id);
+	}
+
+
+	@Override
+	public void enrollReview(ReviewDTO reviewDTO) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public int ReviewIsExist(ReviewDTO reviewDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return reviewDAO.ReviewIsExist(reviewDTO);
+	}
+
+	@Override
+	public int ReviewIsPossible(ReviewDTO reviewDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return reviewDAO.ReviewIsPossible(reviewDTO);
+	}
+
+	@Override
+	public void insertReview(ReviewDTO reivewDTO) throws Exception {
+		// TODO Auto-generated method stub
+		reviewDAO.insertReview(reivewDTO);
+	}
+
+	@Override
+	public void s3FileUpload(MultipartFile file) {
+		// TODO Auto-generated method stub
+		if(file != null && !file.getOriginalFilename().equals("")) {
+			System.out.println(file.getOriginalFilename());
+			
+//			File localFile = new File("/Users/jinhobae/Downloads/" + file.getOriginalFilename());
+//			file.transferTo(localFile);
+//			
+//			System.out.println(localFile.getName());
+//			PutObjectRequest obj = new PutObjectRequest(BUCKET_NAME, localFile.getName(), localFile);
+//			obj.setCannedAcl(CannedAccessControlList.PublicRead);
+//			String imageUrl = "https://reviewaws.s3.ap-northeast-2.amazonaws.com/"+localFile.getName();
+//			s3.putObject(obj);
+			//System.out.println(imageUrl);
+			//reviewVO.setS3ImageUrl(imageUrl);
+			
+			//reviewMapper.insertReview(reviewVO);
+		}else {
+			//reviewMapper.insertReview(reviewVO);
+		}
 	}
 	
 }

@@ -61,36 +61,6 @@ public class ProductBoardReviewDAOTests {
 			e.printStackTrace();
 		}
 	}
-
-	
-	@Test
-	public void testGetReviewProductBoard() {
-		
-		ArrayList<ReviewDTO> list;
-		try {
-			list = reviewDAO.getReviewListBasic("prd_board_id_tmp1");
-			
-			for(int i=0;i<list.size();i++) {
-				log.info(list.get(i));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	@Test
-	public void getReviewCount() {
-		// review_t
-		
-		try {
-			reviewDAO.getReviewCount("prd_board_id_tmp1");
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	@Test
 	public void testgetReviewListByInsdtCore() {

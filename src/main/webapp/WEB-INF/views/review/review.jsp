@@ -24,6 +24,11 @@
 	<input type="hidden" name="prd_board_id" value="${prd_board_id}"/>
 	<input type="hidden" name="categoryCode" value="${categoryCode}"/>
 	<input type="hidden" name="sort" value="1"/>
+	<sec:authentication property="principal" var="principal_user" />
+	<c:if test="${principal_user != 'anonymousUser' }">
+	<sec:authentication property="principal.user.user_id" var="principal_user_id" />
+	</c:if>
+
 
 	<!-- 상품평 tab -->
 	<div class="pages page3" id="viewPage03">
@@ -54,7 +59,11 @@
 					<c:if test="${1==1 }">
 						<div style="float: right;">
 							<button ga-category="상품상세" ga-action="상품평" ga-label="상품평 쓰기"
-								class="btn btn-lineblack small itemEvalRegBtn gp_className">
+								class="btn btn-lineblack small gp_className" onclick="evalWriteCore()">
+								<span><i class="icon review"></i>상품평 쓰기(마이페이지 이동 버튼)</span>
+							</button>
+							<button ga-category="상품상세2" ga-action="상품평2" ga-label="상품평 쓰기2"
+								class="btn btn-lineblack small gp_className" onclick="InsertReview()">
 								<span><i class="icon review"></i>상품평 쓰기</span>
 							</button>
 						</div>
@@ -99,8 +108,9 @@
 										
 									</div>
 									<div class="top-right">
-										<span class="date"><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.ins_dt}"
-												/></span>
+										<span class="date">
+										<fmt:formatDate pattern="yyyy-MM-dd" value="${dto.ins_dt}"/>
+										</span>
 									</div>
 								</div>
 								<!--review-option-->
@@ -136,8 +146,6 @@
 								</div> <!-- 동영상 --> <!-- 동영상 --> <!-- //.pdwrap --> <!--review-content-->
 								<div class="review-content">
 									<div class="review-txt">${dto.content }</div>
-									<h1><sec:authentication property="principal" /></h1><br>
-
 								</div> <!--//review-content-->
 							</li>
 						</c:forEach>
@@ -190,31 +198,68 @@
 
 	<!--// 상품평 -->
 
-	<input type="hidden" name="pageNum" value="${reviewpageMaker.cri.pageNum}"/>
-  	<input type="hidden" name="amount" value="${reviewpageMaker.cri.amount}"/>
-	<input type="hidden" name="categoryCode" value="${categoryCode}"/>
-	<input type="hidden" name="sort" value="1"/>
-	
 </body>
 
 <script>
 
-/*
- * 상품평 쓰기 버튼
- */
-$('.itemEvalRegBtn').on("click",function(e) {
-	e.preventDefault();
-	
-	const prd_board_id = '200';
-	const memberId = '1';
 
-	let popUrl = "${app}/r/Enroll/" + memberId+ "?prd_board_id=" + prd_board_id;
-	console.log(popUrl);
-	let popOption = "width = 600px, height=700px, top=300px, left=300px, scrollbars=yes";
+
+	// 마이페이지로 넘어가 댓글을 달기 전, 자격을 평가하는 함수
+	function evalWriteCore(){
+		var val_cur_user='${principal_user}';
+		var prd_board_id = '${prd_board_id}';
+		console.log(val_cur_user,prd_board_id);
+		
+		
+		if (val_cur_user=='anonymousUser'){
+			// 비로그인 시 로그인 팝업
+			LoginPopup();
+		} else{
+			// 로그인 시
+			val_cur_user='${principal_user_id}';
+			console.log(val_cur_user);
+			var val_reviewIsExist='${reviewIsExist}';
+			console.log(val_cur_user, val_reviewIsExist);
+			
+			var val_reviewIsPossible='${reviewIsPossible}';
+			console.log(val_reviewIsPossible);
+			
+			// 현재 게시판에 이미 댓글을 단지 판단
+			if (val_reviewIsExist>0){
+				alert('현재 상품게시판에 댓글이 등록되어있습니다');
+			} else{
+				// 해당 prd_board_id로 주문상세가 없는 경우 ; 임의로 step00
+				if (val_reviewIsPossible=0){
+					alert('상품평은 구매고객에 한해 작성이 가능합니다.');
+					return
+				}
+				
+				// 해당 prd_board_id로 최소 주문을 한 경우 ; step01~03 모두 포괄
+				var result = confirm("상품평은 주문하신 상품이 발송된 후에 작성하실 수 있습니다. \n마이페이지로 이동하여 확인하시겠습니까?");
+				
+				if(result){
+					location.href = '${app}/mypage/odslist';
+				}
+			}
+			
+		}
+	}
 	
-	window.open(popUrl,"리뷰 쓰기",popOption);
-	
-});
+	/*
+	 * 상품평 쓰기 버튼
+	 */
+	function InsertReview(){
+		// 마이페이지에서 같은 parent obj에서 jquery로 접근할 부분
+		var user_id='LikeReviewWacher';
+		var prd_board_id='200';
+		var prd_id='test1';
+		
+		let popUrl = "${app}/r/insert/" + user_id+ "?prd_board_id=" + prd_board_id + "prd_id="+prd_id;
+		console.log(popUrl);
+		let popOption = "width = 600px, height=700px, top=300px, left=300px, scrollbars=yes";
+		
+		window.open(popUrl,"리뷰 쓰기",popOption);
+	}
 
 </script>
 
