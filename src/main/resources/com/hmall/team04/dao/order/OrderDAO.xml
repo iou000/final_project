@@ -91,7 +91,7 @@
 	    AND pot.USER_ID = #{userId}
 	</select>
 	
-	<select id="getOrderDetail" resultType="orderDetailMap">
+	<select id="getOrderDetail" resultMap="orderDetailMap">
 		SELECT
 				prd_orderdetail_id
 				,(SELECT prd_nm FROM prd_t WHERE prd_id = odt.prd_id) AS prd_nm
