@@ -12,4 +12,5 @@ public class MypageDTO {
 	private int prd_price;
 	private String all_option;
 	private Date order_date;
+	
 }

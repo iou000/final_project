@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="app" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -53,9 +54,70 @@
         p.quickmenu {
             margin-right: 50px;
         }
+        
         img.ic_img {
-    	width: 30px;
+    	 width: 30px;
+    	}
+
+        table {
+            width: 500px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: table-row;
+        }
+
+        .item td {
+            cursor: pointer;
+        }
+
+        .cus-wrap h3 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 29px;
+        }
+        
+        .cus-wrap .tblwrap table td {
+		    font-size: 15px;
+		    line-height: 15px;
+		    border-bottom: 1px solid #eee;
 		}
+
+        .tblwrap table td {
+            color: #333;
+            line-height: 22px;
+        }
+
+        .basic-border-one {
+            border: 1px solid #eee;
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            min-height: 45px;
+        }
+
+        tr.show {
+            background: #f8f8f8;
+		}
+		
+		 p.oneaone-p {
+            margin-left: 10px;
+            margin-bottom: 21px;
+        }
+
+        .oneaone-div {
+            text-align: end;
+            font-size: 14px;
+            margin-bottom: 6px;
+            margin-right: 5px;
+        }
     </style>
     <script src="//image.hmall.com/p/js/co/jquery-3.4.1.min.js"></script><!-- jQuery Plugin -->
     <script src="//image.hmall.com/p/js/co/jquery.easing.min.js"></script><!-- jQuery UI Effect -->
@@ -69,23 +131,6 @@
             location.href = "/p/mpf/selectMyPageMain.do";
         }
 
-        jQuery(function ($) {
-            $(".myShoping > dl[class='type1']").click(function () {
-                location.href = "http://www.hmall.com/p/mpc/selectRecentItemList.do";
-            });
-
-            $(".myShoping > dl[class='type3']").click(function () {
-                location.href = "/p/mpc/bitmAlrimList.do";
-            });
-            $(".myShoping > dl[class='type4']").click(function () {
-                location.href = "/p/mpc/sltdItemList.do?SkyscraperGroup=WishList";
-            });
-            $(".myShoping > dl[class='type5']").click(function () {
-                location.href = "/p/odb/basktList.do?GnbGroup=Basket";
-            });
-
-            rcmmItem();
-        });
 
         $(document).ready(function () {
             bannerOpen();
@@ -247,18 +292,25 @@
                 <h3 class="title22">
                     최근 주문내역
                     <div class="btngroup abs">
-                        <a href="/p/mpa/selectOrdDlvCrst.do" class="btn atext"><span>전체보기</span><i
+                        <a href="${app}/mypage/odslist" class="btn atext"><span>전체보기</span><i
                                 class="arrow right"></i></a>
                     </div>
                 </h3>
                 <!-- 추후 상품전시 레이아웃 마크업으로 변경 필요 -->
                 <div class="order-list">
-                            <div class="order-list">
-                            <c:forEach var="orderDTO" items="${list}"> 
+                            <div class="order-list">                          
+                            <c:if test = "${fn:length(list) == 0}">
+                           	  <div class="nodata" >
+				      			<span class=" bgcircle"><i class="icon nodata-type7"></i></span>
+				      			<p>최근 14일간의 주문한 상품이 없습니다.</p>
+				      		</div>                            
+                            </c:if>
+                            <c:if test = "${fn:length(list) > 0}">
+                            <c:forEach var="orderDTO" items="${list}">                                                 
                                 <dl>
                                     <dt>
                                         <div class="date">
-                                            <span>${orderDTO.order_date} (주문번호 : <c:out value="${orderDTO.prd_order_id}"/>)</span>
+                                            <span><fmt:formatDate value="${orderDTO.order_date}" type= "date"/> (주문번호 : <c:out value="${orderDTO.prd_order_id}"/>)</span>
                                         </div>
                                         <div class="abs">
                                             <a href="${app}/mypage/od?orderNo=${orderDTO.prd_order_id}"
@@ -267,16 +319,15 @@
                                     </dt>
                                     <!-- 이중포 여기 -->
                                     <c:forEach items="${orderDTO.orderDetailList}" var="detailDTO">
-                                    <dd class="btn-col2">
-                                        <!-- 버튼 1개일경우 class="btn-col" 추가, 버튼 2개 이상일경우 class="btn-col2" 추가 -->
-                                        <a href="http://www.hmall.com/p/pda/itemPtc.do?slitmCd=2068295310&ordpreview=true">
+                                    <dd class="btn-col2">                            
+                                        <a href="${app}/p/${detailDTO.prd_board_id}">
                                             <span class="img"><img
                                                     src="https://image.hmall.com/static/3/5/29/68/2068295310_0.jpg?RS=300x300&AR=0"
                                                     alt="닥터시드 허니앤밀크밤 모이스처 바디워시 1000ml"
                                                     onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&AR=0')" />
                                             </span>
                                             <div class="box">
-                                                <span class="state sky">
+                                                <span class="state">
                                                     ${detailDTO.order_flag}
                                                     <em class="color-999">
                                                     </em>
@@ -293,53 +344,146 @@
                                                 </span>
                                             </div>
                                         </a>
+                                      <c:if test="${detailDTO.order_flag == '주문접수' || detailDTO.order_flag == '상품준비중'}">
                                         <div class="btngroup">
                                             <button class="btn btn-linelgray small30" type="button"
-                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>주문취소</span></button>
-                                        </div>
-                                    </dd>
-                                    </c:forEach>
-
-                                 <!--  이중포 END  -->
- <!-- 
-                                        <div class="btngroup">
-                                            <button class="btn btn-linelgray small30" type="button"
-                                                onClick="location.href='/p/mpa/selectOrdRtpPup.do?ordNo=20220527277541&ordPtcSeq=3&chkOrdPtcSeq=3'"><span>반품신청</span></button>
-                                            <button class="btn btn-linelgray small30" type="button"
-                                                onClick="fnOpenExchPup('20220527277541', '3');"><span>교환신청</span></button>
-                                            <button class="btn btn-linelgray small30" type="button"
-                                                onClick="openDlvTrcUrlPup('20220527277541', '3')"><span>배송조회</span></button>
-                                            <button class="btn btn-linelgray small30" type="button"
-                                                onClick="openItemEvalPopup('2134887005', '00012', '20220527277541')"><span>상품평쓰기</span>
-
+                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>주문취소</span>
                                             </button>
                                         </div>
--->
+                                       </c:if>
+                                       <c:if test="${detailDTO.order_flag == '결제완료'}">
+                                        <div class="btngroup">
+                                            <button class="btn btn-linelgray small30" type="button"
+                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>주문취소</span>
+                                            </button>                                      
+                                        </div>
+                                       </c:if>
+                                       <c:if test="${detailDTO.order_flag == '상품발송'}">
+                                        <div class="btngroup">
+                                            <button class="btn btn-linelgray small30" type="button"
+                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>주문취소</span>
+                                            </button>
+                                        </div>
+                                       </c:if>
+                                       <c:if test="${detailDTO.order_flag == '배송완료'}">
+                                        <div class="btngroup">
+                                            <button class="btn btn-linelgray small30" type="button"
+                                                onClick="openItemEvalPopup('2134887005', '00012', '20220527277541')"><span>상품평쓰기</span>
+                                            </button>
+                                             <button class="btn btn-linelgray small30" type="button"
+                                                 onClick="window.open('${app}/mypage/exchangePopup?detailid=${detailDTO.prd_orderdetail_id}','교환신청','width=588,height=724')"><span>교환신청</span>
+                                            </button>
+                                            <button class="btn btn-linelgray small30" type="button"
+                                                onClick="window.open('${app}/mypage/returnPopup?detailid=${detailDTO.prd_orderdetail_id}','반품신청','width=588,height=724')"><span>반품신청</span>                                      
+                                            </button>
+                                        </div>
+                                       </c:if>                                                          
+                                    </dd>
+                                    </c:forEach>
+                                    
+                                    <!--주문 flag 따라 색상 변환  -->
+                                    <script> 
+										$(".state:contains('주문취소')").css({color:"#ff5340"});																													
+										$(".state:contains('주문접수')").css({color:"#3abbd5"});
+										$(".state:contains('결제완료')").css({color:"#03c75a"});
+										$(".state:contains('상품발송')").css({color:"#3abbd5"});
+										$(".state:contains('상품준비중')").css({color:"#737373"});
+										$(".state:contains('반품접수')").css({color:"#737373"});
+										$(".state:contains('반품완료')").css({color:"#03c75a"});
+										$(".state:contains('교환접수')").css({color:"#737373"});
+										$(".state:contains('교환완료')").css({color:"#03c75a"});
+									</script>	
                                     
                                 </dl>
                             </c:forEach>
+                            </c:if>
                             </div>
-                    <div class="nodata" style="display:none;">
-                        <span class=" bgcircle"><i class="icon nodata-type7"></i></span>
-                        <p>최근 14일간의 주문한 상품이 없습니다.</p>
-                    </div>
+                   
                     <!-- list 출력 부분 end -->
                 </div>
-                
-                
-                
+                  
+
                 
                 <h3 class="title22">
                     최근 상담 내역
-                    <div class="btngroup abs">
+                    <div class="btngroup abs">        
                         <a href="${app}/cs/qna" class="btn atext"><span>전체보기</span><i class="arrow right"></i></a>
                     </div>
                 </h3>
+                <c:if test = "${fn:length(qlist) > 0}">      	 
+                  <div class="tblwrap tbl-list">
+                  <script type="text/javascript">
+                    $(function () {
+                        var article = (".recruit .show");
+                        $(".recruit .item  td").click(function () {
+                            var myArticle = $(this).parents().next("tr");
+                            if ($(myArticle).hasClass('hide')) {
+                                $(article).removeClass('show').addClass('hide');
+                                $(myArticle).removeClass('hide').addClass('show');
+                            }
+                            else {
+                                $(myArticle).addClass('hide').removeClass('show');
+                            }
+                        });
+                    });  
+                </script>
+           
+                <table class="recruit">
+                    <caption>고객센터 공지사항</caption>
+                    <colgroup>
+                        <col style="width:125px">
+                        <col style="width:250px">
+                        <col style="width:120px">
+                        <col style="width:120px">
+                        <col style="width:100px">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th scope="col">문의 유형</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">문의일</th>
+                            <th scope="col">답변일</th>
+                            <th scope="col">문의상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<c:forEach items="${qlist}" var="qlist">
+                        <tr class="item">
+                            <td class="txt-center"><span>${qlist.type}</span></td>
+                            <td class="nowrap, txt-center">${qlist.title}</td>
+                            <td class="txt-center"><span class="date"><fmt:formatDate value="${qlist.ins_dt}" type="date" /></span></td>
+                            <td class="txt-center"><span class="date"><fmt:formatDate value="${qlist.ans_ins_dt}" type="date" /></span></td>
+                            <td class="txt-center"><span>
+                            	<c:if test="${qlist.ans_yn eq '0'.charAt(0)}">처리중</c:if>
+                            	<c:if test="${qlist.ans_yn eq '1'.charAt(0)}">답변완료</c:if>
+                            </span></td>
+                        </tr>
+                        <tr class="hide">
+                        	<td colspan="1" style="text-align: center; letter-spacing: 1px">
+                        		<div class="basic-border-one">질문 내용</div>
+                        		<div class="basic-border-one">답변 내용</div>
+                        	</td>
+                            <td colspan="4">
+                                <div class="basic-border-one">
+                                    ${qlist.content}
+                                </div>
+                                <div class="basic-border-one">
+                                    ${qlist.ans_content}
+                                </div>
+                            </td>
+                        </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+             </c:if>
+              <c:if test = "${fn:length(qlist) == 0}"> 
                 <div class="pdlist-wrap col4">                    
                     <div class="nodata">
                         <p>최근 상담한 내역이 없습니다.</p>                        
                     </div>
                 </div>
+              </c:if>  
                 <!--<div id="divRcmmItem" class="product-wrap pdslide">
 					</div>					                     -->
                 <div class="list-head" id="divRcmmItem" style="display:none;">

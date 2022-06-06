@@ -73,6 +73,56 @@
 		]]>
 	</select>
 	
+	<select id="getQnaListFive" resultType="QnaDTO">
+		SELECT 
+			  	 qna_id,
+	             user_id,
+	             ans_user_id,
+	             title,
+	             content,
+	             (SELECT 
+	             		dtl_nm 
+	             		FROM CODE_DTL_T  
+	             		WHERE grp_cd = 'FAQ' 
+	             		AND dtl_cd = TYPE) AS type,
+	             ans_title,
+	             ans_content,
+	             ins_dt,
+	             ans_ins_dt,
+	             private_yn,
+	             ans_yn,
+	             file_yn,
+	             prd_id,
+	             prd_orderdetail_id
+			 		FROM
+			 		 (SELECT 
+			 				rownum as rnum,
+			                qna_id,
+			                user_id,
+			                ans_user_id,
+			                title,
+			                content,	
+			                TYPE,
+			                ans_title,
+			                ans_content,
+			                ins_dt,
+			                ans_ins_dt,
+			                private_yn,
+			                ans_yn,
+			                file_yn,
+			                prd_id,
+			                prd_orderdetail_id
+						  FROM
+	               				 qna_t
+	            		  WHERE user_id =#{userid}
+	            		  ORDER BY ins_dt DESC )
+				<![CDATA[
+				WHERE rnum < 6
+				]]>
+			
+	</select>
+	
+	
 	<select id="getBoardCount" parameterType="map" resultType="int">
 		select count(*)
 		from qna_t
