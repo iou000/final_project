@@ -205,7 +205,8 @@
 											</div>
 											<div class="row-value">
 												<div class="inputbox sm">
-													<label class="inplabel"><input type="text"
+													<label class="inplabel">
+													<input type="text" 
 														oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g, '$1');"
 														name="useUPoint" value="" placeholder="0"
 														onchange="directInsertUPoint(this);">
@@ -223,6 +224,45 @@
 						</div>
 						<!-- // 할인/포인트 적용 -->
 
+						<!-- 총 결제금액 // -->
+						<div class="box-toggle">
+							<h3 class="selected">
+								<button data-modules-collapse="" class="accordion-trigger"
+									aria-expanded="false">
+									<span class="row-title">총 결제금액</span> <span
+										class="row-value color-ff5340"> <em class="tag"
+										id="main_totDiscountRate" style="">약 40% 절약</em> <strong
+										id="main_totPayAmt">94,800</strong>원
+									</span> <i class="icon"></i>
+								</button>
+							</h3>
+							<div class="accordion-panel selected" role="region" aria-label="">
+								<ul class="row-list">
+									<li>
+										<div class="row-title">
+											<p class="tit">주문금액</p>
+										</div>
+										<div class="row-value">
+											<p class="price">
+												<strong id="main_orderAmt">158,000</strong>원
+											</p>
+										</div>
+									</li>
+									<li>
+										<div class="row-title">
+											<p class="tit">할인금액</p>
+										</div>
+										<div class="row-value">
+											<p class="price">
+												<strong id="main_discountAmt">-63,200</strong>원
+											</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!-- // 총 결제금액 -->
+						
 						<!-- 결제정보// -->
 						<div class="sticky-ui-wrapper util-option-sticky">
 							<div class="sticky-placeholder" style=""></div>
@@ -232,66 +272,83 @@
 								<div class="sticky-inner">
 									<h4 class="title20">총 결제금액</h4>
 									<ul class="payment-list">
+
 										<li>
 											<div id="orderAmt">
-												<span class="tit">총 판매금액</span> <span class="txt"><strong>89,000</strong>원</span>
-											</div>
-											<div id="addDlvCostDiv"
-												class="tooltip-case hidden adddel_order addDlvCostArea">
-												<div class="tit">
-													지역별 추가 배송비
-													<div class="ui-tooltip">
-														<span class="nav"
-															data-modules-tooltip="href:#localDeliver"><i
-															class="icon que-mark"></i></span>
-														<div id="localDeliver" class="tooltip-conts">
-															<dl>
-																<dt>
-																	제주/도서지역 추가 배송비 <br> 부과 안내
-																</dt>
-																<dd>
-																	상품별 배송비, 배송지, 구매수량에 따라 추가 배송비를 재계산합니다. <br>
-																	제주/도서지역 주문시, 부분취소/환불이 불가능합니다. <br> 자세한 내용은 고객센터로
-																	연락주세요. <br> (1600-0000)
-																</dd>
-
-															</dl>
-															<button class="btn-close">
-																<i class="icon"></i><span class="hiding">닫기</span>
-															</button>
-															<button class="btn-close">
-																<i class="icon"></i><span class="hiding">닫기</span>
-															</button>
-														</div>
-													</div>
-												</div>
-												<div class="txt">
-													<strong>0</strong>원
-												</div>
+												<span class="tit">총 판매금액</span> <span class="txt"><strong>158,000</strong>원</span>
 											</div>
 
+											<div id="copnDcAmtDiv" class="">
+												<span class="tit">쿠폰할인</span> <span class="txt"><strong>-63,200</strong>원</span>
+											</div>
+
+											<div>
+												<span class="tit">할인 합계금액</span> <span class="txt"> <strong
+													id="totDcAmtDd">-63,200</strong>원 <em style="">약 40%
+														절약</em>
+												</span>
+											</div>
+											
+											<div class="" id="useUPointDiv">
+                                                 <span class="tit">H.Point 사용</span>
+                                                 <span class="txt"><strong>-1,001</strong>P</span>
+                                            </div>
+											
+											<div class="hidden" id="stlmPaperGcAmtDiv">
+												<span class="tit">지류상품권</span> <span class="txt"><strong
+													id="stlmPaperGcAmtDd">0</strong>원</span>
+											</div> <!-- TODO 곽희섭 20170403 통합포인트 소스 추가 시작--> <!-- 상품권/적립금 제외 모두 결제가능 적용 시 H.point 결제 허용 -->
+
+											<div class="hidden" id="useUPointDiv">
+												<span class="tit">H.Point 사용</span> <span class="txt"><strong>0</strong>P</span>
+											</div> <!-- TODO 곽희섭 20170403 통합포인트 소스 추가 끝-->
+
+											<div class="hidden" id="useOPointDiv">
+												<span class="tit">Oh! point 사용</span> <span class="txt"><strong>0</strong>원</span>
+											</div>
+											<div class="hidden" id="stlmHanaMoneyAmtDiv">
+												<span class="tit">하나머니 사용</span> <span class="txt"><strong>0</strong>원</span>
+											</div>
 										</li>
+
 										<li>
 											<div class="total">
 												<span class="tit">최종 결제금액</span> <span class="txt"
 													id="lastStlmAmtDd"><strong>89,000</strong>원</span>
 											</div>
 										</li>
+										
+										<li>
+											<div id="calculateList_upoint" class="hpay">
+												<span class="tit"> 적립예정 적립금 </span>
+												 <span class="txt"><strong id="hppExpectPoint">70</strong>P</span>
+											</div>
+											
+											<ul class="check-list agreeCheck">
+                                                <li>
+                                                    <label class="chklabel sm">
+                                                        <input type="checkbox" id="ordAgreeChk" name="ordAgreeChk">
+                                                        <i class="icon"></i>
+                                                        <span>주문하실 상품의 상품명, 가격,<br>배송정보를 확인하였으며,<br>이에 동의합니다.<br>(전자상거래법 제8조 제2항)</span>
+                                                    </label>
+                                                </li>
+                                            </ul>
+										</li>
+										
 									</ul>
+									
 									<div class="btngroup agreeCheck">
 										<button type="button" class="btn btn-default medium"
 											onclick="order();">
 											<span> 결제 </span>
 										</button>
 									</div>
+									
 								</div>
 							</div>
 						</div>
 						<!-- //결제정보 -->
 						
-						
-						
-
 					</div>
 				</div>
 			</div>
@@ -1042,8 +1099,6 @@ function cancleCopn() {
 	
 }
 
-
-
 /* 쿠폰 취소 or 선택가능 */
 function applyCopnDc() {
 	
@@ -1078,8 +1133,60 @@ function applyCopnDc() {
 		
 	}
 	
-	
+}
 
+
+
+/* 적립금 사용 */
+function useUpoint() {
+	
+	// 적립금 체크 안되어있을시
+    if ( $("input[name=upointCheck]").prop("checked") ) {
+
+        var upoint = Number($("input[name='uPoint']").val()); // 가지고 있는 적립금
+        $("input[name=useUPoint]").val(priceToString(upoint));
+        
+    } else { //적립금 체크 되어있을시
+        $("input[name=useUPoint]").val("0");
+    }
+	
+   directInsertUPoint($("input[name=useUPoint]"));
+   //cardCalculate();
+}
+
+
+/* 적립금 얼마나 사용할지 */
+function directInsertUPoint(obj) {
+	
+	console.log($(obj).val())
+	
+	var upoint = Number($("input[name='uPoint']").val()); //현재 내가 가지고있는 적립금
+	var usePoint = isEmpty($(obj).val()) ? 0 : Number(($(obj).val()).replace(/[^0-9]/g,'')); //사용할 적립금
+	
+	// 적립금 100원 이상 써야함 체크
+	if (usePoint < 100 && usePoint > 0) {
+		alert("최소 100P를 사용해야 합니다.");
+		$("input[name=useUPoint]").val("0");
+		usePoint = 0;
+		return;
+	}
+	
+	//현재 내가 가진 적립금보다 더 큰 금액을 쓸 경우
+	if (usePoint > upoint) {
+		alert("사용하실 적립금이 보유한 적립금보다 큽니다.");
+		$("input[name=useUPoint]").val(priceToString(upoint));
+		return;
+	}
+	
+	$("input[name=upointCheck]").prop("checked", false);
+	
+	if ( Number(($(obj).val()).replace(/[^0-9]/g,'')) > 0 ) {
+        $("input[name=upointCheck]").prop("checked", true);
+    }
+	
+	$(obj).val(priceToString(usePoint));
+	
+	//cardCalculate();
 }
 
 
