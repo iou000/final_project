@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="app" value="${pageContext.request.contextPath}" />
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 우편번호 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
@@ -117,35 +118,53 @@
 						<h3 class="title22 selected only">
 							<button data-modules-collapse="" class="accordion-trigger"
 								aria-expanded="false">
-								상품정보 <span class="num" id="ordItemCnt"></span><i class="icon"></i>
+								상품정보 <span class="num" id="ordItemCnt">${fn:length(orderPrdList)}</span><i class="icon"></i>
 							</button>
 						</h3>
-						<c:forEach items="${orderInfo}" var="order">
+
 						<div class="accordion-panel selected" role="region" aria-label="">
 							<div class="order-list" id="orderItems">
+								
 								<ul>
-									<li name="orderItem">
-									<input type="hidden" name="slitmNm" value="${order.prd_board_id }"> 
-										<a href="#" target="_blank">
-										<span class="img">
-										<img src="#" onerror="#">
-										</span>
-											<div class="box">
-												<span class="tit">${order.prd_board_id }</span>
-												<div class="info">
-													<ul>
-
-														<li>${order.prd_count }개<input type="hidden" name="ordQty" value="1"
-															readonly="readonly"></li>
-													</ul>
+									<c:forEach items="${orderPrdList}" var="orderPrd">
+										<li name="orderItem">
+											<input type="hidden" name="prd_id" value="${orderPrd.prd_id}">
+											<input type="hidden" name="prd_nm" value="${orderPrd.prd_nm}">
+											<input type="hidden" name="option1" value="${orderPrd.option1}">
+											<input type="hidden" name="option2" value="${orderPrd.option2}">
+											<input type="hidden" name="prd_count" value="${orderPrd.prd_price}">
+											<input type="hidden" name="prd_detail" value="${orderPrd.prd_detail}">
+											<input type="hidden" name="prd_count" value="${orderPrd.prd_count}">
+											
+											
+											<a href="#" target="_blank">
+											<span class="img">
+												<img src="${orderPrd.prd_detail}" onerror="#">
+											</span>
+												<div class="box">
+													<span class="tit">${orderPrd.prd_nm}</span>
+													<div class="info">
+														<ul>
+															<c:if test="${empty activeDeliever}">style="display:none;"</c:if>
+															<li>
+																<c:if test="${not empty orderPrd.option1}">${orderPrd.option1}
+																	<c:if test="${not empty orderPrd.option2}">/${orderPrd.option2}</c:if>
+																</c:if>
+															</li>
+															<li>${orderPrd.prd_count}개
+																<input type="hidden" name="ordQty" value="${orderPrd.prd_count}" readonly="readonly">
+															</li>
+														</ul>
+													</div>
+													<span class="price"><strong><fmt:formatNumber value="${orderPrd.prd_price}" /></strong>원</span>
 												</div>
-												<span class="price"><strong></strong>원</span>
-											</div>
-									</a></li>
+											</a>
+										</li>
+									</c:forEach>
 								</ul>
 							</div>
 						</div>
-						</c:forEach>
+						
 						<!-- //상품정보 -->
 						
 						<!-- 할인/포인트 적용 // -->
