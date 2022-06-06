@@ -55,7 +55,7 @@ public class ProductBoardReviewDAOTests {
 		log.info(reviewDTO);
 		
 		try {
-			reviewDAO.enrollReview(reviewDTO);
+			reviewDAO.insertReview(reviewDTO);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

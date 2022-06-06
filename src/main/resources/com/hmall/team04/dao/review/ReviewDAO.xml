@@ -35,9 +35,9 @@
 	
 		
 	<!-- insert review -->
-	<insert id="enrollReview" parameterType="reviewDTO">
-		insert into review_t(review_id,prd_board_id,user_id,content,star,file_yn)
-		values(review_t_review_id_seq.nextval,#{prd_board_id},#{user_id},#{content},#{star},#{file_yn})
+	<insert id="insertReview" parameterType="reviewDTO">
+		insert into review_t(review_id,prd_board_id,prd_id,user_id,content,star,file_yn)
+		values(review_t_review_id_seq.nextval,#{prd_board_id},#{prd_id},#{user_id},#{content},#{star},#{file_yn})
 	</insert>
 
 	<select id="ReviewIsExist" resultType="int">

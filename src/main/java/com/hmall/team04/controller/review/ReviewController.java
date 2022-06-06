@@ -1,6 +1,7 @@
 package com.hmall.team04.controller.review;
 
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import com.hmall.team04.dto.product.ProductBoardDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
 import com.hmall.team04.dto.common.ReviewPageDTO;
 import com.hmall.team04.service.category.CategoryService;
+import com.hmall.team04.service.file.FileServiceImpl;
 import com.hmall.team04.service.like.LikeService;
 import com.hmall.team04.service.product.ProductBoardService;
 import com.hmall.team04.service.review.ReviewService;
@@ -55,6 +57,9 @@ public class ReviewController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private FileServiceImpl awsS3Service;
 	
 	/* 리뷰 쓰기 */
 	@RequestMapping("/insert/{user_id}")
@@ -111,7 +116,7 @@ public class ReviewController {
  			int totalCore = reviewService.getReviewListCountCore(prd_board_id);
 			
 			ReviewPageDTO reviewpageDTO = new ReviewPageDTO(reviewcri, totalCore);
-			log.info(reviewpageDTO);
+			//log.info(reviewpageDTO);
 			
 			model.addAttribute("reviewpageMaker", new ReviewPageDTO(reviewcri, totalCore));
 			model.addAttribute("reviewDTO", reviewDTO);
@@ -125,42 +130,28 @@ public class ReviewController {
 		return "review.review";
 	}
 	
+	@RequestMapping(value = "/uploadS3", method= {RequestMethod.POST})
+	@ResponseBody
+	public void uploadS3(ReviewDTO reviewDTO) throws Exception {
+		log.info(reviewDTO.toString());
+		MultipartFile file = reviewDTO.getUploadfile();
+		log.info(file);
+		
+		awsS3Service.s3FileUpload(file);
+		
+	}
+	
 	@RequestMapping(value = "/insertReview", method= {RequestMethod.POST})
 	@ResponseBody
-	public String insertReview(ReviewDTO reviewDTO) throws Exception {
+	public HashMap<String, String> insertReview(ReviewDTO reviewDTO) throws Exception {
 		log.info(reviewDTO.toString());
-		System.out.println(reviewDTO.getTest1());
-		System.out.println(reviewDTO.getTest2());
-		//ArrayList fileNames = filemanagement.FileUploader(reviewDTO.getTest3());
 		
-		return "ok";
+		reviewService.insertReview(reviewDTO);
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("insert_review_Success", "True");
+		
+		return map;
 	}
 	
-	@RequestMapping(value = "/insertReview2", method= RequestMethod.POST)
-	@ResponseBody
-	public String insertReview2(ReviewDTO reviewDTO) throws Exception {
-		log.info(reviewDTO.toString());
-		System.out.println(reviewDTO.getTest1());
-		System.out.println(reviewDTO.getTest2());
-		//ArrayList fileNames = filemanagement.FileUploader(reviewDTO.getTest3());
-		
-		return "ok";
-	}
-	
-	//${app}/r/fileUpload
-	@PostMapping("/fileUpload")
-	@ResponseBody
-	public int fileUpload(@RequestParam("mediaFile") MultipartFile file,
-	    //@RequestParam("title") String title,
-	    //@RequestParam("content") String content,
-	    Model model) throws IllegalStateException {
-
-
-		log.info(file.toString());
-		
-	    // 이미지는 s3에 업로드 후 리뷰 데이터 저장
-		//reviewService.s3FileUpload(file);
-
-	    return 1;   
-	}
 }

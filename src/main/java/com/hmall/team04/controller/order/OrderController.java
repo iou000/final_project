@@ -106,7 +106,7 @@ public class OrderController {
 		model.addAttribute("top1Coupon", top1Coupon);
 		model.addAttribute("orderInfo", orderList);
 		// 우선 사용 완료했으므로 삭제하여 혹시모를 용량문제 해소
-		session.removeAttribute("orderInfo");
+		//session.removeAttribute("orderInfo");
 
 		return "order.order";
 	}

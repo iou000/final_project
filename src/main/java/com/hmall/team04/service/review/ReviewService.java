@@ -29,5 +29,4 @@ public interface ReviewService {
 
 	void insertReview(ReviewDTO reivewDTO) throws Exception;
 
-	void s3FileUpload(MultipartFile file);
 }

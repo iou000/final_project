@@ -28,8 +28,4 @@ public class ReviewDTO {
 	// files
 	private List<FileDTO> fileList;
 	private MultipartFile uploadfile;
-	
-	private String test1;
-	private String test2;
-	private MultipartFile[] test3;
 }
