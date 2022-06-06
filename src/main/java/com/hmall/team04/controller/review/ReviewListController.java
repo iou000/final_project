@@ -19,12 +19,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hmall.team04.dto.cart.CartDTO;
 import com.hmall.team04.dto.common.Criteria;
@@ -36,6 +38,7 @@ import com.hmall.team04.dto.product.ProductBoardDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
 import com.hmall.team04.dto.common.ReviewPageDTO;
 import com.hmall.team04.service.cart.CartService;
+import com.hmall.team04.service.file.FileServiceImpl;
 import com.hmall.team04.service.product.ProductBoardService;
 import com.hmall.team04.service.review.ReviewService;
 
@@ -51,6 +54,9 @@ public class ReviewListController {
 	
 	@Autowired
 	private ProductBoardService productboardService;
+	
+	@Autowired
+	private FileServiceImpl awsS3Service;
 	
 	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<Object> getProuctList(@RequestParam String categoryCode,
@@ -89,5 +95,4 @@ public class ReviewListController {
 		return new ResponseEntity<Object>(dataCore, HttpStatus.OK);
 	}
 	
-
 }

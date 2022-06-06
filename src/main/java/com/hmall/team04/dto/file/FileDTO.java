@@ -3,6 +3,8 @@ package com.hmall.team04.dto.file;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.hmall.team04.dto.user.AuthDTO;
 
 import lombok.Data;
@@ -17,4 +19,6 @@ public class FileDTO {
 	private String file_type;
 	private Date ins_dt;
 	private String board_flag;
+	
+	private MultipartFile uploadfile;
 }

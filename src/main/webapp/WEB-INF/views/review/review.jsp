@@ -254,7 +254,7 @@
 		var prd_board_id='200';
 		var prd_id='test1';
 		
-		let popUrl = "${app}/r/insert/" + user_id+ "?prd_board_id=" + prd_board_id + "prd_id="+prd_id;
+		let popUrl = "${app}/r/insert/" + user_id+ "?prd_board_id=" + prd_board_id + "&&prd_id="+prd_id;
 		console.log(popUrl);
 		let popOption = "width = 600px, height=700px, top=300px, left=300px, scrollbars=yes";
 		

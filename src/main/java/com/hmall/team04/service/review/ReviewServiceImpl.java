@@ -1,5 +1,6 @@
 package com.hmall.team04.service.review;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.hmall.team04.dao.file.FileDAO;
 import com.hmall.team04.dao.product.ProductBoardDAO;
 import com.hmall.team04.dao.review.ReviewDAO;
@@ -34,7 +38,12 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	private int pageSize=10;
 
-	
+	private static String BUCKET_NAME = "eveadam";
+    private static String ACCESS_KEY="AKIA6EN3BZ4CYVUA7X5L";
+    private static String SECRET_KEY="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";
+    
+    private AmazonS3 s3;
+    
 	@Override
 	public ArrayList<ReviewDTO> getReviewListByInsdtCore(ReviewCriteria reviewcri) throws Exception {
 		// 읽어들인 Review의 file_yn이 1이면 추가로 사진 정보를 읽어온다.
@@ -84,27 +93,27 @@ public class ReviewServiceImpl implements ReviewService {
 		reviewDAO.insertReview(reivewDTO);
 	}
 
-	@Override
-	public void s3FileUpload(MultipartFile file) {
-		// TODO Auto-generated method stub
-		if(file != null && !file.getOriginalFilename().equals("")) {
-			System.out.println(file.getOriginalFilename());
-			
-//			File localFile = new File("/Users/jinhobae/Downloads/" + file.getOriginalFilename());
-//			file.transferTo(localFile);
+//	@Override
+//	public void s3FileUpload(MultipartFile file) throws Exception {
+//		// TODO Auto-generated method stub
+//		if(file != null && !file.getOriginalFilename().equals("")) {
+//			System.out.println(file.getOriginalFilename());
 //			
+//			File localFile = new File("/Users/devsacti/Downloads/" + file.getOriginalFilename());
+//			file.transferTo(localFile);
+////			
 //			System.out.println(localFile.getName());
 //			PutObjectRequest obj = new PutObjectRequest(BUCKET_NAME, localFile.getName(), localFile);
 //			obj.setCannedAcl(CannedAccessControlList.PublicRead);
-//			String imageUrl = "https://reviewaws.s3.ap-northeast-2.amazonaws.com/"+localFile.getName();
+//			String imageUrl = "https://eveadam.s3.ap-northeast-2.amazonaws.com/"+localFile.getName();
 //			s3.putObject(obj);
-			//System.out.println(imageUrl);
-			//reviewVO.setS3ImageUrl(imageUrl);
-			
-			//reviewMapper.insertReview(reviewVO);
-		}else {
-			//reviewMapper.insertReview(reviewVO);
-		}
-	}
+//			System.out.println(imageUrl);
+//			//reviewVO.setS3ImageUrl(imageUrl);
+//			
+//			//reviewMapper.insertReview(reviewVO);
+//		}else {
+//			//reviewMapper.insertReview(reviewVO);
+//		}
+//	}
 	
 }
