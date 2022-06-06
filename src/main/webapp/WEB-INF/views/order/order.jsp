@@ -193,13 +193,13 @@
 									<ul class="row-list">
 										<li id="hpointUseLi">
 											<div class="row-title">
-												<label class="chklabel"> <input type="checkbox"
-													name="upointCheck" onclick="useUpoint()"> <i
-													class="icon"></i> <span>적립금 <em class="num">1,001</em></span>
-													<input type="hidden" name="uPoint" value="1001">
+												<label class="chklabel"> 
+													<input type="checkbox" name="upointCheck" onclick="useUpoint()">
+													<i class="icon"></i> 
+													<span>적립금 <em class="num"><fmt:formatNumber value="${user_reserve}" /></em></span>
+													<input type="hidden" name="uPoint" value="${user_reserve}">
 												</label>
-												<button type="button" class="btn-tooltip"
-													onclick="$('#pec009').modal().show();">
+												<button type="button" class="btn-tooltip" onclick="$('#pec009').modal().show();">
 													<i class="icon que-mark"></i><span class="hiding">툴팁</span>
 												</button>
 											</div>
@@ -208,10 +208,11 @@
 													<label class="inplabel"><input type="text"
 														oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g, '$1');"
 														name="useUPoint" value="" placeholder="0"
-														onchange="directInsertUPoint(this);"></label> <span
-														class="unit point">P</span>
+														onchange="directInsertUPoint(this);">
+													</label> 
+													<span class="unit point">P</span>
 													<button class="btn ico-clearabled">
-														<i class="icon"></i><span class="hiding">지우기</span>
+														<i class="icon"></i>
 													</button>
 												</div>
 											</div>
@@ -1034,7 +1035,7 @@ function cancleCopn() {
 	$("#divCopnInfArea input[name=user_id]").val('');
 	$("#divCopnInfArea input[name=coupon_active]").val('');
 	
-	$(".price").empty();
+	$("#copnSaleDiv .price").empty();
 	
 	$('input[name=copnDcAply]').prop('checked', false);
 	$('#pec007-01').modal('hide');
@@ -1059,7 +1060,7 @@ function applyCopnDc() {
 		$("#divCopnInfArea input[name=user_id]").val('');
 		$("#divCopnInfArea input[name=coupon_active]").val('');
 		
-		$(".price").empty();
+		$("#copnSaleDiv .price").empty();
 	} else {
 		$("#divCopnInfArea input[name=coupon_id]").val('${top1Coupon.coupon_id}');
 		$("#divCopnInfArea input[name=coupon_nm]").val('${top1Coupon.coupon_nm}');
@@ -1073,7 +1074,7 @@ function applyCopnDc() {
 		addCouponPriceHtml += "<strong style='margin-right:24px; color:#09f; font-size:14px;'>${top1Coupon.coupon_nm}</strong>";
 		addCouponPriceHtml += "<strong id='copnDcAplyAmt'>-"+priceToString(${top1Coupon.coupon_price})+"</strong>";
 		addCouponPriceHtml += "원";
-		$(".price").append(addCouponPriceHtml);
+		$("#copnSaleDiv .price").append(addCouponPriceHtml);
 		
 	}
 	
