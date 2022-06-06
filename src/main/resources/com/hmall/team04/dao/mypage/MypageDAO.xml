@@ -49,6 +49,8 @@
 		       		where article_id = podt.prd_id 
 		       		and board_flag = 'prd') as upload_path 
 		       ,pot.ORDER_DATE
+		       ,pot.coupon_discount_amount
+		       ,pot.reserve_discount_amount
 		    FROM PRD_ORDER_T pot
 		        ,PRD_ORDERDETAIL_T podt 
 		    WHERE podt.prd_order_id = pot.prd_order_id  

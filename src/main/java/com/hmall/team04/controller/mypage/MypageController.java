@@ -1,7 +1,6 @@
 package com.hmall.team04.controller.mypage;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hmall.team04.dto.mypage.MypageDTO;
 import com.hmall.team04.dto.order.OrderDTO;
+import com.hmall.team04.dto.order.OrderDetailDTO;
 import com.hmall.team04.service.balance.BalanceService;
 import com.hmall.team04.service.coupon.CouponService;
 import com.hmall.team04.service.mypage.MypageService;
@@ -36,8 +35,8 @@ public class MypageController {
 	private OrderService orderService;
 	private MypageService mypageService;
  	
-	public MypageController(UserService userService, CouponService couponService, ReserveService reserveService, BalanceService balanceService,
-							OrderService orderService, MypageService mypageService) {
+	public MypageController(UserService userService, CouponService couponService, ReserveService reserveService,
+							BalanceService balanceService, OrderService orderService, MypageService mypageService) {
 		this.userService = userService;
 		this.couponService = couponService;
 		this.reserveService = reserveService;
@@ -68,8 +67,6 @@ public class MypageController {
 			model.addAttribute("reserves", reserves);
 			model.addAttribute("balances", balances);
 			return "mypage.orderhist.mypageMainList";
-		
-			
 		} catch (Exception e) {
 			log.info(e.toString());
 			model.addAttribute("msg", "list 출력 에러");
@@ -85,14 +82,34 @@ public class MypageController {
 	}
 	
 	@GetMapping("/od")
-	public ModelAndView orderDetail(ModelAndView mnv, @RequestParam String orderNo) {
+	public ModelAndView orderDetail(Principal principal, @RequestParam String orderNo) {
+		ModelAndView mnv = new ModelAndView();
 		try {
 			mnv.setViewName("mypage.orderhist.orderdetail");
-			List<OrderDTO> list = orderService.getOrderByOrderNo(orderNo);
-			mnv.addObject("list", list);
+			OrderDTO orderDTO = orderService.getOrderByOrderNo(principal.getName(), orderNo);
+			log.info(orderDTO);
+			mnv.addObject("orderDTO", orderDTO);
 		} catch (Exception e) {
+			log.info(e);
 			mnv.addObject("msg", "주문내역 출력 에러");
-			mnv.addObject("url", "../");
+			mnv.addObject("url", "");
+			mnv.setViewName("redirect");
+		}
+		return mnv;
+	}
+	
+	@GetMapping("/oc")
+	public ModelAndView orderCancel(@RequestParam String orderDetailNo) {
+		ModelAndView mnv = new ModelAndView();
+		try {
+			mnv.setViewName("mypage.orderhist.ordercancel");
+			OrderDetailDTO odDTO = orderService.getOrderDetail(orderDetailNo);
+			
+			mnv.addObject("odDTO", odDTO);
+		} catch (Exception e) {
+			log.info(e);
+			mnv.addObject("msg", "주문취소 출력 에러");
+			mnv.addObject("url", "");
 			mnv.setViewName("redirect");
 		}
 		return mnv;

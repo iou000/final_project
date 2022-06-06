@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.hmall.team04.dto.order.OrderCompleteDTO;
 import com.hmall.team04.dto.order.OrderDTO;
+import com.hmall.team04.dto.order.OrderDetailDTO;
 
 public interface OrderService {
 	//
@@ -12,6 +13,8 @@ public interface OrderService {
 
 	OrderCompleteDTO getPrdPayment(OrderCompleteDTO ordercompleteDTO) throws Exception;
 
-	List<OrderDTO> getOrderByOrderNo(String orderNo) throws Exception;
+	OrderDTO getOrderByOrderNo(String userid, String orderNo) throws Exception;
+
+	OrderDetailDTO getOrderDetail(String orderDetailNo) throws Exception;
 
 }
