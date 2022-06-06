@@ -3,6 +3,8 @@ package com.hmall.team04.dto.review;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.hmall.team04.dto.file.FileDTO;
 
 import lombok.Data;
@@ -25,4 +27,5 @@ public class ReviewDTO {
 	
 	// files
 	private List<FileDTO> fileList;
+	private MultipartFile uploadfile;
 }

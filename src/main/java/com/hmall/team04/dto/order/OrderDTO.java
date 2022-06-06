@@ -19,5 +19,8 @@ public class OrderDTO {
 	private String order_comment;
 	private Date order_date;
 	private String prd_pmt_id;
+	private String pay_method;
+	private int coupon_discount_amount;
+	private int reserve_discount_amount;
 	private List<OrderDetailDTO> orderDetailList;
 }

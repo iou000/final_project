@@ -49,4 +49,20 @@ public class ProductBoardServiceImpl implements ProductBoardService {
 		return productboardDAO.getProductBoardListByRowPrice(cri);
 	}
 
+
+
+	@Override
+	public ArrayList<ProductBoardDTO> getProductBoardListByKeyword(ProductCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return productboardDAO.getProductBoardListByKeyword(cri);
+	}
+
+
+
+	@Override
+	public int getProductListCountByKeyword(String keyword) throws Exception {
+		// TODO Auto-generated method stub
+		return productboardDAO.getProductListCountByKeyword(keyword);
+	}
+
 }

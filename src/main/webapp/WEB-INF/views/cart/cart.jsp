@@ -360,6 +360,7 @@ function setTotalInfo(){
 		deliveryPrice = 3000;	
 	}
 	//alert(deliveryPrice);
+	
 	/* 최종 가격 */
 	finalTotalPrice = totalPrice + deliveryPrice;
 	//alert('최종가격');
@@ -424,10 +425,8 @@ function deleteBasktCore(prd_cart_id,flag) {
 					}
 				})
 		}
-		
-		alert('deleteBaskt');		
+				
 	} else {
-		alert('deleteBaskt one start');
 				$.ajax({
 					url : "${app}/deletePrdCartId",
 					method : "POST",
@@ -440,12 +439,10 @@ function deleteBasktCore(prd_cart_id,flag) {
 					beforeSend : function(xhr) { xhr.setRequestHeader(header, token); },
 					success : function(data) {
 						if (data.delete_PrdCartId_Success == "True") {
-							alert('hi');
 						}
 					}
 				})
 		
-		alert('deleteBaskt one end');	
 	}
 
 }
@@ -460,12 +457,10 @@ function deleteAllBasktCore(prd_cart_id) {
 	  	$("input:checkbox[name=chk]:checked").each(function() {
 	  	  //checkBoxArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
 	  	  //console.log(checkBoxArr);
-	  	  alert($(this).val());
 	  	  deleteBasktCore($(this).val(),'1');
 	  	})
 	  	location.reload();
-	  	
-	  	alert('deleteAllBasktCore');		
+	  		
 	}
 }
 
@@ -480,7 +475,6 @@ function deleteBasktAll() {
 	
 	location.reload();
 	
-	alert('deleteAllBaskt');
 }
 
 function changeBasktItemCore(obj,prd_cart_id) {
@@ -493,8 +487,7 @@ function changeBasktItemCore(obj,prd_cart_id) {
 	
 	var change_amount = Number($(target_childObj).val());
 	var target_leftQty = Number($(target_childObj2).val());
-	alert(change_amount);
-	alert(target_leftQty);
+
 	
 	if(change_amount>target_leftQty){
 		alert('재고량보다 많이 주문할 수 없습니다!');
@@ -519,7 +512,6 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		}
 	})
 	
-	alert('changeBasktItemCore');
 }
 
 
@@ -559,7 +551,6 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		
 		var val_target_childObj = Number($(target_childObj).val());
 	
-		alert(val_target_childObj);
 		
 		$(target_childObj).val(val_target_childObj + 1);
 
@@ -579,7 +570,6 @@ function changeBasktItemCore(obj,prd_cart_id) {
             return false;
         }
 		
-		alert(val_target_childObj);
 		
 		$(target_childObj).val(val_target_childObj - 1);
     }
@@ -597,14 +587,13 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		
 		var val_target_childObj = Number($(target_childObj).val());
 	
-		alert(val_target_childObj);
-		
-		alert(prd_board_id);
-		
-		alert(prd_id);
 		
 		var orderList = [];
-		var order = [prd_board_id, prd_id,val_target_childObj];
+		var order = {
+				prd_board_id : prd_board_id, 
+				prd_id : prd_id, 
+				prd_count : val_target_childObj
+				};
 		orderList.push(order);
 		
 		for(var i=0; i<orderList.length;i++){
@@ -614,23 +603,19 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		$.ajax({
 			url : "${app}/order",
 			method : "POST",
-			traditional: true,	// ajax 배열 넘기기 옵션!
-			data : {
-				orderList : orderList
-			},
-			dataType : 'json',
+//			traditional: true,	// ajax 배열 넘기기 옵션!
+			data : JSON.stringify(orderList),
+			contentType : "application/json",
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(data) {
 				if(data.orderSuccess=='True'){
-					alert('your choice is order and let us go order page');
 					location.href = '${app}/order';
 				}
 			}
 		});
 
-		alert('hi2');
 
 	}
 </script>
@@ -649,13 +634,14 @@ function changeBasktItemCore(obj,prd_cart_id) {
 			if($(element).find(".individual_cart_checkbox").is(":checked") === true){
 				
 				val_prd_board_id = ($(element).find(".individual_prd_board_id").val());
-				alert(val_prd_board_id);
 				val_prd_id = ($(element).find(".individual_prd_id").val());
-				alert(val_prd_id);
 				val_amount = ($(element).find(".individual_cart_amount").val());
-				alert(val_amount);
 				
-				var order = [val_prd_board_id,val_prd_id,val_amount];
+				var order = {
+						prd_board_id : val_prd_board_id,
+						prd_id : val_prd_id,
+						prd_count : val_amount
+						};
 				
 				orderList.push(order);
 			}
@@ -668,23 +654,19 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		$.ajax({
 			url : "${app}/order",
 			method : "POST",
-			traditional: true,	// ajax 배열 넘기기 옵션!
-			data : {
-				orderList : orderList
-			},
-			dataType : 'json',
+//			traditional: true,	// ajax 배열 넘기기 옵션!
+			data : JSON.stringify(orderList),
+			contentType : "application/json",
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(data) {
 				if(data.orderSuccess=='True'){
-					alert('your choiceSSSS is order and let us go order page');
 					location.href = '${app}/order';
 				}
 			}
 		});
 
-		alert('hi3');		
 
 	}
 </script>

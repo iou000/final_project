@@ -1,7 +1,15 @@
 package com.hmall.team04.dao.coupon;
 
+import java.util.List;
+
+import com.hmall.team04.dto.coupon.CouponDTO;
+
 public interface CouponDAO {
 
-	int getCouponCountbyUserId(String userid) throws Exception;
+	int getCouponCountbyUserId(String user_id) throws Exception;
+
+	List<CouponDTO> selectCouponListByUserId(String user_id) throws Exception;
+
+	CouponDTO selectCouponTop1ByUserId(String user_id) throws Exception;
 
 }

@@ -30,24 +30,39 @@
 										data-slick-index="0" aria-hidden="false" style="width: 520px;">
 										<div>
 											<div class="item" data-item=""
-												data-outputsrc="${productboadDTO.upload_path}"
+												data-outputsrc="${productboadDTO.productList[0].upload_path}"
 												onerror="this.src='https://image.hmall.com/hmall/pd/no_image_600x600.jpg'"
 												style="width: 100%; display: inline-block; vertical-align: top;">
-												<a href="javascript:;"
-													onclick="goGaEvent('상품상세','상단_이미지확대','')" tabindex="0"><img
-													src="${productboadDTO.upload_path}"
-													alt="2140365970_0.jpg"
+												<a href="javascript:;" onclick="goGaEvent('상품상세','상단_이미지확대','')" tabindex="0">
+													<img id="image-detail" src="${productboadDTO.productList[0].upload_path}" alt="2140365970_0.jpg"
 													onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=520x520&amp;AR=0')"></a>
 											</div>
+											
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="ui-angle"
-							style="display: none; width: 260px; height: 260px; top: 0px; left: 230.5px;"></div>
+							style="display: none; width: 260px; height: 260px; top: 0px; left: 230.5px;">
+						</div>
 					</div>
-
+					<div class="slider-thumbnaii no-slick">
+	                    <ul> 
+	                    	<c:forEach items="${productboadDTO.productList}" var="productlist" varStatus="status">
+	                    	<c:if test="${status.count == 1}">
+	                        <li class="ui-thumbnaii ui-active"><a href="javascript:;" onclick="" draggable="false">
+	                        <input type="hidden" name="image-url" value="${productlist.upload_path}" />
+	                        <img src="${productlist.upload_path}" alt="" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=100x100&amp;AR=0')"></a></li>  
+	                    	</c:if>
+	                    	<c:if test="${status.count != 1}">
+	                        <li class="ui-thumbnaii"><a href="javascript:;" onclick="" draggable="false">
+	                        <input type="hidden" name="image-url" value="${productlist.upload_path}" />
+	                        <img src="${productlist.upload_path}" alt="" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=100x100&amp;AR=0')"></a></li>  
+	                    	</c:if>
+	                    	</c:forEach>
+	                    </ul>
+                	</div>
 				</div>
 				<!-- // 상품 이미지 영역 끝 -->
 
@@ -59,62 +74,52 @@
 
 			<!-- 우측메뉴 -->
 			<div class="right-info">
+				<div data-viewercontent="" class="">
+	                <p class="guide-txt">마우스 휠을 움직이면 상품 이미지를 더욱 상세히 보실 수 있습니다.</p>
+	            </div>
 				<!-- 상품 기본 정보 시작 -->
 				<div class="basic-info">
-
-					<!-- 브랜드샵 -->
-
-					<div class="brand-info">
-						<a ga-custom-etc="urlAction"> <span class="brand-name">${productboadDTO.brand}<i
-								class="icon icon-arrow"></i>
-						</span>
-						</a>
-					</div>
-
-					<!--//brand-area-->
-
 					<!--prduct-title-info-->
 					<div class="prduct-title-info">
 
-						<strong class="prduct-name">${productboadDTO.prd_board_id}</strong>
+						<strong class="prduct-name">${productboadDTO.title}</strong>
 
 					</div>
 					<!--//prduct-title-info-->
 
 					<!-- pdinfo 플래그 -->
 					<div class="pdinfo">
-
 						<a href="#none" onclick="gotoPageLink(2);return false;"
-							class="gp_className" ga-category="상품상세" ga-action="별점"
-							ga-label="">
+							class="gp_className" ga-category="상품상세" ga-action="별점" ga-label="">
 							<div class="grade">
-
-								<div class="starbg pt10">
+								<div class="starbg pt<fmt:formatNumber type='number' maxFractionDigits='0' value='${2*productboadDTO.star}' />">
 									<p class="score">
-										<span class="hiding">100점</span>
+									<c:set var="star" value="${2*productboadDTO.star}" />
+										<span class="hiding"><fmt:formatNumber value="${(star -(star)%1)*10}" type="number" />점</span>
 									</p>
 								</div>
 								<p class="like-count">
-									<em>5</em>(1)
+									<em>${productboadDTO.star}</em>
 								</p>
 							</div> <!-- 10 10 -->
 						</a>
 
 					</div>
 					<!--//pdinfo-->
-
-					<!-- pdprice-->
+					
+					<!-- 할인율이 있을 때 pdprice-->
+					<c:if test="${productboadDTO.discount_rate != 0}">
 					<div class="pdprice">
-
+						<c:set var="d_price" value="${productboadDTO.price * (1 - (productboadDTO.discount_rate / 100))}" />
 						<span class="rateprice" aria-label="할인율이 적용된 가격"> <em
 							class="rate" aria-label="할인율">${productboadDTO.discount_rate }%</em>
 
 							<!-- (우수고객혜택가) -->
 							<p class="discount" aria-label="할인가">
-								<em>${productboadDTO.price * (100-productboadDTO.discount_rate)/100 }</em>
+								<em><fmt:formatNumber value="${d_price+(10-(d_price%10))%10}" pattern="###,###,###" /></em>
 								<b>원</b>
 							</p> <del class="normal" aria-label="정상가">
-								<em>${productboadDTO.price }</em>원
+								<em><fmt:formatNumber value="${productboadDTO.price}" pattern="###,###,###" /></em>원
 							</del> <!--옵션값이있을경우-->
 
 						</span>
@@ -122,19 +127,36 @@
 					</div>
 
 					<div class="pdinfo">
+						<c:set var="r_price" value="${d_price * (1)/100}" />
 						<span class="rateprice" aria-label="적립금"> <em
-							class="rate_save" aria-label="적립률">적립금 </em> <em>${productboadDTO.price * (1)/100 }</em><b>원</b>
-
+							class="rate_save" aria-label="적립률">적립금 </em> <em><fmt:formatNumber value="${r_price+(1-(r_price%1))%1}" type="number" /></em><b>원</b>
 						</span>
 					</div>
+					</c:if>
+					<!-- 할인율이 없을 때 pdprice-->
+					<c:if test="${productboadDTO.discount_rate == 0}">
+					<div class="pdprice">
 
+						<span class="rateprice" aria-label="할인율이 적용된 가격"> 
+							<p class="discount" aria-label="할인가">
+								<em><fmt:formatNumber value="${productboadDTO.price}" pattern="###,###,###" /></em>
+								<b>원</b>
+							</p> 
+
+						</span>
+
+					</div>
+					
+					<div class="pdinfo">
+						<c:set var="r_price" value="${productboadDTO.price * (1)/100}" />
+						<span class="rateprice" aria-label="적립금"> <em
+							class="rate_save" aria-label="적립률">적립금 </em> <em><fmt:formatNumber value="${r_price+(1-(r_price%1))%1}" type="number" /></em><b>원</b>
+						</span>
+					</div>
+					</c:if>
 					<!--//pdprice-->
-
 				</div>
-
 				<div class="delivery-info">
-
-
 					<dl>
 						<dt>배송정보</dt>
 						<dd class="deliver-save">
@@ -142,94 +164,63 @@
 								<strong>무료배송</strong>
 							</p>
 						</dd>
-
 						<dt>배송불가지역</dt>
 						<dd>도서/산간지역 불가</dd>
-
 					</dl>
 
 
 				</div>
 				<!-- // 상품 기본 정보 끝 -->
-
 				<div class="product-option-wrap">
-
-					<div class="stock-item select-product-list item-normal-product">
-						<div class="pditem">
-							<input type="hidden" name="uitmCd" value="00001">
-							<div class="product-info">
-								<div class="figcaption">
-									<c:choose>
-										<c:when test="${productboadDTO.option1 == null}">
-											<em>${productboadDTO.prd_nm}</em><br>
-											<span class="option">색상/속성 없음</span>
-										</c:when>
-
-										<c:otherwise>
-											<span class="option">색상/속성 있음 추후구체화<em></em>
-											</span>
-										</c:otherwise>
-									</c:choose>
-
-									<div class="quantity">
-										<div class="count">
-											<button class="btn btn-minus" data-area-id="1"
-												aria-label="수량 감소" onclick="minusOrdQtyCore(this, '99');">
-												<i class="icon"></i> <span class="hiding">감소</span>
-											</button>
-											<div class="inputbox">
-												<label class="inplabel"> <input type="number"
-													data-area-id="1" name="ordQty"
-													onkeyup="changeOrdQtyCore(this)" value="1" maxlength="3"
-													title="입력하세요"></label>
-											</div>
-											<button class="btn btn-plus" data-area-id="1"
-												aria-label="수량 증가" onclick="plusOrdQtyCore(this, '99');">
-												<i class="icon"></i> <span class="hiding">증가</span>
-											</button>
-										</div>
-									</div>
-								</div>
-								<!--// figcaption -->
-							</div>
-							<!--// product-info -->
-						</div>
-						<!--// pditem -->
-
-					</div>
-					<!--// stock-item -->
-
-					<!-- 희망배송일 -->
-
-					<!-- //희망배송일 -->
-
-					<!-- 현대백화점 상품구매도우미 -->
-
-					<!-- //현대백화점 상품구매도우미 -->
-					<div class="popup id_duplicate posA hiding" id="stock_cnt"
-						style="width: 469px; right: 0; bottom: 1px;"></div>
-				</div>
-
-
-				<input type="hidden" value="0/0">
-				<!-- 총 상품 금액 시작 -->
-				<div class="sum-price" style="">
-					<div class="sum-title">
-						<!--20200916 수요일 변경 : pc레이아웃 공통 icon class 변경-->
-						<strong>총 상품 금액
-						</strong>
-					</div>
-
-					<div class="price-wrap">
-						<p class="total-price">
-
-							<strong>${productboadDTO.price * (100-productboadDTO.discount_rate)/100 }</strong>원
-
-						</p>
-					</div>
-				</div>
-				<!-- // 총 상품 금액 시작 끝 -->
-
+                    <div class="ui-dropdown-group">
+                      <div class="ui-dropdown sel-prduct">
+                         <div class="drop" href="#" data-modules-dropdown="" aria-expanded="true">
+                              <a class="defaultVal" href="javascript:;">상품을 선택하세요.</a>
+                          </div>
+                          <div class="dropdown-menu" role="menu">
+                              <div class="item-box-list">
+                     				<c:forEach items="${productboadDTO.productList}" var="productlist" varStatus="status">
+                                    <a href="javascript://" onclick="insertPrd('${productlist.prd_id}', '${productlist.prd_nm}', '${productlist.upload_path}', '${productlist.option1}', '${productlist.option2}', '${productlist.prd_price}', '${productlist.amount}', '${productlist.prd_price}', '${status.count}');" class="">
+                                            <div class="thumb">
+                                                <img src="${productlist.upload_path}" alt="${productlist.prd_nm} ${productlist.option1} ${productlist.option2}" onerror="this.src='https://image.hmall.com/hmall/pd/no_image_100x100.jpg'">
+                                            </div>
+                                            <div class="figcaption">
+                                                <div class="pdname" aria-label="제품명"><em class="choose-num">[선택${status.count}]</em>${productlist.prd_nm} ${productlist.option1} ${productlist.option2}</div>    
+                                                <div class="pdoption" aria-label="수량"><span class="option"><em>남은수량 : ${productlist.amount}개</em></span></div>
+                                                <div class="pdprice"><ins aria-label="가격"><em><fmt:formatNumber value="${productlist.prd_price}" pattern="###,###,###" /></em><b>원</b></ins></div>
+                                            </div>
+                                     </a>
+                                  </c:forEach>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                    <!-- stock-item -->
+                    <div class="stock-item select-product-list" style="">
+                        <input type="hidden" name="ItemCnt" value="0">
+                        
+                    </div>
+                    
+                    <!--// stock-item -->
+                </div>
+                <div class="sum-price" style="">
+                    <div class="sum-title">
+                        <strong>총 상품 금액
+                           <a href="#tooltipCont3" data-modules-tooltip="" class=""><i class="icon que-mark"></i></a>
+                        </strong>
+                        <div class="tooltip-box" id="tooltipCont3">
+                        	<p class="txt">선택하실 수 있는 할인혜택이 모두 적용된 금액입니다.<br>배송비가 포함이 되어 있지 않은 금액으로, 결제시 배송비가 추가될 수 있습니다.</p>
+                            <button class="btn-close"><i class="icon"></i><span class="hiding">닫기</span></button>
+                        <button class="btn-close"><i class="icon"></i><span class="hiding">닫기</span></button></div>
+                        <!--//tooltip-box-->
+                    </div>
+                    <div class="price-wrap">
+                    	<input type="hidden" name="total-price-int" value="0" />
+                        <p class="total-price">   
+                            <strong>0</strong>원              
+                        </p>
+                    </div>
+                </div>
 				<div class="btngroup prdBtnBoxGroup type00"></div>
 				<!-- btngroup -->
 				<div class="btngroup prdBtnBoxGroup pd_shipping_type_nomral type04">
@@ -506,7 +497,7 @@
 <script>
 $(document).ready(function() {
 	// 좋아요 누른 기록 존재 체크
-	var val_likeIsExist=${likeIsExist };
+	var val_likeIsExist="${likeIsExist}";
 	//alert(val_likeIsExist);
 	
 	if (val_likeIsExist > 0){
@@ -515,10 +506,21 @@ $(document).ready(function() {
 		
 	}
 	
-		
-
-	
 });
+
+
+/*
+ * 이미지 클릭했을 때 ui-active 추가 제거 callback 함수
+ */
+$(".slider-thumbnaii>ul>li>a").click(function(){
+	$(".slider-thumbnaii>ul>li.ui-active").removeClass("ui-active");
+	$(this).parent('li').addClass("ui-active");
+	var image_url = $(this).children('input').val();
+	$(".item").attr('data-outputsrc', image_url);
+	$("#image-detail").attr('src', image_url);
+});
+
+
 </script>
 
 <script>
@@ -610,31 +612,31 @@ function goChioceProcessCore(prd_board_id) {
 
 }
 </script>
-
 <script>
 	// 장바구니
 	function addCartCore(obj) {
+		var prd_id_length = $("input[name='sel_prd_id']").length;
+		var cartList = [];
+		if(prd_id_length == '0'){
+			alert("제품을 선택해주세요.");
+			return false;
+		}
+		for(var i = 0; i < prd_id_length; i++){
+			var prd_id = $("input[name='sel_prd_id']").eq(i).val();
+			var cart_amount = $("input[name='sel_prd_amount']").eq(i).val();
+			var cartDTO = {
+					prd_id : prd_id,
+					cart_amount : cart_amount
+			}
+			cartList.push(cartDTO);
+		}
 		var token = $("input[name='_csrf']").val();
 		var header = "X-CSRF-TOKEN";
-		
-		val_prd_id=('${productboadDTO.prd_id}');
-		alert(val_prd_id);
-		
-		var targetCssHeader = ".product-option-wrap:first";
-		var cur_ordQty = $(
-				targetCssHeader
-						+ " .select-product-list .pditem input[name='ordQty']")
-				.val();
-
-		alert(cur_ordQty);
-
 		$.ajax({
 			url : "${app}/basktList",
 			method : "POST",
-			data : {
-				prd_id : val_prd_id,
-				cart_amount : cur_ordQty
-			},
+			data : JSON.stringify(cartList),
+			contentType : "application/json",
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
 			},
@@ -653,7 +655,6 @@ function goChioceProcessCore(prd_board_id) {
 			}
 		
 		});
-		alert('end');
 
 	}
 </script>
@@ -663,72 +664,115 @@ function goChioceProcessCore(prd_board_id) {
 	function buyProductCore(obj) {
 		var token = $("input[name='_csrf']").val();
 		var header = "X-CSRF-TOKEN";
-
-		var targetCssHeader = ".product-option-wrap:first";
-		var cur_ordQty = $(
-				targetCssHeader
-						+ " .select-product-list .pditem input[name='ordQty']")
-				.val();
-
-		alert(cur_ordQty);
-		val_prd_board_id="${productboadDTO.prd_board_id }";
-		alert(val_prd_board_id);
-
-		val_prd_id=('${productboadDTO.prd_id}');
-		alert(val_prd_id);
-		
-		var orderList = [];
-		var order = [val_prd_board_id, val_prd_id, cur_ordQty];
-		orderList.push(order);
-		
-		for(var i=0; i<orderList.length;i++){
-			console.log(orderList[i]);
+		var val_prd_board_id = "${productboadDTO.prd_board_id }";
+		var prd_id_length = $("input[name='sel_prd_id']").length;
+		if(prd_id_length == '0'){
+			alert("제품을 선택해주세요.");
+			return false;
 		}
-		
+		var orderList = [];
+		for(var i = 0; i < prd_id_length; i++){
+			var prd_id = $("input[name='sel_prd_id']").eq(i).val();
+			var cur_ordQty = $("input[name='sel_prd_amount']").eq(i).val();
+			var order = {
+				prd_board_id : val_prd_board_id,
+				prd_id : prd_id,
+				prd_count : cur_ordQty
+			};
+			orderList.push(order);
+		}
 		$.ajax({
 			url : "${app}/order",
 			method : "POST",
-			traditional: true,	// ajax 배열 넘기기 옵션!
-			data : {
-				orderList : orderList
-			},
-			dataType : 'json',
+//			traditional: true,	// ajax 배열 넘기기 옵션!
+			data : JSON.stringify(orderList),
+			contentType : "application/json",
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(data) {
+				console.log("success");
 				if(data.orderSuccess=='True'){
-					alert('your choice is order and let us go order page');
 					location.href = '${app}/order';
+				}else{
+					location.href ='${app}/login';
 				}
+			},
+			error:function(request,status,error){        
+				location.href ='${app}/login';
 			}
 		});
-
-		alert('hi2');
 
 	}
 </script>
 
 <script>
-    function calcSellPrcCore(obj) {
-        var totSellPrc = 0;
-        var targetCssHeader = ".product-option-wrap:first";
-
-        var ordQty = $(
-                targetCssHeader + " .select-product-list .pditem input[name='ordQty']"
-            ).val();
-
-		discount_payment =${productboadDTO.price * (100-productboadDTO.discount_rate)/100 };
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	function insertPrd(prd_id, prd_nm, upload_path, option1, option2, price, amount, prd_price, cnt){
+		var str = "";
+		var no_image_url = "https://image.hmall.com/hmall/pd/no_image_100x100.jpg";
+		var prd_id_length = $("input[name='sel_prd_id']").length;
+		var prd_id_arr = new Array(prd_id_length);
+		for(var i = 0; i < prd_id_length; i++){
+			prd_id_arr[i] = $("input[name='sel_prd_id']").eq(i).val();
+		}
+		if( prd_id_arr.includes(prd_id) ){
+			alert("동일상품이 선택되었습니다.\n아래에서 선택사항을 확인해주세요.");
+		}
+		else{
+			str += "<div class='pditem'>"
+			str += "<div class='product-info'>"
+			str += "<div class='thumb'>"
+			str += "<img src='" + upload_path + "' alt='" + prd_nm + option1 + option2 + "' onerror='"+ "noImage(this, '" + no_image_url + "')'>"
+			str += "</div>"
+			str += "<div class='figcaption'>"
+			str += "<div class='pdname' aria-label='제품명'>[선택" + cnt + "]" + prd_nm + option1 + option2 + "</div>"
+			str += "<div class='pdoption' aria-label='수량'><span class='stock-num'><em>남은수량 : " + amount + "</em></span></div>"
+			str += "<div class='quantity'>"
+			str += "<div class='count'>"
+			str += "<button class='btn btn-minus' data-area-id='1' aria-label='수량 감소' onclick='minusOrdQty(this);'>"
+	        str += "<i class='icon'></i><span class='hiding'>감소</span></button>"
+	        str += "<div class='inputbox'>"
+	        str += "<label class='inplabel'>"
+	        str += "<input type='text' data-area-id='1' name='ordQty' class='amount' onkeyup='changeOrdQty(this, " + amount + ")' value='1' maxlength='3'></label></div>"
+	        str += "<button class='btn btn-plus' data-area-id='1' aria-label='수량 증가' onclick='plusOrdQty(this, "+ amount +");'>"    
+	        str += "<i class='icon'></i><span class='hiding'>증가</span></button></div>"
+	        str += "<div class='pdprice'><ins aria-label='가격'><em>" + numberWithCommas(price) +"</em><b>원</b></ins></div></div></div>"
+	        str += "<button class='btn-delete btn-delete-sel-item' onclick='delItem(this)'><i class='icon'></i><span class='hiding'>삭제</span></button>"
+	        str += "<input type='hidden' name='sel_prd_id' value='" + prd_id + "' >"
+	        str += "<input type='hidden' name='sel_prd_amount' value='1' >"
+	        str += "<input type='hidden' name='sel_prd_price' value='" + prd_price + "' >"
+	        str += "</div>"
+	        $(".select-product-list").append(str);
+	        var sum_price = $("input[name='total-price-int']").val();
+	        $("input[name='total-price-int']").val(parseInt(sum_price) + parseInt(price));
+	        $(".sum-price .total-price strong").text(numberWithCommas(parseInt(sum_price) + parseInt(price)));
+		}
+        $(".sel-prduct").removeClass("ui-active");
+        
+	}
+	
+	function delItem(obj){
+		console.log("Test");
+		var targetPditem = $(obj).closest(".pditem");
+		var price =  $(targetPditem).find("input[name='sel_prd_price']").val();
+		var amount = $(targetPditem).find("input[name='sel_prd_amount']").val();
+        var sum_price = $("input[name='total-price-int']").val();
+        $("input[name='total-price-int']").val(parseInt(sum_price) - (parseInt(amount) * parseInt(price)));
+        
+        $(".sum-price .total-price strong").text(numberWithCommas(parseInt(sum_price) - (parseInt(amount) * parseInt(price))));
+        
+		$(targetPditem).remove();
 		
-        totSellPrcPayment = ordQty * discount_payment;
-
-        $(".sum-price .total-price strong").text(totSellPrcPayment);
-
-    }
-    /*
+	}
+    
+ /*
  * 수량 input 변경
  */
-    function changeOrdQtyCore(obj, limitCnt) {
+    function changeOrdQty(obj, limitCnt) {
+	 	console.log("test");
         var targetObj = $(obj).closest(".inplabel");
         var ordQty = $(obj).val();
         var orgSlitmCd = "";
@@ -737,20 +781,19 @@ function goChioceProcessCore(prd_board_id) {
         // 추후 전체 재고량 고려한 안내문 기능 염두
         // var totalQty = fn_calTotalQty(0, orgSlitmCd, parentObj);
 
-        // if (totalQty > limitCnt) {
-        //     var cnt = limitCnt - (totalQty - ordQty);
-        //     $(obj).val(cnt);
-        //     alert("본상품은 " + limitCnt + "개 이상 주문할 수 없습니다.");
-        //     ordQty = cnt;
-        // }
+         if (totalQty > limitCnt) {
+             var cnt = limitCnt - (totalQty - ordQty);
+             $(obj).val(cnt);
+             alert("본상품은 " + limitCnt + "개 이상 주문할 수 없습니다.");
+             ordQty = cnt;
+         }
 
-        calcSellPrcCore(obj);
     }
 
-    /*
+/*
  * 속성 수량 더하기
  */
-    function plusOrdQtyCore(obj, limitCnt) {
+    function plusOrdQty(obj, limitCnt) {
         // 용도 모르겠으나, 참조하는 게 중요해 보이는 변수라 남김
         var thisIdx = $(obj)
             .parents(".pditem")
@@ -758,24 +801,35 @@ function goChioceProcessCore(prd_board_id) {
         // <div class="count"> 참조해서 Obj화 하고, 문법에 따라 해당값들 추출
         var targetObj = $(obj).closest(".count");
         var ordQty = Number($(targetObj).find("input[name=ordQty]").val());
-
+		var targetPditem = $(obj).closest(".pditem");
+		
+        if (ordQty == limitCnt) {
+        	alert("재고량보다 많습니다.");
+            return false;
+        }
+        
         // 기존 changeQty 참고
         var copyBasketObj = $(targetObj).closest(".pditem");
         // 요소 3 ; ?
         $(copyBasketObj)
             .find("input[name=ordQty]")
             .val(ordQty + 1);
-
-        calcSellPrcCore(obj);
+        var price =  $(targetPditem).find("input[name='sel_prd_price']").val();
+        var sum_price = $("input[name='total-price-int']").val();
+        $("input[name='total-price-int']").val(parseInt(sum_price) +  parseInt(price));
+        $(targetPditem).find("input[name='sel_prd_amount']").val(ordQty + 1);
+        $(".sum-price .total-price strong").text(numberWithCommas(parseInt(sum_price) +  parseInt(price)));
+        $(targetPditem).find(".pdprice>ins>em").text(numberWithCommas(parseInt(price) * parseInt(ordQty + 1)));
     }
 
-    /*
+/*
  * 속성 수량  빼기
  */
-    function minusOrdQtyCore(obj, limitCnt) {
+    function minusOrdQty(obj, limitCnt) {
         var targetObj = $(obj).closest(".count");
         var ordQty = Number($(targetObj).find("input[name=ordQty]").val());
-
+        var targetPditem = $(obj).closest(".pditem");
+        
         if (ordQty <= 1) {
             return false;
         }
@@ -785,8 +839,13 @@ function goChioceProcessCore(prd_board_id) {
         $(copyBasketObj)
             .find("input[name=ordQty]")
             .val(ordQty - 1);
-
-        calcSellPrcCore(obj);
+        
+        var price =  $(targetPditem).find("input[name='sel_prd_price']").val();
+        var sum_price = $("input[name='total-price-int']").val();
+        $("input[name='total-price-int']").val(parseInt(sum_price) -  parseInt(price));
+        $(targetPditem).find("input[name='sel_prd_amount']").val(ordQty - 1);
+        $(".sum-price .total-price strong").text(numberWithCommas(parseInt(sum_price) -  parseInt(price)));
+        $(targetPditem).find(".pdprice>ins>em").text(numberWithCommas(parseInt(price) * parseInt(ordQty - 1)));
     }
 </script>
 

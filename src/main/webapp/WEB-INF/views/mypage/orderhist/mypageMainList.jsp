@@ -313,7 +313,7 @@
                                             <span><fmt:formatDate value="${orderDTO.order_date}" type= "date"/> (주문번호 : <c:out value="${orderDTO.prd_order_id}"/>)</span>
                                         </div>
                                         <div class="abs">
-                                            <a href="/p/mpa/selectOrdPTCPup.do?ordNo=20220527277541"
+                                            <a href="${app}/mypage/od?orderNo=${orderDTO.prd_order_id}"
                                                 class="btn alink"><span>주문/배송 상세</span></a>
                                         </div>
                                     </dt>

@@ -57,4 +57,22 @@ public class ProductListController {
 		data.add(pageMaker);
 		return new ResponseEntity<Object>(data, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/search", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<Object> getProuctListByKeyword(@RequestParam String keyword, 
+														 @RequestParam int pageNum) throws Exception {
+		ArrayList<Object> data = new ArrayList<>();
+		ProductCriteria cri = new ProductCriteria(pageNum, keyword);
+		ArrayList<ProductBoardDTO> productBoardDTO;
+		ProductPageDTO pageMaker;
+	
+		productBoardDTO = productboardService.getProductBoardListByKeyword(cri);
+		int total = productboardService.getProductListCountByKeyword(keyword);
+		pageMaker = new ProductPageDTO(cri, total);
+		
+		data.add(productBoardDTO);
+		data.add(pageMaker);
+		return new ResponseEntity<Object>(data, HttpStatus.OK);
+	}
+	
 }

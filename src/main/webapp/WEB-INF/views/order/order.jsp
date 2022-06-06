@@ -2,8 +2,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="app" value="${pageContext.request.contextPath}" />
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 우편번호 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <main class="cmain main" role="main" id="mainContents">
 	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
@@ -147,6 +148,81 @@
 						</c:forEach>
 						<!-- //상품정보 -->
 						
+						<!-- 할인/포인트 적용 // -->
+						<div id="chkStlmType">
+							<h3 class="title22">할인/포인트 적용</h3>
+							<div class="discount-box">
+								<!-- 쿠폰 -->
+								<div class="coupon-area">
+									<ul class="row-list">
+										<li id="copnSaleDiv">
+											<div class="hidden" id="divCopnInfArea">
+												<input type="hidden" name="coupon_id" value="${top1Coupon.coupon_id}">
+												<input type="hidden" name="coupon_nm" value="${top1Coupon.coupon_nm}">
+												<input type="hidden" name="coupon_price" value="${top1Coupon.coupon_price}">
+												<input type="hidden" name="coupon_min_price" value="${top1Coupon.coupon_min_price}">
+												<input type="hidden" name="coupon_valid_dt" value="${top1Coupon.coupon_valid_dt}">
+												<input type="hidden" name="user_id" value="${top1Coupon.user_id}">
+												<input type="hidden" name="coupon_active" value="${top1Coupon.coupon_active}">
+											</div>
+											<div class="row-title">
+												<label class="chklabel">
+													<input type="checkbox" name="copnDcAply" onclick="applyCopnDc();" <c:if test="${not empty top1Coupon}">checked</c:if> >
+													<i class="icon"></i> 
+													<span>쿠폰</span>
+												</label>
+												<button class="btn btn-linelgray small34" onclick="getCouponList();">
+													<span>조회/변경</span>
+												</button>
+											</div>
+											<div class="row-value">
+											
+												<c:if test="${not empty top1Coupon}">
+													<p class="price">
+														<strong style="margin-right:24px; color:#09f; font-size:14px;">${top1Coupon.coupon_nm}</strong>
+														<strong id="copnDcAplyAmt">-<fmt:formatNumber value="${top1Coupon.coupon_price}" /></strong>원
+													</p>
+												</c:if>
+												
+											</div>
+										</li>
+									</ul>
+								</div>
+								<!-- 적립금 -->
+								<div class="point-area">
+									<ul class="row-list">
+										<li id="hpointUseLi">
+											<div class="row-title">
+												<label class="chklabel"> 
+													<input type="checkbox" name="upointCheck" onclick="useUpoint()">
+													<i class="icon"></i> 
+													<span>적립금 <em class="num"><fmt:formatNumber value="${user_reserve}" /></em></span>
+													<input type="hidden" name="uPoint" value="${user_reserve}">
+												</label>
+												<button type="button" class="btn-tooltip" onclick="$('#pec009').modal().show();">
+													<i class="icon que-mark"></i><span class="hiding">툴팁</span>
+												</button>
+											</div>
+											<div class="row-value">
+												<div class="inputbox sm">
+													<label class="inplabel"><input type="text"
+														oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g, '$1');"
+														name="useUPoint" value="" placeholder="0"
+														onchange="directInsertUPoint(this);">
+													</label> 
+													<span class="unit point">P</span>
+													<button class="btn ico-clearabled">
+														<i class="icon"></i>
+													</button>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- // 할인/포인트 적용 -->
+
 						<!-- 결제정보// -->
 						<div class="sticky-ui-wrapper util-option-sticky">
 							<div class="sticky-placeholder" style=""></div>
@@ -212,7 +288,9 @@
 							</div>
 						</div>
 						<!-- //결제정보 -->
-
+						
+						
+						
 
 					</div>
 				</div>
@@ -220,6 +298,7 @@
 		</div>
 	</div>
 	<!-- //.container -->
+	
 	<!-- 배송지 모달 -->
 	<div class="ui-modal pop-pec003" id="pec003" tabindex="-1" role="dialog" aria-label="배송지 입력" style="z-index: 1031; display: none; padding-right: 0px;">
         <div class="ui-modal-dialog" role="document">
@@ -310,6 +389,60 @@
         <!-- //.ui-modal-dialog -->
     </div>
 	
+	<!-- 쿠폰 선택 모달 -->
+	<div class="ui-modal pop-pec007-01" id="pec007-01" tabindex="-1" role="dialog" aria-label="쿠폰 할인" style="z-index: 1041; display: none;">
+                <div class="ui-modal-dialog" role="document">
+                    <div class="content">
+                        <p class="ui-title">쿠폰 할인</p>
+                        <div class="content-body">
+                            <div class="mycoupon-body">
+                                <div class="coupon-list">
+                                    
+                                    <!-- <div class="coupon-box">
+                                    	<input type="hidden" name="coupon_id" value="">
+	                                    <input type="hidden" name="coupon_nm" value="">
+	                                    <input type="hidden" name="coupon_price" value="">
+	                                    <input type="hidden" name="coupon_min_price" value="">
+	                                    <input type="hidden" name="coupon_valid_dt" value="">
+	                                    <input type="hidden" name="user_id" value="">
+	                                    <input type="hidden" name="coupon_active" value="">
+                                        <div class="coupon">
+                                            <p class="discount"><strong>15</strong><b>%</b></p>
+                                            <div class="coupon-info">
+                                                <p class="title"><strong>15% 바로사용쿠폰</strong></p>
+                                                
+                                                <label class="radlabel">
+                                                    <input type="radio" name="gnrlCopn_2138263418_00002_0_0" id="dc-select-gcpn-0-" value="00004161|2138263418|00002|0|1|15|1|0||0|03|40|N">
+                                                    <i class="icon"></i>
+                                                    <span class="hiding">Default</span>
+                                                </label>
+                                            </div>
+                                            // .coupon-info
+                                        </div>
+                                        // .coupon
+                                        <div class="coupon-bg"><div></div><div></div></div>
+                                    </div>
+                                    //.coupon-box -->
+                                    
+                                </div>
+                                <!-- //.coupon-list -->
+                            </div>
+							
+                            <div class="btngroup">
+                                <button class="btn btn-linelgray" onclick="cancleCopn();"><span>적용 안함</span></button>
+                                <button class="btn btn-default" onclick="selectCoupon();"><span>적용하기</span></button>
+                                <!-- 데이터 전송 후 클릭시 $(element).modal().hide() -->
+                            </div>
+                        </div>
+                        <!-- //.content-body -->
+
+                        <button class="btn btn-close" data-dismiss="modal"><i class="icon xico"></i><span class="hiding">레이어 닫기</span></button>
+                    </div>
+                    <!-- //.content -->
+                </div>
+                <!-- //.ui-modal-dialog -->
+            </div>
+
 </main>
 
 <script>
@@ -772,6 +905,182 @@ function kakaopost() {
     }).open();
 }
 
+function priceToString(price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+
+
+/* 쿠폰 리스트 받아오기 */
+function getCouponList() {
+	
+	var coupon_id = $("#divCopnInfArea input[name='coupon_id']").val();
+	
+	
+    $.ajax({
+		method : "get",
+		url : "${app}/coupon/selectCouponList",
+		dataType:"json",
+		async: true,
+		contentType: "application/json",
+		success : function(couponList) {
+			$(".coupon-list").empty();
+			couponList.map((coupon) => {
+				
+	        	var addCouponHtml = "";
+	        	addCouponHtml += "<div class='coupon-box'>";
+	        	addCouponHtml += "	<input type='hidden' name='coupon_id' value='"+coupon.coupon_id+"'>";
+	        	addCouponHtml += "	<input type='hidden' name='coupon_nm' value='"+coupon.coupon_nm+"'>";
+	        	addCouponHtml += "	<input type='hidden' name='coupon_price' value='"+coupon.coupon_price+"'>";
+                addCouponHtml += "	<input type='hidden' name='coupon_min_price' value='"+coupon.coupon_min_price+"'>";
+                addCouponHtml += "	<input type='hidden' name='coupon_valid_dt' value='"+coupon.coupon_valid_dt+"'>";
+                addCouponHtml += "	<input type='hidden' name='user_id' value=''>";
+                addCouponHtml += "	<input type='hidden' name='coupon_active' value='"+coupon.coupon_active+"'>";
+                addCouponHtml += "	<div class='coupon'>";
+                addCouponHtml += "		<p class='discount'><strong>"+priceToString(coupon.coupon_price)+"</strong><b>원</b></p>";
+                addCouponHtml += "		<div class='coupon-info'>";
+                addCouponHtml += "			<p class='title'><strong>"+coupon.coupon_nm+"</strong></p>";
+                addCouponHtml += "			<ul class='coupon-info-list'>";
+                addCouponHtml += "				<li>기간: "+moment(coupon.coupon_valid_dt).format('YYYY-MM-DD')+"</li>";
+                addCouponHtml += "			</ul>";
+                addCouponHtml += "			<p class='type' style='line-height: 20px; color: #ff5340; font-size: 13px;'>남은기간 : "+Math.floor(moment.duration(moment(coupon.coupon_valid_dt).diff(moment())).asDays())+"일</p>";
+                addCouponHtml += "			<label class='radlabel'>";
+                addCouponHtml += "				<input type='radio' name='couponRadio'" + ((coupon.coupon_id == coupon_id) ? " checked " : "" ) +" >";
+                addCouponHtml += "				<i class='icon'></i>";
+                addCouponHtml += "				<span class='hiding'>Default</span>";
+                addCouponHtml += "			</label>";
+                addCouponHtml += "		</div>";
+                addCouponHtml += "	</div>";
+                addCouponHtml += "	<div class='coupon-bg'><div></div><div></div></div>";
+                addCouponHtml += "</div>";
+                
+                $(".coupon-list").append(addCouponHtml);
+	        }); // end map
+	        
+	    },
+		error: function(error) {
+			console.log(error);
+		}
+	
+    });
+    
+    $('#pec007-01').modal('show');
+
+}
+
+
+/* 쿠폰 선택 */
+function selectCoupon() {
+	
+	
+	
+	$("#pec007-01 .coupon-list input[name=couponRadio]").each(function(index) {
+		if ( $(this).prop("checked") ) {
+			// 모달창에서 체크되어있는 배송지의 정보들
+			var coupon_id = $("#pec007-01 .coupon-box input[name=coupon_id]").eq(index).val();
+			var coupon_nm = $("#pec007-01 .coupon-box input[name=coupon_nm]").eq(index).val();
+			var coupon_price = $("#pec007-01 .coupon-box input[name=coupon_price]").eq(index).val();
+			var coupon_min_price =  $("#pec007-01 .coupon-box input[name=coupon_min_price]").eq(index).val();
+			var coupon_valid_dt = $("#pec007-01 .coupon-box input[name=coupon_valid_dt]").eq(index).val();
+			var user_id = $("#pec007-01 .coupon-box input[name=user_id]").eq(index).val();
+			var coupon_active = $("#pec007-01 .coupon-box input[name=coupon_active]").eq(index).val();
+			
+			
+			$("#copnSaleDiv").empty()
+			var addCopnHtml = "";
+			addCopnHtml += "<div class='hidden' id='divCopnInfArea'>";
+			addCopnHtml += "	<input type='hidden' name='coupon_id' value='"+coupon_id+"'>";
+			addCopnHtml += "	<input type='hidden' name='coupon_nm' value='"+coupon_nm+"'>";
+			addCopnHtml += "	<input type='hidden' name='coupon_price' value='"+coupon_price+"'>";
+			addCopnHtml += "	<input type='hidden' name='coupon_min_price' value='"+coupon_min_price+"'>";
+			addCopnHtml += "	<input type='hidden' name='coupon_valid_dt' value='"+coupon_valid_dt+"'>";
+			addCopnHtml += "	<input type='hidden' name='user_id' value='"+user_id+"'>";
+			addCopnHtml += "	<input type='hidden' name='coupon_active' value='"+coupon_active+"'>";
+			addCopnHtml += "</div>";
+			addCopnHtml += "<div class='row-title'>";
+			addCopnHtml += "	<label class='chklabel'>";
+			addCopnHtml += "		<input type='checkbox' name='copnDcAply' onclick='applyCopnDc();' checked />";
+			addCopnHtml += "		<i class='icon'></i>";
+			addCopnHtml += "		<span>쿠폰</span>";
+			addCopnHtml += "	</label>";
+			addCopnHtml += "	<button class='btn btn-linelgray small34' onclick='getCouponList();'>";
+			addCopnHtml += "		<span>조회/변경</span>";
+			addCopnHtml += "	</button>";
+			addCopnHtml += "</div>";
+			addCopnHtml += "<div class='row-value'>";
+			addCopnHtml += "	<p class='price'>";
+			addCopnHtml += "		<strong style='margin-right:24px; color:#09f; font-size:14px;'>"+coupon_nm+"</strong>";
+			addCopnHtml += "		<strong id='copnDcAplyAmt'>-"+priceToString(coupon_price)+"</strong>원";
+			addCopnHtml += "	</p>";
+			addCopnHtml += "</div>";
+			
+			$("#copnSaleDiv").append(addCopnHtml);
+			$('#pec007-01').modal('hide');
+		} else{
+			
+		}
+		
+	});
+	
+}
+
+// 쿠폰 적용 안함 누를시
+function cancleCopn() {
+	
+	$("#divCopnInfArea input[name=coupon_id]").val('');
+	$("#divCopnInfArea input[name=coupon_nm]").val('');
+	$("#divCopnInfArea input[name=coupon_price]").val('');
+	$("#divCopnInfArea input[name=coupon_min_price]").val('');
+	$("#divCopnInfArea input[name=coupon_valid_dt]").val('');
+	$("#divCopnInfArea input[name=user_id]").val('');
+	$("#divCopnInfArea input[name=coupon_active]").val('');
+	
+	$("#copnSaleDiv .price").empty();
+	
+	$('input[name=copnDcAply]').prop('checked', false);
+	$('#pec007-01').modal('hide');
+	
+}
+
+
+
+/* 쿠폰 취소 or 선택가능 */
+function applyCopnDc() {
+	
+	var top1Coupon = '${top1Coupon}';
+	console.log(top1Coupon);
+	
+	// 쿠폰이 선택되어있을때
+	if(!$("input[name=copnDcAply]").prop("checked")){
+		$("#divCopnInfArea input[name=coupon_id]").val('');
+		$("#divCopnInfArea input[name=coupon_nm]").val('');
+		$("#divCopnInfArea input[name=coupon_price]").val('');
+		$("#divCopnInfArea input[name=coupon_min_price]").val('');
+		$("#divCopnInfArea input[name=coupon_valid_dt]").val('');
+		$("#divCopnInfArea input[name=user_id]").val('');
+		$("#divCopnInfArea input[name=coupon_active]").val('');
+		
+		$("#copnSaleDiv .price").empty();
+	} else {
+		$("#divCopnInfArea input[name=coupon_id]").val('${top1Coupon.coupon_id}');
+		$("#divCopnInfArea input[name=coupon_nm]").val('${top1Coupon.coupon_nm}');
+		$("#divCopnInfArea input[name=coupon_price]").val('${top1Coupon.coupon_price}');
+		$("#divCopnInfArea input[name=coupon_min_price]").val('${top1Coupon.coupon_min_price}');
+		$("#divCopnInfArea input[name=coupon_valid_dt]").val('${top1Coupon.coupon_valid_dt}');
+		$("#divCopnInfArea input[name=user_id]").val('${top1Coupon.user_id}');
+		$("#divCopnInfArea input[name=coupon_active]").val('${top1Coupon.coupon_active}');
+		
+		var addCouponPriceHtml = '';
+		addCouponPriceHtml += "<strong style='margin-right:24px; color:#09f; font-size:14px;'>${top1Coupon.coupon_nm}</strong>";
+		addCouponPriceHtml += "<strong id='copnDcAplyAmt'>-"+priceToString(${top1Coupon.coupon_price})+"</strong>";
+		addCouponPriceHtml += "원";
+		$("#copnSaleDiv .price").append(addCouponPriceHtml);
+		
+	}
+	
+	
+
+}
 
 
 </script>

@@ -14,7 +14,7 @@
 	left join prd_payment_t ppt on (pot.prd_order_id=ppt.prd_order_id)
 	where pot.user_id=#{user_id} and pot.prd_order_id=#{prd_order_id}
 	</select>
-
+ 
 	<select id="getPrdPayment" parameterType="OrderCompleteDTO" resultType="OrderCompleteDTO">
 		select pot.prd_order_id,pot.user_id,pot.address_dest,pot.hp_no,
 		ppt.pmt_amount
@@ -23,8 +23,93 @@
 		where pot.user_id=#{user_id} and ppt.prd_pmt_id=#{prd_pmt_id}
 	</select>
 
-	<select id="getOrderByOrderNo" resultType="OrderDTO">
-		select * from prd_order_t where prd_order_id = #{orderNo}
-	</select>
+	<resultMap id="orderMap" type="OrderDTO">
+		<id property="prd_order_id" column="prd_order_id" />
+		<result property="user_id"  column="user_id"/>
+		<result property="recipient"  column="recipient"/>
+		<result property="total_amount"  column="total_amount"/>
+		<result property="discount_amount"  column="discount_amount"/>
+		<result property="pmt_amount"  column="pmt_amount"/>
+		<result property="address_dest"  column="address_dest"/>
+		<result property="tel_no"  column="tel_no"/>
+		<result property="hp_no"  column="hp_no"/>
+		<result property="order_comment"  column="order_comment"/>
+		<result property="order_date"  column="order_date"/>
+		<result property="prd_pmt_id"  column="prd_pmt_id"/>
+		<result property="coupon_discount_amount" column="coupon_discount_amount"/>
+		<result property="reserve_discount_amount" column="reserve_discount_amount"/>
+		<collection property="orderDetailList" resultMap="orderDetailMap"/>
+	</resultMap>
+	
+	<resultMap id="orderDetailMap" type="OrderDetailDTO">
+		<id property="prd_orderdetail_id" column="prd_orderdetail_id"/>
+		<result property="prd_nm" column="prd_nm"/>
+		<result property="prd_price" column="prd_price"/>
+		<result property="order_flag" column="order_flag"/>
+		<result property="upload_path" column="upload_path"/>
+		<result property="all_option" column="all_option"/>
+		<result property="prd_count" column="prd_count"/>
+		<result property="cancel_date" column="cancel_date"/>
+		<result property="prd_board_id" column="prd_board_id"/>
+	</resultMap>
 
+	<select id="getOrderByOrderNo" resultMap="orderMap">
+		SELECT
+	        pot.PRD_ORDER_ID
+	       ,podt.PRD_ORDERDETAIL_ID
+	       ,(SELECT user_nm FROM user_t WHERE user_id = pot.user_id) AS user_id
+	       ,podt.prd_count
+	       ,(SELECT dtl_nm FROM CODE_DTL_T WHERE grp_cd = 'ORDER_FLAG' AND dtl_cd = podt.order_flag) AS ORDER_Flag
+	       ,(SELECT prd_nm FROM prd_t WHERE prd_id = podt.PRD_ID) AS prd_nm
+	       ,(SELECT prd_price FROM prd_t WHERE prd_id = podt.prd_id) AS prd_price
+	       ,(SELECT 
+	         concat(concat(nvl(OPTION1,''), ' '),nvl(OPTION2,'')) 
+	         FROM prd_t WHERE prd_id = podt.PRD_ID) AS all_option
+	       ,(select 
+	       		upload_path 
+	       	    from file_t 
+	       		where article_id = podt.prd_id 
+	       		and board_flag = 'prd') as upload_path 
+	       ,pot.recipient
+	       ,pot.total_amount
+	       ,pot.discount_amount
+	       ,pot.pmt_amount
+	       ,(SELECT pay_method FROM PRD_PAYMENT_T where PRD_PMT_ID = pot.PRD_PMT_ID) AS pay_method
+	       ,podt.cancel_date
+	       ,pot.address_dest
+	       ,pot.tel_no
+	       ,pot.hp_no
+	       ,pot.order_comment
+	       ,pot.coupon_discount_amount
+	       ,pot.reserve_discount_amount
+	       ,pot.ORDER_DATE
+	       ,(SELECT prd_board_id FROM prd_t WHERE prd_id = podt.prd_id) AS prd_board_id
+	    FROM PRD_ORDER_T pot
+	        ,PRD_ORDERDETAIL_T podt 
+	    WHERE podt.prd_order_id = pot.prd_order_id
+	    AND pot.prd_order_id = #{orderNo}
+	    AND pot.USER_ID = #{userId}
+	</select>
+	
+	<select id="getOrderDetail" resultMap="orderDetailMap">
+		SELECT
+				prd_orderdetail_id
+				,(SELECT prd_nm FROM prd_t WHERE prd_id = odt.prd_id) AS prd_nm
+				,(SELECT prd_price FROM prd_t WHERE prd_id = podt.prd_id) AS prd_price
+				,(SELECT dtl_nm FROM CODE_DTL_T WHERE grp_cd = 'ORDER_FLAG' AND dtl_cd = podt.order_flag) AS order_flag
+				,(select 
+			       		upload_path 
+			       	    from file_t 
+			       		where article_id = podt.prd_id 
+			       		and board_flag = 'prd') as upload_path
+			    ,(SELECT 
+				         concat(concat(nvl(OPTION1,''), ' '),nvl(OPTION2,'')) 
+				         FROM prd_t WHERE prd_id = podt.PRD_ID) AS all_option
+				,odt.prd_count
+				,odt.cancel_date
+				,odt.prd_board_id
+		FROM prd_orderdetail_t odt
+		WHERE prd_orderdetail_id = #{orderDetailNo}
+	</select>
+	
 </mapper>
