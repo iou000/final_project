@@ -71,6 +71,22 @@ public class ProductBoardController {
 		return "product.productListBoard";
 	}
 	
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String productlistbykeyword(@RequestParam String keyword, Model model) {
+		ProductCriteria cri = new ProductCriteria(1, keyword);
+		
+ 		try {
+ 			ArrayList<ProductBoardDTO> productBoardDTO = productboardService.getProductBoardListByKeyword(cri);
+ 			int total = productboardService.getProductListCountByKeyword(keyword);
+			model.addAttribute("pageMaker", new ProductPageDTO(cri, total));
+			model.addAttribute("productBoardDTO", productBoardDTO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "product.productSearchBoard";
+	}
+	
 	@RequestMapping(value = "/{prd_board_id}", method = RequestMethod.GET)
 	public String product(@PathVariable String prd_board_id, Model model,Principal principal) {
 		log.info("소분류에서 상품 선택에 따른 페이지");

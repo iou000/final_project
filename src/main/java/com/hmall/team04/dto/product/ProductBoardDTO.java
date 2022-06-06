@@ -1,5 +1,8 @@
 package com.hmall.team04.dto.product;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -9,16 +12,15 @@ public class ProductBoardDTO {
 	private int price;
 	private String title;
 	private String content;
-	private int score;
+	private float star;
 	private String category;
 	private String brand;
 	
+	// like
+	private String like_id;
+	
 	// prd_t 
-	private String prd_id;
-	private String prd_nm;
-	private String prd_detail;
-	private String option1;
-	private String option2;
+	private List<ProductDTO> productList;
 	
 	// file_t
 	private String upload_path;

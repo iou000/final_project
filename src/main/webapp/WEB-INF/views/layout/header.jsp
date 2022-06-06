@@ -73,7 +73,6 @@ $(document).ready(function(){
    
    /* GNB - 카테고리 vs008 */
    function setCategory(){
-       console.log("set category");
        var str = "";
       $.ajax({
          type : "get"
@@ -186,8 +185,16 @@ $(document).ready(function(){
       return this;
       
    }
-       
-
+$("input[name='searchTerm']").on("keyup",function(key){         
+	if(key.keyCode==13) {       
+		var keyword = $("input[name='searchTerm']").val();
+		location.href = "${app}/p/search?keyword=" + keyword;   
+	}     
+});       
+function doSearch(){
+	var keyword = $("input[name='searchTerm']").val();
+	location.href = "${app}/p/search?keyword=" + keyword;
+}
 function LoginPopup(){
    var make_date = $("#make_date").val(); //화면의 파라미터 가져오기
      window.open("${app}" + "/loginpopup", "_blank", "toolbar=yes, menubar=yes, width=600, height=700").focus();
@@ -212,7 +219,7 @@ function LoginPopup(){
                                     autocomplete="off" title="검색어" size="88"/>
                         </label>
                         <button class="btn ico-clearabled" type="button" onclick="javascript:clearWord();"><i id="searchDeleteX" class="icon"></i><span class="hiding">지우기</span></button>
-                        <button class="btn btn-search" onclick="javascript:doSearchGnb();"><span>검색</span></button>
+                        <button class="btn btn-search" onclick="doSearch();"><span>검색</span></button>
                         <input type="hidden" name="gnbSearchYn" value="Y">
                     </div>
                 </form>

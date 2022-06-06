@@ -4,6 +4,7 @@ package com.hmall.team04.controller.cart;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,11 +16,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hmall.team04.dto.cart.CartDTO;
+import com.hmall.team04.dto.deliever.DelieverDTO;
 import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.dto.product.ProductBoardDTO;
 import com.hmall.team04.service.cart.CartService;
@@ -36,12 +39,13 @@ public class CartController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/basktList", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public HashMap<String, String> carttest(CartDTO cartDTO, Principal principal) throws Exception {
-		
-		cartDTO.setUser_id(principal.getName());
-		log.info(cartDTO.toString());
+	public HashMap<String, String> carttest(@RequestBody List<CartDTO> cartList, Principal principal) throws Exception {
+		for(CartDTO cartDTO : cartList) {
+			cartDTO.setUser_id(principal.getName());
+			log.info(cartDTO.toString());
 
-		cartService.InsertPrdCart(cartDTO);
+			cartService.InsertPrdCart(cartDTO);
+		}
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("cartSuccess", "True");
