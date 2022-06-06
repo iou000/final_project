@@ -83,4 +83,70 @@
 		where PRD_ORDERDETAIL_ID = #{prd_orderdetail_id}	
 	</update>
 	
+	
+	<select id ="getCountStep1" resultType = "int">
+		<![CDATA[	
+			SELECT 
+		  	count(podt.PRD_ORDERDETAIL_ID) AS step1
+			FROM PRD_ORDERDETAIL_T podt 
+		 		,PRD_ORDER_T pot
+			WHERE podt.prd_order_id = pot.prd_order_id  
+			AND pot.ORDER_date >= TO_CHAR(SYSDATE-60,'YYYYMMDD')
+			AND PODT.order_flag = 'STEP1'
+			AND pot.user_id = #{id}
+		]]>
+	</select>
+	
+	<select id ="getCountStep2" resultType = "int">
+		<![CDATA[	
+			SELECT 
+		  	count(podt.PRD_ORDERDETAIL_ID) AS step2
+			FROM PRD_ORDERDETAIL_T podt 
+		 		,PRD_ORDER_T pot
+			WHERE podt.prd_order_id = pot.prd_order_id  
+			AND pot.ORDER_date >= TO_CHAR(SYSDATE-60,'YYYYMMDD')
+			AND PODT.order_flag = 'STEP2'
+			AND pot.user_id = #{id}
+		]]>
+	</select>
+	
+	<select id ="getCountStep3" resultType = "int">
+		<![CDATA[	
+			SELECT 
+		  	count(podt.PRD_ORDERDETAIL_ID) AS step3
+			FROM PRD_ORDERDETAIL_T podt 
+		 		,PRD_ORDER_T pot
+			WHERE podt.prd_order_id = pot.prd_order_id  
+			AND pot.ORDER_date >= TO_CHAR(SYSDATE-60,'YYYYMMDD')
+			AND PODT.order_flag = 'STEP3'
+			AND pot.user_id = #{id}
+		]]>
+	</select>
+	
+	<select id ="getCountStep4" resultType = "int">
+		<![CDATA[	
+			SELECT 
+		  	count(podt.PRD_ORDERDETAIL_ID) AS step4
+			FROM PRD_ORDERDETAIL_T podt 
+		 		,PRD_ORDER_T pot
+			WHERE podt.prd_order_id = pot.prd_order_id  
+			AND pot.ORDER_date >= TO_CHAR(SYSDATE-60,'YYYYMMDD')
+			AND PODT.order_flag = 'STEP4'
+			AND pot.user_id = #{id}
+		]]>
+	</select>
+	<select id ="getCountStep5" resultType = "int">
+		<![CDATA[	
+			SELECT 
+		  	count(podt.PRD_ORDERDETAIL_ID) AS step5
+			FROM PRD_ORDERDETAIL_T podt 
+		 		,PRD_ORDER_T pot
+			WHERE podt.prd_order_id = pot.prd_order_id  
+			AND pot.ORDER_date >= TO_CHAR(SYSDATE-60,'YYYYMMDD')
+			AND PODT.order_flag = 'STEP5'
+			AND pot.user_id = #{id}
+		]]>
+	</select>
+	
+	
 </mapper>

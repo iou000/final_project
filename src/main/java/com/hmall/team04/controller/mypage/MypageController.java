@@ -60,8 +60,26 @@ public class MypageController {
 	}
 	
 	@GetMapping("/odslist")
-	public String odslist() {
-		return "mypage.orderhist.mypageODSList";
+	public String odslist(Principal principal,Model model) {
+		try {
+			String id = principal.getName(); // user_id;			
+			int cnt_step1 = mypageService.getCountStep1(id);
+			int cnt_step2 = mypageService.getCountStep2(id);
+			int cnt_step3 = mypageService.getCountStep3(id);
+			int cnt_step4 = mypageService.getCountStep4(id);
+			int cnt_step5 = mypageService.getCountStep5(id);
+			model.addAttribute("cnt_step1", cnt_step1);
+			model.addAttribute("cnt_step2", cnt_step2);
+			model.addAttribute("cnt_step3", cnt_step3);
+			model.addAttribute("cnt_step4", cnt_step4);
+			model.addAttribute("cnt_step5", cnt_step5);			
+			return "mypage.orderhist.mypageODSList";
+		} catch (Exception e) {
+			log.info(e.toString());
+			model.addAttribute("msg", "list 출력 에러");
+			model.addAttribute("url", "");
+			return "redirect";			
+		}		
 	}
 	
 

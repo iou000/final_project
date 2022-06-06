@@ -5,7 +5,7 @@
 
 <mapper namespace ="com.hmall.team04.dao.coupon.CouponDAO">
 	
-	<!-- 유저가 가진 쿠폰 수 -->
+	<!-- 유저가 가진 쿠폰 수  AND coupon_active = '1'-->
 	<select id = "getCouponCountbyUserId" resultType = "int">
 		SELECT 
 			count(coupon_id)
