@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,30 +43,10 @@ public class OrderController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/order", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public HashMap<String, String> ordertest(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public HashMap<String, String> ordertest(@RequestBody List<OrderCompleteDTO> orderList, HttpServletRequest req, HttpServletResponse res) throws Exception {
 
 		HashMap<String, String> resultMap = new HashMap<String, String>();
-		// ajax를 통해 넘어온 배열 데이터 선언
-		String[] arrStr = req.getParameterValues("orderList");
-		log.info(arrStr);
 		
-		// 현재 String 배열 안에 String이 있는 상태임, 이걸 ArrayList 형태로 전환
-		ArrayList<OrderCompleteDTO> orderList = new ArrayList<OrderCompleteDTO>();
-		if (arrStr != null && arrStr.length > 0) {
-			for (int i = 0; i < arrStr.length; i++) {
-				log.info(arrStr[i]);
-				String[] subitem = arrStr[i].split(",");
-				
-				OrderCompleteDTO orderCompleteDTO = new OrderCompleteDTO();
-				orderCompleteDTO.setPrd_board_id(subitem[0]);
-				orderCompleteDTO.setPrd_id(subitem[1]);
-				orderCompleteDTO.setPrd_count(Integer.parseInt(subitem[2]));
-				
-				log.info(orderCompleteDTO);
-				
-				orderList.add(orderCompleteDTO);
-			}
-		}
 		// ArrayList 로 변환 완료
 		log.info(orderList.toString());
 		

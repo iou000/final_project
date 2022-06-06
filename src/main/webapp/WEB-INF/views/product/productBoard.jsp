@@ -675,20 +675,18 @@ function goChioceProcessCore(prd_board_id) {
 			var prd_id = $("input[name='sel_prd_id']").eq(i).val();
 			var cur_ordQty = $("input[name='sel_prd_amount']").eq(i).val();
 			var order = {
-				val_prd_board_id : val_prd_board_id,
+				prd_board_id : val_prd_board_id,
 				prd_id : prd_id,
-				cur_ordQty : cur_ordQty
-			}
+				prd_count : cur_ordQty
+			};
 			orderList.push(order);
 		}
 		$.ajax({
 			url : "${app}/order",
 			method : "POST",
-			traditional: true,	// ajax 배열 넘기기 옵션!
-			data : {
-				orderList : orderList
-			},
-			dataType : 'json',
+//			traditional: true,	// ajax 배열 넘기기 옵션!
+			data : JSON.stringify(orderList),
+			contentType : "application/json",
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
 			},
@@ -696,10 +694,12 @@ function goChioceProcessCore(prd_board_id) {
 				console.log("success");
 				if(data.orderSuccess=='True'){
 					location.href = '${app}/order';
-				} 
+				}else{
+					location.href ='${app}/login';
+				}
 			},
 			error:function(request,status,error){        
-				location.href ='${app}/login';    
+				location.href ='${app}/login';
 			}
 		});
 
