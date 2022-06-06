@@ -354,7 +354,7 @@
                                        <c:if test="${detailDTO.order_flag == '결제완료'}">
                                         <div class="btngroup">
                                             <button class="btn btn-linelgray small30" type="button"
-                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>주문취소</span>
+                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>결제취소</span>
                                             </button>                                      
                                         </div>
                                        </c:if>

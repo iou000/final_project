@@ -18,4 +18,14 @@ public interface MypageDAO {
 
 	void updateflagR(OrderDetailDTO orderdetaildto) throws Exception;
 
+	int getCountStep1(String id) throws Exception;
+	
+	int getCountStep2(String id) throws Exception;
+	
+	int getCountStep3(String id) throws Exception;
+	
+	int getCountStep4(String id) throws Exception;
+	
+	int getCountStep5(String id) throws Exception;
+
 }

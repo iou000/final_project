@@ -39,6 +39,40 @@ public class MypageServiceImpl implements MypageService{
 	public void updateflagR(OrderDetailDTO orderdetaildto) throws Exception{
 		mypageDAO.updateflagR(orderdetaildto);
 	}
+
+
+	@Override
+	public int getCountStep1(String id) throws Exception {
+		
+		return mypageDAO.getCountStep1(id);
+	}
+
+
+	@Override
+	public int getCountStep2(String id) throws Exception {
+		return mypageDAO.getCountStep2(id);
+	}
+
+
+	@Override
+	public int getCountStep3(String id) throws Exception {
+	
+		return mypageDAO.getCountStep3(id);
+	}
+
+
+	@Override
+	public int getCountStep4(String id) throws Exception {
+		
+		return mypageDAO.getCountStep4(id);
+	}
+
+
+	@Override
+	public int getCountStep5(String id) throws Exception {
+		
+		return mypageDAO.getCountStep5(id);
+	}
 	
 	
 

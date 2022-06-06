@@ -38,28 +38,29 @@
 			<ul>
 				<li>
 					<div>
-						<strong class="num">0</strong> <span class="txt">주문접수</span>
+						<strong class="num">${cnt_step1}</strong> <span class="txt">주문접수</span>
 					</div>
 				</li>
 				<li>
 					<div>
-						<strong class="num">0</strong> <span class="txt">결제완료</span>
+						<strong class="num">${cnt_step2}</strong> <span class="txt">결제완료</span>
 					</div>
 				</li>
 				<li>
 					<div>
-						<strong class="num">0</strong> <span class="txt">상품준비중</span>
+						<strong class="num">${cnt_step3}</strong> <span class="txt">상품준비중</span>
 					</div>
 				</li>
 				<li>
 					<div>
-						<strong class="num">0</strong> <span class="txt">상품발송</span>
+						<strong class="num">${cnt_step4}</strong> <span class="txt">상품발송</span>
 					</div>
 				</li>
-				<li><a
-					href="https://www.hmall.com/p/mpb/selectItemEvalAtclListPagingByCondtion">
-						<strong class="num">1</strong> <span class="txt">작성 가능한 상품평</span>
-				</a></li>
+				<li>
+					<div>
+						<strong class="num">${cnt_step5}</strong> <span class="txt">작성 가능한 상품평</span>
+					</div>
+				</li>
 			</ul>
 		</div>
 		<ul class="dotlist">
@@ -116,230 +117,65 @@
 
 
 		<div class="order-list">
-
 			<dl>
-
-
-
-				<!--  2020.07.31 박민성 묶음상품 조건 추가  -->
-				<!-- 각 상품들이 배송비비용발생번호가 같지 않을 경우 (묶음 상품)-->
-
-				<!-- 묶음 상품일 경우 배송비비용발생번호와 같은 상품들끼리 카운트 및 추가 배송비를 합한다. -->
-
-
-
-
-
-				<!-- 결제완료 -->
-
-
-
-
 				<dt>
 					<div class="date">
 						<span>2022-05-13 (주문번호 : 20220513296480)</span>
 					</div>
-
 					<div class="abs">
 						<a href="/p/mpa/selectOrdPTCPup?ordNo=20220513296480"
 							class="btn alink"><span>주문/배송 상세</span></a>
 					</div>
-
 				</dt>
-
-
-
-
-
-
-
-
-
-
-
 				<dd class="btn-col2">
 					<!-- 버튼 1개일경우 class="btn-col" 추가, 버튼 2개 이상일경우 class="btn-col2" 추가 -->
-
-
-
 					<a
 						href="http://www.hmall.com/p/pda/itemPtc?slitmCd=2137807436&ordpreview=true">
 						<span class="img"><img
 							src="https://image.hmall.com/static/4/7/80/37/2137807436_0.jpg?RS=300x300&AR=0"
 							alt="SPC삼립 돌아온 포켓몬빵 8종 10봉 랜덤배송 (피카츄/푸린/파이리/로켓단/디그다/꼬부기/고오스/발챙이)"
 							onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&AR=0')" /></span>
-
-
-
 						<div class="box">
 							<span class="state sky"> 배송완료 <em class="color-999">
-
 							</em>
 							</span> <span class="tit">SPC삼립 돌아온 포켓몬빵 8종 10봉 랜덤배송
 								(피카츄/푸린/파이리/로켓단/디그다/꼬부기/고오스/발챙이)</span>
 							<div class="info">
-
-
 								<ul>
-
 									<li>10봉 랜덤구성</li>
-
-
-
-
 									<li>1개</li>
-
-
 								</ul>
-
-
-
 							</div>
 							<span class="price"> <strong>15,000</strong>원
-
-
 							</span>
 						</div>
 					</a>
 
 					<div class="btngroup">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-						<!-- 20180626_특화배송조유진 -->
-
-
-
-
-
-
-
-
-
-
-
 						<button class="btn btn-linelgray small30" type="button"
 							onclick="openCnslAcptPup('20220513296480','1','rtp');">
 							<span>반품신청</span>
 						</button>
-
-
-
-
 						<button class="btn btn-linelgray small30" type="button"
 							onclick="openCnslAcptPup('20220513296480','1','exch');">
 							<span>교환신청</span>
 						</button>
-
-
-
-
-
-
-
-
-
-
-
-
-
 						<button class="btn btn-linelgray small30" type="button"
 							onClick="openDlvTrcUrlPup('20220513296480', '1')">
 							<span>배송조회</span>
 						</button>
-
-
-
-
-
-
 						<button class="btn btn-linelgray small30" type="button"
 							onClick="openItemEvalPopup('2137807436', '00008', '20220513296480')">
 							<span>만족도평가</span>
-
 						</button>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 					</div>
-
-					<!--[10/16] 사은품/hpoint 영역 추가-->
-
-					<!--//[10/16] 사은품/hpoint 영역 추가-->
 				</dd>
-				<!-- // 결제완료 -->
-
 			</dl>
-
-
 		</div>
 		<div class="paging">
-
-
-
-
-
 			<div class="page-prevarea">
-
-
-
-
-
-
 				<strong aria-label="현재 선택페이지">1</strong>
-
-
-
-
-
-
 			</div>
-
-
-
 		</div>
 		<div class="tblwrap">
 			<h4 class="ctypo17">주문상태 안내</h4>
@@ -463,8 +299,6 @@
 				</tbody>
 			</table>
 		</div>
-
-		<!-- 2020-09-03 텍스트 수정 -->
 		<div class="guide-box">
 			<h4 class="ctypo18">꼭 읽어보세요! Notice</h4>
 			<ul class="dotlist">

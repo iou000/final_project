@@ -5,12 +5,12 @@
 
 <mapper namespace ="com.hmall.team04.dao.coupon.CouponDAO">
 	
-	<!-- 유저가 가진 쿠폰 수 -->
+	<!-- 유저가 가진 쿠폰 수  AND coupon_active = '1'-->
 	<select id = "getCouponCountbyUserId" resultType = "int">
 		SELECT 
 			count(coupon_id)
 			FROM USER_COUPON_DT_T
-			WHERE user_id = #{user_id} AND coupon_active = '1'
+			WHERE user_id = #{user_id}
 	</select>
 	
 	<select id="selectCouponListByUserId" parameterType="String" resultType = "CouponDTO">
