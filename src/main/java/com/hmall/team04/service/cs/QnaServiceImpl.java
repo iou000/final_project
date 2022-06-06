@@ -35,5 +35,13 @@ public class QnaServiceImpl implements QnaService {
 	public List<QnaDTO> getQnaList(String userid, Criteria cri) throws Exception {
 		return qnaDAO.getQnaList(userid, cri);
 	}
+	
+	@Override
+	public List<QnaDTO> getQnaListFive(String userid) throws Exception {
+		return qnaDAO.getQnaListFive(userid);
+	}
+
+	
+	
 
 }

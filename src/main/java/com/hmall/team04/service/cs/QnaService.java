@@ -14,4 +14,6 @@ public interface QnaService {
 
 	List<QnaDTO> getQnaList(String userid, Criteria cri) throws Exception;
 
+	List<QnaDTO> getQnaListFive(String userid) throws Exception;
+
 }

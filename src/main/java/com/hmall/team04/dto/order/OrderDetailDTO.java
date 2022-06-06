@@ -12,6 +12,6 @@ public class OrderDetailDTO {
 	private String upload_path;
 	private String all_option;
 	private String prd_count;
-	
+	private String prd_board_id;
 }
 

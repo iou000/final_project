@@ -29,6 +29,7 @@
 		<result property="upload_path" column="upload_path"/>
 		<result property="all_option" column="all_option"/>
 		<result property="prd_count" column="prd_count"/>
+		<result property="prd_board_id" column="prd_board_id"/>
 	</resultMap>
 	
 	<select id="getPurchasePrd" resultMap="orderMap">
@@ -49,12 +50,35 @@
 		       		where article_id = podt.prd_id 
 		       		and board_flag = 'prd') as upload_path 
 		       ,pot.ORDER_DATE
+		       ,podt.prd_board_id
 		    FROM PRD_ORDER_T pot
 		        ,PRD_ORDERDETAIL_T podt 
 		    WHERE podt.prd_order_id = pot.prd_order_id  
 		    AND pot.ORDER_date >= TO_CHAR(SYSDATE-#{day},'YYYYMMDD')
 		    AND pot.USER_ID = #{id}
+		    ORDER BY ORDER_DATE DESC
 	    ]]>
 	</select>
+	
+	<select id ="getPopupDetailbyOrderDetailId" resultType ="OrderDetailDTO">
+		SELECT 
+			  podt.prd_board_id
+			,(SELECT prd_nm FROM prd_t WHERE prd_id = podt.PRD_ID) AS prd_nm
+			,podt.PRD_ORDERDETAIL_ID 
+			,(select 
+			      upload_path 
+			      from file_t 
+			      where article_id = podt.prd_id 
+			      and board_flag = 'prd') as upload_path 
+			FROM PRD_ORDER_T pot 
+				,PRD_ORDERDETAIL_T podt 
+			WHERE podt.prd_order_id = pot.prd_order_id 
+			AND podt.PRD_ORDERDETAIL_ID = #{detailid}
+	</select>
+	
+	<update id = "updateflagR" parameterType="OrderDetailDTO">
+		UPDATE PRD_ORDERDETAIL_T set order_flag = #{order_flag}
+		where PRD_ORDERDETAIL_ID = #{prd_orderdetail_id}	
+	</update>
 	
 </mapper>

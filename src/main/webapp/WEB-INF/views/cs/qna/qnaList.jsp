@@ -255,7 +255,7 @@ select {
 						<a href="${num }">${num }</a></c:if><c:if test="${pageMaker.cri.pageNum == num}"><div>${num }</div></c:if></li>
 					</c:forEach>
 	
-					<c:if test="${pageMaker.next }">
+					<c:if test="${pageMaker.next}">
 						<li class="paginate_button next">
 						<a href="${pageMaker.endPage + 1}">&gt;</a></li>
 					</c:if>
@@ -263,7 +263,7 @@ select {
 			<!--paging-->
 			<br/>
 					<div class="row">
-						<form class="form-inline" id="searchForm" action="${app }/cs/qna" method="get">
+						<form class="form-inline" id="searchForm" action="${app}/cs/qna" method="get">
 							<select class="form-control" name="type">
 								<option value="T"
 									>제목</option>
