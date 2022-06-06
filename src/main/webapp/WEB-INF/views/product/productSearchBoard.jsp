@@ -39,49 +39,24 @@ $(document).on('mouseenter mouseleave', '.pdlist-wrap .pdthumb .thumb', function
     var target = $this.closest('.pdthumb');
     target.addClass('ui-hover');
 })
-   /* 상품 리스트 생성 - test */
-   function setProductListTest(){
-       console.log("set productlist by insert day");
-       var str = "";
-      $.ajax({
-         type : "GET"
-         ,url : "${app}" + "/p/list"
-         ,dataType: 'json'
-         ,data : {
-           pageNum : 1,
-  		   amount : 30,
-  		   categoryCode : "${categoryCode}",
-  		   sort : 1
-         }
-         
-         ,success : function(data){
-        	 console.log(data);
-         }
-      });
-   }
-   
-   function numberWithCommas(x) {
+
+function numberWithCommas(x) {
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
    
    /* 상품 리스트 생성 */
    function setProductList(){
 	   window.scrollTo({ left: 0, top: 0});
-       var sort = $("input[name='sort']").val();
 	   var pageNum = $("input[name='pageNum']").val();
-	   var categoryCode = $("input[name='categoryCode']").val();
-	   var amount = $("input[name='amount']").val();
+	   var keyword = $("input[name='keyword']").val();
 	   var totalAmount = $("#total-amount");
-	  
       $.ajax({
          type : "GET"
-         ,url : "${app}" + "/p/list"
+         ,url : "${app}" + "/p/search"
          ,dataType: 'json'
          ,data : {
-           pageNum : pageNum,
-  		   amount : amount,
-  		   categoryCode : categoryCode,
-  		   sort : sort
+           keyword : keyword,
+           pageNum : pageNum
          }
          ,crossDomain: true
          ,beforeSend: function () {              
@@ -115,8 +90,7 @@ $(document).on('mouseenter mouseleave', '.pdlist-wrap .pdthumb .thumb', function
                str += "<li class='pdthumb'>"
                str += "<a href='${app}/p/" + data[0][i].prd_board_id + "'>"
                str += "<div class='thumb'>"
-               str += "<img src='"+ data[0][i].upload_path +"'"
-			   str += "alt='로에베 에센시아 로에베 옴므 데오도란트 스틱 75ml/2.5oz' id='2141327733_img'></div>"
+               str += "<img src='"+ data[0][i].upload_path +"' ></div>"
                str += "<div class='figcaption'><div class='pdname' aria-label='제품명'>"
                str += data[0][i].title
                str += "</div>"
@@ -171,6 +145,11 @@ $(document).on('mouseenter mouseleave', '.pdlist-wrap .pdthumb .thumb', function
     			pstr += "<a href='javascript://' onclick='goToPageNum(" + pageMaker.realEnd + ")' class='page-last' aria-label='마지막페이지 이동'> <i class='icon'></i><span class='hiding'>마지막페이지 이동</span></a>"
             }
             $(".page-prevarea").html(pstr);
+            try {
+         	   loading(false);
+	         } catch (e) {
+	         }
+            
          },error : function(e) {
             console.log("product list");
          }
@@ -180,26 +159,6 @@ $(document).on('mouseenter mouseleave', '.pdlist-wrap .pdthumb .thumb', function
       });
    }
    
-   // listSize 변경으로 상품 리스트 재조회
-   function listSubmit(val){
-       var listSize = $(val).val();
-       $("form[name='pdeSearchForm']").find("input[name='listSize']").val(listSize);
-       $("input[name='amount']").val(listSize);
-       $("input[name='pageNum']").val(1);
-       setProductList();
-   }
-   
-   //sort 바꾸기
-   function searchSort(type) {
-		  $("input[name='sort']").val(type);
-		  $("input[name='pageNum']").val(1);
-		  $("#sort" + type).siblings().removeClass("active");
-		  $("#sort" + type).addClass("active");
-		  
-		  setProductList();
-		  
-	  }
-   
    function goToPageNum(pageNum){
 	   $("input[name='pageNum']").val(pageNum);
 	   
@@ -208,55 +167,32 @@ $(document).on('mouseenter mouseleave', '.pdlist-wrap .pdthumb .thumb', function
 </script>
 </head>
 <body>
-	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"/>
-  	<input type="hidden" name="amount" value="${pageMaker.cri.amount}"/>
-	<input type="hidden" name="categoryCode" value="${categoryCode}"/>
-	<input type="hidden" name="sort" value="1"/>
-	
+<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"/>
+<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}"/>
 	<div class="wrap display-3depth">
-		<main class="cmain main" role="main" id="mainContents">
-			<div id="reflashArea" class="container">
-				<div class="location">
-					<ul class="loction-menu" data-modules-menus>
-						<li data-menu class="home">
-							<a href="${app}/">홈</a>
-						</li>
-						<li data-menu class>
-							<a href="${app}/p/productlist/?category=${categoryCode}">${category}</a>
-						</li>
-					</ul>
+		<main class="cmain results" role="main" id="mainContents">
+			<c:if test="${pageMaker.total eq 0}">
+			<div class="container">
+				<div class="contents">
+					<div class="nodata">
+						<p class="results-title">
+							<strong>${pageMaker.cri.keyword}</strong>검색결과가 없습니다.
+						</p>
+						<p>검색어가 올바르게 입력 되었는지 확인해 주세요.</p>
+						<p>두 단어 이상의 검색어인 경우, 띄어쓰기를 확인해 주세요.</p>
+					</div>
 				</div>
-				<div class="gird-l2x">
+			</div>
+			</c:if>
+			<c:if test="${pageMaker.total > 0}"> 
+			<div id="reflashArea" class="container">
+				<div class="container gird-l2x">
 					<div class="contents" id="pl_main">
-
 						<div class="display-list-wrap" id="itemListArea">
-
-							<h2 class="title30">
-								<span id="category-name">${category}</span> 
-								<em	id="total-amount">(${pageMaker.total})</em>
-							</h2>
-
-							<div class="list-sort-area">
-								<div class="sortOption">
-									<!--// 활성화시 a태그에 active 클래스 추가 -->
-									<a href="javascript://" id="sort1" onclick="searchSort(1);" class="active">최근등록순</a> 
-									<a href="javascript://" id="sort2" onclick="searchSort(2);">낮은가격순</a> 
-									<a href="javascript://" id="sort3" onclick="searchSort(3);">높은가격순</a>
-								</div>
-
-								<div class="sort-form"></div>
-
-								<div class="selectwrap">
-									<div id="selectListSize" class="custom-selectbox sm"
-										data-modules-selectbox="">
-										<select id="listSize" onchange="javascript:listSubmit(this);">
-											<option value="30" selected="selected">30개씩 보기</option>
-											<option value="60">60개씩 보기</option>
-											<option value="120">120개씩 보기</option>
-										</select>
-									</div>
-								</div>
-							</div>
+							<p class="results-title" id="search_title">
+								<strong>${pageMaker.cri.keyword}</strong> 검색결과
+                                <em>(${pageMaker.total})</em>
+                            </p>
 								<div class="pdlist-wrap" id="pdListDiv">
 									<ul>
 										<c:forEach items="${productBoardDTO}" var="list">
@@ -289,16 +225,10 @@ $(document).on('mouseenter mouseleave', '.pdlist-wrap .pdthumb .thumb', function
 																</span>
 															</div>
 														</c:if>
-														<div class="pdinfo"><div class="benefits" style="line-height: 20px;"><span>현대7%</span></div></div>
+														<div class="pdinfo"><div class="benefits" style="line-height: 20px;"></div></div>
 													</div>
 											</a>
 											<a href="${app}/p/${list.prd_board_id}" target="_blank" class="hoverview"><i class="icon"></i>새창열기</a>
-											<div class="alimlike" data-slitmcd="2141048469" data-bsitmcd="2141048469">
-												
-													<a href="javascript://" class="btn btn-like" onclick=""><i class="icon"></i>
-													<span class="hiding">찜</span></a>
-												
-											</div>
 											</li>
 											<!-- 상품 끝 -->
 										</c:forEach>
@@ -335,6 +265,7 @@ $(document).on('mouseenter mouseleave', '.pdlist-wrap .pdthumb .thumb', function
 						</div>
 					</div>
 			</div>
+			</c:if>
 		</main>
 	</div>
 </body>

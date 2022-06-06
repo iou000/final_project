@@ -15,12 +15,12 @@
             <h2 class="hiding">푸터메뉴</h2>
             <div class="short-menu">
                 <ul>
-                    <li><a href="http://www.ehyundai.com/newPortal/ir/main.do" target="_blank">possible link1</a></li>
-                    <li><a href="http://www.ehyundai.com/newPortal/index.jsp" target="_blank">possible link2</a></li>
-                    <li><a href="https://company.hyundaihmall.com/" target="_blank">possible link3</a></li>
-                    <li><a href="https://company.hyundaihmall.com/html/company/company_ethics-2.html" target="_blank">possible link4</a></li>
-                    <li><a href="https://company.hyundaihmall.com/html/investment/investment_stock.html" target="_blank">possible link5</a></li>
-                    <li><a href="https://recruit.ehyundai.com/index.nhd" target="_blank">possible link6</a></li>
+                    <li><a href="http://www.ehyundai.com/newPortal/ir/main.do" target="_blank">현대백화점그룹</a></li>
+                    <li><a href="http://www.ehyundai.com/newPortal/index.jsp" target="_blank">현대백화점소개</a></li>
+                    <li><a href="https://company.hyundaihmall.com/" target="_blank">현대홈쇼핑소개</a></li>
+                    <li><a href="https://company.hyundaihmall.com/html/company/company_ethics-2.html" target="_blank">윤리경영</a></li>
+                    <li><a href="https://company.hyundaihmall.com/html/investment/investment_stock.html" target="_blank">IR</a></li>
+                    <li><a href="https://recruit.ehyundai.com/index.nhd" target="_blank">채용안내</a></li>
                 </ul>
             </div>
             <!-- // .short-menu -->

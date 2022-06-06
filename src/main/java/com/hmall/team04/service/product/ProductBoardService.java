@@ -17,4 +17,8 @@ public interface ProductBoardService {
 
 	int getProductListCount(String category) throws Exception;
 
+	ArrayList<ProductBoardDTO> getProductBoardListByKeyword(ProductCriteria cri) throws Exception;
+
+	int getProductListCountByKeyword(String keyword) throws Exception;
+
 }

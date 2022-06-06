@@ -31,6 +31,13 @@ public class ProductCriteria {
 		this.categoryCode = categoryCode;
 	}
 	
+	public ProductCriteria(int pageNum, String keyword) {
+		this.pageNum = pageNum;
+		this.amount = 30;
+		this.keyword = keyword;
+	}
+	
+	
 	public ProductCriteria(int pageNum, int amount, String categoryCode) {
 		this.pageNum = pageNum;
 		this.amount = amount;

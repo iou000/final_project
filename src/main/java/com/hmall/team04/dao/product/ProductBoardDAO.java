@@ -8,6 +8,9 @@ import com.hmall.team04.dto.product.ProductBoardDTO;
 
 public interface ProductBoardDAO {
 	
+	//상품 검색
+	ArrayList<ProductBoardDTO> getProductBoardListByKeyword(ProductCriteria cri) throws SQLException;
+	
 	//상품게시글에 따른 상품리스트
 	ArrayList<ProductBoardDTO> getProductBoardListByInsdt(ProductCriteria cri) throws SQLException;
 	
@@ -21,4 +24,6 @@ public interface ProductBoardDAO {
 	ProductBoardDTO getProductBoard(String prd_board_id) throws SQLException;
 
 	int getProductListCount(String category) throws Exception;
+
+	int getProductListCountByKeyword(String keyword) throws Exception;
 }
