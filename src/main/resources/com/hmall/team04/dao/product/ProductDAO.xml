@@ -13,7 +13,7 @@
 		    option1,
 		    option2,
 		    prd_price,
-		    prd_detail
+		    prd_image
 		FROM PRD_T
 		WHERE PRD_ID = #{prd_id}
 	</select>

@@ -10,7 +10,7 @@ public class OrderPrdResponseDTO {
 	private String option1;
 	private String option2;
 	private int prd_price;
-	private String prd_detail; //상품상세(이미지임)
+	private String prd_image; //상품 이미지
 	
 	private int prd_count; //상품 주문 개수
 }
