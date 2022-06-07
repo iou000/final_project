@@ -10,8 +10,7 @@ public class ProductDTO {
 	private int amount;
 	
 	private String prd_board_id;
-	private String prd_detail;
-	private String upload_path;
+	private String prd_image;
 	
 	private String option1;
 	private String option2;

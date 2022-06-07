@@ -4,7 +4,9 @@
 
 <html>
   <head>
-
+<link rel="shortcut icon" type="image/x-icon"
+	href="//image.hmall.com/p/img/co/favicon/favicon.ico">
+<title>아이디/비밀번호 찾기</title>
   </head>
   <body>
   

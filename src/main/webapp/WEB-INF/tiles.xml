@@ -69,7 +69,7 @@
 	</definition>
 	
 	<!-- 일반 로그인 (팝업 x) -->
-	<definition name="user.login.login" template="/WEB-INF/views/template/findLayout.jsp">
+	<definition name="user.login.login" template="/WEB-INF/views/template/login.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/user/login/login.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />

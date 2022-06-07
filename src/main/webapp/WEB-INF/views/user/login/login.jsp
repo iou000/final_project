@@ -10,6 +10,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" type="image/x-icon"
+	href="//image.hmall.com/p/img/co/favicon/favicon.ico">
+<title>로그인</title>
 <style type="text/css">
 	.msg_warn {
 		color: #ff009d;

@@ -9,7 +9,9 @@
 <html>
 
 <head>
-
+<link rel="shortcut icon" type="image/x-icon"
+	href="//image.hmall.com/p/img/co/favicon/favicon.ico">
+<title>상품 상세</title>
 
 
 <!-- Main Contents css = Contents css부분은 각페이지마다 다르게 해당되는 css가 호출 됨(폴더 구조별)  -->
