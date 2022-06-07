@@ -45,4 +45,7 @@ public class OrderCompleteDTO {
 	private Date vbank_date;
 	private String pay_status;
 	private String pay_method;
+	
+	private String coupon_id;
+	private int expectPoint;
 }
