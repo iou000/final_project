@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="app" value="${pageContext.request.contextPath}" />
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 우편번호 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
@@ -117,35 +118,53 @@
 						<h3 class="title22 selected only">
 							<button data-modules-collapse="" class="accordion-trigger"
 								aria-expanded="false">
-								상품정보 <span class="num" id="ordItemCnt"></span><i class="icon"></i>
+								상품정보 <span class="num" id="ordItemCnt">${fn:length(orderPrdList)}</span><i class="icon"></i>
 							</button>
 						</h3>
-						<c:forEach items="${orderInfo}" var="order">
+
 						<div class="accordion-panel selected" role="region" aria-label="">
 							<div class="order-list" id="orderItems">
+								
 								<ul>
-									<li name="orderItem">
-									<input type="hidden" name="slitmNm" value="${order.prd_board_id }"> 
-										<a href="#" target="_blank">
-										<span class="img">
-										<img src="#" onerror="#">
-										</span>
-											<div class="box">
-												<span class="tit">${order.prd_board_id }</span>
-												<div class="info">
-													<ul>
-
-														<li>${order.prd_count }개<input type="hidden" name="ordQty" value="1"
-															readonly="readonly"></li>
-													</ul>
+									<c:forEach items="${orderPrdList}" var="orderPrd">
+										<li name="orderItem">
+											<input type="hidden" name="prd_id" value="${orderPrd.prd_id}">
+											<input type="hidden" name="prd_nm" value="${orderPrd.prd_nm}">
+											<input type="hidden" name="option1" value="${orderPrd.option1}">
+											<input type="hidden" name="option2" value="${orderPrd.option2}">
+											<input type="hidden" name="prd_price" value="${orderPrd.prd_price}">
+											<input type="hidden" name="prd_image" value="${orderPrd.prd_image}">
+											<input type="hidden" name="prd_count" value="${orderPrd.prd_count}">
+											
+											
+											<a href="#" target="_blank">
+											<span class="img">
+												<img src="${orderPrd.prd_image}" onerror="#">
+											</span>
+												<div class="box">
+													<span class="tit">${orderPrd.prd_nm}</span>
+													<div class="info">
+														<ul>
+															<c:if test="${empty activeDeliever}">style="display:none;"</c:if>
+															<li>
+																<c:if test="${not empty orderPrd.option1}">${orderPrd.option1}
+																	<c:if test="${not empty orderPrd.option2}">/${orderPrd.option2}</c:if>
+																</c:if>
+															</li>
+															<li>${orderPrd.prd_count}개
+																<input type="hidden" name="ordQty" value="${orderPrd.prd_count}" readonly="readonly">
+															</li>
+														</ul>
+													</div>
+													<span class="price"><strong><fmt:formatNumber value="${orderPrd.prd_price}" /></strong>원</span>
 												</div>
-												<span class="price"><strong></strong>원</span>
-											</div>
-									</a></li>
+											</a>
+										</li>
+									</c:forEach>
 								</ul>
 							</div>
 						</div>
-						</c:forEach>
+						
 						<!-- //상품정보 -->
 						
 						<!-- 할인/포인트 적용 // -->
@@ -192,6 +211,7 @@
 								<div class="point-area">
 									<ul class="row-list">
 										<li id="hpointUseLi">
+											<input type="hidden" name="useUPoint" value="0">
 											<div class="row-title">
 												<label class="chklabel"> 
 													<input type="checkbox" name="upointCheck" onclick="useUpoint()">
@@ -271,8 +291,14 @@
 								style="">
 								<div class="sticky-inner">
 									<h4 class="title20">총 결제금액</h4>
+									
+									<input type="hidden" name="totPayAmt" />
+									<input type="hidden" name="couponDcAmt" />
+									<input type="hidden" name="usePointAmt" />
+									<input type="hidden" name="prdPriceAmt" />
+									<input type="hidden" name="ExpectPoint" />
+									
 									<ul class="payment-list">
-
 										<li>
 											<div id="orderAmt">
 												<span class="tit">총 판매금액</span> <span class="txt"><strong>158,000</strong>원</span>
@@ -321,7 +347,7 @@
 										<li>
 											<div id="calculateList_upoint" class="hpay">
 												<span class="tit"> 적립예정 적립금 </span>
-												 <span class="txt"><strong id="hppExpectPoint">70</strong>P</span>
+												 <span class="txt"><strong id="ExpectPoint">70</strong>P</span>
 											</div>
 											
 											<ul class="check-list agreeCheck">
@@ -503,6 +529,15 @@
 </main>
 
 <script>
+
+$(document).ready(function(){
+	payAmtCalculate();
+});
+
+
+
+
+
 
 var token = $("input[name='_csrf']").val();
 var header = "X-CSRF-TOKEN";
@@ -1073,11 +1108,12 @@ function selectCoupon() {
 			
 			$("#copnSaleDiv").append(addCopnHtml);
 			$('#pec007-01').modal('hide');
-		} else{
+		} else{ //가지고 있는 쿠폰이 없을시
 			
 		}
-		
 	});
+	
+	payAmtCalculate();
 	
 }
 
@@ -1097,6 +1133,7 @@ function cancleCopn() {
 	$('input[name=copnDcAply]').prop('checked', false);
 	$('#pec007-01').modal('hide');
 	
+	payAmtCalculate();
 }
 
 /* 쿠폰 취소 or 선택가능 */
@@ -1132,6 +1169,7 @@ function applyCopnDc() {
 		$("#copnSaleDiv .price").append(addCouponPriceHtml);
 		
 	}
+	payAmtCalculate();
 	
 }
 
@@ -1151,7 +1189,7 @@ function useUpoint() {
     }
 	
    directInsertUPoint($("input[name=useUPoint]"));
-   //cardCalculate();
+   payAmtCalculate();
 }
 
 
@@ -1185,8 +1223,49 @@ function directInsertUPoint(obj) {
     }
 	
 	$(obj).val(priceToString(usePoint));
+	$("#hpointUseLi > input[name=useUPoint]").val(usePoint);
 	
-	//cardCalculate();
+	payAmtCalculate();
+}
+
+
+
+function payAmtCalculate() {
+	var totPayAmt = 0; //총 결제금액
+	var prd_price = 0; //상품 총 금액
+	var coupon_price = 0; //쿠폰 할인 금액
+	var usePoint = 0; //적립금 사용 금액
+	
+	$("li[name=orderItem]").each(function(index) { //상품 총 금액 계산
+		prd_price += Number($("input[name=prd_price]").eq(index).val());
+	});
+	console.log(prd_price);
+	coupon_price = Number($("#divCopnInfArea input[name=coupon_price]").val());
+	usePoint = Number($("#hpointUseLi input[name=useUPoint]").val());
+	
+	totPayAmt = prd_price - (coupon_price + usePoint);
+	
+	
+	$("input[name=totPayAmt]").val(totPayAmt);
+	$("input[name=couponDcAmt]").val(coupon_price);
+	$("input[name=usePointAmt]").val(usePoint);
+	$("input[name=prdPriceAmt]").val(prd_price);
+
+	// 하단 결제금액
+	$("#main_totPayAmt").text(priceToString(totPayAmt));
+	$("#main_orderAmt").text(priceToString(prd_price));
+	$("#main_discountAmt").text('-'+priceToString(coupon_price));
+	
+	//오른쪽 옆 결제금액
+	$("#orderAmt strong").text(priceToString(prd_price));
+	$("#copnDcAmtDiv strong").text('-'+priceToString(coupon_price));
+	$("#totDcAmtDd").text('-'+priceToString(coupon_price))
+	$("#lastStlmAmtDd strong").text(priceToString(totPayAmt));
+	$("#useUPointDiv strong").text(priceToString(usePoint));
+	
+	//적립 예정 적립금
+	$("input[name=ExpectPoint]").val(Math.ceil(totPayAmt * 0.01));
+	$("#ExpectPoint").text(priceToString(Math.ceil(totPayAmt * 0.01)));
 }
 
 

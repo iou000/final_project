@@ -24,8 +24,12 @@ import com.hmall.team04.dto.coupon.CouponDTO;
 import com.hmall.team04.dto.deliever.DelieverDTO;
 
 import com.hmall.team04.dto.order.OrderDTO;
+import com.hmall.team04.dto.order.OrderPrdRequestDTO;
+import com.hmall.team04.dto.order.OrderPrdResponseDTO;
 import com.hmall.team04.service.coupon.CouponService;
 import com.hmall.team04.service.deliever.DelieverService;
+import com.hmall.team04.service.product.ProductBoardService;
+import com.hmall.team04.service.product.ProductService;
 import com.hmall.team04.service.reserve.ReserveService;
 import com.hmall.team04.service.user.UserService;
 
@@ -41,21 +45,21 @@ public class OrderController {
 	private final UserService userService;
 	private final CouponService couponService;
 	private final ReserveService reserveService;
-	
+	private final ProductService productService;
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/order", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public HashMap<String, String> ordertest(@RequestBody List<OrderCompleteDTO> orderList, HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public HashMap<String, String> ordertest(@RequestBody List<OrderPrdRequestDTO> orderPrdList, HttpServletRequest req, HttpServletResponse res) throws Exception {
 
 		HashMap<String, String> resultMap = new HashMap<String, String>();
 		
 		// ArrayList 로 변환 완료
-		log.info(orderList.toString());
+		log.info(orderPrdList.toString());
 		
 		// 컨트롤러 간 공용 임시저장소인 session 을 불러와, orderInfo라는 key에 orderList를 value로 저장
 		HttpSession session = req.getSession();
-		session.setAttribute("orderInfo", orderList);
+		session.setAttribute("orderInfo", orderPrdList);
 
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("orderSuccess", "True");
@@ -65,22 +69,33 @@ public class OrderController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/order", method = RequestMethod.GET)
-	public String order(OrderCompleteDTO orderCompleteDTO, HttpServletRequest req, HttpServletResponse res, Model model, Principal principal) {
+	public String order(HttpServletRequest req, HttpServletResponse res, Model model, Principal principal) {
 		String user_id = principal.getName();
 		String user_nm = "";
     
 		// ArrayList 자료형을 가짐
 		// !!! 반드시 c:foreach 로 출력해야함 !!!
 		HttpSession session = req.getSession();
-		ArrayList<OrderCompleteDTO> orderList = new ArrayList<OrderCompleteDTO>();
-		orderList = (ArrayList<OrderCompleteDTO>) session.getAttribute("orderInfo");
+		List<OrderPrdRequestDTO> orderPrdRequestList = new ArrayList<>();
+		orderPrdRequestList = (ArrayList<OrderPrdRequestDTO>) session.getAttribute("orderInfo");
 
-		log.info(orderList);
+		log.info("================================"+orderPrdRequestList.toString());
 		
+		List<OrderPrdResponseDTO> orderPrdList = new ArrayList<>();
 		DelieverDTO activeDeliever = null;
 		CouponDTO top1Coupon = null;
 		int user_reserve = 0;
+		
 		try {
+			
+			for(OrderPrdRequestDTO dto : orderPrdRequestList) { //주문서에 들어갈 상품(리스트)
+				OrderPrdResponseDTO orderPrd = productService.getOrderProductByPrdId(dto.getPrd_id());
+				orderPrd.setPrd_count(dto.getPrd_count());
+				orderPrd.setPrd_price(orderPrd.getPrd_price() * dto.getPrd_count());
+				
+				orderPrdList.add(orderPrd);
+			}
+			
 			activeDeliever = delieverService.selectDelieverActiveYnByUserId(user_id);
 			user_nm = userService.getUserNamebyUserId(user_id);
 			top1Coupon = couponService.selectCouponTop1ByUserId(user_id);
@@ -93,7 +108,7 @@ public class OrderController {
 		model.addAttribute("activeDeliever", activeDeliever);
 		model.addAttribute("top1Coupon", top1Coupon);
 		model.addAttribute("user_reserve", user_reserve);
-		model.addAttribute("orderInfo", orderList);
+		model.addAttribute("orderPrdList", orderPrdList);
 		// 우선 사용 완료했으므로 삭제하여 혹시모를 용량문제 해소
 		//session.removeAttribute("orderInfo");
 
