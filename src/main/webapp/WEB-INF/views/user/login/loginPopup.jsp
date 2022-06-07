@@ -163,7 +163,7 @@ function login(){
 			success : function(response){
 				if(response.code == "200"){
 					// 정상 처리 된 경우	
-					window.opener.location.href = response.item.url; //부모창 이전페이지로
+					window.opener.location.href = "${app}/"; //부모창 메인페이지로
 					self.close(); //팝업창 닫기
 				} else {
 					alert(response.message);

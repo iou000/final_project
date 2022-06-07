@@ -174,7 +174,7 @@ function login(){
 			success : function(response){
 				if(response.code == "200"){
 					// 정상 처리 된 경우	
-					window.location.href = response.item.url; //이전페이지로
+					window.location.href = "${app}/"; //메인페이지로
 				} else {
 					alert(response.message);
 				}
