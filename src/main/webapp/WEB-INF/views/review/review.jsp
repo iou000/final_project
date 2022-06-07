@@ -19,6 +19,8 @@
 
 
 <body>
+	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+	
 	<input type="hidden" name="pageNum" value="${reviewpageMaker.cri.pageNum}"/>
   	<input type="hidden" name="amount" value="${reviewpageMaker.cri.amount}"/>
 	<input type="hidden" name="prd_board_id" value="${prd_board_id}"/>
@@ -44,8 +46,7 @@
 							<span class="hiding">5점</span>
 						</p>
 					</div>
-					<span class="like-point" aria-label="포인트"><em>5.0, 추후
-							plsql 생성 시 리뷰마다 업데이트 예정</em></span>
+					<span class="like-point" aria-label="포인트"><em>board와 통일</em></span>
 				</div>
 				<!-- //.review-star -->
 			</div>
@@ -103,11 +104,11 @@
 											</div>
 										</c:if>
 								
-										<span class="nick">${dto.review_id }</span>
 										<span class="nick">${dto.user_id }</span>
 										
 									</div>
 									<div class="top-right">
+										<button><span class="nick" onclick="DeleteReview(${dto.review_id })">삭제 </span></button>
 										<span class="date">
 										<fmt:formatDate pattern="yyyy-MM-dd" value="${dto.ins_dt}"/>
 										</span>
@@ -259,6 +260,33 @@
 		let popOption = "width = 600px, height=700px, top=300px, left=300px, scrollbars=yes";
 		
 		window.open(popUrl,"리뷰 쓰기",popOption);
+	}
+	/*
+	 * 상품평 삭제 버튼, 자기 자신만 보인다.
+	 */
+	function DeleteReview(review_id){
+		var token = $("input[name='_csrf']").val();
+		var header = "X-CSRF-TOKEN";
+		var prd_board_id = $("input[name='prd_board_id']").val();
+		
+		$.ajax({
+			url : "${app}/r/deleteReview",
+			method : "POST",
+			data : {
+				review_id : review_id,
+				prd_board_id : prd_board_id
+			},
+			dataType : "json",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+				//alert(JSON.stringify(data));
+				if (data.delete_review_Success == "True") {
+					location.reload();
+				}
+			}
+		})
 	}
 
 </script>
@@ -443,7 +471,6 @@
 			}
 			str += "</ul>";
 			$(".text-review-list-std").html(str);
-			alert('end ajax');
             
 			// paging part ajax
             var pstr = ""

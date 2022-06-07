@@ -11,7 +11,7 @@
 		ft.upload_path
 		from prd_cart_t pct
 		left join prd_t pt on (pct.prd_id=pt.prd_id)
-		left join file_t ft on (pt.prd_board_id=ft.article_id)
+		left join file_t ft on (pct.prd_id=ft.article_id)
 		where pct.user_id=#{user_id}
 	</select>
 	

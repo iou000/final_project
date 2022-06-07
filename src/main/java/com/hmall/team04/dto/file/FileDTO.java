@@ -19,6 +19,8 @@ public class FileDTO {
 	private String file_type;
 	private Date ins_dt;
 	private String board_flag;
+	private String user_id;
+	private String prd_board_id;
 	
 	private MultipartFile uploadfile;
 }

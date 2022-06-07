@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
@@ -36,14 +37,6 @@ public class ReviewServiceImpl implements ReviewService {
 	@Setter(onMethod_ = { @Autowired })
 	private FileDAO fileDAO;
 	
-	private int pageSize=10;
-
-	private static String BUCKET_NAME = "eveadam";
-    private static String ACCESS_KEY="AKIA6EN3BZ4CYVUA7X5L";
-    private static String SECRET_KEY="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";
-    
-    private AmazonS3 s3;
-    
 	@Override
 	public ArrayList<ReviewDTO> getReviewListByInsdtCore(ReviewCriteria reviewcri) throws Exception {
 		// 읽어들인 Review의 file_yn이 1이면 추가로 사진 정보를 읽어온다.
@@ -67,13 +60,22 @@ public class ReviewServiceImpl implements ReviewService {
 		// TODO Auto-generated method stub
 		return reviewDAO.getReviewListCountCore(prd_board_id);
 	}
-
-
+	
 	@Override
-	public void enrollReview(ReviewDTO reviewDTO) throws Exception {
-		// TODO Auto-generated method stub
+	@Transactional
+	public void insertReview(ReviewDTO reviewDTO) throws Exception {
+		try {
+		reviewDAO.insertReview(reviewDTO);
+		// update star of related board
+		reviewDAO.updateAvgStar(reviewDTO);
 		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			throw e;
+		}
 	}
+
 	
 	@Override
 	public int ReviewIsExist(ReviewDTO reviewDTO) throws Exception {
@@ -88,32 +90,26 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public void insertReview(ReviewDTO reivewDTO) throws Exception {
-		// TODO Auto-generated method stub
-		reviewDAO.insertReview(reivewDTO);
+	@Transactional
+	public void deleteReview(ReviewDTO reviewDTO) throws Exception {
+		try {
+		// delete derivatives of certain row of review that will be deleted
+		FileDTO fileDTO = new FileDTO();
+		fileDTO.setArticle_id(reviewDTO.getReview_id());
+		fileDTO.setBoard_flag("review");
+		fileDAO.deleteReviewfile(fileDTO);
+		
+		// delete certain row
+		reviewDAO.deleteReview(reviewDTO);
+		
+		// update star of related board
+		reviewDAO.updateAvgStar(reviewDTO);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
-//	@Override
-//	public void s3FileUpload(MultipartFile file) throws Exception {
-//		// TODO Auto-generated method stub
-//		if(file != null && !file.getOriginalFilename().equals("")) {
-//			System.out.println(file.getOriginalFilename());
-//			
-//			File localFile = new File("/Users/devsacti/Downloads/" + file.getOriginalFilename());
-//			file.transferTo(localFile);
-////			
-//			System.out.println(localFile.getName());
-//			PutObjectRequest obj = new PutObjectRequest(BUCKET_NAME, localFile.getName(), localFile);
-//			obj.setCannedAcl(CannedAccessControlList.PublicRead);
-//			String imageUrl = "https://eveadam.s3.ap-northeast-2.amazonaws.com/"+localFile.getName();
-//			s3.putObject(obj);
-//			System.out.println(imageUrl);
-//			//reviewVO.setS3ImageUrl(imageUrl);
-//			
-//			//reviewMapper.insertReview(reviewVO);
-//		}else {
-//			//reviewMapper.insertReview(reviewVO);
-//		}
-//	}
 	
 }

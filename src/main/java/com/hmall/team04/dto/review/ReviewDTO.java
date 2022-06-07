@@ -27,5 +27,5 @@ public class ReviewDTO {
 	
 	// files
 	private List<FileDTO> fileList;
-	private MultipartFile uploadfile;
+	private MultipartFile[] uploadfiles;
 }

@@ -36,8 +36,12 @@
 		
 	<!-- insert review -->
 	<insert id="insertReview" parameterType="reviewDTO">
-		insert into review_t(review_id,prd_board_id,prd_id,user_id,content,star,file_yn)
+		insert into
+		review_t(review_id,prd_board_id,prd_id,user_id,content,star,file_yn)
 		values(review_t_review_id_seq.nextval,#{prd_board_id},#{prd_id},#{user_id},#{content},#{star},#{file_yn})
+		<selectKey keyProperty="review_id" resultType="string" order="AFTER">
+			SELECT review_t_review_id_seq.currval FROM dual
+		</selectKey>
 	</insert>
 
 	<select id="ReviewIsExist" resultType="int">
@@ -52,5 +56,19 @@
 		left join prd_orderdetail_t podt on (pot.prd_order_id=podt.prd_order_id)
 		where pot.user_id=#{user_id} and podt.prd_board_id=#{prd_board_id}
 	</select>
+	
+	<!-- delete review -->
+	<delete id="deleteReview" parameterType="reviewDTO">
+		delete 
+		from review_t rt
+		WHERE rt.review_id=#{review_id}
+	</delete>
+	
+	<!-- update prd_board_t star which is belong to Star of review, when insert or delete -->
+	<update id="updateAvgStar" parameterType="reviewDTO">
+		update prd_board_t
+		set star = (select trunc(avg(star),1) as AVG from review_t where prd_board_id=#{prd_board_id})
+		where prd_board_id=#{prd_board_id}
+	</update>
 	
 </mapper>

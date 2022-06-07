@@ -13,4 +13,18 @@
 		WHERE ft.article_id=#{article_id} and ft.board_flag=#{board_flag}
 	</select>
 	
+	<!-- insert file -->
+	<insert id="insertReviewFile" parameterType="FileDTO">
+		insert into
+		file_t(file_id,article_id,upload_path,file_nm,file_type,board_flag)
+		values(file_t_file_id_seq.nextval,#{article_id},#{upload_path},#{file_nm},#{file_type},#{board_flag})
+	</insert>
+	
+	<!-- delete files of review -->
+	<delete id="deleteReviewfile" parameterType="FileDTO">
+		delete 
+		from file_t ft
+		WHERE ft.article_id=#{article_id} and ft.board_flag=#{board_flag}
+	</delete>
+	
 </mapper>

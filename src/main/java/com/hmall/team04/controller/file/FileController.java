@@ -2,6 +2,8 @@ package com.hmall.team04.controller.file;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,11 +27,11 @@ public class FileController {
 	@RequestMapping(value = "/uploadS3", method= {RequestMethod.POST})
 	@ResponseBody
 	public void uploadS3(ReviewDTO reviewDTO) throws Exception {
-		log.info(reviewDTO.toString());
-		MultipartFile file = reviewDTO.getUploadfile();
-		log.info(file);
+//		log.info(fileDTO.toString());
+//		MultipartFile file = fileDTO.getUploadfile();
+//		log.info(file);
 		
-		awsS3Service.s3FileUpload(file);
+		awsS3Service.s3FileUpload(reviewDTO);
 		
 	}
 	
