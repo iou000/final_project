@@ -28,7 +28,7 @@
 	<input type="hidden" name="sort" value="1"/>
 	<sec:authentication property="principal" var="principal_user" />
 	<c:if test="${principal_user != 'anonymousUser' }">
-	<sec:authentication property="principal.user.user_id" var="principal_user_id" />
+		<sec:authentication property="principal.user.user_id" var="principal_user_id" />
 	</c:if>
 
 
@@ -108,7 +108,16 @@
 										
 									</div>
 									<div class="top-right">
-										<button><span class="nick" onclick="DeleteReview(${dto.review_id })">삭제 </span></button>
+										<c:choose>
+											<c:when test="${principal_user == 'anonymousUser' }">
+											</c:when>
+											<c:otherwise>
+													<c:if test="${principal_user_id == dto.user_id }">
+														<button><span class="nick" onclick="DeleteReview(${dto.review_id })">삭제 </span></button>
+													</c:if>
+											</c:otherwise>
+										</c:choose>
+										
 										<span class="date">
 										<fmt:formatDate pattern="yyyy-MM-dd" value="${dto.ins_dt}"/>
 										</span>
@@ -293,7 +302,7 @@
 
 <script>
 	$(document).ready(function(){
-
+		deleteCheck();
 	});
 
 	/* 댓글 리스트 생성 - test */
@@ -378,6 +387,26 @@
 	   return val_str;
    	}
    
+   	function deleteCheck(user_id, review_id) {
+ 	   var val_str="";
+ 	   
+ 	   console.log('#','${principal_user}');
+ 	   
+ 	   if('${principal_user}' == 'anonymousUser'){
+			val_str=" ";
+ 	   } else{
+ 		   // login user and review owner
+ 		   console.log('#','${principal_user_id}');
+ 		   if('${principal_user_id}'== user_id){
+ 			  val_str="<button><span class='nick' onclick='DeleteReview("+review_id+")'>삭제 </span></button> ";
+ 		   } else{
+ 			  val_str=" ";
+ 		   }
+ 	   }
+ 	   
+ 	   return val_str;
+    }
+   	
    	/* 댓글 리스트 생성 */
    	function setReviewList(){
        console.log("set review real");
@@ -425,13 +454,14 @@
 				str += "<div class='top-left'>"; // start of top-left
 
 				str += ReadStarRate(data[0][i].star);
-
-				str += "<span class='nick'>"+data[0][i].review_id+"</span> ";
+				
 				str += "<span class='nick'>"+data[0][i].user_id+"</span>";
 
 				str += "</div>"; // end of top-left
 
 				str += "<div class='top-right'>"; // start of top-right
+				str += deleteCheck(data[0][i].user_id,data[0][i].review_id);
+				//str += "<span class='nick'>"+data[0][i].user_id+data[0][i].review_id+"</span> ";
 				str += "<span class='date'>"+ UnixTimeToDate(data[0][i].ins_dt) + "</span>";
 				str += "</div>"; // end of top-right
 				
