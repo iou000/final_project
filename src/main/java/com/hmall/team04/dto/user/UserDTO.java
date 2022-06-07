@@ -21,7 +21,7 @@ public class UserDTO {
 	private String hp_no;
 	private Date ins_dt;
 	private Date upd_dt;
-	private int enabled;
+	private boolean enabled;
 	
 	private List<AuthDTO> authList;
 }

@@ -16,6 +16,7 @@
 		<result property="hp_no" column="hp_no"/>
 		<result property="ins_dt" column="ins_dt"/>
 		<result property="upd_dt" column="upd_dt"/>
+		<result property="enabled" column="enabled"/>
 		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	
