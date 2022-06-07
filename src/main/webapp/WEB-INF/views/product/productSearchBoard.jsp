@@ -90,7 +90,8 @@ function numberWithCommas(x) {
                str += "<li class='pdthumb'>"
                str += "<a href='${app}/p/" + data[0][i].prd_board_id + "'>"
                str += "<div class='thumb'>"
-               str += "<img src='"+ data[0][i].upload_path +"' ></div>"
+           	   str += "<img src='"+ data[0][i].prd_board_img +"'"
+   			   str += "alt='제품이미지입니다.' id='2141327733_img' onerror='noImage(this, " + "'" + "https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0" + "'" + ")'></div>"                   
                str += "<div class='figcaption'><div class='pdname' aria-label='제품명'>"
                str += data[0][i].title
                str += "</div>"
@@ -201,7 +202,7 @@ function numberWithCommas(x) {
 												<!-- 2020.11.26 icj 가중치 weightYn 옵션시에 이미지 위에 상품코드 노출, a 태그로 이동하지 않도록 밖으로 배치 -->
 												<a href="${app}/p/${list.prd_board_id}">
 													<div class="thumb">
-														<img src="${list.upload_path}" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
+														<img src="${list.prd_board_img}" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
 													</div>
 													<div class="figcaption">
 														<div class="pdname" aria-label="제품명">${list.title}</div>

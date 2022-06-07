@@ -10,7 +10,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://www.hmall.com/favicon.ico" />
+<link rel="shortcut icon" type="image/x-icon"
+	href="//image.hmall.com/p/img/co/favicon/favicon.ico">
+<title>로그인</title>
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/common.css"><!-- 공통 css -->
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/layout.css"><!-- 공통 Layout css -->
 <link rel="stylesheet" type="text/css" href="${app}/resources/css/popup.css"><!-- 공통 Popup css -->

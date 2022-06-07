@@ -30,11 +30,11 @@
 										data-slick-index="0" aria-hidden="false" style="width: 520px;">
 										<div>
 											<div class="item" data-item=""
-												data-outputsrc="${productboadDTO.productList[0].upload_path}"
+												data-outputsrc="${productboadDTO.productList[0].prd_image}?RS=520x520&AR=0"
 												onerror="this.src='https://image.hmall.com/hmall/pd/no_image_600x600.jpg'"
 												style="width: 100%; display: inline-block; vertical-align: top;">
 												<a href="javascript:;" onclick="goGaEvent('상품상세','상단_이미지확대','')" tabindex="0">
-													<img id="image-detail" src="${productboadDTO.productList[0].upload_path}" alt="2140365970_0.jpg"
+													<img id="image-detail" src="${productboadDTO.productList[0].prd_image}?RS=520x520&AR=0" alt="2140365970_0.jpg"
 													onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=520x520&amp;AR=0')"></a>
 											</div>
 											
@@ -52,13 +52,13 @@
 	                    	<c:forEach items="${productboadDTO.productList}" var="productlist" varStatus="status">
 	                    	<c:if test="${status.count == 1}">
 	                        <li class="ui-thumbnaii ui-active"><a href="javascript:;" onclick="" draggable="false">
-	                        <input type="hidden" name="image-url" value="${productlist.upload_path}" />
-	                        <img src="${productlist.upload_path}" alt="" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=100x100&amp;AR=0')"></a></li>  
+	                        <input type="hidden" name="image-url" value="${productlist.prd_image}" />
+	                        <img src="${productlist.prd_image}?RS=100x100&AR=0" alt="" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=100x100&amp;AR=0')"></a></li>  
 	                    	</c:if>
 	                    	<c:if test="${status.count != 1}">
 	                        <li class="ui-thumbnaii"><a href="javascript:;" onclick="" draggable="false">
-	                        <input type="hidden" name="image-url" value="${productlist.upload_path}" />
-	                        <img src="${productlist.upload_path}" alt="" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=100x100&amp;AR=0')"></a></li>  
+	                        <input type="hidden" name="image-url" value="${productlist.prd_image}" />
+	                        <img src="${productlist.prd_image}?RS=100x100&AR=0" alt="" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=100x100&amp;AR=0')"></a></li>  
 	                    	</c:if>
 	                    	</c:forEach>
 	                    </ul>
@@ -180,9 +180,9 @@
                           <div class="dropdown-menu" role="menu">
                               <div class="item-box-list">
                      				<c:forEach items="${productboadDTO.productList}" var="productlist" varStatus="status">
-                                    <a href="javascript://" onclick="insertPrd('${productlist.prd_id}', '${productlist.prd_nm}', '${productlist.upload_path}', '${productlist.option1}', '${productlist.option2}', '${productlist.prd_price}', '${productlist.amount}', '${productlist.prd_price}', '${status.count}');" class="">
+                                    <a href="javascript://" onclick="insertPrd('${productlist.prd_id}', '${productlist.prd_nm}', '${productlist.prd_image}', '${productlist.option1}', '${productlist.option2}', '${productlist.prd_price}', '${productlist.amount}', '${productlist.prd_price}', '${status.count}');" class="">
                                             <div class="thumb">
-                                                <img src="${productlist.upload_path}" alt="${productlist.prd_nm} ${productlist.option1} ${productlist.option2}" onerror="this.src='https://image.hmall.com/hmall/pd/no_image_100x100.jpg'">
+                                                <img src="${productlist.prd_image}?RS=100x100&AR=0" alt="${productlist.prd_nm} ${productlist.option1} ${productlist.option2}" onerror="this.src='https://image.hmall.com/hmall/pd/no_image_100x100.jpg'">
                                             </div>
                                             <div class="figcaption">
                                                 <div class="pdname" aria-label="제품명"><em class="choose-num">[선택${status.count}]</em>${productlist.prd_nm} ${productlist.option1} ${productlist.option2}</div>    
@@ -710,7 +710,7 @@ function goChioceProcessCore(prd_board_id) {
 	function numberWithCommas(x) {
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
-	function insertPrd(prd_id, prd_nm, upload_path, option1, option2, price, amount, prd_price, cnt){
+	function insertPrd(prd_id, prd_nm, prd_image, option1, option2, price, amount, prd_price, cnt){
 		var str = "";
 		var no_image_url = "https://image.hmall.com/hmall/pd/no_image_100x100.jpg";
 		var prd_id_length = $("input[name='sel_prd_id']").length;
@@ -725,7 +725,7 @@ function goChioceProcessCore(prd_board_id) {
 			str += "<div class='pditem'>"
 			str += "<div class='product-info'>"
 			str += "<div class='thumb'>"
-			str += "<img src='" + upload_path + "' alt='" + prd_nm + option1 + option2 + "' onerror='"+ "noImage(this, '" + no_image_url + "')'>"
+			str += "<img src='" + prd_image + "?RS=100x100&AR=0' alt='" + prd_nm + option1 + option2 + "' onerror="+ `"noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&AR=0')">`
 			str += "</div>"
 			str += "<div class='figcaption'>"
 			str += "<div class='pdname' aria-label='제품명'>[선택" + cnt + "]" + prd_nm + option1 + option2 + "</div>"

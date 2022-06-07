@@ -6,7 +6,7 @@
   <head>
 <link rel="shortcut icon" type="image/x-icon"
 	href="//image.hmall.com/p/img/co/favicon/favicon.ico">
-<title>상품리스트</title>
+<title>로그인</title>
   </head>
   <body>
   

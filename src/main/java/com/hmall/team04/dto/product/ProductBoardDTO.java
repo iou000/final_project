@@ -15,6 +15,7 @@ public class ProductBoardDTO {
 	private float star;
 	private String category;
 	private String brand;
+	private String prd_board_img;
 	
 	// like
 	private String like_id;
@@ -22,6 +23,4 @@ public class ProductBoardDTO {
 	// prd_t 
 	private List<ProductDTO> productList;
 	
-	// file_t
-	private String upload_path;
 }

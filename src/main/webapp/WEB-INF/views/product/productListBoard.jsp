@@ -72,7 +72,7 @@ $(document).on('mouseenter mouseleave', '.pdlist-wrap .pdthumb .thumb', function
 	   var categoryCode = $("input[name='categoryCode']").val();
 	   var amount = $("input[name='amount']").val();
 	   var totalAmount = $("#total-amount");
-	  
+	   var no_image_url = "https://image.hmall.com/hmall/pd/no_image_100x100.jpg";
       $.ajax({
          type : "GET"
          ,url : "${app}" + "/p/list"
@@ -115,8 +115,8 @@ $(document).on('mouseenter mouseleave', '.pdlist-wrap .pdthumb .thumb', function
                str += "<li class='pdthumb'>"
                str += "<a href='${app}/p/" + data[0][i].prd_board_id + "'>"
                str += "<div class='thumb'>"
-               str += "<img src='"+ data[0][i].upload_path +"'"
-			   str += "alt='로에베 에센시아 로에베 옴므 데오도란트 스틱 75ml/2.5oz' id='2141327733_img'></div>"
+               str += "<img src='" + data[0][i].prd_board_img + "' alt='제품이미지입니다.' onerror=" + `"noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&AR=0')">`
+			   str += "</div>"
                str += "<div class='figcaption'><div class='pdname' aria-label='제품명'>"
                str += data[0][i].title
                str += "</div>"
@@ -265,7 +265,7 @@ $(document).on('mouseenter mouseleave', '.pdlist-wrap .pdthumb .thumb', function
 												<!-- 2020.11.26 icj 가중치 weightYn 옵션시에 이미지 위에 상품코드 노출, a 태그로 이동하지 않도록 밖으로 배치 -->
 												<a href="${app}/p/${list.prd_board_id}">
 													<div class="thumb">
-														<img src="${list.upload_path}" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
+														<img src="${list.prd_board_img}" onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
 													</div>
 													<div class="figcaption">
 														<div class="pdname" aria-label="제품명">${list.title}</div>
