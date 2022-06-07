@@ -18,14 +18,14 @@ public class CustomUser extends User{
 	private static final long serialVersionUID = 1L;
 	private UserDTO user;
 	
-	public CustomUser(String username, String password,
+	public CustomUser(String username, String password, boolean enabled,
 			Collection<? extends GrantedAuthority> authorities) {
-		super(username, password, authorities);
+		super(username, password, enabled, true, true, true, authorities);
 		// TODO Auto-generated constructor stub
 	}
 	
 	public CustomUser(UserDTO vo) {
-		super(vo.getUser_id(), vo.getPassword(), vo.getAuthList()
+		super(vo.getUser_id(), vo.getPassword(), vo.isEnabled(), true, true, true, vo.getAuthList()
 													.stream()
 													.map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList()));
 		this.user = vo;
