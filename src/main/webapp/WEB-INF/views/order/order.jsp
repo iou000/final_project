@@ -4,11 +4,22 @@
 <c:set var="app" value="${pageContext.request.contextPath}" />
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 우편번호 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <main class="cmain main" role="main" id="mainContents">
 	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
+	
+	<sec:authentication property="principal" var="principal_user" />
+   	<c:if test="${principal_user != 'anonymousUser' }">
+    	<sec:authentication property="principal.user.email" var="principal_email" />
+    	<sec:authentication property="principal.user.user_id" var="principal_user_id" />
+    	<sec:authentication property="principal.user.user_nm" var="principal_user_nm" />
+   	</c:if>
+	
 	<!-- 메인페이지 'main' 클래스 추가 -->
 	<div class="container">
 		<div class="cbody gird-full">
@@ -297,6 +308,7 @@
 									<input type="hidden" name="usePointAmt" />
 									<input type="hidden" name="prdPriceAmt" />
 									<input type="hidden" name="ExpectPoint" />
+									<input type="hidden" name="discountAmt" />
 									
 									<ul class="payment-list">
 										<li>
@@ -308,7 +320,7 @@
 												<span class="tit">쿠폰할인</span> <span class="txt"><strong>-63,200</strong>원</span>
 											</div>
 
-											<div>
+											<div id="totDcAmtDiv">
 												<span class="tit">할인 합계금액</span> <span class="txt"> <strong
 													id="totDcAmtDd">-63,200</strong>원 <em style="">약 40%
 														절약</em>
@@ -319,22 +331,6 @@
                                                  <span class="tit">H.Point 사용</span>
                                                  <span class="txt"><strong>-1,001</strong>P</span>
                                             </div>
-											
-											<div class="hidden" id="stlmPaperGcAmtDiv">
-												<span class="tit">지류상품권</span> <span class="txt"><strong
-													id="stlmPaperGcAmtDd">0</strong>원</span>
-											</div> <!-- TODO 곽희섭 20170403 통합포인트 소스 추가 시작--> <!-- 상품권/적립금 제외 모두 결제가능 적용 시 H.point 결제 허용 -->
-
-											<div class="hidden" id="useUPointDiv">
-												<span class="tit">H.Point 사용</span> <span class="txt"><strong>0</strong>P</span>
-											</div> <!-- TODO 곽희섭 20170403 통합포인트 소스 추가 끝-->
-
-											<div class="hidden" id="useOPointDiv">
-												<span class="tit">Oh! point 사용</span> <span class="txt"><strong>0</strong>원</span>
-											</div>
-											<div class="hidden" id="stlmHanaMoneyAmtDiv">
-												<span class="tit">하나머니 사용</span> <span class="txt"><strong>0</strong>원</span>
-											</div>
 										</li>
 
 										<li>
@@ -374,7 +370,52 @@
 							</div>
 						</div>
 						<!-- //결제정보 -->
-						
+
+						<h3 class="title22">결제 수단</h3>
+						<div class="payment-way-box" id="payTypeHpp">
+							<ul>
+								<!-- 결제수단 -->
+								<li class="payment-group">
+									<input id="payment-type-3" class="payment-title" type="radio" name="payment-type" value="3">
+									<label for="payment-type-3" class="payment-label">
+										<i class="icon"></i><span>결제수단</span>
+									</label>
+
+									<div class="payment-content">
+										<div id="payTypeDiv">
+											<div class="radio-box pay-radio">
+												<!-- 신용카드 -->
+												<span> 
+													<input type="radio" name="payType" id="payType1" value="10"> 
+													<label for="payType1" class="sm50"> 
+														<span class="text">신용카드</span>
+													</label>
+												</span>
+												<!-- // 신용카드 -->
+												
+												<!-- 무통장 입금 -->
+												<span> <input type="radio" name="payType" id="payType2" value="20">
+													<label for="payType2" class="sm50">
+														<span class="text">무통장입금</span>
+													</label>
+												</span>
+												<!-- // 무통장 입금 -->
+												
+												<!-- 카카오페이 -->
+												<span> <input type="radio" name="payType" id="payType3" value="30">
+													<label for="payType3" class="sm50">
+														<span class="text">카카오페이</span>
+													</label>
+												</span>
+												<!-- // 카카오페이 -->
+											</div>
+										</div>
+									</div>
+								</li>
+								
+							</ul>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -1235,21 +1276,27 @@ function payAmtCalculate() {
 	var prd_price = 0; //상품 총 금액
 	var coupon_price = 0; //쿠폰 할인 금액
 	var usePoint = 0; //적립금 사용 금액
+	var totDiscountRate = 0;
 	
 	$("li[name=orderItem]").each(function(index) { //상품 총 금액 계산
 		prd_price += Number($("input[name=prd_price]").eq(index).val());
 	});
-	console.log(prd_price);
+	
 	coupon_price = Number($("#divCopnInfArea input[name=coupon_price]").val());
 	usePoint = Number($("#hpointUseLi input[name=useUPoint]").val());
-	
 	totPayAmt = prd_price - (coupon_price + usePoint);
+	
+	// 할인율 할인액/정가 * 100
+	totDiscountRate = (coupon_price / prd_price * 100)
+	
+	
 	
 	
 	$("input[name=totPayAmt]").val(totPayAmt);
 	$("input[name=couponDcAmt]").val(coupon_price);
 	$("input[name=usePointAmt]").val(usePoint);
 	$("input[name=prdPriceAmt]").val(prd_price);
+	$("input[name=discountAmt]").val(coupon_price+usePoint);
 
 	// 하단 결제금액
 	$("#main_totPayAmt").text(priceToString(totPayAmt));
@@ -1266,49 +1313,218 @@ function payAmtCalculate() {
 	//적립 예정 적립금
 	$("input[name=ExpectPoint]").val(Math.ceil(totPayAmt * 0.01));
 	$("#ExpectPoint").text(priceToString(Math.ceil(totPayAmt * 0.01)));
+	
+	// 절약 금액
+	$("#main_totDiscountRate").text("약 "+Math.round(totDiscountRate)+"% 절약");
+	$("#totDcAmtDiv em").text("약 "+Math.round(totDiscountRate)+"% 절약");
 }
 
 
 </script>
-
-
+<!-- 아임포트 -->
 <script>
-// 바로구매
-function buyProduct(obj){
+var IMP = window.IMP; // 생략 가능
+IMP.init("imp49827942"); // 예: imp00000000
+
+function order() {
 	var token = $("input[name='_csrf']").val();
 	var header = "X-CSRF-TOKEN";
 	
-    var targetCssHeader = ".product-option-wrap:first";
-    var cur_ordQty = $(
-            targetCssHeader + " .select-product-list .pditem input[name='ordQty']"
-        ).val();
-
-    alert(cur_ordQty);
-    
+	// 결제수단 선택과 이에 따른 pg, pay_method 설정
+	var objName = document.getElementsByName("payType");
+	var pay_type='';
 	
-	$.ajax({
-		
-		method : "POST",
-		url : "${app}/team04/oda/order.do",
-		method : "POST",
-		data : {
-			ordQty : cur_ordQty
-		},
-		dataType:'json',
-		beforeSend : function(xhr) { 
-			xhr.setRequestHeader(header, token); 
-		},
-		success : function(data) {
-			
-			location.href = '${app}/team04/oda/order.do';
+	var val_pg='';
+	var val_pay_method='';
+	
+	for(var i=0; i<objName.length; i++){
+	    if(objName[i].checked){
+		   	alert("선택한 결제수단 번호는 "+objName[i].value+"입니다");
+		   	pay_type=objName[i].value;
+		   	alert(pay_type)
 		}
-		
+	}
+	
+	switch (pay_type) {
+	  case '10':
+		  val_pg='kcp';
+		  val_pay_method='card';
+		  break;
+	  case '20':
+		  val_pg='html5_inicis';
+		  val_pay_method='vbank';
+		  break;
+	  case '30':
+		  val_pg='kakaopay';
+		  val_pay_method='card';
+		  break;
+	  default:
+	    alert( "어떤 값인지 파악이 되지 않습니다." );
+	}
+	
+
+	// 주문번호 생성
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
+	var hours = ('0' + today.getHours()).slice(-2); 
+	var minutes = ('0' + today.getMinutes()).slice(-2);
+	var seconds = ('0' + today.getSeconds()).slice(-2);
+
+	console.log(val_merchant_uid);
+	
+	// 아임포트 결제 데이터
+	var val_merchant_uid = year+month+day+hours+minutes+seconds;
+	var val_name = $("input[name=prd_nm]").val() + '외' + $("li[name=orderItem]").length;
+	var val_amount = $("input[name=totPayAmt]").val();
+	var val_buyer_email = '${principal_email}';
+	var val_buyer_name = $("input[name=senderName]").val();
+	var val_buyer_tel = $("#divDlvInfArea input[name=deliever_hp_no]").val();
+	var val_buyer_addr = "("+$("#divDlvInfArea input[name=address_f]").val()+") "+ $("#divDlvInfArea input[name=address_l]").val();
+	
+	
+	IMP.request_pay({
+	    pg : val_pg,
+	    pay_method : val_pay_method,
+	    merchant_uid: val_merchant_uid, // 상점에서 관리하는 주문 번호를 전달
+	    name : val_name,
+	    amount : val_amount,
+	    buyer_email : val_buyer_email,
+	    buyer_name : val_buyer_name,
+	    buyer_tel : val_buyer_tel,
+	    buyer_addr : val_buyer_addr
+	}, function(rsp) {
+		if (rsp.success) {
+			// below rsp is come from import
+			alert('빌링키 발급 성공');
+			console.log('빌링키 발급 성공',rsp)
+			
+			
+			//prd_order_t
+			var prd_order_id = rsp.merchant_uid; //주문번호
+			var user_id = '${principal_user_id}'; //유저 id
+			var recipient = $("#divDlvInfArea input[name=receiver_nm]").val(); //받는사람이름
+			var total_amount = Number($("input[name=prdPriceAmt]").val()); //상품 총 가격
+			var discount_amount = Number($("input[name=discountAmt]").val()); // 총 할인 가격(쿠폰+적립금)
+			var pmt_amount = rsp.paid_amount; //최종 주문 금액
+			var address_dest = rsp.buyer_addr; //배송지
+			var tel_no = rsp.buyer_tel;
+			var hp_no = rsp.buyer_tel;
+			var order_comment = $("input[name=deliever_msg]").val();
+			var order_date = new Date().valueOf();
+			//var prd_pmt_id = prd_pmt_id의 시퀀스
+			var coupon_discount_amount = Number($("input[name=couponDcAmt]").val());
+			var reserve_discount_amount = Number($("input[name=usePointAmt]").val());
+			
+			
+			//prd_order_detail_t
+			//var prd_orderdetail_id = 시퀀스
+			var prd_order_id = rsp.merchant_uid;
+			//var prd_id => 상품 id(반복해서 넣어줄거임)
+			//var prd_count = Number($("li[name=orderItem] input[name=prd_count]").val()); (반복해서 넣어줄거임)
+			var order_flag = 'SETP1';
+			//var cancel_date = 처음엔 null
+			var prd_board_id = '${prd_board_id}';
+			//var cancel_reason => 처음엔 null
+			
+			
+			// prd_payment_t
+			//var prd_pmt_id = 시퀀스
+			var prd_order_id = rsp.merchant_uid;
+			var pmt_time = new Date().valueOf();
+			var pmt_amount = rsp.paid_amount; //총 결제액
+			var pmt_id = rsp.pg_tid;
+			var user_nm = rsp.buyer_name; //입금자명
+			var vbank_holder = rsp.vbank_holder;
+			var vbank_name = rsp.vbank_name;
+			var vbank_num = rsp.vbank_num;
+			var vbank_date = new Date(rsp.vbank_date).valueOf();
+			var pay_status = rsp.status;
+			var pay_method = rsp.pay_method;
+			
+			// coupon 삭제용
+			var coupon_id = $("#divCopnInfArea input[name=coupon_id]").val();
+			// 적립금 적립용
+			var expectPoint = parseInt($("input[name=ExpectPoint]").val());
+			
+			
+			// 주문화면과 아임포트로부터 날라온 정보로 정보 생성
+			// 결제 관련 테이블들에 Insert되거나 세션에 저장될 정보들
+			var orderCompleteList = [];
+			$("li[name=orderItem]").each( function(index) {			
+				var prd_id = $("input[name=prd_id]").eq(index).val();
+				var prd_count = $("input[name=prd_count]").eq(index).val();
+				
+				var ordercompleteDTO = {
+						// prd_order_t
+						prd_order_id : prd_order_id,
+						user_id : user_id,
+						recipient : recipient,
+						total_amount : total_amount,
+						discount_amount : discount_amount,
+						pmt_amount : pmt_amount,
+						address_dest : address_dest,
+						tel_no : tel_no,
+						hp_no : hp_no,
+						order_comment : order_comment,
+						order_date : order_date,
+						coupon_discount_amount : coupon_discount_amount,
+						reserve_discount_amount : reserve_discount_amount,
+						// prd_orderdetail_t
+						prd_id : prd_id,
+						prd_count : prd_count,
+						order_flag : 'STEP1',
+						prd_board_id : prd_board_id,
+						pmt_time : pmt_time,
+						pmt_id : pmt_id,
+						user_nm : user_nm,
+						vbank_holder : vbank_holder,
+						vbank_name : vbank_name,
+						vbank_num : vbank_num,
+						vbank_date : vbank_date,
+						pay_status : pay_status,
+						pay_method : pay_method,
+						
+						coupon_id : coupon_id,
+						expectPoint : expectPoint
+				}
+				
+				orderCompleteList.push(ordercompleteDTO);
+				
+			});
+			
+			for(var i=0; i<orderCompleteList.length;i++){
+				console.log(orderCompleteList[i]);
+			}
+			
+			// 유효한 결제정보를, ordercomplete post controller로 전송 for DB 테이블과 세션에 정보저장
+			$.ajax({
+				url : "${app}/orderComplete",
+				method : "POST",
+				data : JSON.stringify(orderCompleteList),
+				contentType : "application/json",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(header, token);
+				},
+				success : function(data) {
+					if(data.orderCompleteSuccess=='True'){
+						alert('your choiceSSSS is ordercompleted and let us go ordercomplete page');
+						location.href = '${app}/orderComplete';
+					}
+				}
+			});
+
+			alert('after rsp.success, let us go to controller end');	
+			
+		} else {
+			alert('빌링키 발급 실패');
+			var msg = '결제에 실패하였습니다.\n';
+            msg += rsp.error_msg;
+            alert(msg);
+            return false;
+		}
 	});
-
-	
-	alert('hi2');
-	
-
 }
-  
+	
 </script>

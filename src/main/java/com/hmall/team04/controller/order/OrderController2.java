@@ -30,8 +30,6 @@ import lombok.extern.log4j.Log4j;
 @Controller
 public class OrderController2 {
 	
-	@Autowired
-	private OrderService orderService;
 	
 	//@PreAuthorize("isAuthenticated()")
 //	@RequestMapping(value = "/orderComplete", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -79,75 +77,7 @@ public class OrderController2 {
 //	}
 
 	
-	@RequestMapping(value = "/orderComplete", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public void orderComplete2(@RequestBody List<OrderCompleteDTO> orderCompleteList, Principal principal) {
-			
-			for(OrderCompleteDTO ordercompleteDTO : orderCompleteList) {
-				log.info(ordercompleteDTO.toString());
-			}
-			
-	}
 	
-	@RequestMapping(value = "/orderComplete", method = RequestMethod.GET)
-	public String orderComplete(OrderCompleteDTO orderCompleteDTO, Principal principal,HttpServletRequest req, HttpServletResponse res, Model model) {
-		try {
-//			HttpSession session = req.getSession();
-//			OrderCompleteDTO ordercompleteDTO = (OrderCompleteDTO) session.getAttribute("ordercompleteDTO");
-			// 우선 사용 완료했으므로 삭제하여 혹시모를 용량문제 해소
-//			session.removeAttribute("ordercompleteDTO");
-			
-			OrderCompleteDTO ordercompleteDTO = new OrderCompleteDTO();
-			ordercompleteDTO.setUser_id("1");
-			ordercompleteDTO.setPrd_order_id("merchant_1653809215425");
-			ordercompleteDTO.setPrd_pmt_id("StdpayVBNKINIpayTest20220529162715283069");
-			
-			ArrayList<OrderCompleteDTO> ordercompleteList = orderService.getOrderCompleteList(ordercompleteDTO);
-			log.info(ordercompleteList);
-
-			OrderCompleteDTO orderpay = orderService.getPrdPayment(ordercompleteDTO);
-			log.info(orderpay);
-			
-			// prd_order_id
-			String prd_order_id = ordercompleteList.get(0).getPrd_order_id();
-			
-			// representative prd_id and check cnt of kind of item
-			String prd_id = ordercompleteList.get(0).getPrd_id();
-			
-			// user_id
-			String user_id = ordercompleteList.get(0).getUser_id();
-			String address_dest = ordercompleteList.get(0).getAddress_dest();
-			String hp_no = ordercompleteList.get(0).getHp_no();
-			
-			model.addAttribute("ordercompleteList", ordercompleteList);
-			model.addAttribute("prd_order_id", prd_order_id);
-			model.addAttribute("prd_id", prd_id);
-			model.addAttribute("user_id", user_id);
-			model.addAttribute("address_dest", address_dest);
-			model.addAttribute("hp_no", hp_no);
-			// pmt_amount, insert 될 때 총합으로 들어갈 것이므로, 여기선 그냥 빼오면 끝
-			model.addAttribute("orderpay", orderpay);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-
-		return "order.orderComplete";
-	}
-	
-	@RequestMapping(value = "/orderPayComplete", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public HashMap<String, String> orderPayComplete(OrderCompleteDTO ordercompleteDTO,Principal principal,HttpServletRequest req, HttpServletResponse res) throws Exception {
-		// 아임포트에서 ngrok을 통해 현재 localhost:8090/team04/orderPayComplete로 아래와 같이 전송
-		//  curl -H "Content-Type: application/json" -X POST -d '{ "imp_uid": "imp_1234567890", "merchant_uid": "order_id_8237352", "status": "paid" }' { NotificationURL }
-		log.info(ordercompleteDTO);
-		
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("orderPayComplete", "True");
-
-		return map;
-	}
 	
 	
 }
