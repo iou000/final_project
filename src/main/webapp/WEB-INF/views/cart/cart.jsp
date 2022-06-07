@@ -71,7 +71,7 @@
 													<div class="checkbox">
 														<label class="chklabel">
 														<input type="checkbox" class="individual_cart_checkbox input_size_20" value='${cart.prd_cart_id }' name="chk">
-															<i class="icon"></i><span>${cart.prd_board_id }</span>
+															<i class="icon"></i><span>${cart.prd_id }</span>
 														</label>
 													</div>
 													<button type="button" class="btn btn-cart-del" onclick="deleteBasktCore('${cart.prd_cart_id }','0');">
@@ -98,7 +98,7 @@
 														<div class="pditem">
 															<figure class="pdthumb">
 																<!-- 장바구니에서 사진 클릭 시 다시 상품상세로 이동하는 부분 -->
-																<a href="#">
+																<a href="${app }/p/${cart.prd_board_id }">
 																	<div class="thumb">
 																		<img src="${cart.upload_path }"
 																			onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=120x120&amp;AR=0')">
@@ -115,14 +115,11 @@
 
 																		</div>
 																		<div class="benefits">
-
-																			<span>쿠폰 10% </span>
-
+																			<span class="option">옵션1: <em>${cart.option1 }</em></span>
+																			<span class="option">옵션2: <em>${cart.option2 }</em></span>
 																		</div>
 
 																		<div class="pdoption" aria-label="옵션/수량">
-																			<span class="option">옵션1: <em>${cart.option1 }</em></span>
-																			<span class="option">옵션2: <em>${cart.option2 }</em></span>
 																			<span class="count">수량: <em>${cart.cart_amount }</em></span>
 																			<span class="count">재고량: <em>${cart.amount }</em></span>
 																		</div>

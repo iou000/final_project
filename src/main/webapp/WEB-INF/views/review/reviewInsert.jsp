@@ -319,267 +319,265 @@
 $(document).on("click", '#attachImg1, #attachImg2, #attachImg3', function(e) {
 	e.preventDefault();
 	//uploadImg($(this));
-	uploadImgCh($(this));
+	//uploadImgCh($(this));
+	uploadImChCore($(this));
 });
 
 
 /*
- * 웹 이미지 업로드
- *  - 업로드 전에 HTML에서 이미지 압축까지해서 서버로 전송
+ * 웹 이미지 업로드 ; thumnail )
+ *  - 업로드 전에 HTML에서 이미지 압축까지해서 서버로 전송하던 것을
+ *    이미지 압축까지만 하고, 그 다음은 review 작성시점에 서버로 전송 2분할
  */
-function uploadImgCh(obj){
-    var imgSeq = Number(obj.attr('id').replace("attachImg", ""));
-    var imgId = "#getfile_" + imgSeq;
-    var file = document.querySelector(imgId);
-    //console.log('imgSeq',imgSeq);
-    //console.log('imgId-file',imgId,file);
-    
-    var max_size = 0;
-    var width = 0;
-    var height = 0;
-    var orientation = 0;
-    var dataURIRotate;
 
-    $(imgId).trigger('click');
-    //console.log('imgSeq, imgId-file',imgSeq,imgId,file);
-    
-    file.onchange = function () {
-        $("#attachImg"+ imgSeq).addClass("attach"); // upload 내부 라벨에 attach가 붙어서 파일이 첨부됨을 표기
-        var fileList = file.files ;
-        //console.log(fileList); // FileList {0: File, length: 1}
-        //console.log(fileList [0]); // 첨부한 자료의 속성값들로 보인다. 단순히 obj 접근인줄 알았지만 자동으로 더 구체정보까지 읽음
-        /*
-        * lastModified: 1653837220192
-        * lastModifiedDate: Mon May 30 2022 00:13:40 GMT+0900 (한국 표준시) {}
-        * name: "캡처.PNG"
-        * size: 37108
-        * type: "image/png"
-        * webkitRelativePath: ""
-        */
-        
-        // 읽기
-        var reader = new FileReader();
-        reader.readAsDataURL(fileList [0]);
+	function uploadImChCore(obj) {
+		var imgSeq = Number(obj.attr('id').replace("attachImg", ""));
+		var imgId = "#getfile_" + imgSeq;
+		var file = document.querySelector(imgId);
 
-        //로드 한 후
-        reader.onload = function  () {
-            if(imgSeq < 4) {
-                
-                if(fileList [0].size > 10000000) {
-                    alert('10MB 이하크기의 사진(들)만 등록이 가능합니다.');
-                    return false;
-                } 
-                
-                //썸네일 이미지 생성
-                var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
-                tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
-                
-                tempImage.onload = function () {
-                    
-                    //사진 EXIF 정보 가져오기
-                    window.EXIF.getData(tempImage, function () {
-                        orientation = window.EXIF.getTag(this, "Orientation");
-                    });
-                    
-                    //리사이즈를 위해 캔버스 객체 생성
-                    var canvas = document.createElement('canvas');
-                    max_size = 800;
-                    width = tempImage.width;
-                    height = tempImage.height;
-                    
-                    if(width < 300 || height < 300){
-                        alert("300x300 사이즈 이상 이미지로 등록해주세요.");
-                        $("#getfile_" + imgSeq).val(""); 
-                        $("#attachImg"+ imgSeq).removeClass("attach");
-                        return false;
-                    }
-                    
-                    if (width > height) {
-                        if (width > max_size) {
-                            height *= max_size / width;
-                            width = max_size;
-                        }
-                    } else {
-                        if (height > max_size) {
-                            width *= max_size / height;
-                            height = max_size;
-                        }
-                    }
-                                
-                    canvas.width = width;
-                    canvas.height = height;
-                    canvas.getContext('2d').drawImage(tempImage, 0, 0, width, height);
-                    //var dataUrl = canvas.toDataURL('image/jpeg', 0.90);   // 이미지 퀄리티 조절도 가능...
-                     
-                    //캔버스에 그린 이미지를 다시 data-uri 형태로 변환
-                    var dataURI = canvas.toDataURL("image/jpeg");
-    
-                    // store current data to an image
-                    myImage = new Image();
-                    myImage.src = dataURI;
-    
-                    myImage.onload = function () {
-                        // reset the canvas with new dimensions
-                        
-                        switch(orientation){
-                        case 6:
-                        case 8:
-                            canvas.width = height;
-                            canvas.height = width;
-                            width = canvas.width;
-                            height = canvas.height;
-        
-                            canvas.getContext('2d').save();
-                            if(orientation == 6){
-                                canvas.getContext('2d').translate(width, 0);
-                                canvas.getContext('2d').rotate(90 * Math.PI / 180);
-                            }else{
-                                canvas.getContext('2d').translate(0, height);
-                                canvas.getContext('2d').rotate(-90 * Math.PI / 180);
-                            }
-                        break;
-                        
-                        case 1:
-                        case 3:
-                            canvas.width = width;
-                            canvas.height = height;
-                            width = canvas.height;
-                            height = canvas.width;
-                            
-                            if(orientation == 3){
-                                canvas.getContext('2d').translate(height, width );
-                                canvas.getContext('2d').rotate(180 * Math.PI / 180);
-                            }
-                        }
-                            
-                        // draw the previows image, now rotated
-                        canvas.getContext('2d').drawImage(myImage, 0, 0);
-                        canvas.getContext('2d').restore();
-                        
-                        dataURIRotate = canvas.toDataURL("image/jpeg");
-                        
-                        var imgId = "thumbnail" + imgSeq;
-                        //var srcImg = "<img class='addImg' src='' style='width:56px;height:56px;' id=" + imgId +" />";
-                        var srcImg = "<img src='' id=" + imgId +" />";
-                        
-                        var thumnailId = "attachImg" + imgSeq;
-                        $("#"+ thumnailId+">.upfile").append(srcImg);
-                        //$("#"+ thumnailId).find("a._delimg").show();
-                        
-                      	//썸네일 이미지 보여주기
-                        document.querySelector('#' + imgId).src = dataURIRotate;
-                      	// 위부분까진 썸네일 보여주고 끝이고, 아래를 통해 원본사진이 서버로 전송된다.
-                      	//console.log(dataURIRotate,imgId,imgSeq, fileList [0].name);
-                        //callAjax(dataURIRotate,imgId,imgSeq, fileList [0].name,"1");
-                        callAjaxCore(fileList[0],imgId,imgSeq, fileList [0].name,"1");
-                    };
-                } //tempImage.onload
-            }
-            
-        }; //reader.onload
-    }
-}
+		var max_size = 0;
+		var width = 0;
+		var height = 0;
+		var orientation = 0;
+		var dataURIRotate;
 
-// 댓글과 별개로 사진등록마다 s3 업로드
-function callAjaxCore(file,imgId,imgSeq,filename) {
-	var token = $("input[name='_csrf']").val();
-	var header = "X-CSRF-TOKEN";
-	
-	// 파일을 담아보낼 formData
-    var formData = new FormData();
-	// 수업방식과 달리, 추가로 Blob으로 변환함, 어떤 이득이 있을 것을 예상하나 지금은 생략
-    //var blob = dataURItoBlob(dataURIRotate);
-	
-	var val_user_id = '${user_id}';
-	var val_prd_board_id = '${prd_board_id}';
-	var val_prd_id = '${prd_id}';
-	
-	
-	console.log(file);
-    formData.append('uploadfile', file);
-    formData.append('user_id', val_user_id);
-    formData.append('prd_board_id', val_prd_board_id);
-    formData.append('prd_id', val_prd_id);
-    
-    loading(true);
-    $.ajax({
-        type: "post",
-        url: "${app}/aws/uploadS3",
-        processData: false,
-        contentType: false,
-        data : formData,
-        //async : false,
-        beforeSend : function(xhr) {
-			xhr.setRequestHeader(header, token);
-		},
-        success: function(data, textStatus, jqXHR) {
-            //var returnPath = data.returnPath;
-            //document.querySelector('#' + imgId).src = returnPath;
-            
-            loading(false); // hmall mark
-            $("#attachImg"+ imgSeq).addClass("attach");
-            $("#"+imgSeq).css("display","block");
-            
-        }, error: function(jqXHR, textStatus, errorThrown) {
-            loading(false);
-            alert('사진 업로드에 실패하였습니다. error');
-            //location.reload();
-            if(imgSeq == 4) {
-                $(".marginB15").hide();
-            }
-        }
-    }); 
-}
+		$(imgId).trigger('click');
 
-function deleteImg(target){
-	console.log('deleteImg start');
-    //$("#attachImg" + target.id).trigger("click"); 
-   	var thumbnailSize = $("img[id^='thumbnail']").length;
-    if (target.id == "1") {
-        
-        if (thumbnailSize == 3) { 
-            $("#thumbnail1")[0].src = $("#thumbnail2")[0].src;
-            $("#thumbnail2")[0].src = $("#thumbnail3")[0].src;
-            
-            $("#thumbnail1")[0].title = $("#thumbnail2")[0].title;
-            $("#thumbnail2")[0].title = $("#thumbnail3")[0].title;            
+		file.onchange = function() {
+			$("#attachImg" + imgSeq).addClass("attach"); // upload 내부 라벨에 attach가 붙어서 파일이 첨부됨을 표기
+			var fileList = file.files;
 
-            $("#attachImg3").removeClass("attach");
-            $("#thumbnail3").remove();
-            $("#3").hide(); 
-        } else if (thumbnailSize == 2) { 
-            $("#thumbnail1")[0].src = $("#thumbnail2")[0].src;
-            $("#thumbnail1")[0].title = $("#thumbnail2")[0].title;
-            
-            $("#attachImg2").removeClass("attach");
-            $("#thumbnail2").remove();
-            $("#2").hide();
-        } else {
-            $("#attachImg1").removeClass("attach");
-            $("#thumbnail1").remove();
-            $("#1").hide();
-        }
-        
-    } else if (target.id == "2") { 
-        
-        if (thumbnailSize == 3) { 
-            $("#thumbnail2")[0].src = $("#thumbnail3")[0].src;
-            $("#thumbnail2")[0].title = $("#thumbnail3")[0].title;
-            
-            $("#attachImg3").removeClass("attach");
-            $("#thumbnail3").remove(); 
-            $("#3").hide();
-        } else if (thumbnailSize == 2) { 
-            $("#attachImg2").removeClass("attach");
-            $("#thumbnail2").remove();
-            $("#2").hide();
-        } 
-    } else {
-        $("#attachImg3").removeClass("attach");
-        $("#thumbnail3").remove();
-        $("#3").hide();
-    }
-}
+			// 읽기
+			var reader = new FileReader();
+			reader.readAsDataURL(fileList[0]);
+
+			//로드 한 후
+			reader.onload = function() {
+				if (imgSeq < 4) {
+
+					if (fileList[0].size > 10000000) {
+						alert('10MB 이하크기의 사진(들)만 등록이 가능합니다.');
+						return false;
+					}
+
+					//썸네일 이미지 생성
+					var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
+					tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
+
+					tempImage.onload = function() {
+
+						//사진 EXIF 정보 가져오기
+						window.EXIF.getData(tempImage, function() {
+							orientation = window.EXIF.getTag(this,
+									"Orientation");
+						});
+
+						//리사이즈를 위해 캔버스 객체 생성
+						var canvas = document.createElement('canvas');
+						max_size = 800;
+						width = tempImage.width;
+						height = tempImage.height;
+
+						if (width < 300 || height < 300) {
+							alert("300x300 사이즈 이상 이미지로 등록해주세요.");
+							$("#getfile_" + imgSeq).val("");
+							$("#attachImg" + imgSeq).removeClass("attach");
+							return false;
+						}
+
+						if (width > height) {
+							if (width > max_size) {
+								height *= max_size / width;
+								width = max_size;
+							}
+						} else {
+							if (height > max_size) {
+								width *= max_size / height;
+								height = max_size;
+							}
+						}
+
+						canvas.width = width;
+						canvas.height = height;
+						canvas.getContext('2d').drawImage(tempImage, 0, 0,
+								width, height);
+						//var dataUrl = canvas.toDataURL('image/jpeg', 0.90);   // 이미지 퀄리티 조절도 가능...
+
+						//캔버스에 그린 이미지를 다시 data-uri 형태로 변환
+						var dataURI = canvas.toDataURL("image/jpeg");
+
+						// store current data to an image
+						myImage = new Image();
+						myImage.src = dataURI;
+
+						myImage.onload = function() {
+							// reset the canvas with new dimensions
+
+							switch (orientation) {
+							case 6:
+							case 8:
+								canvas.width = height;
+								canvas.height = width;
+								width = canvas.width;
+								height = canvas.height;
+
+								canvas.getContext('2d').save();
+								if (orientation == 6) {
+									canvas.getContext('2d').translate(width, 0);
+									canvas.getContext('2d').rotate(
+											90 * Math.PI / 180);
+								} else {
+									canvas.getContext('2d')
+											.translate(0, height);
+									canvas.getContext('2d').rotate(
+											-90 * Math.PI / 180);
+								}
+								break;
+
+							case 1:
+							case 3:
+								canvas.width = width;
+								canvas.height = height;
+								width = canvas.height;
+								height = canvas.width;
+
+								if (orientation == 3) {
+									canvas.getContext('2d').translate(height,
+											width);
+									canvas.getContext('2d').rotate(
+											180 * Math.PI / 180);
+								}
+							}
+
+							// draw the previows image, now rotated
+							canvas.getContext('2d').drawImage(myImage, 0, 0);
+							canvas.getContext('2d').restore();
+
+							dataURIRotate = canvas.toDataURL("image/jpeg");
+
+							var imgId = "thumbnail" + imgSeq;
+							//var srcImg = "<img class='addImg' src='' style='width:56px;height:56px;' id=" + imgId +" />";
+							var srcImg = "<img src='' id=" + imgId +" />";
+
+							var thumnailId = "attachImg" + imgSeq;
+							$("#" + thumnailId + ">.upfile").append(srcImg);
+							//$("#"+ thumnailId).find("a._delimg").show();
+
+							//썸네일 이미지 보여주고, 전송은 review 등록과 함께
+							document.querySelector('#' + imgId).src = dataURIRotate;
+							$("#" + imgSeq).css("display", "block");
+						};
+					} //tempImage.onload
+				}
+			}; //reader.onload
+		}
+	}
+
+	function deleteImg(target) {
+		console.log('deleteImg start');
+		//$("#attachImg" + target.id).trigger("click"); 
+		var thumbnailSize = $("img[id^='thumbnail']").length;
+		if (target.id == "1") {
+
+			if (thumbnailSize == 3) {
+				$("#thumbnail1")[0].src = $("#thumbnail2")[0].src;
+				$("#thumbnail2")[0].src = $("#thumbnail3")[0].src;
+
+				$("#thumbnail1")[0].title = $("#thumbnail2")[0].title;
+				$("#thumbnail2")[0].title = $("#thumbnail3")[0].title;
+
+				$("#attachImg3").removeClass("attach");
+				$("#thumbnail3").remove();
+				$("#3").hide();
+			} else if (thumbnailSize == 2) {
+				$("#thumbnail1")[0].src = $("#thumbnail2")[0].src;
+				$("#thumbnail1")[0].title = $("#thumbnail2")[0].title;
+
+				$("#attachImg2").removeClass("attach");
+				$("#thumbnail2").remove();
+				$("#2").hide();
+			} else {
+				$("#attachImg1").removeClass("attach");
+				$("#thumbnail1").remove();
+				$("#1").hide();
+			}
+
+		} else if (target.id == "2") {
+
+			if (thumbnailSize == 3) {
+				$("#thumbnail2")[0].src = $("#thumbnail3")[0].src;
+				$("#thumbnail2")[0].title = $("#thumbnail3")[0].title;
+
+				$("#attachImg3").removeClass("attach");
+				$("#thumbnail3").remove();
+				$("#3").hide();
+			} else if (thumbnailSize == 2) {
+				$("#attachImg2").removeClass("attach");
+				$("#thumbnail2").remove();
+				$("#2").hide();
+			}
+		} else {
+			$("#attachImg3").removeClass("attach");
+			$("#thumbnail3").remove();
+			$("#3").hide();
+		}
+	}
+ 
+	// 댓글과 별개로 사진등록마다 s3 업로드
+	function callAjaxCore(file, imgId, imgSeq, filename) {
+		var token = $("input[name='_csrf']").val();
+		var header = "X-CSRF-TOKEN";
+
+		// 파일을 담아보낼 formData
+		var formData = new FormData();
+		// 수업방식과 달리, 추가로 Blob으로 변환함, 어떤 이득이 있을 것을 예상하나 지금은 생략
+		//var blob = dataURItoBlob(dataURIRotate);
+
+		var val_prd_board_id = '${prd_board_id}';
+		var val_user_id = '${user_id}';
+		// only review and image, i
+		var val_board_flag = 'review';
+		var val_file_nm = 'image';
+		var val_file_type = 'i';
+
+		console.log(file);
+		formData.append('uploadfile', file);
+		formData.append('prd_board_id', val_prd_board_id);
+		formData.append('user_id', val_user_id);
+		formData.append('board_flag', val_board_flag);
+		formData.append('file_nm', val_file_nm);
+		formData.append('file_type', val_file_type);
+
+		loading(true);
+		$.ajax({
+			type : "post",
+			url : "${app}/aws/uploadS3",
+			processData : false,
+			contentType : false,
+			data : formData,
+			//async : false,
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data, textStatus, jqXHR) {
+				//var returnPath = data.returnPath;
+				//document.querySelector('#' + imgId).src = returnPath;
+
+				loading(false); // hmall mark
+				$("#attachImg" + imgSeq).addClass("attach");
+				$("#" + imgSeq).css("display", "block");
+
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				loading(false);
+				alert('사진 업로드에 실패하였습니다. error');
+				location.reload();
+				if (imgSeq == 4) {
+					$(".marginB15").hide();
+				}
+			}
+		});
+	}
 
 
 </script>
@@ -594,11 +592,10 @@ function insertReview(){
 	var val_prd_board_id = '${prd_board_id}';
 	var val_prd_id = '${prd_id}';
 	var val_user_id = '${user_id}';
-	console.log('prd_board_id and prd_id and user_id',val_prd_board_id,val_prd_id,val_user_id);
+	
 	
 	var content= $("#evalMsgCntn").val();
 	var val_star = $('#itemEvalAvgScrg').val();
-	console.log('content and star',content,val_star);
 	
 	var val_file_yn=0;
 	
@@ -606,7 +603,6 @@ function insertReview(){
         alert("내용을 입력해 주세요.");
         return false;
     }
-    
     
     /*
      * UX-2412 상품평 입력 화면에서 엔터 눌러도 줄바꿈 되지 않는 현상 개선
@@ -666,28 +662,55 @@ function insertReview(){
     //console.log($("#attachImg3").find("img").length);
    
    	$("input[name='pDCItemEvalAtclVO.itemEvalCntn']").val(content);
-   	
-    $.ajax({
-        type: "post",
-        url: "${app}/r/insertReview",
-        data : {
-        	prd_board_id : val_prd_board_id,
-        	prd_id : val_prd_id,
-        	user_id : val_user_id,
-        	content : content,
-        	star : val_star,
-        	file_yn : val_file_yn
-		},
-        dataType : "json",
-        beforeSend : function(xhr) {
+
+	console.log('prd_board_id AND prd_id AND user_id',val_prd_board_id,val_prd_id,val_user_id);
+	console.log('content AND star',content,val_star);
+	console.log('file_yn',val_file_yn);
+
+
+	var formData = new FormData();
+	// image limit is 3
+	for (var imgSeq = 1; imgSeq < 4; imgSeq++){
+		var imgId = "#getfile_" + imgSeq;
+		var file = document.querySelector(imgId);
+		//console.log(file);
+		console.log(file.files);
+		formData.append('uploadfiles', file.files[0]);
+	}
+	formData.append('prd_board_id', val_prd_board_id);
+	formData.append('prd_id', val_prd_id);
+	formData.append('user_id', val_user_id);
+	formData.append('content', content);
+	formData.append('star', val_star);
+	formData.append('file_yn', val_file_yn);
+	loading(true);
+	$.ajax({
+		type : "post",
+		url : "${app}/r/insertReview",
+		processData : false,
+		contentType : false,
+		data : formData,
+		//async : false,
+		beforeSend : function(xhr) {
 			xhr.setRequestHeader(header, token);
 		},
-        success: function(data) {
-			if (data.insert_review_Success == "True") {
-				window.close();
+		success : function(data, textStatus, jqXHR) {
+			//var returnPath = data.returnPath;
+			//document.querySelector('#' + imgId).src = returnPath;
+
+			loading(false); // hmall mark
+			window.close();
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			loading(false);
+			alert('사진 업로드에 실패하였습니다. error');
+			location.reload();
+			if (imgSeq == 4) {
+				$(".marginB15").hide();
 			}
-        }
-    }); 
+		}
+	});
+
 }
 
 </script>

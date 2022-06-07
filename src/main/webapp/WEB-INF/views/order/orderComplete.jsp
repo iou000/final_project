@@ -73,31 +73,7 @@ function requestPay() {
 	var val_buyer_addr = '서울특별시 강남구 삼성동';// 주문화면의 user_t.address_f || user_t.address_l
 	var val_notice_url = 'https://145a-58-143-54-209.jp.ngrok.io/team04/orderPayComplete';//
 	
-	// 상단은 아임포트로 request를 날릴때 필요한 정보들이라면, 
-	
-	// 하단은 아임포트로부터 response를 받은 후 AJAX POST로 '/team04/orderComplete'에 보낼 때 필요한 정보들
-	// 결제 관련 테이블들에 Insert되거나 세션에 저장될 정보들
-	var orderCompleteList = [];
-	$(".order-list").each(function(index, element){
-		
-		val_prd_id = ($(element).find("input[name='prd_id']").val());
-		alert(val_prd_id);
-		
-		//val_prd_count = ($(element).find("input[name='prd_count']").val());
-		//alert(val_prd_count);
-		
-		// 우선은 prd_id, prd_count만 생각하지만, 필요 시 위와같이 접근해서 담아 보내면된다.
-		// 아래는 우선 임시값 하드코딩
-		val_prd_count=3;
-		var ordercomplete = [val_prd_id,val_prd_count];
-		
-		orderCompleteList.push(ordercomplete);
-		
-	});
-	
-	for(var i=0; i<orderCompleteList.length;i++){
-		console.log(orderCompleteList[i]);
-	}
+	// 상단은 아임포트로 request를 날릴때 필요한 정보들
 	
 	IMP.request_pay({
 	    pg : val_pg,
@@ -112,18 +88,44 @@ function requestPay() {
 	    notice_url : val_notice_url
 	}, function(rsp) {
 		if (rsp.success) {
+			// below rsp is come from import
 			alert('빌링키 발급 성공');
 			console.log('빌링키 발급 성공',rsp)
 			
+			// 주문화면과 아임포트로부터 날라온 정보로 정보 생성
+			// 결제 관련 테이블들에 Insert되거나 세션에 저장될 정보들
+			var orderCompleteList = [];
+			$(".order-list").each(function(index, element){
+				
+				val_prd_id = ($(element).find("input[name='prd_id']").val());
+				alert(val_prd_id);
+				
+				//val_prd_count = ($(element).find("input[name='prd_count']").val());
+				//alert(val_prd_count);
+				
+				// 우선은 prd_id, prd_count만 생각하지만, 필요 시 위와같이 접근해서 담아 보내면된다.
+				// 아래는 우선 임시값 하드코딩
+				val_prd_count=3;
+				// 하단에 
+				var ordercompleteDTO = {
+						pmt_amount : val_amount,
+						prd_id : val_prd_id,
+						user_nm : val_buyer_name
+				}
+				
+				orderCompleteList.push(ordercompleteDTO);
+				
+			});
+			
+			for(var i=0; i<orderCompleteList.length;i++){
+				console.log(orderCompleteList[i]);
+			}
 			// 유효한 결제정보를, ordercomplete post controller로 전송 for DB 테이블과 세션에 정보저장
 			$.ajax({
 				url : "${app}/orderComplete",
 				method : "POST",
-				traditional: true,	// ajax 배열 넘기기 옵션!
-				data : {
-					orderCompleteList : orderCompleteList
-				},
-				dataType : 'json',
+				data : JSON.stringify(orderCompleteList),
+				contentType : "application/json",
 				beforeSend : function(xhr) {
 					xhr.setRequestHeader(header, token);
 				},

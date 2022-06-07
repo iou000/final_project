@@ -19,6 +19,8 @@ public interface FileDAO {
 	ArrayList<FileDTO> getReviewFileList(FileDTO fileDTO) throws SQLException;
 
 	// 댓글 관련 파일 insert
-	ArrayList<FileDTO> insertReviewFileList(FileDTO fileDTO) throws SQLException;
+	void insertReviewFile(FileDTO fileDTO) throws SQLException;
+
+	void deleteReviewfile(FileDTO fileDTO) throws SQLException;
 	
 }

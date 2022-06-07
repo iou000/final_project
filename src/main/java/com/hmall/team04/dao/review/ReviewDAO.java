@@ -19,7 +19,7 @@ public interface ReviewDAO {
 
 	int getReviewListCountCore(String prd_board_id) throws SQLException;
 	
-	// 상품 게시판 관련 댓글 추가
+	// 댓글 of 제품상세(게시판) 추가
 	void insertReview(ReviewDTO reivewDTO) throws SQLException;
 
 	// 댓글 등록 여부 판단
@@ -27,5 +27,10 @@ public interface ReviewDAO {
 
 	int ReviewIsPossible(ReviewDTO reviewDTO) throws SQLException;
 
+	// 댓글 of 제품상세(게시판) 삭제
+	void deleteReview(ReviewDTO reviewDTO) throws SQLException;
+
+	// 댓글의 추가 삭제에 따른 별점 update
+	void updateAvgStar(ReviewDTO reviewDTO) throws SQLException;
 
 }

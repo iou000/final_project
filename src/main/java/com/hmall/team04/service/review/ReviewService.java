@@ -20,13 +20,15 @@ public interface ReviewService {
 	int getReviewListCountCore(String prd_board_id) throws Exception;
 
 	// 댓글 등록
-	void enrollReview(ReviewDTO reviewDTO) throws Exception;
+	void insertReview(ReviewDTO reivewDTO) throws Exception;
 	
 	// 댓글 등록 여부 판단
 	int ReviewIsExist(ReviewDTO reviewDTO) throws Exception;
 
 	int ReviewIsPossible(ReviewDTO reviewDTO) throws Exception;
 
-	void insertReview(ReviewDTO reivewDTO) throws Exception;
+	// 댓글 삭제
+	void deleteReview(ReviewDTO reviewDTO) throws Exception;
+
 
 }

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -34,19 +37,39 @@ public class ProductBoardReviewDAOTests {
 	@Setter(onMethod_ = @Autowired)
 	private FileDAO fileDAO;
 	
+	@Value("${s3.bucketname}")
+	private String BUCKET_NAME;
+
+	@Value("${s3.accesskey}")
+	private String ACCESS_KEY;
+	
+	@Value("${s3.secretkey}")
+	private String SECRET_KEY;
+
+	
+	@Test
+	public void testprint() {
+
+		log.info(BUCKET_NAME);
+		log.info(ACCESS_KEY);
+		log.info(SECRET_KEY);
+	}
+	
 	@Test
 	public void testInsertReviewProductBoard() {
 		// review_t
-		String prd_board_id="prd_board_id_tmp1";
-		
-		String user_id="22";
+		String prd_board_id="200";
+		String prd_id="test1";
+		String user_id="LikeReviewWacher";
 		String content="review_content_tmp"+user_id;
+
 		int star=3;
 		int file_yn=1;
 		
 		ReviewDTO reviewDTO = new ReviewDTO();
 		
 		reviewDTO.setPrd_board_id(prd_board_id);
+		reviewDTO.setPrd_id(prd_id);
 		reviewDTO.setUser_id(user_id);
 		reviewDTO.setContent(content);
 		reviewDTO.setStar(star);
@@ -56,7 +79,7 @@ public class ProductBoardReviewDAOTests {
 		
 		try {
 			reviewDAO.insertReview(reviewDTO);
-			
+			log.info(reviewDTO.getReview_id());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

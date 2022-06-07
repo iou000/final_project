@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,12 +19,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hmall.team04.dto.cart.CartDTO;
 import com.hmall.team04.dto.common.Criteria;
 import com.hmall.team04.dto.common.ProductCriteria;
 import com.hmall.team04.dto.common.ProductPageDTO;
@@ -130,26 +133,37 @@ public class ReviewController {
 		return "review.review";
 	}
 	
-	@RequestMapping(value = "/uploadS3", method= {RequestMethod.POST})
-	@ResponseBody
-	public void uploadS3(ReviewDTO reviewDTO) throws Exception {
-		log.info(reviewDTO.toString());
-		MultipartFile file = reviewDTO.getUploadfile();
-		log.info(file);
-		
-		awsS3Service.s3FileUpload(file);
-		
-	}
-	
 	@RequestMapping(value = "/insertReview", method= {RequestMethod.POST})
 	@ResponseBody
 	public HashMap<String, String> insertReview(ReviewDTO reviewDTO) throws Exception {
 		log.info(reviewDTO.toString());
 		
+		for(MultipartFile file : reviewDTO.getUploadfiles()) {
+			log.info(file);
+		}
+		
+		// save review first
 		reviewService.insertReview(reviewDTO);
+		log.info(reviewDTO.getReview_id());
+		
+		// after making review_id, by using this save file at file_t
+		awsS3Service.s3FileUpload(reviewDTO);
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("insert_review_Success", "True");
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/deleteReview", method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public HashMap<String, String> deleteReply(ReviewDTO reviewDTO) throws Exception {
+		
+		
+		reviewService.deleteReview(reviewDTO);
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("delete_review_Success", "True");
 		
 		return map;
 	}
