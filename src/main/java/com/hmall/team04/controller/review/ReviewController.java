@@ -34,6 +34,7 @@ import com.hmall.team04.dto.common.ReviewCriteria;
 import com.hmall.team04.dto.like.LikeDTO;
 import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.dto.product.ProductBoardDTO;
+import com.hmall.team04.dto.product.ProductDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
 import com.hmall.team04.dto.common.ReviewPageDTO;
 import com.hmall.team04.service.category.CategoryService;
@@ -155,13 +156,18 @@ public class ReviewController {
 			// 최종적으로 모두 통과한 유저
 			model.addAttribute("user_id", user_id);
 			model.addAttribute("prd_board_id", prd_board_id);
-			model.addAttribute("prd_id", prd_id);
-			
+			String prdImgUrl="";
 			try {
 				ProductBoardDTO productBoardDTO = productboardService.getProductBoard(prd_board_id);
-				log.info(productBoardDTO);
 				
-				model.addAttribute("productBoardDTO",productBoardDTO);
+				
+				for(ProductDTO dto : productBoardDTO.getProductList()) {
+					if(dto.getPrd_id().equals(prd_id)) {
+						prdImgUrl=dto.getPrd_image();
+					}
+				}
+				
+				model.addAttribute("prdImgUrl", prdImgUrl);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
