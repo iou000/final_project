@@ -17,6 +17,7 @@ import com.hmall.team04.dao.review.ReviewDAO;
 import com.hmall.team04.dto.common.Criteria;
 import com.hmall.team04.dto.common.ProductCriteria;
 import com.hmall.team04.dto.product.ProductBoardDTO;
+import com.hmall.team04.dto.product.ProductDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
 
 import lombok.Setter;
@@ -42,7 +43,9 @@ public class ProductBoardDAOTests {
 		try {
 			productboardDTO = productboardDAO.getProductBoard("201");
 			
-			System.out.println(productboardDTO.toString());
+			for(ProductDTO dto : productboardDTO.getProductList()) {
+				log.info(dto);
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

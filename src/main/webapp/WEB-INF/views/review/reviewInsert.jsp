@@ -175,14 +175,13 @@
                                 <figure>
                                     <div class="thumb">
                                         <a href="javascript:;">
-                                            <img src="${productBoardDTO.PRD_BOARD_IMG }"
-                                                alt="${productBoardDTO.title }"
+                                            <img src="${prdImgUrl }"
                                                 onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_600x600.jpg')" />
                                         </a>
                                     </div>
                                     <figcaption>
                                         <a href="javascript:;">
-                                            <div class="pdname" aria-label="제품명">${productBoardDTO.title }</div>
+                                            <div class="pdname" aria-label="제품명">${prd_board_id }</div>
                                         </a>
                                     </figcaption>
                                 </figure>
