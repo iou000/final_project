@@ -19,4 +19,6 @@ public interface OrderService {
 
 	void updateCancelInfo(int updtTotal, int updtDis, int updtPmt, int updtRDA, int updtCDA, int updtPC, String updtFlag, String orderId, String oDetailId, String userId) throws Exception;
 
+	void insertSuccessOrder(List<OrderCompleteDTO> orderCompleteList) throws Exception;
+
 }

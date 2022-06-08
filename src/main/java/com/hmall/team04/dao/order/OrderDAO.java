@@ -23,4 +23,8 @@ public interface OrderDAO {
 
 	void cancelOrderDetail(@Param("updtPC") int updtPC, @Param("updtFlag") String updtFlag, @Param("oDetailId") String oDetailId, @Param("userId") String userId) throws Exception;
 
+	void insertOrderAndPayment(OrderCompleteDTO orderCompleteDTO) throws Exception;
+
+	void insertOrderDetail(OrderCompleteDTO orderCompleteDTO) throws Exception;
+
 }

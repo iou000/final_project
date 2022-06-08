@@ -44,6 +44,12 @@
 		WHERE ROWNUM = 1
 	</select>
 	
+	<delete id="deleteCoupon" parameterType="CouponDataDTO">
+		DELETE FROM user_coupon_dt_t
+    	WHERE user_id = #{user_id} and coupon_id = #{coupon_id}
+	</delete>
+	
+	
 	
 	
 	

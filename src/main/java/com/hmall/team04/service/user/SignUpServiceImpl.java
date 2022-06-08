@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.json.simple.JSONObject;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hmall.team04.dao.user.SignUpDAO;
 import com.hmall.team04.dto.user.SignUpRequestDTO;
@@ -25,6 +26,7 @@ public class SignUpServiceImpl implements SignUpService{
 	private final SignUpDAO signUpDAO;
 	private final PasswordEncoder passwordEncoder;
 	
+	@Transactional
 	@Override
 	public void signUp(SignUpRequestDTO signUpRequestDTO) throws Exception {
 		

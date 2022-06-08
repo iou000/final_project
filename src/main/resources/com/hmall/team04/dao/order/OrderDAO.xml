@@ -118,6 +118,22 @@
 		AND ot.user_id = #{userId}
 	</select>
 	
+
+	<!-- 주문정보 삽입 (프로시저) -->
+    <select id="insertOrderAndPayment" parameterType="OrderCompleteDTO" statementType="CALLABLE">
+
+		{ CALL order_payment_insert(#{prd_order_id}, #{user_id}, #{recipient}, #{total_amount}, #{discount_amount}, #{pmt_amount}, #{address_dest}, #{tel_no}, #{hp_no}, 
+									#{order_comment}, #{order_date}, #{coupon_discount_amount}, #{reserve_discount_amount}, #{pmt_time}, #{pmt_id}, #{user_nm}, 
+									#{vbank_holder}, #{vbank_name}, #{vbank_num}, #{vbank_date}, #{pay_status}, #{pay_method}, #{expectPoint}) }
+		
+    </select>
+    
+    
+    <insert id="insertOrderDetail" parameterType="OrderCompleteDTO">
+    	INSERT INTO prd_orderdetail_t (prd_orderdetail_id, prd_order_id, prd_id, prd_count, order_flag, prd_board_id)
+		VALUES (prd_orderdetail_t_prd_orderdetail_id_seq.nextval, #{prd_order_id}, #{prd_id}, #{prd_count}, #{order_flag}, #{prd_board_id})
+    </insert>
+
 	<!-- <select id="getCancelData" resultType="map">
 		SELECT
 				ot.total_amount
@@ -158,5 +174,5 @@
 					where pot.prd_order_id = podt.prd_order_id
 					and podt.prd_orderdetail_id = #{oDetailId} ) = #{userId}
 	</update>
-	
+
 </mapper>
