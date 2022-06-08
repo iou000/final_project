@@ -9,7 +9,7 @@
 <html>
 
 <head>
-
+<title>장바구니</title>
 
 
 <!-- Main Contents css = Contents css부분은 각페이지마다 다르게 해당되는 css가 호출 됨(폴더 구조별)  -->

@@ -6,13 +6,18 @@
 <mapper namespace="com.hmall.team04.dao.order.OrderDAO">
 
 	<select id="getOrderCompleteList" parameterType="OrderCompleteDTO" resultType="OrderCompleteDTO">
-	select pot.prd_order_id,pot.user_id,pot.address_dest,pot.hp_no,
-	podt.prd_id,
-	ppt.pmt_amount
+	select pot.prd_order_id,pot.user_id,pot.address_dest,pot.hp_no,pot.total_amount,
+    podt.prd_board_id,podt.prd_id,
+	ppt.pmt_amount,ppt.PAY_METHOD,ppt.vbank_name,ppt.VBANK_NUM
 	from prd_order_t pot
 	left join prd_orderdetail_t podt on (pot.prd_order_id=podt.prd_order_id)
 	left join prd_payment_t ppt on (pot.prd_order_id=ppt.prd_order_id)
-	where pot.user_id=#{user_id} and pot.prd_order_id=#{prd_order_id}
+	where pot.user_id=#{user_id} and pot.prd_order_id=(select a.prd_order_id
+    from (select pot.* 
+            from prd_order_t pot
+            where user_id=#{user_id}
+            order by pot.order_date DESC) a
+    where ROWNUM = 1)
 	</select>
  
 	<select id="getPrdPayment" parameterType="OrderCompleteDTO" resultType="OrderCompleteDTO">

@@ -112,7 +112,7 @@ public class OrderController {
 		model.addAttribute("user_reserve", user_reserve);
 		model.addAttribute("prd_board_id", orderPrdRequestList.get(0).getPrd_board_id());
 		model.addAttribute("orderPrdList", orderPrdList);
-		// 우선 사용 완료했으므로 삭제하여 혹시모를 용량문제 해소
+		// 우선 사용 완료했으므로 삭제하여 혹시모를 용량문제 해소 => orderComplete 에서 삭제
 		//session.removeAttribute("orderInfo");
 
 		return "order.order";
@@ -137,49 +137,62 @@ public class OrderController {
 			
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/orderComplete", method = RequestMethod.GET)
-	public String orderComplete(OrderCompleteDTO orderCompleteDTO, Principal principal,HttpServletRequest req, HttpServletResponse res, Model model) {
-		try {
-			// HttpSession session = req.getSession();
-			// OrderCompleteDTO ordercompleteDTO = (OrderCompleteDTO) session.getAttribute("ordercompleteDTO");
-			// 우선 사용 완료했으므로 삭제하여 혹시모를 용량문제 해소
-			// session.removeAttribute("ordercompleteDTO");
+	public String orderComplete(Principal principal,HttpServletRequest req, HttpServletResponse res, Model model) {
+		HttpSession session = req.getSession();
+		session.removeAttribute("orderInfo");
+		
+		String user_id;
+		
+		if(principal==null) {
+			return "user.login.login";
+		} else {
+			user_id = principal.getName();
 			
+			try {
 			OrderCompleteDTO ordercompleteDTO = new OrderCompleteDTO();
-			ordercompleteDTO.setUser_id("1");
-			ordercompleteDTO.setPrd_order_id("merchant_1653809215425");
-			//ordercompleteDTO.setPrd_pmt_id("StdpayVBNKINIpayTest20220529162715283069");
-			
+			ordercompleteDTO.setUser_id(user_id);
 			ArrayList<OrderCompleteDTO> ordercompleteList = orderService.getOrderCompleteList(ordercompleteDTO);
-			log.info(ordercompleteList);
-
-			OrderCompleteDTO orderpay = orderService.getPrdPayment(ordercompleteDTO);
-			log.info(orderpay);
+			
+			for(OrderCompleteDTO dto : ordercompleteList) {
+				log.info(dto);
+			}
 			
 			// prd_order_id
 			String prd_order_id = ordercompleteList.get(0).getPrd_order_id();
+			// check cnt of orderdetail
+			int cnt_prd = ordercompleteList.size();
 			
 			// representative prd_id and check cnt of kind of item
-			String prd_id = ordercompleteList.get(0).getPrd_id();
-			
-			// user_id
-			String user_id = ordercompleteList.get(0).getUser_id();
+			String prd_board_id = ordercompleteList.get(0).getPrd_board_id();
 			String address_dest = ordercompleteList.get(0).getAddress_dest();
 			String hp_no = ordercompleteList.get(0).getHp_no();
 			
-			model.addAttribute("ordercompleteList", ordercompleteList);
+			int total_amount = ordercompleteList.get(0).getTotal_amount();
+			int pmt_amount = ordercompleteList.get(0).getPmt_amount();
+
+			String pay_method = ordercompleteList.get(0).getPay_method();
+			String bank_name = ordercompleteList.get(0).getVbank_name();
+			String bank_num = ordercompleteList.get(0).getVbank_num();
+			
+			
 			model.addAttribute("prd_order_id", prd_order_id);
-			model.addAttribute("prd_id", prd_id);
+			model.addAttribute("prd_board_id", prd_board_id);
+			model.addAttribute("cnt_prd", cnt_prd);
 			model.addAttribute("user_id", user_id);
 			model.addAttribute("address_dest", address_dest);
 			model.addAttribute("hp_no", hp_no);
-			// pmt_amount, insert 될 때 총합으로 들어갈 것이므로, 여기선 그냥 빼오면 끝
-			model.addAttribute("orderpay", orderpay);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
+			model.addAttribute("total_amount", total_amount);
+			model.addAttribute("pay_method", pay_method);
+			model.addAttribute("pmt_amount", pmt_amount);
+			model.addAttribute("bank_name", bank_name);
+			model.addAttribute("bank_num", bank_num);
+			}catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 		}
-		
 
 		return "order.orderComplete";
 	}

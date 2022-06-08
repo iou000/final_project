@@ -1470,7 +1470,7 @@ function order() {
 			var prd_order_id = rsp.merchant_uid;
 			//var prd_id => 상품 id(반복해서 넣어줄거임)
 			//var prd_count = Number($("li[name=orderItem] input[name=prd_count]").val()); (반복해서 넣어줄거임)
-			var order_flag = 'SETP1';
+			var order_flag = 'STEP1';
 			//var cancel_date = 처음엔 null
 			var prd_board_id = '${prd_board_id}';
 			//var cancel_reason => 처음엔 null
@@ -1482,12 +1482,23 @@ function order() {
 			var pmt_time = new Date().valueOf();
 			var pmt_id = rsp.pg_tid; //결제 고유 번호
 			var user_nm = rsp.buyer_name; //입금자명
+
+			var pay_method = rsp.pay_method;
 			var vbank_holder = rsp.vbank_holder;
 			var vbank_name = rsp.vbank_name;
 			var vbank_num = rsp.vbank_num;
 			var vbank_date = new Date(rsp.vbank_date).valueOf(); //입금기한
 			var pay_status = rsp.status;
-			var pay_method = rsp.pay_method;
+			
+			// 가상계좌 외
+			if (pay_method != 'vbank'){
+				vbank_holder='';
+				vbank_name='';
+				vbank_num='';
+				vbank_date='';
+				
+				var order_flag = 'STEP2';
+			}
 			
 			// coupon 삭제용
 			var coupon_id = $("#divCopnInfArea input[name=coupon_id]").val();
@@ -1521,7 +1532,7 @@ function order() {
 						// prd_orderdetail_t
 						prd_id : prd_id,
 						prd_count : prd_count,
-						order_flag : 'STEP1',
+						order_flag : order_flag,
 						prd_board_id : prd_board_id,
 						
 						// prd_payment_t
@@ -1543,11 +1554,11 @@ function order() {
 				
 			});
 			
-			//for(var i=0; i<orderCompleteList.length;i++){
-			//	console.log(orderCompleteList[i]);
-			//}
+			for(var i=0; i<orderCompleteList.length;i++){
+				console.log(orderCompleteList[i]);
+			}
 			
-			// 유효한 결제정보를, ordercomplete post controller로 전송 for DB 테이블과 세션에 정보저장
+			// 유효한 결제정보를, ordercomplete post controller로 전송 for DB 테이블
 			$.ajax({
 				url : "${app}/orderComplete",
 				method : "POST",

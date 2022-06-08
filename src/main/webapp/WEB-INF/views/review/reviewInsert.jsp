@@ -175,7 +175,7 @@
                                 <figure>
                                     <div class="thumb">
                                         <a href="javascript:;">
-                                            <img src="${productBoardDTO.prd_board_img }"
+                                            <img src="${productBoardDTO.PRD_BOARD_IMG }"
                                                 alt="${productBoardDTO.title }"
                                                 onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_600x600.jpg')" />
                                         </a>
