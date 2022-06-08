@@ -65,14 +65,6 @@ function fn_upntPopupClose(){
                 </ul>
             </li>
             <li>
-                <a href="javascript:;">나의 혜택</a>
-                <ul class="sub-list">
-                	<li><a href="https://www.hmall.com/p/mpe/selectCopnList">적립금</a></li>
-                    <li><a href="https://www.hmall.com/p/mpe/selectCopnList">예치금</a></li>
-                    <li><a href="https://www.hmall.com/p/mpe/selectUPntTabPage">쿠폰</a></li>
-                </ul>
-            </li>
-            <li>
                 <a href="javascript:;">회원정보</a>
                 <ul class="sub-list">
 	               	<li><a href="https://www.hmall.com/p/mpd/changeMemberInfoForm">회원정보 변경</a><li>
