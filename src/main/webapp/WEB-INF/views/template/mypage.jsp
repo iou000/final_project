@@ -44,6 +44,7 @@
         p.quickmenu {
             margin-right: 50px;
         }
+        
         img.ic_img {
     	width: 30px;
 		}
@@ -63,5 +64,3 @@
 		<tiles:insertAttribute name="footer" />
 	</body>
 </html>
-
-	    
