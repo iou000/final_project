@@ -16,5 +16,6 @@ public class OrderDetailDTO {
 	private String prd_count;
 	private Date cancel_date;
 	private String prd_board_id;
+	private String prd_id;
 }
 
