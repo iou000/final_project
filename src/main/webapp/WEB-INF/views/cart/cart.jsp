@@ -83,8 +83,6 @@
 												<input type="hidden" class="individual_salePrice_input" value="${cart.prd_price}">
 												<input type="hidden" class="individual_bookCount_input" value="${cart.amount}"> 
 												<input type="hidden" class="individual_totalPrice_input" value="${cart.prd_price * cart.cart_amount}">
-												<input type="hidden" class="individual_point_input" value="${ci.point}"> 
-												<input type="hidden" class="individual_totalPoint_input" value="${ci.totalPoint}">
 
 												<input type="hidden" class="individual_prd_board_id" value="${cart.prd_board_id }">
 												<input type="hidden" class="individual_prd_id" value="${cart.prd_id }">
@@ -145,7 +143,7 @@
 																			</button>
 																			<div class="inputbox">
 																				<label class="inplabel">
-																				<input type="number" name="ordQty" maxlength="2" value="${cart.cart_amount }" onkeyup="uCheckOrdQty(this,'99', '0')" title="입력하세요">
+																				<input type="number" name="ordQty" maxlength="2" value="${cart.cart_amount }" title="입력하세요">
 																				<!-- 상품별 재고량 -->
 																				<input type="hidden" name="leftQty" value="${cart.amount}">
 																				</label>
@@ -343,12 +341,8 @@ function setTotalInfo(){
 		if($(element).find(".individual_cart_checkbox").is(":checked") === true){
 			// 총 가격
 			totalPrice += parseInt($(element).find(".individual_totalPrice_input").val());
-			// 총 갯수
+			// 총 갯수 필요 시 추가
 			//totalCount += parseInt($(element).find(".individual_bookCount_input").val());
-			// 총 종류
-			//totalKind += 1;
-			// 총 마일리지
-			//totalPoint += parseInt($(element).find(".individual_totalPoint_input").val());
 		}
 	});
 	
@@ -361,12 +355,9 @@ function setTotalInfo(){
 	} else {
 		deliveryPrice = 3000;	
 	}
-	//alert(deliveryPrice);
 	
 	/* 최종 가격 */
 	finalTotalPrice = totalPrice + deliveryPrice;
-	//alert('최종가격');
-	//alert(finalTotalPrice);
 	
 	/* ※ 세자리 컴마 Javscript Number 객체의 toLocaleString() */
 	
@@ -374,10 +365,6 @@ function setTotalInfo(){
 	$(".totalPrice_span").text(totalPrice.toLocaleString());
 	// 총 갯수
 	$(".totalCount_span").text(totalCount);
-	// 총 종류
-	$(".totalKind_span").text(totalKind);
-	// 총 마일리지
-	$(".totalPoint_span").text(totalPoint.toLocaleString());
 	// 배송비
 	$(".delivery_price").text(deliveryPrice);	
 	// 최종 가격(총 가격 + 배송비)
@@ -388,10 +375,6 @@ function setTotalInfo(){
 	$(".result #totalPrice").text(numberWithCommas(totalPrice));
 	// 총 갯수
 	//$(".totalCount_span").text(totalCount);
-	// 총 종류
-	//$(".totalKind_span").text(totalKind);
-	// 총 마일리지
-	//$(".totalPoint_span").text(totalPoint);
 	// 배송비
 	$(".result .ship-fee #selDlvAmt").text(numberWithCommas(deliveryPrice));	
 	// 최종 가격(총 가격 + 배송비)
@@ -400,7 +383,9 @@ function setTotalInfo(){
 </script>
 
 <script>
-
+/*
+ * 장바구니 삭제 함수, 장바구니 삭제 또는 선택 삭제에서 공통 호출된다.
+ */
 function deleteBasktCore(prd_cart_id,flag) {
 	var token = $("input[name='_csrf']").val();
 	var header = "X-CSRF-TOKEN";
@@ -448,7 +433,9 @@ function deleteBasktCore(prd_cart_id,flag) {
 	}
 
 }
-
+/*
+ * 장바구니 비우기 함수
+ */
 function deleteAllBasktCore(prd_cart_id) {
 	var token = $("input[name='_csrf']").val();
 	var header = "X-CSRF-TOKEN";
@@ -465,7 +452,9 @@ function deleteAllBasktCore(prd_cart_id) {
 	  		
 	}
 }
-
+/*
+ * 선택 삭제 함수
+ */
 function deleteBasktAll() {
 	var token = $("input[name='_csrf']").val();
 	var header = "X-CSRF-TOKEN";
@@ -521,9 +510,9 @@ function changeBasktItemCore(obj,prd_cart_id) {
 
 <script>
 
-/*
- * 수량 input 변경
- */
+	/*
+	 * 수량 input 변경
+	 */
     function changeOrdQtyCore(obj, limitCnt) {
         var targetObj = $(obj).closest(".inplabel");
         var ordQty = $(obj).val();
@@ -544,8 +533,8 @@ function changeBasktItemCore(obj,prd_cart_id) {
     }
 
     /*
- * 속성 수량 더하기
- */
+	 * 속성 수량 더하기
+	 */
     function plusOrdQtyCore(obj, limitCnt) {
 
 		var childObj = $(obj).closest("td");
@@ -559,8 +548,8 @@ function changeBasktItemCore(obj,prd_cart_id) {
     }
 
     /*
- * 속성 수량  빼기
- */
+	 * 속성 수량  빼기
+	 */
     function minusOrdQtyCore(obj, limitCnt) {
     	
 		var childObj = $(obj).closest("td");
@@ -605,7 +594,6 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		$.ajax({
 			url : "${app}/order",
 			method : "POST",
-//			traditional: true,	// ajax 배열 넘기기 옵션!
 			data : JSON.stringify(orderList),
 			contentType : "application/json",
 			beforeSend : function(xhr) {
@@ -624,7 +612,7 @@ function changeBasktItemCore(obj,prd_cart_id) {
 
 <script>
 
-	// 바로구매 from 장바구니 to 주문결제
+	// 전체바로구매 from 장바구니 to 주문결제
 	function buyProductAllCore(obj) {
 		var token = $("input[name='_csrf']").val();
 		var header = "X-CSRF-TOKEN";
@@ -656,7 +644,6 @@ function changeBasktItemCore(obj,prd_cart_id) {
 		$.ajax({
 			url : "${app}/order",
 			method : "POST",
-//			traditional: true,	// ajax 배열 넘기기 옵션!
 			data : JSON.stringify(orderList),
 			contentType : "application/json",
 			beforeSend : function(xhr) {

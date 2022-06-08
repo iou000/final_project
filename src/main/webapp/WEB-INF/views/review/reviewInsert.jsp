@@ -175,14 +175,14 @@
                                 <figure>
                                     <div class="thumb">
                                         <a href="javascript:;">
-                                            <img src="https://eveadam.s3.ap-northeast-2.amazonaws.com/upload/default.jpg"
-                                                alt="SPC삼립 돌아온 포켓몬빵 8종 10봉 랜덤배송 (피카츄/푸린/파이리/로켓단/디그다/꼬부기/고오스/발챙이)"
+                                            <img src="${productBoardDTO.prd_board_img }"
+                                                alt="${productBoardDTO.title }"
                                                 onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_600x600.jpg')" />
                                         </a>
                                     </div>
                                     <figcaption>
                                         <a href="javascript:;">
-                                            <div class="pdname" aria-label="제품명">대표상품 선정 되면 board 대표상품으로</div>
+                                            <div class="pdname" aria-label="제품명">${productBoardDTO.title }</div>
                                         </a>
                                     </figcaption>
                                 </figure>
