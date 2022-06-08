@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class OrderDetailDTO {
-	
+	private String prd_order_id;
 	private String prd_orderdetail_id;
 	private String prd_nm;
 	private String prd_price;
@@ -17,5 +17,7 @@ public class OrderDetailDTO {
 	private Date cancel_date;
 	private String prd_board_id;
 	private String prd_id;
+	private String cancel_reason;
+
 }
 

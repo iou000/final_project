@@ -17,6 +17,10 @@ public interface OrderDAO {
 
 	OrderDTO getOrderByOrderNo(@Param("userId")String userId, @Param("orderNo")String orderNo) throws Exception;
 
-	OrderDetailDTO getOrderDetail(String orderDetailNo) throws Exception;
+	OrderDetailDTO getOrderDetail(@Param("userId") String userid, @Param("orderDetailNo") String orderDetailNo) throws Exception;
+
+	void cancelOrder(@Param("updtTotal") int updtTotal, @Param("updtDis") int updtDis, @Param("updtPmt") int updtPmt, @Param("updtRDA") int updtRDA, @Param("updtCDA") int updtCDA, @Param("orderId") String orderId, @Param("userId") String userId) throws Exception;
+
+	void cancelOrderDetail(@Param("updtPC") int updtPC, @Param("updtFlag") String updtFlag, @Param("oDetailId") String oDetailId, @Param("userId") String userId) throws Exception;
 
 }
