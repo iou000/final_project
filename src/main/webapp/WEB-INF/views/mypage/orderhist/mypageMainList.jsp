@@ -322,8 +322,8 @@
                                     <dd class="btn-col2">                            
                                         <a href="${app}/p/${detailDTO.prd_board_id}">
                                             <span class="img"><img
-                                                    src="https://image.hmall.com/static/3/5/29/68/2068295310_0.jpg?RS=300x300&AR=0"
-                                                    alt="닥터시드 허니앤밀크밤 모이스처 바디워시 1000ml"
+                                                    src="${detailDTO.upload_path}"
+                                                    alt="${detailDTO.prd_nm}"
                                                     onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&AR=0')" />
                                             </span>
                                             <div class="box">
@@ -347,21 +347,21 @@
                                       <c:if test="${detailDTO.order_flag == '주문접수' || detailDTO.order_flag == '상품준비중'}">
                                         <div class="btngroup">
                                             <button class="btn btn-linelgray small30" type="button"
-                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>주문취소</span>
+                                                onClick="location.href='${app}/mypage/oc?orderDetailNo=${detailDTO.prd_orderdetail_id}&orderNo=${orderDTO.prd_order_id}'"><span>주문취소</span>
                                             </button>
                                         </div>
                                        </c:if>
                                        <c:if test="${detailDTO.order_flag == '결제완료'}">
                                         <div class="btngroup">
                                             <button class="btn btn-linelgray small30" type="button"
-                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>결제취소</span>
+                                                onClick="location.href='${app}/mypage/oc?orderDetailNo=${detailDTO.prd_orderdetail_id}&orderNo=${orderDTO.prd_order_id}'"><span>주문취소</span>
                                             </button>                                      
                                         </div>
                                        </c:if>
                                        <c:if test="${detailDTO.order_flag == '상품발송'}">
                                         <div class="btngroup">
                                             <button class="btn btn-linelgray small30" type="button"
-                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>주문취소</span>
+                                                onClick="location.href='${app}/mypage/oc?orderDetailNo=${detailDTO.prd_orderdetail_id}&orderNo=${orderDTO.prd_order_id}'"><span>주문취소</span>
                                             </button>
                                         </div>
                                        </c:if>

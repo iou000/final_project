@@ -86,7 +86,7 @@
 													<c:if test="${list.order_flag == '주문접수' || list.order_flag == '결제완료' || list.order_flag == '상품준비중'}">
 													<div class="btngroup">
 						                            	<button class="btn btn-linelgray small30" type="button"
-							                            	onclick="location.href='${app}/mypage/oc?orderDetailNo=${list.prd_orderdetail_id}'">
+							                            	onclick="location.href='${app}/mypage/oc?orderDetailNo=${list.prd_orderdetail_id}&orderNo=${orderDTO.prd_order_id}'">
 							                            	<span>주문취소</span>
 						                            	</button>
 						                            </div>
@@ -213,6 +213,12 @@
 											<li>
 											    <div class="tit-wrap">H.Point</div>
 											    <div class="txt-wrap"><strong><fmt:formatNumber value="${orderDTO.reserve_discount_amount}" pattern="#,###"/></strong>P (에누리 대상 5)</div>
+											</li>
+											</c:if>
+											<c:if test="${orderDTO.coupon_discount_amount != 0}">
+											<li>
+											    <div class="tit-wrap">쿠폰</div>
+											    <div class="txt-wrap"><strong><fmt:formatNumber value="${orderDTO.coupon_discount_amount}" pattern="#,###"/></strong>원</div>
 											</li>
 											</c:if>
 											<li>

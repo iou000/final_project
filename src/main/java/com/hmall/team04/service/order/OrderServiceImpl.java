@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hmall.team04.controller.cart.CartController;
 import com.hmall.team04.dao.cart.CartDAO;
@@ -45,8 +46,16 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderDetailDTO getOrderDetail(String orderDetailNo) throws Exception {
-		return orderDAO.getOrderDetail(orderDetailNo);
+	public OrderDetailDTO getOrderDetail(String userid, String orderDetailNo) throws Exception {
+		return orderDAO.getOrderDetail(userid, orderDetailNo);
+	}
+
+	@Override
+	@Transactional
+	public void updateCancelInfo(int updtTotal, int updtDis, int updtPmt, int updtRDA, int updtCDA, int updtPC, String updtFlag, String orderId, String oDetailId, String userId)
+			throws Exception {
+		orderDAO.cancelOrder(updtTotal, updtDis, updtPmt, updtRDA, updtCDA, orderId, userId);
+		orderDAO.cancelOrderDetail(updtPC, updtFlag, oDetailId, userId);
 	}
 
 }
