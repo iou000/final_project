@@ -19,4 +19,8 @@ public interface OrderDAO {
 
 	OrderDetailDTO getOrderDetail(String orderDetailNo) throws Exception;
 
+	void insertOrderAndPayment(OrderCompleteDTO orderCompleteDTO) throws Exception;
+
+	void insertOrderDetail(OrderCompleteDTO orderCompleteDTO) throws Exception;
+
 }

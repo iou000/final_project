@@ -123,15 +123,17 @@ public class OrderController {
 	
 	@RequestMapping(value = "/orderComplete", method= {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void orderComplete2(@RequestBody List<OrderCompleteDTO> orderCompleteList, Principal principal) {
+	public void orderCompletePost(@RequestBody List<OrderCompleteDTO> orderCompleteList, Principal principal) {
 			
 		for(OrderCompleteDTO ordercompleteDTO : orderCompleteList) {
 			log.info(ordercompleteDTO.toString());
 		}
 		
-			
-			
-			
+		try {
+			orderService.insertSuccessOrder(orderCompleteList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 			
 	}
 	
@@ -146,7 +148,7 @@ public class OrderController {
 			OrderCompleteDTO ordercompleteDTO = new OrderCompleteDTO();
 			ordercompleteDTO.setUser_id("1");
 			ordercompleteDTO.setPrd_order_id("merchant_1653809215425");
-			ordercompleteDTO.setPrd_pmt_id("StdpayVBNKINIpayTest20220529162715283069");
+			//ordercompleteDTO.setPrd_pmt_id("StdpayVBNKINIpayTest20220529162715283069");
 			
 			ArrayList<OrderCompleteDTO> ordercompleteList = orderService.getOrderCompleteList(ordercompleteDTO);
 			log.info(ordercompleteList);

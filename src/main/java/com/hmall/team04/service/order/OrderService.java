@@ -17,4 +17,6 @@ public interface OrderService {
 
 	OrderDetailDTO getOrderDetail(String orderDetailNo) throws Exception;
 
+	void insertSuccessOrder(List<OrderCompleteDTO> orderCompleteList) throws Exception;
+
 }

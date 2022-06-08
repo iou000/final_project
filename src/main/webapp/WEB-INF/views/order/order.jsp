@@ -1433,13 +1433,12 @@ function order() {
 			//var prd_pmt_id = 시퀀스
 			var prd_order_id = rsp.merchant_uid;
 			var pmt_time = new Date().valueOf();
-			var pmt_amount = rsp.paid_amount; //총 결제액
-			var pmt_id = rsp.pg_tid;
+			var pmt_id = rsp.pg_tid; //결제 고유 번호
 			var user_nm = rsp.buyer_name; //입금자명
 			var vbank_holder = rsp.vbank_holder;
 			var vbank_name = rsp.vbank_name;
 			var vbank_num = rsp.vbank_num;
-			var vbank_date = new Date(rsp.vbank_date).valueOf();
+			var vbank_date = new Date(rsp.vbank_date).valueOf(); //입금기한
 			var pay_status = rsp.status;
 			var pay_method = rsp.pay_method;
 			
@@ -1471,11 +1470,14 @@ function order() {
 						order_date : order_date,
 						coupon_discount_amount : coupon_discount_amount,
 						reserve_discount_amount : reserve_discount_amount,
+						
 						// prd_orderdetail_t
 						prd_id : prd_id,
 						prd_count : prd_count,
 						order_flag : 'STEP1',
 						prd_board_id : prd_board_id,
+						
+						// prd_payment_t
 						pmt_time : pmt_time,
 						pmt_id : pmt_id,
 						user_nm : user_nm,
