@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 	language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- cbody -->
 
 <c:set var="app" value="${pageContext.request.contextPath}" />
@@ -100,7 +101,7 @@
 																<!-- 장바구니에서 사진 클릭 시 다시 상품상세로 이동하는 부분 -->
 																<a href="${app }/p/${cart.prd_board_id }">
 																	<div class="thumb">
-																		<img src="${cart.upload_path }"
+																		<img src="${cart.prd_image }"
 																			onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=120x120&amp;AR=0')">
 																	</div>
 																</a>
@@ -108,9 +109,8 @@
 																<figcaption>
 																	<a href="#">
 																		<div class="pdprice">
-
 																			<ins class="normal" aria-label="정상가">
-																				<em>${cart.prd_price }</em><b>원</b>
+																				<em><fmt:formatNumber value="${cart.prd_price}" pattern="###,###,###" /></em>
 																			</ins>
 
 																		</div>
@@ -275,6 +275,11 @@
 
 	
 <script>
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 $(document).ready(function() {
 	//
 	var total = $("input[name=chk]").length;
@@ -380,7 +385,7 @@ function setTotalInfo(){
 	
 	/* 값 삽입 */
 	// 총 가격
-	$(".result #totalPrice").text(totalPrice);
+	$(".result #totalPrice").text(numberWithCommas(totalPrice));
 	// 총 갯수
 	//$(".totalCount_span").text(totalCount);
 	// 총 종류
@@ -388,9 +393,9 @@ function setTotalInfo(){
 	// 총 마일리지
 	//$(".totalPoint_span").text(totalPoint);
 	// 배송비
-	$(".result .ship-fee #selDlvAmt").text(deliveryPrice);	
+	$(".result .ship-fee #selDlvAmt").text(numberWithCommas(deliveryPrice));	
 	// 최종 가격(총 가격 + 배송비)
-	$(".total-price #selOrdAmt").text(finalTotalPrice);
+	$(".total-price #selOrdAmt").text(numberWithCommas(finalTotalPrice));
 }
 </script>
 
@@ -666,4 +671,5 @@ function changeBasktItemCore(obj,prd_cart_id) {
 
 
 	}
+
 </script>

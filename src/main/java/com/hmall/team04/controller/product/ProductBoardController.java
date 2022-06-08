@@ -23,11 +23,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hmall.team04.dto.common.Criteria;
 import com.hmall.team04.dto.common.ProductCriteria;
 import com.hmall.team04.dto.common.ProductPageDTO;
+import com.hmall.team04.dto.common.ReviewCriteria;
+import com.hmall.team04.dto.common.ReviewPageDTO;
 import com.hmall.team04.dto.like.LikeDTO;
 import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.dto.product.ProductBoardDTO;
 import com.hmall.team04.dto.review.ReviewDTO;
 import com.hmall.team04.service.category.CategoryService;
+import com.hmall.team04.service.file.FileServiceImpl;
 import com.hmall.team04.service.like.LikeService;
 import com.hmall.team04.service.product.ProductBoardService;
 import com.hmall.team04.service.review.ReviewService;
@@ -50,6 +53,9 @@ public class ProductBoardController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private FileServiceImpl awsS3Service;
 	
 	@RequestMapping(value = "/productlist", method = RequestMethod.GET)
 	public String productlist(@RequestParam String category,Model model) {
@@ -102,24 +108,42 @@ public class ProductBoardController {
 			likeDTO.setPrd_board_id(prd_board_id);
 			likeDTO.setUser_id(user_id);
 			
+			// 로그인 상태에서 review 존재 여부 판단
+			ReviewDTO reviewDTO = new ReviewDTO();
+			reviewDTO.setPrd_board_id(prd_board_id);
+			reviewDTO.setUser_id(user_id);
+			
 			try {
-				
-				
 				int likeIsExist = likeService.likeIsExist(likeDTO);
-				log.info(likeIsExist);
+				int reviewIsExist = reviewService.ReviewIsExist(reviewDTO);
+				int reviewIsPossible = reviewService.ReviewIsPossible(reviewDTO);
+				
 				model.addAttribute("likeIsExist", likeIsExist);
+				model.addAttribute("reviewIsExist", reviewIsExist);
+				model.addAttribute("reviewIsPossible", reviewIsPossible);
+				
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 			
 		}
 		
+		ReviewCriteria reviewcri = new ReviewCriteria(prd_board_id);
 		
 		try {
 			// 상품 게시판 가져오기
 			ProductBoardDTO productboadDTO = productboardService.getProductBoard(prd_board_id);
 			log.info(productboadDTO.toString());
-
+			
+			// 상품게시판(제품상세)의 댓글 가져오기
+ 			ArrayList<ReviewDTO> reviewDTO = reviewService.getReviewListByInsdtCore(reviewcri);
+ 			int totalCore = reviewService.getReviewListCountCore(prd_board_id);
+ 			ReviewPageDTO reviewpageDTO = new ReviewPageDTO(reviewcri, totalCore);
+ 			
+			model.addAttribute("reviewpageMaker", new ReviewPageDTO(reviewcri, totalCore));
+			model.addAttribute("reviewDTO", reviewDTO);
+			model.addAttribute("prd_board_id", prd_board_id);
+			
 			// like
 			int likeCnt = likeService.getLikeCnt(prd_board_id);
 			

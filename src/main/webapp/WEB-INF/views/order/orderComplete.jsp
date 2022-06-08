@@ -132,7 +132,7 @@ function requestPay() {
 				success : function(data) {
 					if(data.orderCompleteSuccess=='True'){
 						alert('your choiceSSSS is ordercompleted and let us go ordercomplete page');
-						location.href = '${app}/orderComplete';
+						//location.href = '${app}/orderComplete';
 					}
 				}
 			});

@@ -138,9 +138,9 @@ public class ReviewController {
 	public HashMap<String, String> insertReview(ReviewDTO reviewDTO) throws Exception {
 		log.info(reviewDTO.toString());
 		
-		for(MultipartFile file : reviewDTO.getUploadfiles()) {
-			log.info(file);
-		}
+//		for(MultipartFile file : reviewDTO.getUploadfiles()) {
+//			log.info(file);
+//		}
 		
 		// save review first
 		reviewService.insertReview(reviewDTO);

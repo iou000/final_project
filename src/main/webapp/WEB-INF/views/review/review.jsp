@@ -26,6 +26,7 @@
 	<input type="hidden" name="prd_board_id" value="${prd_board_id}"/>
 	<input type="hidden" name="categoryCode" value="${categoryCode}"/>
 	<input type="hidden" name="sort" value="1"/>
+	
 	<sec:authentication property="principal" var="principal_user" />
 	<c:if test="${principal_user != 'anonymousUser' }">
 		<sec:authentication property="principal.user.user_id" var="principal_user_id" />
@@ -261,7 +262,7 @@
 	function InsertReview(){
 		// 마이페이지에서 같은 parent obj에서 jquery로 접근할 부분
 		var user_id='LikeReviewWacher';
-		var prd_board_id='200';
+		var prd_board_id='201';
 		var prd_id='test1';
 		
 		let popUrl = "${app}/r/insert/" + user_id+ "?prd_board_id=" + prd_board_id + "&&prd_id="+prd_id;
@@ -330,10 +331,7 @@
 	        }
 	     });
 	}
-   
-   	function numberWithCommas(x) {
-	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
+
    
 	//  unix time stamp to Date
    	function UnixTimeToDate(UnixTime){

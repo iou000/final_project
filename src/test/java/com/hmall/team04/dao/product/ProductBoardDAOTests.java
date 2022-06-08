@@ -40,7 +40,7 @@ public class ProductBoardDAOTests {
 		
 		ProductBoardDTO productboardDTO;
 		try {
-			productboardDTO = productboardDAO.getProductBoard("200");
+			productboardDTO = productboardDAO.getProductBoard("201");
 			
 			System.out.println(productboardDTO.toString());
 			
