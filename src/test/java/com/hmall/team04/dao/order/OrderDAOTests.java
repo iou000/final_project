@@ -35,8 +35,7 @@ public class OrderDAOTests {
 		ArrayList<OrderCompleteDTO> list;
 		
 		OrderCompleteDTO ordercompleteDTO = new OrderCompleteDTO();
-		ordercompleteDTO.setPrd_order_id("merchant_1653809215425");
-		ordercompleteDTO.setUser_id("1");
+		ordercompleteDTO.setUser_id("LikeReviewWacher");
 		try {
 			list = orderDAO.getOrderCompleteList(ordercompleteDTO);
 			
@@ -54,7 +53,6 @@ public class OrderDAOTests {
 		
 		OrderCompleteDTO ordercompleteDTO = new OrderCompleteDTO();
 		ordercompleteDTO.setUser_id("1");
-		ordercompleteDTO.setPrd_pmt_id("StdpayVBNKINIpayTest20220529162715283069");
 		
 		try {
 			ordercompleteDTO = orderDAO.getPrdPayment(ordercompleteDTO);

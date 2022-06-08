@@ -157,6 +157,15 @@ public class ReviewController {
 			model.addAttribute("prd_board_id", prd_board_id);
 			model.addAttribute("prd_id", prd_id);
 			
+			try {
+				ProductBoardDTO productBoardDTO = productboardService.getProductBoard(prd_board_id);
+				log.info(productBoardDTO);
+				
+				model.addAttribute("productBoardDTO",productBoardDTO);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
 			return "review/reviewInsert";
 			
 		}
