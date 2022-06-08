@@ -110,7 +110,7 @@
 																	<a href="#">
 																		<div class="pdprice">
 																			<ins class="normal" aria-label="정상가">
-																				<em><fmt:formatNumber value="${cart.prd_price}" pattern="###,###,###" /></em>
+																				<em><fmt:formatNumber value="${cart.prd_price}" pattern="###,###,###" /><b>원</b></em>
 																			</ins>
 
 																		</div>
@@ -483,9 +483,9 @@ function changeBasktItemCore(obj,prd_cart_id) {
 	var token = $("input[name='_csrf']").val();
 	var header = "X-CSRF-TOKEN";
 	
-	var childObj = $(obj).closest("td");
-	var target_childObj = $(childObj).find("input[name=ordQty]");
-	var target_childObj2 = $(childObj).find("input[name=leftQty]");
+	var parentObj = $(obj).closest("td");
+	var target_childObj = $(parentObj).find("input[name=ordQty]");
+	var target_childObj2 = $(parentObj).find("input[name=leftQty]");
 	
 	var change_amount = Number($(target_childObj).val());
 	var target_leftQty = Number($(target_childObj2).val());
