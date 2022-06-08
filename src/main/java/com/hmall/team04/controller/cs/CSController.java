@@ -3,6 +3,7 @@ package com.hmall.team04.controller.cs;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import com.hmall.team04.dto.cs.NoticeDTO;
 import com.hmall.team04.dto.cs.QnaDTO;
 import com.hmall.team04.service.cs.NoticeService;
 import com.hmall.team04.service.cs.QnaService;
+import com.hmall.team04.service.review.ReviewService;
 import com.hmall.team04.dto.common.Criteria;
 import com.hmall.team04.dto.common.PageDTO;
 import com.hmall.team04.dto.cs.FaqDTO;

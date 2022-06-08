@@ -32,10 +32,143 @@
 		<sec:authentication property="principal.user.user_id" var="principal_user_id" />
 	</c:if>
 
+	<dl>
+		<dt>
+			<div class="date">
+				<span>2022. 6. 3 (주문번호 : 20220603215832)</span>
+			</div>
+			<div class="abs">
+				<a href="/team04/mypage/od?orderNo=20220603215832" class="btn alink"><span>주문/배송
+						상세</span></a>
+			</div>
+		</dt>
+		<!-- 이중포 여기 -->
+
+		<dd class="btn-col2">
+			<a href="/team04/p/200"> <span class="img"><img
+					src="https://image.hmall.com/static/3/5/29/68/2068295310_0.jpg?RS=300x300&amp;AR=0"
+					alt="닥터시드 허니앤밀크밤 모이스처 바디워시 1000ml"
+					onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
+			</span>
+				<div class="box">
+					<span class="state" style="color: rgb(255, 83, 64);"> 주문취소 <em
+						class="color-999"> </em>
+					</span> <span class="tit">나이키 신발</span>
+					<div class="info">
+						<ul>
+							<li>Yellow 220</li>
+							<li>1 개</li>
+						</ul>
+					</div>
+					<span class="price"> <strong>10000</strong>원
+					</span>
+				</div>
+			</a>
+
+
+
+
+		</dd>
+
+		<dd class="btn-col2">
+			<a href="/team04/p/200"> <span class="img"><img
+					src="https://image.hmall.com/static/3/5/29/68/2068295310_0.jpg?RS=300x300&amp;AR=0"
+					alt="닥터시드 허니앤밀크밤 모이스처 바디워시 1000ml"
+					onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
+			</span>
+				<div class="box">
+					<span class="state" style="color: rgb(3, 199, 90);"> 결제완료 <em
+						class="color-999"> </em>
+					</span> <span class="tit">로션</span>
+					<div class="info">
+						<ul>
+							<li></li>
+							<li>2 개</li>
+						</ul>
+					</div>
+					<span class="price"> <strong>25000</strong>원
+					</span>
+				</div>
+			</a>
+
+
+			<div class="btngroup">
+				<button class="btn btn-linelgray small30" type="button"
+					onclick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&amp;chkOrdPtcSeq=1'">
+					<span>결제취소</span>
+				</button>
+			</div>
+
+
+
+		</dd>
+
+		<dd class="btn-col2">
+			<a href="/team04/p/200"> <span class="img"><img
+					src="https://image.hmall.com/static/3/5/29/68/2068295310_0.jpg?RS=300x300&amp;AR=0"
+					alt="닥터시드 허니앤밀크밤 모이스처 바디워시 1000ml"
+					onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&amp;AR=0')">
+			</span>
+				<div class="box">
+					<span class="state"> 배송완료 <em class="color-999"> </em>
+					</span> <span class="tit">남자 셔츠</span>
+					<div class="info">
+						<ul>
+							<li>XL</li>
+							<li>1 개</li>
+						</ul>
+					</div>
+					<span class="price"> <strong>10000</strong>원
+					</span>
+				</div>
+			</a>
+
+
+
+
+			<div class="btngroup">
+				<button class="btn btn-linelgray small30" type="button"
+					onclick="InsertReview(this)">
+					<span>상품평쓰기</span>
+				</button>
+				<button class="btn btn-linelgray small30" type="button"
+					onclick="window.open('/team04/mypage/exchangePopup?detailid=7','교환신청','width=588,height=724')">
+					<span>교환신청</span>
+				</button>
+				<button class="btn btn-linelgray small30" type="button"
+					onclick="window.open('/team04/mypage/returnPopup?detailid=7','반품신청','width=588,height=724')">
+					<span>반품신청</span>
+				</button>
+			</div>
+
+		</dd>
+
+
+		<!--주문 flag 따라 색상 변환  -->
+		<script> 
+										$(".state:contains('주문취소')").css({color:"#ff5340"});																													
+										$(".state:contains('주문접수')").css({color:"#3abbd5"});
+										$(".state:contains('결제완료')").css({color:"#03c75a"});
+										$(".state:contains('상품발송')").css({color:"#3abbd5"});
+										$(".state:contains('상품준비중')").css({color:"#737373"});
+										$(".state:contains('반품접수')").css({color:"#737373"});
+										$(".state:contains('반품완료')").css({color:"#03c75a"});
+										$(".state:contains('교환접수')").css({color:"#737373"});
+										$(".state:contains('교환완료')").css({color:"#03c75a"});
+									</script>
+
+	</dl>
+
 
 	<!-- 상품평 tab -->
 	<div class="pages page3" id="viewPage03">
 		<div id="itemOptEvalInfo">
+
+			<!-- 구매고객 총 평점 -->
+			<div class="content-area review-point">
+				<h3>Review Test 화면</h3>
+			</div>
+			<!--// 구매고객 총 평점 -->
 
 			<!-- 구매고객 총 평점 -->
 			<div class="content-area review-point">
@@ -62,11 +195,11 @@
 						<div style="float: right;">
 							<button ga-category="상품상세" ga-action="상품평" ga-label="상품평 쓰기"
 								class="btn btn-lineblack small gp_className" onclick="evalWriteCore()">
-								<span><i class="icon review"></i>상품평 쓰기(마이페이지 이동 버튼)</span>
+								<span><i class="icon review"></i>상품평 쓰러가기 버튼(제품상세에서의 버튼 : 마이페이지 이동 버튼)</span>
 							</button>
 							<button ga-category="상품상세2" ga-action="상품평2" ga-label="상품평 쓰기2"
-								class="btn btn-lineblack small gp_className" onclick="InsertReview()">
-								<span><i class="icon review"></i>상품평 쓰기</span>
+								class="btn btn-lineblack small gp_className" onclick="InsertReview(this)">
+								<span><i class="icon review"></i>상품평 쓰기(마이페이지에서 출현할 버튼)</span>
 							</button>
 						</div>
 					</c:if>
@@ -213,9 +346,9 @@
 
 <script>
 
-
-
 	// 마이페이지로 넘어가 댓글을 달기 전, 자격을 평가하는 함수
+	// 마이페이지는 구조적으로 로그인 한 상태를 전제이나, 상품상세는 아닐 수 있으므로
+	// anonymousUser 부터 체크
 	function evalWriteCore(){
 		var val_cur_user='${principal_user}';
 		var prd_board_id = '${prd_board_id}';
@@ -257,20 +390,53 @@
 	}
 	
 	/*
-	 * 상품평 쓰기 버튼
+	 * 상품평 쓰기 버튼 with 유효성 검사
+	 * !! 마이페이지에서 댓글을 달게 하는 것의 이점은 확실한 주문정보를 제공
 	 */
-	function InsertReview(){
-		// 마이페이지에서 같은 parent obj에서 jquery로 접근할 부분
-		var user_id='LikeReviewWacher';
-		var prd_board_id='201';
-		var prd_id='test1';
+	function InsertReview(prd_board_id, prd_id){
+		var token = $("input[name='_csrf']").val();
+		var header = "X-CSRF-TOKEN";
 		
-		let popUrl = "${app}/r/insert/" + user_id+ "?prd_board_id=" + prd_board_id + "&&prd_id="+prd_id;
-		console.log(popUrl);
-		let popOption = "width = 600px, height=700px, top=300px, left=300px, scrollbars=yes";
+		//var parentObj = $(obj).closest("dd");
+
+		var val_cur_user='${principal_user_id}';
+		var val_prd_board_id = prd_board_id;
+		var val_prd_id = prd_id;
+		// 마이페이지에서 prd_board_id 접근?
+				
+		console.log(prd_board_id,prd_id);
 		
-		window.open(popUrl,"리뷰 쓰기",popOption);
+		// insert 전 자격 체크, goto checkValidReview controller
+		$.ajax({
+			url : "${app}/r/checkValidReview",
+			method : "POST",
+			data : {
+				user_id : val_cur_user,
+				prd_board_id : prd_board_id,
+				prd_id : prd_id
+			},
+			dataType : "json",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+				//alert(JSON.stringify(data));
+				if (data.reviewFlag == "Already") {
+					alert('현재 상품게시판에 댓글이 등록되어있습니다');
+				} else if(data.reviewFlag == "Possible"){
+					
+					let popUrl = "${app}/r/insert/" + val_cur_user+ "?prd_board_id=" + prd_board_id + "&&prd_id="+prd_id;
+					console.log(popUrl);
+					let popOption = "width = 600px, height=700px, top=300px, left=300px, scrollbars=yes";
+					window.open(popUrl,"리뷰 쓰기",popOption);
+					
+				} else if(data.reviewFlag == "Possible"){
+					alert('상품평은 구매고객에 한해 작성이 가능합니다.');
+				}
+			}
+		});
 	}
+	
 	/*
 	 * 상품평 삭제 버튼, 자기 자신만 보인다.
 	 */
@@ -296,7 +462,7 @@
 					location.reload();
 				}
 			}
-		})
+		});
 	}
 
 </script>

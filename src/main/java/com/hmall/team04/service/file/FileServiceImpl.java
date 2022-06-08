@@ -52,48 +52,6 @@ public class FileServiceImpl implements FileService {
 	@Autowired
 	private AmazonS3 s3Client;
 	
-//	private String BUCKET_NAME="eveadam";
-//	private String ACCESS_KEY="AKIA6EN3BZ4CYVUA7X5L";
-//	private String SECRET_KEY="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";
-	
-//	private String BUCKET_NAME;
-//	private String ACCESS_KEY;
-//	private String SECRET_KEY;
-
-	//private S3Config s3config = new S3Config();
-    
-    //AWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
-
-//	@Value("#{property['s3.bucketname']}")
-//	private String BUCKET_NAME;
-//	
-//	@Value("#{property['s3.accesskey']}")
-//	private String ACCESS_KEY;
-//	
-//	@Value("#{property['s3.secretkey']}")
-//	private String SECRET_KEY;
-	
-//	GenericXmlApplicationContext context = new GenericXmlApplicationContext(FileServiceImpl.class,"classpath:WEB-INF/spring/appServlet/servlet-context.xml");
-//	FileServiceImpl mb = (FileServiceImpl) context.getBean("mb");
-//	ctx.loa("classpath:WEB-INF/spring/appServlet/servlet-context.xml");
-	
-//	ctx.refresh();
-	
-//	AWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
-//
-//    private AmazonS3 s3= AmazonS3Client.builder()
-//			.withRegion(Regions.AP_NORTHEAST_2)
-//			.withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
-//	
-//  public FileServiceImpl() {
-//	    AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-//
-//	    this.s3Client = AmazonS3ClientBuilder.standard()
-//	                        .withCredentials(new AWSStaticCredentialsProvider(credentials))
-//	                        .withRegion(Regions.AP_NORTHEAST_2)
-//	                        .build();
-//	  }
-	
     public void s3FileUpload(ReviewDTO reviewDTO) throws Exception {
 		log.info(reviewDTO.toString());
 		MultipartFile[] files = reviewDTO.getUploadfiles();

@@ -1,14 +1,20 @@
 package com.hmall.team04.controller.mypage;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,18 +22,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.hmall.team04.dto.common.Criteria;
 import com.hmall.team04.dto.cs.QnaDTO;
 import com.hmall.team04.dto.mypage.MypageDTO;
+import com.hmall.team04.dto.order.OrderCancelDTO;
 import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.dto.order.OrderDetailDTO;
+import com.hmall.team04.dto.review.ReviewDTO;
 import com.hmall.team04.service.balance.BalanceService;
 import com.hmall.team04.service.coupon.CouponService;
 import com.hmall.team04.service.cs.QnaService;
 import com.hmall.team04.service.mypage.MypageService;
 import com.hmall.team04.service.order.OrderService;
 import com.hmall.team04.service.reserve.ReserveService;
+import com.hmall.team04.service.review.ReviewService;
 import com.hmall.team04.service.user.UserService;
 
 import lombok.extern.log4j.Log4j;
@@ -189,13 +198,16 @@ public class MypageController {
 	}
 	
 	@GetMapping("/oc")
-	public ModelAndView orderCancel(@RequestParam String orderDetailNo) {
+	public ModelAndView orderCancelDetail(Principal principal, @RequestParam String orderDetailNo, @RequestParam String orderNo) {
 		ModelAndView mnv = new ModelAndView();
 		try {
 			mnv.setViewName("mypage.orderhist.ordercancel");
-			OrderDetailDTO odDTO = orderService.getOrderDetail(orderDetailNo);
-			
+			OrderDetailDTO odDTO = orderService.getOrderDetail(principal.getName(), orderDetailNo);
+			OrderDTO oDTO = orderService.getOrderByOrderNo(principal.getName(), orderNo);
 			mnv.addObject("odDTO", odDTO);
+			mnv.addObject("oDTO", oDTO);
+			mnv.addObject("orderNo", orderNo);
+			mnv.addObject("orderDetailNo", orderDetailNo);
 		} catch (Exception e) {
 			log.info(e);
 			mnv.addObject("msg", "주문취소 출력 에러");
@@ -205,9 +217,27 @@ public class MypageController {
 		return mnv;
 	}
 	
-	
-	
-	
-	
-	
+	@PostMapping("/oc")
+	@ResponseBody
+	public ResponseEntity<Void> cancelOrder(@RequestBody HashMap<String, Object> param, Principal principal) {
+//		int returnPrice = Integer.parseInt(((String) param.get(0).get("returnPrice")).replaceAll("[^0-9]",""));
+//		int returnPoint = Integer.parseInt(((String) param.get(1).get("returnPoint")).replaceAll("[^0-9]",""));
+		int updtTotal = Integer.valueOf((String) param.get("updtTotal"));
+		int updtDis = Integer.valueOf((String) param.get("updtDis"));
+		int updtPmt = Integer.valueOf((String) param.get("updtPmt"));
+		int updtRDA = Integer.valueOf((String) param.get("updtRDA"));
+		int updtCDA = Integer.valueOf((String) param.get("updtCDA"));
+		int updtPC = Integer.valueOf((String) param.get("updtPC"));
+		String updtFlag = String.valueOf(param.get("updtFlag"));
+		String orderId = String.valueOf(param.get("orderId"));
+		String oDetailId = String.valueOf(param.get("oDetailId"));
+		log.info("param : " + param);
+		try {
+			orderService.updateCancelInfo(updtTotal, updtDis, updtPmt, updtRDA, updtCDA, updtPC, updtFlag, orderId, oDetailId, principal.getName());
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			log.info(e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
