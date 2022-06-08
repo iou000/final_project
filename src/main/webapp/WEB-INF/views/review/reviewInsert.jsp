@@ -670,19 +670,23 @@ function insertReview(){
 
 	var formData = new FormData();
 	// image limit is 3
-	for (var imgSeq = 1; imgSeq < 4; imgSeq++){
-		var imgId = "#getfile_" + imgSeq;
-		var file = document.querySelector(imgId);
-		//console.log(file);
-		console.log(file.files);
-		formData.append('uploadfiles', file.files[0]);
+	if(val_file_yn){
+		for (var imgSeq = 1; imgSeq < 4; imgSeq++){
+			var imgId = "#getfile_" + imgSeq;
+			var file = document.querySelector(imgId);
+			//console.log(file);
+			console.log(file.files);
+			formData.append('uploadfiles', file.files[0]);
+		}
 	}
+	
 	formData.append('prd_board_id', val_prd_board_id);
 	formData.append('prd_id', val_prd_id);
 	formData.append('user_id', val_user_id);
 	formData.append('content', content);
 	formData.append('star', val_star);
 	formData.append('file_yn', val_file_yn);
+	
 	loading(true);
 	$.ajax({
 		type : "post",
@@ -703,11 +707,7 @@ function insertReview(){
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			loading(false);
-			alert('사진 업로드에 실패하였습니다. error');
-			location.reload();
-			if (imgSeq == 4) {
-				$(".marginB15").hide();
-			}
+			//window.close();
 		}
 	});
 

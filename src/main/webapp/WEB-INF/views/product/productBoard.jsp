@@ -367,100 +367,138 @@
 
 		</div>
 
-		<!-- 상품평 tab -->
-		<div class="pages page3" id="viewPage03">
+		<input type="hidden" name="pageNum" value="${reviewpageMaker.cri.pageNum}"/>
+	  	<input type="hidden" name="amount" value="${reviewpageMaker.cri.amount}"/>
+		<input type="hidden" name="prd_board_id" value="${prd_board_id}"/>
+		<input type="hidden" name="categoryCode" value="${categoryCode}"/>
+		<input type="hidden" name="sort" value="1"/>
+		
+		<sec:authentication property="principal" var="principal_user" />
+		<c:if test="${principal_user != 'anonymousUser' }">
+			<sec:authentication property="principal.user.user_id" var="principal_user_id" />
+		</c:if>
 
+	<!-- 상품평 tab -->
+	<div class="pages page3" id="viewPage03">
+		<div id="itemOptEvalInfo">
 
-			<div id="itemOptEvalInfo">
-
-				<!-- 상품평 -->
-				<!-- 평점 -->
-				<div class="content-area review-point">
-					<h3>구매고객 총 평점</h3>
-					<!--review-star -->
-					<div class="review-star">
-						<div class="starbg type-big pt10">
-							<p class="score">
-								<span class="hiding">5점</span>
-							</p>
-						</div>
-						<span class="like-point" aria-label="포인트"><em>5.0, 추후 plsql 생성 시 리뷰마다 업데이트 예정</em></span>
+			<!-- 구매고객 총 평점 -->
+			<div class="content-area review-point">
+				<h3>구매고객 총 평점</h3>
+				<!--review-star -->
+				<div class="review-star">
+					<div class="starbg pt<fmt:formatNumber type='number' maxFractionDigits='0' value='${2*productboadDTO.star}' />">
+						<p class="score">
+							<c:set var="star" value="${2*productboadDTO.star}" />
+							<span class="hiding"><fmt:formatNumber value="${(star -(star)%1)*10}" type="number" />점</span>
+						</p>
 					</div>
-					<!-- //.review-star -->
+					<span class="like-point" aria-label="포인트"><em>${productboadDTO.star}</em></span>
 				</div>
-				<!--// 평점 -->
+				<!-- //.review-star -->
+			</div>
+			<!--// 구매고객 총 평점 -->
 
-				<!-- 리스트 -->
-				<div class="content-area txt-review" id="reviewContentArea">
+			<!-- 상품평 tab의 댓글 리스트 -->
+			<div class="content-area txt-review" id="reviewContentArea">
 
-					<h3>
-						상품평 <em class="total-num">?</em>건
-						<c:if test="${1==1 }">
+				<h3>
+					상품평 <em class="total-num">${reviewpageMaker.total}</em>건
+					<c:if test="${1==1 }">
 						<div style="float: right;">
-							<button ga-category="상품상세" ga-action="상품평" ga-label="상품평 쓰기" class="btn btn-lineblack small itemEvalRegBtn gp_className">
-							<span><i class="icon review"></i>상품평 쓰기</span></button>
+							<button ga-category="상품상세" ga-action="상품평" ga-label="상품평 쓰기"
+								class="btn btn-lineblack small gp_className" onclick="evalWriteCore()">
+								<span><i class="icon review"></i>상품평 쓰기(마이페이지 이동 버튼)</span>
+							</button>
+							<button ga-category="상품상세2" ga-action="상품평2" ga-label="상품평 쓰기2"
+								class="btn btn-lineblack small gp_className" onclick="InsertReview()">
+								<span><i class="icon review"></i>상품평 쓰기</span>
+							</button>
 						</div>
-						</c:if>
-					</h3>
+					</c:if>
+				</h3>
 
-					<!--review-list-->
-					<h1>hi, ${productboadDTO.prd_board_id }</h1>
-
+				<!--review-list-->
+				<div class="text-review-list-std">
 					<ul class="txt-review-list">
-						<c:forEach items="${reviewList}" var="dto">
+						<c:forEach items="${reviewDTO}" var="dto">
 							<li class="review-item">
 								<div class="review-top">
 									<div class="top-left">
-										<div class="starbg pt10">
-											<p class="score">
-												<span class="hiding">${dto.star }</span>
-											</p>
-										</div>
+										<c:if test="${dto.star==1}">
+											<div class="starbg pt2">
+												<p class="score"></p>
+											</div>
+										</c:if>
+										<c:if test="${dto.star==2}">
+											<div class="starbg pt4">
+												<p class="score"></p>
+											</div>
+										</c:if>
+										<c:if test="${dto.star==3}">
+											<div class="starbg pt6">
+												<p class="score"></p>
+											</div>
+										</c:if>
+										<c:if test="${dto.star==4}">
+											<div class="starbg pt8">
+												<p class="score"></p>
+											</div>
+										</c:if>
+										<c:if test="${dto.star==5}">
+											<div class="starbg pt10">
+												<p class="score"></p>
+											</div>
+										</c:if>
+								
 										<span class="nick">${dto.user_id }</span>
-
+										
 									</div>
 									<div class="top-right">
-										<span class="date"><fmt:formatDate
-												value="${dto.ins_dt}" type="date" /></span>
+										<c:choose>
+											<c:when test="${principal_user == 'anonymousUser' }">
+											</c:when>
+											<c:otherwise>
+													<c:if test="${principal_user_id == dto.user_id }">
+														<button><span class="nick" onclick="DeleteReview(${dto.review_id })">삭제 </span></button>
+													</c:if>
+											</c:otherwise>
+										</c:choose>
+										
+										<span class="date">
+										<fmt:formatDate pattern="yyyy-MM-dd" value="${dto.ins_dt}"/>
+										</span>
 									</div>
-								</div> <!--review-option-->
-								<div class="review-option"></div> <!--//review-option--> <!-- pdwrap -->
+								</div>
+								<!--review-option-->
+								<div class="review-option">
+									<c:choose>
+											<c:when test="${dto.option1 == null}">
+												<em>색상/속성 : 단일상품</em><br>
+											</c:when>
+											<c:when test="${dto.option1 != null && dto.option2 == null}">
+												<em>${dto.option1 }</em><br>
+											</c:when>
+											<c:when test="${dto.option1 != null && dto.option2 != null}">
+												<em>${dto.option1 }/${dto.option2 }</em><br>
+											</c:when>
+									</c:choose>
+								</div> 
+								<!--//review-option--> 
+								
 
+								<!-- pdwrap -->
 								<div class="pdwrap photo-review">
-									<div class="pdlist-wrap" id="review48122177441531">
-
-										<!-- Weanplayer file id -->
-										<!-- Weanplayer instance id -->
-										<!-- Weanplayer path -->
-
-										<div class="pdthumb">
-											<a href="javascript:;">
-
-												<div class="thumb">
-													<img
-														src="//media.hmall.com/hmall/co/editor/20220521/16/m_web_upload2140365970@20220521_165604977.jpg"
-														onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_100x100.jpg')"
-														alt="">
-												</div>
-
-
-											</a>
-										</div>
-
-										<div class="pdthumb">
-											<a href="javascript:;">
-
-												<div class="thumb">
-													<img
-														src="//media.hmall.com/hmall/co/editor/20220521/16/m_web_upload2140365970@20220521_165616226.jpg"
-														onerror="noImage(this, 'https://image.hmall.com/hmall/pd/no_image_100x100.jpg')"
-														alt="">
-												</div>
-
-
-											</a>
-										</div>
-
+									<div class="pdlist-wrap">
+										<c:forEach items="${dto.fileList}" var="file">
+											<div class="pdthumb">
+												<a href="javascript:;">
+													<div class="thumb">
+														<img src="${file.upload_path}" alt="">
+													</div>
+												</a>
+											</div>
+										</c:forEach>
 									</div>
 								</div> <!-- 동영상 --> <!-- 동영상 --> <!-- //.pdwrap --> <!--review-content-->
 								<div class="review-content">
@@ -469,22 +507,53 @@
 							</li>
 						</c:forEach>
 					</ul>
-					<h1>hi2</h1>
-					<!--//review-list-->
-
 				</div>
-				<!--//content-area // 상품평텍스트-->
+				<!--//review-list-->
 
-				<!--// 상품평 -->
+				<div class="paging itemEvalPaging">
+					<div class="page-prevarea">
+						
+						<c:if test="${reviewpageMaker.prev }">
+							<a href="javascript://" onclick="goToPageNumCore(1)"
+								class="page-first" aria-label="처음페이지 이동"> <i class="icon"></i><span
+								class="hiding">처음페이지 이동</span>
+							</a>
+							<a href="javascript://"
+								onclick="goToPageNumCore(${reviewpageMaker.cri.pageNum - 1})"
+								class="page-prev" aria-label="이전페이지 이동"> <i class="icon"></i><span
+								class="hiding">이전페이지 이동</span>
+							</a>
+						</c:if>
+						
+						<c:forEach var="num" begin="${reviewpageMaker.startPage }"
+							end="${reviewpageMaker.endPage }">
+							<c:if test="${reviewpageMaker.cri.pageNum == num}">
+								<strong aria-label="현재 선택페이지">${num}</strong>
+							</c:if>
+							<c:if test="${reviewpageMaker.cri.pageNum != num}">
+								<a href="javascript://" onclick="goToPageNumCore(${num})">${num}</a>
+							</c:if>
+						</c:forEach>
 
-				<!-- 만족도 -->
+						<c:if test="${reviewpageMaker.next }">
+							<a href="javascript://"
+								onclick="goToPageNumCore(${reviewpageMaker.cri.pageNum + 1})"
+								class="page-next" aria-label="다음페이지 이동"><i class="icon"></i><span
+								class="hiding">다음페이지 이동</span></a>
+							<a href="javascript://"
+								onclick="goToPageNumCore(${reviewpageMaker.realEnd})"
+								class="page-last" aria-label="마지막페이지 이동"><i class="icon"></i><span
+								class="hiding">마지막페이지 이동</span></a>
+						</c:if>
 
-				<!--// 만족도 -->
+					</div>
+				</div>
 			</div>
-
-
 		</div>
-		<!--// 상품평 tab -->
+	</div>
+	<!--//content-area // 상품평텍스트-->
+
+	<!--// 상품평 -->
 
 	</div>
 	<!--//scrollspy-wrap-->
@@ -849,3 +918,348 @@ function goChioceProcessCore(prd_board_id) {
     }
 </script>
 
+<script>
+
+
+
+	// 마이페이지로 넘어가 댓글을 달기 전, 자격을 평가하는 함수
+	function evalWriteCore(){
+		var val_cur_user='${principal_user}';
+		var prd_board_id = '${prd_board_id}';
+		console.log(val_cur_user,prd_board_id);
+		
+		
+		if (val_cur_user=='anonymousUser'){
+			// 비로그인 시 로그인 팝업
+			LoginPopup();
+		} else{
+			// 로그인 시
+			val_cur_user='${principal_user_id}';
+			console.log(val_cur_user);
+			var val_reviewIsExist='${reviewIsExist}';
+			console.log(val_cur_user, val_reviewIsExist);
+			
+			var val_reviewIsPossible='${reviewIsPossible}';
+			console.log(val_reviewIsPossible);
+			
+			// 현재 게시판에 이미 댓글을 단지 판단
+			if (val_reviewIsExist>0){
+				alert('현재 상품게시판에 댓글이 등록되어있습니다');
+			} else{
+				// 해당 prd_board_id로 주문상세가 없는 경우 ; 임의로 step00
+				if (val_reviewIsPossible=0){
+					alert('상품평은 구매고객에 한해 작성이 가능합니다.');
+					return
+				}
+				
+				// 해당 prd_board_id로 최소 주문을 한 경우 ; step01~03 모두 포괄
+				var result = confirm("상품평은 주문하신 상품이 발송된 후에 작성하실 수 있습니다. \n마이페이지로 이동하여 확인하시겠습니까?");
+				
+				if(result){
+					location.href = '${app}/mypage/odslist';
+				}
+			}
+			
+		}
+	}
+	
+	/*
+	 * 상품평 쓰기 버튼
+	 */
+	function InsertReview(){
+		// 마이페이지에서 같은 parent obj에서 jquery로 접근할 부분
+		var user_id='LikeReviewWacher';
+		var prd_board_id='201';
+		var prd_id='test1';
+		
+		let popUrl = "${app}/r/insert/" + user_id+ "?prd_board_id=" + prd_board_id + "&&prd_id="+prd_id;
+		console.log(popUrl);
+		let popOption = "width = 600px, height=700px, top=300px, left=300px, scrollbars=yes";
+		
+		window.open(popUrl,"리뷰 쓰기",popOption);
+	}
+	/*
+	 * 상품평 삭제 버튼, 자기 자신만 보인다.
+	 */
+	function DeleteReview(review_id){
+		var token = $("input[name='_csrf']").val();
+		var header = "X-CSRF-TOKEN";
+		var prd_board_id = $("input[name='prd_board_id']").val();
+		
+		$.ajax({
+			url : "${app}/r/deleteReview",
+			method : "POST",
+			data : {
+				review_id : review_id,
+				prd_board_id : prd_board_id
+			},
+			dataType : "json",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(data) {
+				//alert(JSON.stringify(data));
+				if (data.delete_review_Success == "True") {
+					location.reload();
+				}
+			}
+		})
+	}
+
+</script>
+
+<script>
+	$(document).ready(function(){
+		deleteCheck();
+	});
+
+	/* 댓글 리스트 생성 - test */
+	function setReviewListTest(){
+	      console.log("set review");
+	      var str = "";
+	     $.ajax({
+	        type : "GET"
+	        ,url : "${app}" + "/r/list"
+	        ,dataType: 'json'
+	        ,data : {
+	          pageNum : 2,
+	 		   amount : 10,
+	 		   prd_board_id : "${prd_board_id}",
+	 		   categoryCode : "${categoryCode}",
+	 		   sort : 1
+	        }
+	        
+	        ,success : function(data){
+	       	 console.log(data);
+	       	 // review information
+	       	 console.log(data[0]);
+	       	 // review paging info
+	       	 console.log(data[1]);
+	        }
+	     });
+	}
+   
+   	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+   
+	//  unix time stamp to Date
+   	function UnixTimeToDate(UnixTime){
+		var origin = new Date(UnixTime);
+		
+		var year = origin.getFullYear();
+		var month = ('0' + (origin.getMonth() + 1)).slice(-2);
+		var day = ('0' + origin.getDate()).slice(-2);
+		
+		var val_time = year+"-"+month+"-"+day;
+		
+		return val_time;
+   	}
+
+	function ReadOptions(option1, option2){
+		var val_str="";
+		console.log(option1,option2);
+		
+		if(option1 == null){
+			val_str="<em>색상/속성 : 단일상품</em><br>";
+		} else if(option1 != null && option2 == null){
+			val_str="<em>"+option1+"</em><br>";
+		} else if(option1 != null && option2 != null){
+			val_str="<em>"+option1+"/"+option2+"</em><br>";
+		}
+		console.log(val_str);
+		return val_str;
+	}
+   
+   	function ReadStarRate(star) {
+	   var val_str="";
+	   
+	   switch (star) {
+	   		case 1:
+			  val_str="<div class='starbg pt2'><p class='score'></p></div> ";
+			  break;
+	   		case 2:
+			  val_str="<div class='starbg pt4'><p class='score'></p></div> ";
+			  break;
+	   		case 3:
+			  val_str="<div class='starbg pt6'><p class='score'></p></div> ";
+			  break;
+	   		case 4:
+			  val_str="<div class='starbg pt8'><p class='score'></p></div> ";
+			  break;
+	   		case 5:
+			  val_str="<div class='starbg pt10'><p class='score'></p></div> ";
+			  break;
+	   }
+	   
+	   return val_str;
+   	}
+   
+   	function deleteCheck(user_id, review_id) {
+ 	   var val_str="";
+ 	   
+ 	   console.log('#','${principal_user}');
+ 	   
+ 	   if('${principal_user}' == 'anonymousUser'){
+			val_str=" ";
+ 	   } else{
+ 		   // login user and review owner
+ 		   console.log('#','${principal_user_id}');
+ 		   if('${principal_user_id}'== user_id){
+ 			  val_str="<button><span class='nick' onclick='DeleteReview("+review_id+")'>삭제 </span></button> ";
+ 		   } else{
+ 			  val_str=" ";
+ 		   }
+ 	   }
+ 	   
+ 	   return val_str;
+    }
+   	
+   	/* 댓글 리스트 생성 */
+   	function setReviewList(){
+       console.log("set review real");
+       var sort = $("input[name='sort']").val();
+	   var pageNum = $("input[name='pageNum']").val();
+	   var prd_board_id = $("input[name='prd_board_id']").val();
+	   var categoryCode = $("input[name='categoryCode']").val();
+	   var amount = $("input[name='amount']").val();
+	   var totalAmount = $("#total-amount");
+
+	   console.log(sort);
+	   console.log(pageNum);
+	   console.log(prd_board_id);
+	   console.log(categoryCode);
+	   console.log(amount);
+	   console.log(totalAmount);
+	   try {
+      	   loading(true);
+          } catch (e) {
+          }
+      $.ajax({
+         type : "GET"
+         ,url : "${app}" + "/r/list"
+         ,dataType: 'json'
+         ,data : {
+           pageNum : pageNum,
+  		   amount : amount,
+  		   prd_board_id : prd_board_id,
+  		   categoryCode : categoryCode,
+  		   sort : sort
+         }
+         ,crossDomain: true
+         ,success : function(data){
+        	console.log(data);
+			console.log(data[0]);
+        	 
+			var str = "";
+			// review content part ajax
+			str += "<ul class='txt-review-list'>";
+			for (let i = 0; i < data[0].length; i++) {
+				// review item start
+				str += "<li class='review-item'>";
+				str += "<div class='review-top'>";
+				
+				str += "<div class='top-left'>"; // start of top-left
+
+				str += ReadStarRate(data[0][i].star);
+				
+				str += "<span class='nick'>"+data[0][i].user_id+"</span>";
+
+				str += "</div>"; // end of top-left
+
+				str += "<div class='top-right'>"; // start of top-right
+				str += deleteCheck(data[0][i].user_id,data[0][i].review_id);
+				//str += "<span class='nick'>"+data[0][i].user_id+data[0][i].review_id+"</span> ";
+				str += "<span class='date'>"+ UnixTimeToDate(data[0][i].ins_dt) + "</span>";
+				str += "</div>"; // end of top-right
+				
+				str += "</div>"; // end-review-top
+				
+				// product option of review item
+				str += "<div class='review-option'>";
+				str += ReadOptions(data[0][i].option1,data[0][i].option2);
+				str += "</div>";
+				
+				// img of review item
+           	    str += "<div class='pdwrap photo-review'>";
+           	    str += "<div class='pdlist-wrap'>";
+				if(data[0][i].file_yn != 0){
+					for (let j = 0; j < data[0][i].fileList.length ; j++){
+	            	   str += "<div class='pdthumb'>";
+	            	   str += "<a href='javascript:;'>";
+	            	   str += "<div class='thumb'>";
+	            	   str += "<img src=' ";
+	            	   str += data[0][i].fileList[j].upload_path;
+	            	   str += " '>";
+	            	   str += "</div>";
+	            	   str += "</a>";
+	            	   str += "</div>";
+					}
+                }
+       		    str += "</div>"; // end of pdlist-wrap
+       		    str += "</div>"; // end pdwrap photo-review
+       		    
+				// content of review item
+				str += "<div class='review-content'>";
+				str += "<div class='review-txt'>"+data[0][i].content+"</div>";
+				str += "</div>";
+				
+				str += "</li>"
+				// review item end
+			}
+			str += "</ul>";
+			$(".text-review-list-std").html(str);
+            
+			// paging part ajax
+            var pstr = ""
+                var pageMaker = data[1];
+                if (pageMaker.prev){
+                	pstr += "<a href='javascript://' onclick='goToPageNumCore(1)' class='page-first' aria-label='처음페이지 이동'> <i class='icon'></i><span class='hiding'>처음페이지 이동</span></a>"
+                	pstr += "<a href='javascript://' onclick='goToPageNumCore(" + String(parseInt(pageMaker.cri.pageNum) - 1) + ")' class='page-prev' aria-label='이전페이지 이동'>"
+    				pstr += "<i class='icon'></i><span class='hiding'>이전페이지 이동</span></a>"
+                }
+                for(let i = parseInt(pageMaker.startPage); i <= parseInt(pageMaker.endPage); i++){
+                	if (i == pageMaker.cri.pageNum){
+                		pstr += "<strong aria-label='현재 선택페이지'>" + i + "</strong>"
+                	}
+                	else {
+                		pstr += "<a href='javascript://' onclick='goToPageNumCore(" + i + ")'>" + i + "</a>"
+                	}
+                }
+                if (pageMaker.next){
+                	pstr += "<a href='javascript://' onclick='goToPageNumCore(" + String(parseInt(pageMaker.cri.pageNum) + 1) + ")' class='page-next' aria-label='다음페이지 이동'> <i class='icon'></i><span class='hiding'>다음페이지 이동</span></a>"
+        			pstr += "<a href='javascript://' onclick='goToPageNumCore(" + pageMaker.realEnd + ")' class='page-last' aria-label='마지막페이지 이동'> <i class='icon'></i><span class='hiding'>마지막페이지 이동</span></a>"
+                }
+                $(".page-prevarea").html(pstr);
+                try {
+             	   loading(false);
+    	         } catch (e) {
+    	         }
+         },error : function(e) {
+            console.log("review list");
+         }
+         ,complete: function () {                     
+        	 $("#div_ajax_load_image").hide();       
+         }
+      });
+   	}
+   
+   	function goToPageNumCore(pageNum){
+	   $("input[name='pageNum']").val(pageNum);
+	   
+	   setReviewList();
+   	}
+
+   
+   	//sort 바꾸기
+   	function searchSort(type) {
+		  $("input[name='sort']").val(type);
+		  $("input[name='pageNum']").val(1);
+		  $("#sort" + type).siblings().removeClass("active");
+		  $("#sort" + type).addClass("active");
+		  
+		  setProductList();
+		  
+	}
+   
+</script>

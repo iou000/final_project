@@ -28,7 +28,9 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
+@ContextConfiguration({
+	"file:src/main/webapp/WEB-INF/spring/root-context.xml"
+	})
 public class ProductBoardReviewDAOTests {
 	
 	@Setter(onMethod_ = @Autowired)
@@ -45,6 +47,15 @@ public class ProductBoardReviewDAOTests {
 	
 	@Value("${s3.secretkey}")
 	private String SECRET_KEY;
+	
+//	@Value("#{property['s3.bucketname']}")
+//	private String BUCKET_NAME;
+//	
+//	@Value("#{property['s3.accesskey']}")
+//	private String ACCESS_KEY;
+//	
+//	@Value("#{property['s3.secretkey']}")
+//	private String SECRET_KEY;
 
 	
 	@Test
