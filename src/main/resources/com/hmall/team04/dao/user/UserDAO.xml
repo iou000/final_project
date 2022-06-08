@@ -61,4 +61,17 @@
 			where user_id = #{userid}
 	</select> 
 	
+	<select id="comparePassword" resultType="String">
+		SELECT
+				password
+		FROM	user_t
+		WHERE	user_id = #{user_id}
+	</select>
+	
+	<update id="updatePassword">
+		UPDATE user_t
+		SET password = #{new_pw}
+		WHERE user_id = #{user_id}
+	</update>
+	
 </mapper>

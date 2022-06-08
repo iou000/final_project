@@ -240,4 +240,34 @@ public class MypageController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("/chngPW")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public String changePW() {
+		return "mypage.info.modifyPW";
+	}
+	
+	@PostMapping("/chkPW")
+	@PreAuthorize("principal.username == #param.get(\"userid\")")
+	public @ResponseBody ResponseEntity<String> checkPW(@RequestBody HashMap<String, String> param, Principal principal) {
+		if (param.get("oldpw") == null) return new ResponseEntity<>("noString", HttpStatus.INTERNAL_SERVER_ERROR);
+		log.info(param);
+		try {
+			userService.comparePassword(principal.getName(), param.get("oldpw"));
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping("/chngPW")
+	@PreAuthorize("principal.username == #param.get(\"userid\")")
+	public @ResponseBody ResponseEntity<Void> updatePW(@RequestBody HashMap<String, String> param, Principal principal) {
+		try {
+			userService.updatePassword(principal.getName(), param.get("oldpw"), param.get("newpw"));
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

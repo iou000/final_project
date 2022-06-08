@@ -68,7 +68,7 @@ function fn_upntPopupClose(){
                 <a href="javascript:;">회원정보</a>
                 <ul class="sub-list">
 	               	<li><a href="https://www.hmall.com/p/mpd/changeMemberInfoForm">회원정보 변경</a><li>
-                    <li><a href="https://www.hmall.com/p/mpd/selectMemberDstnAdr">비밀번호 변경</a></li>
+                    <li><a href="${app}/mypage/chngPW">비밀번호 변경</a></li>
                     <li><a href="javascript:;" onclick="fn_HppManage();">배송지 관리</a></li>
                     <li><a href="https://www.hmall.com/p/mpd/selectMemberUseInfo">회원 탈퇴</a></li>
                 </ul>
