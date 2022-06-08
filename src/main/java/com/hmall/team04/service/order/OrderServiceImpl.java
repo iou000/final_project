@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hmall.team04.controller.cart.CartController;
 import com.hmall.team04.dao.cart.CartDAO;
+import com.hmall.team04.dao.coupon.CouponDAO;
 import com.hmall.team04.dao.order.OrderDAO;
 import com.hmall.team04.dao.product.ProductBoardDAO;
 import com.hmall.team04.dto.cart.CartDTO;
+import com.hmall.team04.dto.coupon.CouponDataDTO;
 import com.hmall.team04.dto.order.OrderCompleteDTO;
 import com.hmall.team04.dto.order.OrderDTO;
 import com.hmall.team04.dto.order.OrderDetailDTO;
@@ -27,6 +29,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Setter(onMethod_ = { @Autowired })
 	private OrderDAO orderDAO;
+	
+	@Setter(onMethod_ = { @Autowired })
+	private CouponDAO couponDAO;
 
 	@Override
 	public ArrayList<OrderCompleteDTO> getOrderCompleteList(OrderCompleteDTO ordercompleteDTO) throws Exception {
@@ -56,6 +61,24 @@ public class OrderServiceImpl implements OrderService {
 			throws Exception {
 		orderDAO.cancelOrder(updtTotal, updtDis, updtPmt, updtRDA, updtCDA, orderId, userId);
 		orderDAO.cancelOrderDetail(updtPC, updtFlag, oDetailId, userId);
+	}
+
+	@Transactional
+	@Override
+	public void insertSuccessOrder(List<OrderCompleteDTO> orderCompleteList) throws Exception {
+		
+		
+		orderDAO.insertOrderAndPayment(orderCompleteList.get(0)); // 주문, 결제내역 insert
+		
+		if ( orderCompleteList.get(0).getCoupon_id() != null && !orderCompleteList.get(0).getCoupon_id().isEmpty() ) { //쿠폰을 사용했다면
+			couponDAO.deleteCoupon(new CouponDataDTO(orderCompleteList.get(0).getUser_id(), orderCompleteList.get(0).getCoupon_id())); //해당 쿠폰 삭제
+		}
+		
+		for (OrderCompleteDTO orderCompleteDTO : orderCompleteList) {
+			orderDAO.insertOrderDetail(orderCompleteDTO);
+		}
+		
+		
 	}
 
 }

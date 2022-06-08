@@ -18,12 +18,12 @@ public class OrderCompleteDTO {
 	private String hp_no;
 	private String order_comment;
 	private Date order_date;
-	private String prd_pmt_id;
+	//private String prd_pmt_id;
 	private int coupon_discount_amount;
 	private int reserve_discount_amount;
 	
 	// prd_orderdetail_t
-	private String prd_orderdetail_id;
+	//private String prd_orderdetail_id;
 	//private String prd_order_id;
 	private String prd_id;
 	private int prd_count;

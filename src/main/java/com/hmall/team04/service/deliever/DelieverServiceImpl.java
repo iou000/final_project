@@ -3,6 +3,7 @@ package com.hmall.team04.service.deliever;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hmall.team04.dao.deliever.DelieverDAO;
 import com.hmall.team04.dto.deliever.DelieverDTO;
@@ -32,6 +33,7 @@ public class DelieverServiceImpl implements DelieverService {
 	}
 	
 	// 배송지 추가
+	@Transactional
 	@Override
 	public DelieverDTO insertDeliever(DelieverDTO delieverDTO) throws Exception {
 		
@@ -39,6 +41,7 @@ public class DelieverServiceImpl implements DelieverService {
 	}
 	
 	// 배송지 수정
+	@Transactional
 	@Override
 	public void updateDeliever(DelieverDTO delieverDTO) throws Exception{
 		// delieverDTO의 active_yn이 1이면 user_id에 해당하는 active_yn 전부다 0으로 바꾼다음에 수정시켜줌
@@ -52,6 +55,7 @@ public class DelieverServiceImpl implements DelieverService {
 	}
 	
 	// 배송지 삭제
+	@Transactional
 	@Override
 	public void deleteDeliever(DelieverDTO delieverDTO) throws Exception {
 		
