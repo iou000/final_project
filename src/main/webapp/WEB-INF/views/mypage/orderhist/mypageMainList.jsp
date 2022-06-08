@@ -4,7 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="app" value="${pageContext.request.contextPath}" />
+<sec:authentication property="principal.user.user_id" var="principal_user_id" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -237,6 +239,54 @@
             window.open(url, "_blank");
         }
         _TRK_PI_ = "MYPAGE";
+        
+    	/*
+    	 * 상품평 쓰기 버튼 with 유효성 검사
+    	 * !! 마이페이지에서 댓글을 달게 하는 것의 이점은 확실한 주문정보를 제공
+    	 */
+    	function InsertReview(prd_board_id, prd_id){
+    		var token = $("input[name='_csrf']").val();
+    		var header = "X-CSRF-TOKEN";
+    		
+    		//var parentObj = $(obj).closest("dd");
+
+    		var val_cur_user='${principal_user_id}';
+    		var val_prd_board_id = prd_board_id;
+    		var val_prd_id = prd_id;
+    		// 마이페이지에서 prd_board_id 접근?
+    				
+    		console.log(prd_board_id,prd_id);
+    		
+    		// insert 전 자격 체크, goto checkValidReview controller
+    		$.ajax({
+    			url : "${app}/r/checkValidReview",
+    			method : "POST",
+    			data : {
+    				user_id : val_cur_user,
+    				prd_board_id : prd_board_id,
+    				prd_id : val_prd_id
+    			},
+    			dataType : "json",
+    			beforeSend : function(xhr) {
+    				xhr.setRequestHeader(header, token);
+    			},
+    			success : function(data) {
+    				//alert(JSON.stringify(data));
+    				if (data.ReviewFlag == "Already") {
+    					alert('현재 상품게시판에 댓글이 등록되어있습니다');
+    				} else if(data.ReviewFlag == "Possible"){
+    					
+    					let popUrl = "${app}/r/insert/" + val_cur_user+ "?prd_board_id=" + prd_board_id + "&&prd_id="+prd_id;
+    					console.log(popUrl);
+    					let popOption = "width = 600px, height=700px, top=300px, left=300px, scrollbars=yes";
+    					window.open(popUrl,"리뷰 쓰기",popOption);
+    					
+    				} else if(data.ReviewFlag == "Impossible"){
+    					alert('상품평은 구매고객에 한해 작성이 가능합니다.');
+    				}
+    			}
+    		});
+    	}
     </script>
 </head>
                 <!-- 
@@ -322,8 +372,8 @@
                                     <dd class="btn-col2">                            
                                         <a href="${app}/p/${detailDTO.prd_board_id}">
                                             <span class="img"><img
-                                                    src="${detailDTO.upload_path}"
-                                                    alt="${detailDTO.prd_nm}"
+                                                    src="https://image.hmall.com/static/3/5/29/68/2068295310_0.jpg?RS=300x300&AR=0"
+                                                    alt="닥터시드 허니앤밀크밤 모이스처 바디워시 1000ml"
                                                     onerror="noImage(this, 'https://image.hmall.com/p/img/co/noimg-thumb.png?RS=300x300&AR=0')" />
                                             </span>
                                             <div class="box">
@@ -347,28 +397,28 @@
                                       <c:if test="${detailDTO.order_flag == '주문접수' || detailDTO.order_flag == '상품준비중'}">
                                         <div class="btngroup">
                                             <button class="btn btn-linelgray small30" type="button"
-                                                onClick="location.href='${app}/mypage/oc?orderDetailNo=${detailDTO.prd_orderdetail_id}&orderNo=${orderDTO.prd_order_id}'"><span>주문취소</span>
+                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>주문취소</span>
                                             </button>
                                         </div>
                                        </c:if>
                                        <c:if test="${detailDTO.order_flag == '결제완료'}">
                                         <div class="btngroup">
                                             <button class="btn btn-linelgray small30" type="button"
-                                                onClick="location.href='${app}/mypage/oc?orderDetailNo=${detailDTO.prd_orderdetail_id}&orderNo=${orderDTO.prd_order_id}'"><span>주문취소</span>
+                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>결제취소</span>
                                             </button>                                      
                                         </div>
                                        </c:if>
                                        <c:if test="${detailDTO.order_flag == '상품발송'}">
                                         <div class="btngroup">
                                             <button class="btn btn-linelgray small30" type="button"
-                                                onClick="location.href='${app}/mypage/oc?orderDetailNo=${detailDTO.prd_orderdetail_id}&orderNo=${orderDTO.prd_order_id}'"><span>주문취소</span>
+                                                onClick="location.href='/p/mpa/selectOrdImdtCnclReqPup.do?ordNo=20220527277541&chkOrdPtcSeq=1'"><span>주문취소</span>
                                             </button>
                                         </div>
                                        </c:if>
                                        <c:if test="${detailDTO.order_flag == '배송완료'}">
                                         <div class="btngroup">
                                             <button class="btn btn-linelgray small30" type="button"
-                                                onClick="openItemEvalPopup('2134887005', '00012', '20220527277541')"><span>상품평쓰기</span>
+                                                onClick="InsertReview('${detailDTO.prd_board_id}','${detailDTO.prd_id}')"><span>상품평쓰기</span>
                                             </button>
                                              <button class="btn btn-linelgray small30" type="button"
                                                  onClick="window.open('${app}/mypage/exchangePopup?detailid=${detailDTO.prd_orderdetail_id}','교환신청','width=588,height=724')"><span>교환신청</span>

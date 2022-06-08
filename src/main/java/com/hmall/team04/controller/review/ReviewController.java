@@ -122,13 +122,17 @@ public class ReviewController {
 		int reviewIsExist = reviewService.ReviewIsExist(reviewDTO);
 		int reviewIsPossible = reviewService.ReviewIsPossible(reviewDTO);
 		
+		log.info(reviewIsExist);
+		log.info(reviewIsPossible);
 		
-		if(reviewIsExist==1) {
+		if(reviewIsExist>0) {
 			map.put("ReviewFlag", "Already");
-		} else if(reviewIsPossible==1) {
-			map.put("ReviewFlag", "Possible");
 		} else {
-			map.put("ReviewFlag", "Impossible");
+			if(reviewIsPossible>0) {
+				map.put("ReviewFlag", "Possible");
+			}else {
+				map.put("ReviewFlag", "Impossible");
+			}
 		}
 		
 		return map;
@@ -136,7 +140,6 @@ public class ReviewController {
 	
 	/* 리뷰 쓰기 */
 	@RequestMapping(value="/insert/{user_id}", method = RequestMethod.GET)
-	@ResponseBody
 	public String reviewInsertWindowGET(@PathVariable("user_id")String user_id,
 															 String prd_board_id,
 															 String prd_id,

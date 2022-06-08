@@ -408,7 +408,7 @@
 						<div style="float: right;">
 							<button ga-category="상품상세" ga-action="상품평" ga-label="상품평 쓰기"
 								class="btn btn-lineblack small gp_className" onclick="evalWriteCore()">
-								<span><i class="icon review"></i>상품평 쓰기(실질 기능 : 유효성체크 후 마이페이지 이동 버튼)</span>
+								<span><i class="icon review"></i>상품평 쓰기</span>
 							</button>
 						</div>
 					</c:if>
@@ -952,7 +952,7 @@ function goChioceProcessCore(prd_board_id) {
 				var result = confirm("상품평은 주문하신 상품이 발송된 후에 작성하실 수 있습니다. \n마이페이지로 이동하여 확인하시겠습니까?");
 				
 				if(result){
-					location.href = '${app}/mypage/odslist';
+					location.href = '${app}/mypage/mymain';
 				}
 			}
 			
