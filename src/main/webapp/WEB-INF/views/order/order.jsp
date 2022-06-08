@@ -603,7 +603,7 @@ function changeDstn() {
 		contentType: "application/json",
 		success : function(data) {
 			
-			console.log(data);
+			//console.log(data);
 			var addrHtml = "";
 			
 			$("#pec003 #selectedDelieverId").val($("#singleDstn input[name=deliever_id]").val());
@@ -665,7 +665,7 @@ function changeDstn() {
 		} //end success
 		,
 		error : function(error) {
-			console.log(error);
+			alert(error);
 		}
 		
 		
@@ -794,11 +794,11 @@ function modifyAddr(obj, modType) {
         ,dataType: "text"
         ,async: true
         ,success : function(data) {
-        	console.log(data);
+        	//console.log(data);
         	changeDstn();
         }
         ,error: function(error) {
-        	console.log(error);
+        	alert(error);
         }
     });
     
@@ -1181,7 +1181,7 @@ function cancleCopn() {
 function applyCopnDc() {
 	
 	var top1Coupon = '${top1Coupon}';
-	console.log(top1Coupon);
+	//console.log(top1Coupon);
 	
 	// 쿠폰이 선택되어있을때
 	if(!$("input[name=copnDcAply]").prop("checked")){
@@ -1237,7 +1237,7 @@ function useUpoint() {
 /* 적립금 얼마나 사용할지 */
 function directInsertUPoint(obj) {
 	
-	console.log($(obj).val())
+	//console.log($(obj).val())
 	
 	var upoint = Number($("input[name='uPoint']").val()); //현재 내가 가지고있는 적립금
 	var usePoint = isEmpty($(obj).val()) ? 0 : Number(($(obj).val()).replace(/[^0-9]/g,'')); //사용할 적립금
@@ -1330,6 +1330,42 @@ function order() {
 	var token = $("input[name='_csrf']").val();
 	var header = "X-CSRF-TOKEN";
 	
+	
+	/* 결제 전 결제정보 입력 검사 */
+	// 배송지가 입력되지 않았을 경우
+	if (!$("#divDlvInfArea input[name=deliever_id]").val()) {
+		alert("배송지를 입력해주세요.");
+		var offset = $("#singleDstn").offset()
+		$('html, body').animate({scrollTop : offset.top-($(window).height() / 2)}, 100);
+		return;
+	}
+	// 주문자명이 입력되지 않았을 경우
+	if(!$("#singleDstnMsg input[name=senderName]").val()) {
+		alert("주문자명를 입력해주세요.");
+		$("#singleDstnMsg input[name=senderName]").focus();
+		return;
+	}
+	// 배송메시지가 없을 경우
+	if(!$("#singleDstnMsg input[name=deliever_msg]").val()) {
+		alert("배송 메시지를 선택해주세요.");
+		$("#singleDstnMsg select[name=dlvMsgSelect]").focus();
+		return;
+	}
+	// 배송 메시지를 입력하지 않았을 경우
+	if ($("#singleDstnMsg input[name=deliever_msg]").val() =='직접 입력') {
+		alert("배송 메시지를 입력해주세요.");
+		$("#singleDstnMsg input[name=prsnMsg]").focus();
+		return;
+	}
+	
+	// 결제수단 체크 안되어있을경우
+	if (!$("#payTypeHpp input[name=payment-type]").is(':checked')) {
+		alert("결제 수단을 확인해주세요.");
+		var offset = $("#payTypeHpp input[name=payment-type]").offset()
+		$('html, body').animate({scrollTop : offset.top-($(window).height() / 2)}, 100);
+		return;
+	}
+	
 	// 결제수단 선택과 이에 따른 pg, pay_method 설정
 	var objName = document.getElementsByName("payType");
 	var pay_type='';
@@ -1339,9 +1375,9 @@ function order() {
 	
 	for(var i=0; i<objName.length; i++){
 	    if(objName[i].checked){
-		   	alert("선택한 결제수단 번호는 "+objName[i].value+"입니다");
+		   	//alert("선택한 결제수단 번호는 "+objName[i].value+"입니다");
 		   	pay_type=objName[i].value;
-		   	alert(pay_type)
+		   	//alert(pay_type)
 		}
 	}
 	
@@ -1359,8 +1395,20 @@ function order() {
 		  val_pay_method='card';
 		  break;
 	  default:
-	    alert( "어떤 값인지 파악이 되지 않습니다." );
+	    alert( "결제 수단을 선택해주세요." );
+	  	var offset = $("#payTypeHpp input[name=payment-type]").offset()
+			$('html, body').animate({scrollTop : offset.top-($(window).height() / 2)}, 100);
+	  	return;
 	}
+	
+	// 주문동의 체크하지 않았을 경우
+	if (!$("input[name=ordAgreeChk]").is(':checked')) {
+		alert( "주문 동의를 확인해주세요." );
+		return;
+	}
+	
+	
+	
 	
 
 	// 주문번호 생성
@@ -1372,7 +1420,7 @@ function order() {
 	var minutes = ('0' + today.getMinutes()).slice(-2);
 	var seconds = ('0' + today.getSeconds()).slice(-2);
 
-	console.log(val_merchant_uid);
+	//console.log(val_merchant_uid);
 	
 	// 아임포트 결제 데이터
 	var val_merchant_uid = year+month+day+hours+minutes+seconds;
@@ -1397,8 +1445,7 @@ function order() {
 	}, function(rsp) {
 		if (rsp.success) {
 			// below rsp is come from import
-			alert('빌링키 발급 성공');
-			console.log('빌링키 발급 성공',rsp)
+			//console.log('빌링키 발급 성공',rsp)
 			
 			
 			//prd_order_t
@@ -1496,9 +1543,9 @@ function order() {
 				
 			});
 			
-			for(var i=0; i<orderCompleteList.length;i++){
-				console.log(orderCompleteList[i]);
-			}
+			//for(var i=0; i<orderCompleteList.length;i++){
+			//	console.log(orderCompleteList[i]);
+			//}
 			
 			// 유효한 결제정보를, ordercomplete post controller로 전송 for DB 테이블과 세션에 정보저장
 			$.ajax({
@@ -1510,17 +1557,17 @@ function order() {
 					xhr.setRequestHeader(header, token);
 				},
 				success : function(data) {
-					if(data.orderCompleteSuccess=='True'){
-						alert('your choiceSSSS is ordercompleted and let us go ordercomplete page');
-						location.href = '${app}/orderComplete';
-					}
+					alert('결제가 완료되었습니다.');
+					location.href = '${app}/orderComplete';
+				},
+				error : function(error) {
+					alert(error);
 				}
+				
 			});
-
-			alert('after rsp.success, let us go to controller end');	
 			
 		} else {
-			alert('빌링키 발급 실패');
+			//alert('빌링키 발급 실패');
 			var msg = '결제에 실패하였습니다.\n';
             msg += rsp.error_msg;
             alert(msg);
