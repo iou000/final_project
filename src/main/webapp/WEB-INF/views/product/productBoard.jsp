@@ -408,11 +408,7 @@
 						<div style="float: right;">
 							<button ga-category="상품상세" ga-action="상품평" ga-label="상품평 쓰기"
 								class="btn btn-lineblack small gp_className" onclick="evalWriteCore()">
-								<span><i class="icon review"></i>상품평 쓰기(마이페이지 이동 버튼)</span>
-							</button>
-							<button ga-category="상품상세2" ga-action="상품평2" ga-label="상품평 쓰기2"
-								class="btn btn-lineblack small gp_className" onclick="InsertReview()">
-								<span><i class="icon review"></i>상품평 쓰기</span>
+								<span><i class="icon review"></i>상품평 쓰기(실질 기능 : 유효성체크 후 마이페이지 이동 버튼)</span>
 							</button>
 						</div>
 					</c:if>

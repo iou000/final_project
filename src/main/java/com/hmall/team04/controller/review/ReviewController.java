@@ -64,27 +64,6 @@ public class ReviewController {
 	@Autowired
 	private FileServiceImpl awsS3Service;
 	
-	/* 리뷰 쓰기 */
-	@RequestMapping("/insert/{user_id}")
-	public String reviewInsertWindowGET(@PathVariable("user_id")String user_id,
-															 String prd_board_id,
-															 String prd_id,
-															 Principal principal,
-															 Model model) {
-		log.info(prd_board_id);
-		
-		if(principal == null) {
-			return "redirect:/loginpopup";
-		} else {
-			
-			model.addAttribute("user_id", user_id);
-			model.addAttribute("prd_board_id", prd_board_id);
-			model.addAttribute("prd_id", prd_id);
-			
-			return "review/reviewInsert";
-			
-		}
-	}
 	
 	@RequestMapping(value = "/{prd_board_id}", method = RequestMethod.GET)
 	public String productlist(@PathVariable String prd_board_id, Model model,Principal principal) {
@@ -132,25 +111,70 @@ public class ReviewController {
 		}
 		return "review.review";
 	}
+
+	@RequestMapping(value = "/checkValidReview", method= {RequestMethod.POST})
+	@ResponseBody
+	public HashMap<String, Object> checkValidReview(ReviewDTO reviewDTO) throws Exception {
+		log.info(reviewDTO.toString());
+		
+		HashMap<String, Object> map = new HashMap<String,Object>();
+
+		int reviewIsExist = reviewService.ReviewIsExist(reviewDTO);
+		int reviewIsPossible = reviewService.ReviewIsPossible(reviewDTO);
+		
+		
+		if(reviewIsExist==1) {
+			map.put("ReviewFlag", "Already");
+		} else if(reviewIsPossible==1) {
+			map.put("ReviewFlag", "Possible");
+		} else {
+			map.put("ReviewFlag", "Impossible");
+		}
+		
+		return map;
+	}
+	
+	/* 리뷰 쓰기 */
+	@RequestMapping(value="/insert/{user_id}", method = RequestMethod.GET)
+	@ResponseBody
+	public String reviewInsertWindowGET(@PathVariable("user_id")String user_id,
+															 String prd_board_id,
+															 String prd_id,
+															 Principal principal,
+															 Model model) {
+		log.info(prd_board_id);
+		
+		
+		if(principal == null) {
+			return "<script>alert('loginplz');location.href('/')</script>";
+		} else {
+
+			// 최종적으로 모두 통과한 유저
+			model.addAttribute("user_id", user_id);
+			model.addAttribute("prd_board_id", prd_board_id);
+			model.addAttribute("prd_id", prd_id);
+			
+			return "review/reviewInsert";
+			
+		}
+	}
 	
 	@RequestMapping(value = "/insertReview", method= {RequestMethod.POST})
 	@ResponseBody
-	public HashMap<String, String> insertReview(ReviewDTO reviewDTO) throws Exception {
+	public HashMap<String, Object> insertReview(ReviewDTO reviewDTO) throws Exception {
 		log.info(reviewDTO.toString());
 		
-//		for(MultipartFile file : reviewDTO.getUploadfiles()) {
-//			log.info(file);
-//		}
+		HashMap<String, Object> map = new HashMap<String,Object>();
+
 		
-		// save review first
 		reviewService.insertReview(reviewDTO);
 		log.info(reviewDTO.getReview_id());
 		
 		// after making review_id, by using this save file at file_t
 		awsS3Service.s3FileUpload(reviewDTO);
 		
-		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("insert_review_Success", "True");
+		
 		
 		return map;
 	}
