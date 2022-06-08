@@ -130,8 +130,8 @@
     
     
     <insert id="insertOrderDetail" parameterType="OrderCompleteDTO">
-    	INSERT INTO prd_orderdetail_t (prd_orderdetail_id, prd_order_id, prd_id, prd_count, order_flag, prd_board_id)
-		VALUES (prd_orderdetail_t_prd_orderdetail_id_seq.nextval, #{prd_order_id}, #{prd_id}, #{prd_count}, #{order_flag}, #{prd_board_id})
+    	
+    	{ CALL prd_orderdetail_insert(#{prd_order_id}, #{prd_id}, #{prd_count}, #{order_flag}, #{prd_board_id}) }
     </insert>
 
 	<!-- <select id="getCancelData" resultType="map">

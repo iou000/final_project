@@ -25,8 +25,10 @@
 		FROM user_coupon_dt_t u
 		JOIN coupon_t c ON u.coupon_id = c.coupon_id
 		WHERE u.user_id = #{user_id} AND c.coupon_active = '1'
+		ORDER BY c.coupon_price DESC
 	</select>
 	
+	<!-- 제일 많이 깎아주는 쿠폰(원) -->
 	<select id="selectCouponTop1ByUserId" parameterType="String" resultType = "CouponDTO">
 		SELECT * FROM (SELECT
 		    				u.user_id,
